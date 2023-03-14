@@ -1,0 +1,100 @@
+.login {
+  margin-top: 60px;
+  margin-bottom: 100px;
+  display: flex;
+  .virtual {
+    flex: 1;
+  }
+  .wrap_login {
+    flex: 2;
+    h2 {
+      font-size: 28px;
+      color: #203259;
+      margin-bottom: 20px;
+    }
+    .login_form {
+      max-width: 400px;
+      form {
+        .form_item {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            label {
+                margin-bottom: 8px;
+                color: #a8b0bf;
+                font-weight: 500;
+            }
+            input {
+                padding: 10px 11px;
+                border: none;
+                outline: none;
+                background-color: #f5f7fa;
+                border-bottom: 2px solid transparent;
+                border-top: 2px solid transparent;
+                margin-bottom: 30px;
+                &:focus {
+                    border-bottom: 2px solid var(--primary-color);
+                }
+            }
+            .warning {
+                position: absolute;
+                color: red;
+                font-style: italic;
+                font-size: 13px;
+                transform: translateY(calc(-100% - 8px));
+                top: 100%;
+                right: 1px;
+                i {
+                    margin-right: 5px;
+                }
+            }
+        }
+        .more_option {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            .remember {
+                display: flex;
+                color: #1b1b1b;
+                align-items: center;
+                input {
+                    margin-right: 5px;
+                    margin-top: 1px;
+                    width: 16px;
+                    height: 16px;
+                    accent-color: var(--primary-color)
+                }
+            }
+            p {
+                a {
+                    color: var(--primary-color);
+                }
+            }
+        }
+
+        button {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 1px;
+            color: white;
+            background-color: var(--primary-color);
+            border: none;
+            font-weight: 700;
+            margin-top: 20px;
+            &:hover {
+                filter: brightness(0.9);
+                cursor: pointer;
+            }
+        }
+        .create {
+            text-align: center;
+            margin-top: 15px;
+            a {
+                color: var(--primary-color);
+                margin-left: 15px;
+            }
+        }
+      }
+    }
+  }
+}
