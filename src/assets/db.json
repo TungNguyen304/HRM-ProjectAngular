@@ -1,0 +1,208 @@
+{
+  "members": [
+    {
+      "id": 1,
+      "name": "Nguyễn Thành Dương",
+      "code": 2647,
+      "birthday": "30-11-1994",
+      "phone": "0899852441",
+      "image": "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Nguyễn Thành Dương",
+      "code": 2647,
+      "birthday": "30-11-1994",
+      "phone": "0899852441",
+      "image": "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Nguyễn Thành Dương",
+      "code": 2647,
+      "birthday": "30-11-1994",
+      "phone": "0899852441",
+      "image": "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Nguyễn Thành Dương",
+      "code": 2647,
+      "birthday": "30-11-1994",
+      "phone": "0899852441",
+      "image": "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Nguyễn Thành Dương",
+      "code": 2647,
+      "birthday": "30-11-1994",
+      "phone": "0899852441",
+      "image": "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Nguyễn Thành Dương",
+      "code": 2647,
+      "birthday": "30-11-1994",
+      "phone": "0899852441",
+      "image": "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Nguyễn Thành Dương",
+      "code": 2647,
+      "birthday": "30-11-1994",
+      "phone": "0899852441",
+      "image": "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
+    },
+    {
+      "id": 8,
+      "name": "Nguyễn Thành Dương",
+      "code": 2647,
+      "birthday": "30-11-1994",
+      "phone": "0899852441",
+      "image": "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
+    }
+  ],
+  "units": [
+    {
+      "data": {
+        "NameDV": "Công ty Cổ phần GMO-Z.com RUNSYSTEM",
+        "MADV": "runsystem",
+        "address":
+          "Tầng 6, tòa nhà OCEAN PẢK, số 1 Đào Duy Anh, quận Đống Đa, Hà Nội"
+      },
+      "children": [
+        {
+          "data": {
+            "NameDV": "Da Nang Branch",
+            "MADV": "DN",
+            "address": "Số 203 Ông Ích Khiêm-Hải Châu-Đà Nẵng"
+          },
+          "children": [
+            {
+              "data": {
+                "NameDV": "Da Nang-BO Team",
+                "MADV": "BO1"
+              }
+            },
+            {
+              "data": {
+                "NameDV": "Da Nang - Comm Team",
+                "MADV": "BrSE2"
+              }
+            },
+            {
+              "data": {
+                "NameDV": "Da Nang - Outsources Division",
+                "MADV": "Outsources"
+              },
+              "children": [
+                {
+                  "data": {
+                    "NameDV": "Da Nang - Outsources (EC Solutions Dept)",
+                    "MADV": "EC"
+                  }
+                },
+                {
+                  "data": {
+                    "NameDV": "Da Nang - Outsources (QM Dept)",
+                    "MADV": "QA.QC"
+                  },
+                  "children": [
+                    {
+                      "data": {
+                        "NameDV": "Da Nang - Outsources (QM Dept)/QA Team",
+                        "MADV": "QA.1"
+                      }
+                    },
+                    {
+                      "data": {
+                        "NameDV": "Da Nang - Outsources (QM Dept)/QC Team",
+                        "MADV": "QC.1"
+                      }
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "data": {
+                    "NameDV": "Da Nang - Outsources (Ruby Dept)",
+                    "MADV": "Ruby.1"
+                  }
+                },
+                {
+                  "data": {
+                    "NameDV": "Da Nang - Outsources (UIT Dept)",
+                    "MADV": "UIT",
+                    "address": "Tầng 6,7"
+                  }
+                }
+              ],
+              "expanded": true
+            },
+            {
+              "data": {
+                "NameDV": "Da Nang - Smart RPA Department",
+                "MADV": "RPA"
+              }
+            },
+            {
+              "data": {
+                "NameDV": "Da Nang - BrSE Dept",
+                "MADV": "BrSE ĐN"
+              }
+            }
+          ],
+          "expanded": true
+        },
+        {
+          "data": {
+            "NameDV": "IID- Infra Team (ĐN)",
+            "MADV": "InfraDN"
+          }
+        },
+        {
+          "data": {
+            "NameDV": "R&D - AI Team (ĐN)",
+            "MADV": "R&D"
+          }
+        }
+      ],
+      "expanded": true
+    }
+  ],
+  "listJobPosition": [
+    {
+      "code": "DN1",
+      "name": "Member of BOM, Branch Director",
+      "unit": "Da Nang Branch",
+      "type": "Member of BOM, Branch Director"
+    },
+    {
+      "code": "DN2",
+      "name": "Phụ trách chi nhánh",
+      "unit": "Da Nang Branch",
+      "type": "Phụ trách chi nhánh"
+    },
+    {
+      "code": "DN3",
+      "name": "Member of BOM, Branch Director",
+      "unit": "Da Nang Branch",
+      "type": "Member of BOM, Branch Director"
+    },
+    {
+      "name": "Developer",
+      "code": "DN4",
+      "unit": "Da Nang Branch",
+      "type": "Developer"
+    },
+    {
+      "code": "DN5",
+      "name": "Member of BOM, Branch Director",
+      "unit": "Da Nang Branch",
+      "type": "Member of BOM, Branch Director"
+    }
+  ]
+}

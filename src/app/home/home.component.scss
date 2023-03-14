@@ -1,7 +1,8 @@
 .home_container {
     display: flex;
     .outlet {
-        margin-left: 20px;
-        margin-top: 20px;
+        padding: 20px 20px 40px;
+        flex: 1;
+        background-color: #eff3f4;
     }
 }

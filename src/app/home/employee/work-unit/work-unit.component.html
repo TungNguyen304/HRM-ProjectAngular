@@ -1,1 +1,32 @@
-<p>work-unit works!</p>
+<h2 class="title">QUẢN LÝ ĐƠN VỊ</h2>
+<div class="table">
+  <p-treeTable [scrollable]="true" scrollHeight="500px" [value]="products" styleClass="p-datatable-gridlines">
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 500px">Name</th>
+        <th>Size</th>
+        <th>Type</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+      <tr>
+        <td style="width: 500px">
+          <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+          {{ rowData.NameDV }}
+        </td>
+        <td>{{ rowData.MADV }}</td>
+        <td>{{ rowData.address }}</td>
+        <td style="text-align: end">
+          <button
+            pButton
+            class="p-button-outlined p-button-sm"
+            type="button"
+            icon="pi pi-users"
+            iconPos="left"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-treeTable>
+</div>

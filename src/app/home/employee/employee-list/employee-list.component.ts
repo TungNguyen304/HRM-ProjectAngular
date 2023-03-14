@@ -6,5 +6,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./employee-list.component.scss']
 })
 export class EmployeeListComponent {
+  public status: {value:string}[];
+  public sex: {value:string}[];
 
+  constructor() {
+      this.status = [
+          {value: 'Chọn'},
+          {value: 'On'},
+          {value: 'Off'},
+      ];
+      this.sex = [
+        {value: 'Chọn'},
+        {value: 'Nam'},
+        {value: 'Nữ'},
+      ]
+  }
 }

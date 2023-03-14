@@ -19,7 +19,6 @@ body {
 }
 
 
-
 a {
   text-decoration: none;
   -webkit-transition: all 0.6s ease;
@@ -33,15 +32,16 @@ a:hover {
 }
 
 .app {
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
 }
 
 /* -------------
 Sidebar
 ----------------*/
 .sidebar {
-  // border-top: 1px solid #19222a;
   position: relative;
+  font-size: 16px;
   width: 17em;
   height: 100%;
   top: 0;
@@ -61,7 +61,6 @@ Sidebar Nav
   font-weight: 400;
   font-size: 1.2em;
   overflow: auto;
-  padding-bottom: 6em;
   z-index: 9;
   overflow: hidden;
   -webkit-overflow-scrolling: touch;

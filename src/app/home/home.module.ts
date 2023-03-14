@@ -4,6 +4,7 @@ import { HomeComponent } from './home.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { TeamMemberComponent } from './team-member/team-member.component';
+import { MemberComponent } from './team-member/member.component';
 
 const routes:Routes = [
   {
@@ -34,7 +35,8 @@ const routes:Routes = [
 @NgModule({
   declarations: [
     HomeComponent,
-    TeamMemberComponent
+    TeamMemberComponent,
+    MemberComponent
   ],
   imports: [
     CommonModule,

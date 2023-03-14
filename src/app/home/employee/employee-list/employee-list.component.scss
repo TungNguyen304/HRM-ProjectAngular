@@ -1,0 +1,35 @@
+.form_search {
+  margin-top: 30px;
+  background-color: white;
+  padding: 40px 20px;
+  box-shadow: 0 0 8px 2px #ccc;
+
+  form {
+    .form_list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 40px;
+      .form_item {
+        display: flex;
+        flex-direction: column;
+        label {
+          margin-bottom: 10px;
+        }
+        input {
+          background-color: #eaf0f4;
+        }
+      }
+      ::ng-deep .p-dropdown {
+        width: 100%;
+        background-color: #eaf0f4;
+      }
+    }
+    .action {
+        margin-top: 10px;
+      text-align: end;
+      button {
+        margin-left: 10px;
+      }
+    }
+  }
+}
