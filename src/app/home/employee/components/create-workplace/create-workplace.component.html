@@ -1,0 +1,45 @@
+<div class="create_workplace">
+  <form action="">
+    <div class="form_item">
+      <label for="code">
+        <span>Mã</span>
+        <button pButton label="bắt buộc" class="p-button-danger p-button-outlined p-button-sm"></button>
+      </label>
+      <input pInputText type="text" name="" id="code" placeholder="Enter response here"/>
+    </div>
+
+    <div class="form_item">
+        <label for="name">
+          <span>Tên</span>
+          <button pButton label="bắt buộc" class="p-button-danger p-button-outlined p-button-sm"></button>
+        </label>
+        <input pInputText type="text" name="" id="name" placeholder="Enter response here"/>
+      </div>
+
+      <div class="form_item">
+        <label for="newName">
+          <span>Tên khác</span>
+          <button pButton label="bắt buộc" class="p-button-danger p-button-outlined p-button-sm"></button>
+        </label>
+        <input pInputText type="text" name="" id="newName" placeholder="Enter response here"/>
+      </div>
+
+      <div class="form_item">
+        <label for="type">
+          <span>Loại vị trí</span>
+          <button pButton label="bắt buộc" class="p-button-danger p-button-outlined p-button-sm"></button>
+        </label>
+        <input pInputText type="text" name="" id="type" placeholder="Enter response here"/>
+      </div>
+      <div class="form_item">
+        <label for="unit">
+          <span>Đơn vị</span>
+          <button pButton label="bắt buộc" class="p-button-danger p-button-outlined p-button-sm"></button>
+        </label>
+        <p-dropdown placeholder="Chọn" [options]="position" optionLabel="value"></p-dropdown>
+      </div>
+      <div class="action">
+        <button pButton type="submit" label="Lưu" class="p-button-outlined p-button-sm"></button>
+      </div>
+  </form>
+</div>

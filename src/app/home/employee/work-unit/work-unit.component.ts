@@ -8,8 +8,9 @@ import { UnitService } from 'src/app/core/services/api/unit.service';
   styleUrls: ['./work-unit.component.scss'],
 })
 export class WorkUnitComponent {
-  products: any;
-
+  public products: any;
+  public unitTemp:string;
+  public display:boolean = false;
   constructor(private unitService: UnitService) {}
 
   
@@ -17,5 +18,10 @@ export class WorkUnitComponent {
     this.unitService
       .getUnit()
       .subscribe((data) => (this.products = data));
+  }
+
+  handleShowMember(unitCode:string) {
+    this.unitTemp = unitCode;
+    this.display = !this.display;
   }
 }

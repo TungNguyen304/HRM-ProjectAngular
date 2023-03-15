@@ -1,5 +1,6 @@
 .home_container {
     display: flex;
+    min-height: calc(100vh - var(--height-header));
     .outlet {
         padding: 20px 20px 40px;
         flex: 1;

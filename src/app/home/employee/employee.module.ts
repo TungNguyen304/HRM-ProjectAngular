@@ -3,14 +3,22 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { WorkUnitComponent } from './work-unit/work-unit.component';
 import { WorkplaceComponent } from './workplace/workplace.component';
-import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { EmployeeManagementComponent } from './employee-management/employee-management.component';
 import { EmployeeUploadComponent } from './employee-upload/employee-upload.component';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import {TreeTableModule} from 'primeng/treetable';
 import {InputTextModule} from 'primeng/inputtext';
 import {DropdownModule} from 'primeng/dropdown';
-
+import {AccordionModule} from 'primeng/accordion';
+import { OverlayModule } from 'primeng/overlay';
+import { CreateWorkplaceComponent } from './components/create-workplace/create-workplace.component';
+import {DialogModule} from 'primeng/dialog';
+import { MemberTableComponent } from './components/member-table/member-table.component';
+import { CreateEmployeeComponent } from './components/create-employee/create-employee.component';
+import {CalendarModule} from 'primeng/calendar';
+import {DragDropModule} from 'primeng/dragdrop';
+import {PanelModule} from 'primeng/panel';
 const routes: Routes = [
   {
     path: '',
@@ -24,8 +32,8 @@ const routes: Routes = [
         component: WorkplaceComponent,
       },
       {
-        path: 'list',
-        component: EmployeeListComponent,
+        path: 'management',
+        component: EmployeeManagementComponent,
       },
       {
         path: 'upload',
@@ -44,8 +52,11 @@ const routes: Routes = [
   declarations: [
     WorkUnitComponent,
     WorkplaceComponent,
-    EmployeeListComponent,
+    EmployeeManagementComponent,
     EmployeeUploadComponent,
+    CreateWorkplaceComponent,
+    MemberTableComponent,
+    CreateEmployeeComponent,
   ],
   imports: [
     CommonModule,
@@ -54,7 +65,13 @@ const routes: Routes = [
     TableModule,
     InputTextModule,
     TreeTableModule,
-    DropdownModule
+    DropdownModule,
+    AccordionModule,
+    OverlayModule,
+    DialogModule,
+    CalendarModule,
+    DragDropModule,
+    PanelModule
   ],
 })
 export class EmployeeModule {}

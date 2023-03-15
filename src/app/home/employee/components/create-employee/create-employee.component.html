@@ -1,0 +1,180 @@
+<div class="create_workplace">
+  <div class="create_left">
+    <div class="main_info">
+      <form class="form">
+        <div class="form_item">
+          <label for="code">
+            <span>Mã NV</span>
+            <button
+              pButton
+              label="bắt buộc"
+              class="p-button-outlined p-button-danger p-button-sm"
+            ></button>
+          </label>
+          <input
+            type="text"
+            id="code"
+            pInputText
+            placeholder="Enter response here"
+          />
+        </div>
+        <div class="form_item">
+          <label for="name">
+            <span>Họ Tên</span>
+            <button
+              pButton
+              label="bắt buộc"
+              class="p-button-outlined p-button-danger p-button-sm"
+            ></button>
+          </label>
+          <input
+            type="text"
+            id="name"
+            pInputText
+            placeholder="Enter response here"
+          />
+        </div>
+        <div class="form_item">
+          <label for="sex">
+            <span>Giới Tính</span>
+          </label>
+          <p-dropdown [options]="sex" optionLabel="value"></p-dropdown>
+        </div>
+        <div class="form_item">
+          <label for="birthday">
+            <span>Ngày sinh</span>
+            <button
+              pButton
+              label="bắt buộc"
+              class="p-button-outlined p-button-danger p-button-sm"
+            ></button>
+          </label>
+          <p-calendar
+            placeholder="Choose or Enter response here"
+            [showButtonBar]="true"
+            dateFormat="dd.mm.yy"
+          ></p-calendar>
+        </div>
+        <div class="form_item">
+          <label for="addresscurrent">
+            <span>Nơi ở hiện tại</span>
+          </label>
+          <input type="text" pInputText placeholder="Enter response here" />
+        </div>
+        <div class="form_item">
+          <label for="address">
+            <span>Địa chỉ thường trú</span>
+          </label>
+          <input type="text" pInputText placeholder="Enter response here" />
+        </div>
+        <div class="form_item">
+          <label for="joinday">
+            <span>Ngày nhận việc</span>
+          </label>
+          <p-calendar
+            placeholder="Choose or Enter response here"
+            [showButtonBar]="true"
+            dateFormat="dd.mm.yy"
+          ></p-calendar>
+        </div>
+        <div class="form_item">
+          <label for="passday">
+            <span>Ngày được thuê</span>
+          </label>
+          <p-calendar
+            placeholder="Choose or Enter response here"
+            [showButtonBar]="true"
+            dateFormat="dd.mm.yy"
+          ></p-calendar>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="create_right">
+    <h3 class="title">Thông tin liên hệ</h3>
+    <form class="form">
+      <div class="form_item">
+        <label for="email">
+          <span>Email</span>
+          <button
+            pButton
+            label="bắt buộc"
+            class="p-button-outlined p-button-danger p-button-sm"
+          ></button>
+        </label>
+        <input
+          type="text"
+          id="email"
+          pInputText
+          placeholder="Enter response here"
+        />
+      </div>
+      <div class="form_item">
+        <label for="phone">
+          <span>Số điện thoại</span>
+          <button
+            pButton
+            label="bắt buộc"
+            class="p-button-outlined p-button-danger p-button-sm"
+          ></button>
+        </label>
+        <input
+          type="text"
+          id="phone"
+          pInputText
+          placeholder="Enter response here"
+        />
+      </div>
+      <div class="form_item">
+        <label for="skype">
+          <span>SkypeID</span>
+        </label>
+        <input
+          type="text"
+          id="skype"
+          pInputText
+          placeholder="Enter response here"
+        />
+      </div>
+      <div class="form_item">
+        <label for="birthday">
+          <span>Ảnh</span>
+        </label>
+        <div #drag pDroppable class="avt" (onDragEnter)="handleOnDragEnter()" (onDragLeave)="handleOnDragEnd()">
+        </div>
+      </div>
+      <div class="form_item">
+        <label for="addresscurrent">
+          <span>Nơi ở hiện tại</span>
+        </label>
+        <input type="text" pInputText placeholder="Enter response here" />
+      </div>
+      <div class="form_item">
+        <label for="address">
+          <span>Địa chỉ thường trú</span>
+        </label>
+        <input type="text" pInputText placeholder="Enter response here" />
+      </div>
+      <div class="form_item">
+        <label for="joinday">
+          <span>Ngày nhận việc</span>
+        </label>
+        <p-calendar
+          placeholder="Choose or Enter response here"
+          [showButtonBar]="true"
+          dateFormat="dd.mm.yy"
+        ></p-calendar>
+      </div>
+      <div class="form_item">
+        <label for="passday">
+          <span>Ngày được thuê</span>
+        </label>
+        <p-calendar
+          placeholder="Choose or Enter response here"
+          [showButtonBar]="true"
+          dateFormat="dd.mm.yy"
+        ></p-calendar>
+      </div>
+    </form>
+  </div>
+</div>

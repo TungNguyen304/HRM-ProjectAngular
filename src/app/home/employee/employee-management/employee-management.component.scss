@@ -1,8 +1,9 @@
+h2 {
+  margin-bottom: 30px;
+}
+
 .form_search {
-  margin-top: 30px;
   background-color: white;
-  padding: 40px 20px;
-  box-shadow: 0 0 8px 2px #ccc;
 
   form {
     .form_list {
@@ -31,5 +32,41 @@
         margin-left: 10px;
       }
     }
+  }
+}
+
+::ng-deep .p-accordion-header-link {
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+::ng-deep .p-datatable-table {
+  .p-datatable-tbody {
+    tr {
+      td {
+        text-align: center;
+        div {
+          button {
+            margin: 0 5px;
+          }
+        }
+      }
+    }
+  }
+  .p-datatable-thead {
+    tr {
+      th {
+        text-align: center;
+        background-color: white;
+      }
+    }
+  }
+}
+
+.more_option {
+  text-align: end;
+  margin: 30px 0;
+  button {
+    margin-left: 10px;
   }
 }

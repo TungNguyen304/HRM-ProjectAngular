@@ -1,68 +1,64 @@
 {
   "members": [
     {
-      "id": 1,
-      "name": "Nguyễn Thành Dương",
-      "code": 2647,
-      "birthday": "30-11-1994",
-      "phone": "0899852441",
-      "image": "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
+      "image": "https://toigingiuvedep.vn/wp-content/uploads/2021/05/hinh-anh-avatar-nam-1-600x600.jpg",
+      "name": "Le Anh Khanh1",
+      "code": "0000",
+      "sex": "nam",
+      "birthday": "24/05/2001",
+      "phone": "0702355627",
+      "email": "leanhkhanh@gmail.com",
+      "position": "Developer",
+      "unitcode": "RPA",
+      "unit": "Da Nang Branch"
     },
     {
-      "id": 2,
-      "name": "Nguyễn Thành Dương",
-      "code": 2647,
-      "birthday": "30-11-1994",
-      "phone": "0899852441",
-      "image": "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
+      "image": "https://toigingiuvedep.vn/wp-content/uploads/2021/05/hinh-anh-avatar-nam-1-600x600.jpg",
+      "name": "Le Anh Khanh2",
+      "sex": "nam",
+      "code": "1111",
+      "phone": "0702355627",
+      "birthday": "24/05/2001",
+      "email": "leanhkhanh742@gmail.com",
+      "position": "Developer",
+      "unitcode": "DN",
+      "unit": "Da Nang Branch"
     },
     {
-      "id": 3,
-      "name": "Nguyễn Thành Dương",
-      "code": 2647,
-      "birthday": "30-11-1994",
-      "phone": "0899852441",
-      "image": "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
+      "image": "https://toigingiuvedep.vn/wp-content/uploads/2021/05/hinh-anh-avatar-nam-1-600x600.jpg",
+      "name": "Le Anh Khanh3",
+      "code": "2222",
+      "phone": "0702355627",
+      "sex": "nam",
+      "birthday": "24/05/2001",
+      "email": "leanhkhanh6540@gmail.com",
+      "position": "Developer",
+      "unitcode": "DN",
+      "unit": "Da Nang Branch"
     },
     {
-      "id": 4,
-      "name": "Nguyễn Thành Dương",
-      "code": 2647,
-      "birthday": "30-11-1994",
-      "phone": "0899852441",
-      "image": "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
+      "image": "https://toigingiuvedep.vn/wp-content/uploads/2021/05/hinh-anh-avatar-nam-1-600x600.jpg",
+      "name": "Le Anh Khanh4",
+      "code": "3333",
+      "phone": "0702355627",
+      "birthday": "24/05/2001",
+      "sex": "nam",
+      "email": "leanhkhanh123@gmail.com",
+      "position": "Designer",
+      "unitcode": "DN",
+      "unit": "Da Nang Branch"
     },
     {
-      "id": 5,
-      "name": "Nguyễn Thành Dương",
-      "code": 2647,
-      "birthday": "30-11-1994",
-      "phone": "0899852441",
-      "image": "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
-    },
-    {
-      "id": 6,
-      "name": "Nguyễn Thành Dương",
-      "code": 2647,
-      "birthday": "30-11-1994",
-      "phone": "0899852441",
-      "image": "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
-    },
-    {
-      "id": 7,
-      "name": "Nguyễn Thành Dương",
-      "code": 2647,
-      "birthday": "30-11-1994",
-      "phone": "0899852441",
-      "image": "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
-    },
-    {
-      "id": 8,
-      "name": "Nguyễn Thành Dương",
-      "code": 2647,
-      "birthday": "30-11-1994",
-      "phone": "0899852441",
-      "image": "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg"
+      "image": "https://toigingiuvedep.vn/wp-content/uploads/2021/05/hinh-anh-avatar-nam-1-600x600.jpg",
+      "name": "Le Anh Khanh5",
+      "code": "4444",
+      "phone": "0702355627",
+      "birthday": "24/05/2001",
+      "email": "leanhkhanh1@gmail.com",
+      "position": "Designer",
+      "sex": "nam",
+      "unitcode": "DN",
+      "unit": "Da Nang Branch"
     }
   ],
   "units": [
@@ -70,8 +66,7 @@
       "data": {
         "NameDV": "Công ty Cổ phần GMO-Z.com RUNSYSTEM",
         "MADV": "runsystem",
-        "address":
-          "Tầng 6, tòa nhà OCEAN PẢK, số 1 Đào Duy Anh, quận Đống Đa, Hà Nội"
+        "address": "Tầng 6, tòa nhà OCEAN PẢK, số 1 Đào Duy Anh, quận Đống Đa, Hà Nội"
       },
       "children": [
         {
@@ -203,6 +198,26 @@
       "name": "Member of BOM, Branch Director",
       "unit": "Da Nang Branch",
       "type": "Member of BOM, Branch Director"
+    }
+  ],
+  "employee": [
+    {
+      "code": 4845,
+      "name": "Nguyễn Thị Minh Nguyệt",
+      "email": "nguyetntm@runsystem.net",
+      "sex": "Nữ",
+      "unit": "Da Nang - Outsources (QM Dept)",
+      "position": "Fresher",
+      "status": "Đang làm việc"
+    },
+    {
+      "code": 4846,
+      "name": "Nguyễn Văn Tùng",
+      "email": "tungnv1@runsystem.net",
+      "sex": "Nam",
+      "unit": "Da Nang - Outsources (UIT Dept)",
+      "position": "Fresher",
+      "status": "Đang làm việc"
     }
   ]
 }

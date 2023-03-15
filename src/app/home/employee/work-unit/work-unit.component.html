@@ -1,11 +1,16 @@
 <h2 class="title">QUẢN LÝ ĐƠN VỊ</h2>
 <div class="table">
-  <p-treeTable [scrollable]="true" scrollHeight="500px" [value]="products" styleClass="p-datatable-gridlines">
+  <p-treeTable
+    [scrollable]="true"
+    scrollHeight="500px"
+    [value]="products"
+    styleClass="p-datatable-gridlines"
+  >
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 500px">Name</th>
-        <th>Size</th>
-        <th>Type</th>
+        <th style="width: 500px">Tên đơn vị tổ chức</th>
+        <th>Mã đơn vị tổ chức</th>
+        <th>Địa chỉ</th>
         <th></th>
       </tr>
     </ng-template>
@@ -19,10 +24,11 @@
         <td>{{ rowData.address }}</td>
         <td style="text-align: end">
           <button
+            (click)="handleShowMember(rowData.MADV)"
             pButton
             class="p-button-outlined p-button-sm"
             type="button"
-            icon="pi pi-users"
+            icon="bi bi-people-fill"
             iconPos="left"
           ></button>
         </td>
@@ -30,3 +36,10 @@
     </ng-template>
   </p-treeTable>
 </div>
+
+<p-dialog [(visible)]="display">
+  <ng-template pTemplate="header"> Danh sách nhân viên thuộc mã đơn vị {{unitTemp}}</ng-template>
+  <ng-template pTemplate="content">
+    <app-member-table></app-member-table>
+</ng-template>
+</p-dialog>

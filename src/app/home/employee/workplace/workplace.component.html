@@ -8,6 +8,7 @@
       label="Thêm mới"
       class="p-button-success p-button-sm"
       iconPos="left"
+      (click)="handleShowOverlayCreateWorkplace()"
     ></button>
   </div>
   <div class="table">
@@ -34,11 +35,25 @@
           <td>{{ position.unit }}</td>
           <td>{{ position.type }}</td>
           <td style="text-align: end;">
-            <button style="margin-right: 10px;" pButton class="p-button-outlined p-button-sm" type="button" icon="pi pi-users" iconPos="left"></button>
-            <button pButton class="p-button-outlined p-button-sm p-button-success" type="button" icon="pi pi-user-edit" iconPos="left"></button>
+            <button (click)="handleShowOverlayMember(position.name)" style="margin-right: 10px;" pButton class="p-button-outlined p-button-sm" type="button" icon="bi bi-people-fill" iconPos="left"></button>
+            <button pButton class="p-button-outlined p-button-sm p-button-success" type="button" icon="bi bi-pencil-square" iconPos="left"></button>
           </td>
         </tr>
       </ng-template>
     </p-table>
   </div>
 </div>
+
+<p-dialog header="TẠO MỚI" [(visible)]="displayCreate">
+  <ng-template pTemplate="content">
+    <app-create-workplace></app-create-workplace>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="displayMember">
+  <ng-template pTemplate="header"> Danh sách nhân viên thuộc vị trí {{positionTemp}}</ng-template>
+  <ng-template pTemplate="content">
+    <app-member-table></app-member-table>
+</ng-template>
+</p-dialog>
+
