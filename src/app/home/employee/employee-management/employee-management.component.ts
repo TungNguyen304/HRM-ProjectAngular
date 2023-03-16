@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { EmployeeService } from 'src/app/core/services/api/employee.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class EmployeeManagementComponent {
   public employeeList: any;
   public showCreateEmployee:boolean = false;
 
-  constructor(private employeeService:EmployeeService) {
+  constructor(private employeeService:EmployeeService, private router:Router) {
       this.status = [
           {value: 'On'},
           {value: 'Off'},
@@ -30,6 +31,11 @@ export class EmployeeManagementComponent {
   }
 
   handleDisplayCreateEmployee():void {
-    this.showCreateEmployee = !this.showCreateEmployee
+    this.showCreateEmployee = !this.showCreateEmployee;
+    this.router.navigate(['employee', 'management', 'create-employee']);
+  }
+
+  handleNavigateDetailEmployee():void {
+    this.router.navigate(['employee', 'management', 'detail-employee']);
   }
 }

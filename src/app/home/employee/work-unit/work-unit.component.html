@@ -1,6 +1,7 @@
 <h2 class="title">QUẢN LÝ ĐƠN VỊ</h2>
 <div class="table">
   <p-treeTable
+    selectionMode="single"
     [scrollable]="true"
     scrollHeight="500px"
     [value]="products"
@@ -38,8 +39,10 @@
 </div>
 
 <p-dialog [(visible)]="display">
-  <ng-template pTemplate="header"> Danh sách nhân viên thuộc mã đơn vị {{unitTemp}}</ng-template>
+  <ng-template pTemplate="header">
+    Danh sách nhân viên thuộc mã đơn vị {{ unitTemp }}</ng-template
+  >
   <ng-template pTemplate="content">
     <app-member-table></app-member-table>
-</ng-template>
+  </ng-template>
 </p-dialog>

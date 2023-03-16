@@ -100,7 +100,7 @@
     <button (click)="handleDisplayCreateEmployee()" pButton icon="pi pi-plus" iconpos="left" label="Thêm mới" class="p-button-sm p-button-success"></button>
   </div>
 
-  <p-table [value]="employeeList" [tableStyle]="{'min-width': '50rem'}">
+  <p-table selectionMode="single" [value]="employeeList" [tableStyle]="{'min-width': '50rem'}">
     <ng-template pTemplate="caption">
       <tr>
           <th>150 bản ghi</th>
@@ -119,7 +119,7 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-employee>
-        <tr>
+        <tr [pSelectableRow]="employee">
             <td>{{employee.code}}</td>
             <td>{{employee.name}}</td>
             <td>{{employee.email}}</td>
@@ -130,7 +130,7 @@
             <td>
               <div>
                 <button pButton icon="bi bi-pen" class="p-button-rounded p-button-sm p-button-primary"></button>
-                <button pButton icon="bi bi-file-text" class="p-button-rounded p-button-sm p-button-success"></button>
+                <button (click)="handleNavigateDetailEmployee()" pButton icon="bi bi-file-text" class="p-button-rounded p-button-sm p-button-success"></button>
                 <button pButton icon="bi bi-trash" class="p-button-rounded p-button-sm p-button-danger"></button>
               </div>
             </td>
@@ -139,7 +139,7 @@
 </p-table>
 </div>
 
-<p-dialog [(visible)]="showCreateEmployee">
+<!-- <p-dialog [(visible)]="showCreateEmployee">
   <ng-template pTemplate="header">
       <h2 class="title">TẠO MỚI</h2>
   </ng-template>
@@ -147,4 +147,4 @@
   <ng-template pTemplate="content">
       <app-create-employee></app-create-employee>
   </ng-template>
-</p-dialog>
+</p-dialog> -->

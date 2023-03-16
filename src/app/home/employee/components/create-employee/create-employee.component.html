@@ -1,3 +1,7 @@
+<div class="header">
+  <span (click)="handleBack()"><i class="bi bi-arrow-left-short"></i> Trở lại</span>
+  <h2 class="title">TẠO MỚI</h2>
+</div>
 <div class="create_workplace">
   <div class="create_left">
     <div class="main_info">
@@ -89,92 +93,305 @@
         </div>
       </form>
     </div>
+
+    <div class="working_process">
+      <h3 class="title">Quá trình công tác</h3>
+      <form class="form">
+        <div class="form_item">
+          <label for="unit">
+            <span>Đơn vị công tác</span>
+          </label>
+          <p-dropdown
+            placeholder="Chọn"
+            [options]="sex"
+            optionLabel="value"
+          ></p-dropdown>
+        </div>
+        <div class="form_item">
+          <label for="position">
+            <span>Vị trí công việc</span>
+          </label>
+          <p-dropdown
+            placeholder="Chọn"
+            [options]="sex"
+            optionLabel="value"
+          ></p-dropdown>
+        </div>
+        <div class="form_item">
+          <label for="time">
+            <span>Thời gian</span>
+          </label>
+          <p-calendar
+            placeholder="Choose or Enter response here"
+            [showButtonBar]="true"
+            dateFormat="dd.mm.yy"
+          ></p-calendar>
+        </div>
+        <div class="form_item">
+          <label for="">
+            <span>Hình thức làm việc</span>
+          </label>
+          <p-dropdown
+            placeholder="Chọn"
+            [options]="sex"
+            optionLabel="value"
+          ></p-dropdown>
+        </div>
+      </form>
+    </div>
+    <div class="plus">
+      <button
+        pButton
+        icon="bi bi-plus-circle"
+        class="p-button-sm p-button-success"
+      ></button>
+    </div>
+
+    <div class="asset_relate">
+      <h3 class="title">Tài sản liên quan</h3>
+      <p-table
+        selectionMode="single"
+        [value]="assetList"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Mã</th>
+            <th>Tên</th>
+            <th>Ngày sử dụng</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-asset>
+          <tr [pSelectableRow]="asset">
+            <td>{{ asset.code }}</td>
+            <td>{{ asset.name }}</td>
+            <td>{{ asset.expire }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <p class="nodata" *ngIf="assetList.length === 0">No data</p>
+    </div>
+
+    <div class="contact">
+      <h3 class="title">HỢP ĐỒNG</h3>
+      <div class="contact_form">
+        <form class="form">
+          <div class="form_item">
+            <label for="number">
+              <span>Số</span>
+            </label>
+            <input
+              type="text"
+              id="number"
+              pInputText
+              placeholder="Enter response here"
+            />
+          </div>
+          <div class="form_item">
+            <label for="">
+              <span>Loại hợp đồng</span>
+            </label>
+            <p-dropdown [options]="sex" optionLabel="value"></p-dropdown>
+          </div>
+          <div class="form_item">
+            <label for="">
+              <span>Đơn vị công tác</span>
+            </label>
+            <p-dropdown [options]="sex" optionLabel="value"></p-dropdown>
+          </div>
+          <div class="form_item">
+            <label for="">
+              <span>Vị trí công việc</span>
+            </label>
+            <p-dropdown [options]="sex" optionLabel="value"></p-dropdown>
+          </div>
+          <div class="form_item">
+            <label for="">
+              <span>Thời gian</span>
+            </label>
+            <p-calendar
+              placeholder="Choose or Enter response here"
+              [showButtonBar]="true"
+              dateFormat="dd.mm.yy"
+            ></p-calendar>
+          </div>
+          <div class="form_item">
+            <label for="">
+              <span>Hình thức làm việc</span>
+            </label>
+            <p-dropdown [options]="sex" optionLabel="value"></p-dropdown>
+          </div>
+          <div class="form_item">
+            <label for="">
+              <span>Trạng thái</span>
+            </label>
+            <p-dropdown [options]="sex" optionLabel="value"></p-dropdown>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
+
   <div class="create_right">
-    <h3 class="title">Thông tin liên hệ</h3>
+    <div class="contact_information">
+      <h3 class="title">Thông tin liên hệ</h3>
+      <form class="form">
+        <div class="form_item">
+          <label for="email">
+            <span>Email</span>
+            <button
+              pButton
+              label="bắt buộc"
+              class="p-button-outlined p-button-danger p-button-sm"
+            ></button>
+          </label>
+          <input
+            type="text"
+            id="email"
+            pInputText
+            placeholder="Enter response here"
+          />
+        </div>
+        <div class="form_item">
+          <label for="phone">
+            <span>Số điện thoại</span>
+            <button
+              pButton
+              label="bắt buộc"
+              class="p-button-outlined p-button-danger p-button-sm"
+            ></button>
+          </label>
+          <input
+            type="text"
+            id="phone"
+            pInputText
+            placeholder="Enter response here"
+          />
+        </div>
+        <div class="form_item">
+          <label for="skype">
+            <span>SkypeID</span>
+          </label>
+          <input
+            type="text"
+            id="skype"
+            pInputText
+            placeholder="Enter response here"
+          />
+        </div>
+        <div class="form_item">
+          <label for="birthday">
+            <span>Ảnh</span>
+          </label>
+          <div
+            #avt
+            class="avt"
+            (click)="handleClickInputFile()"
+            (dragover)="handleOnDragEnter($event)"
+            (dragleave)="handleOnDragEnd()"
+            (drop)="handleOnDrop($event)"
+          >
+            <input
+              (change)="handleOnDrop($event)"
+              #file
+              style="display: none"
+              type="file"
+              name=""
+              id=""
+            />
+            <img
+              draggable="false"
+              [src]="url || '../../../../../assets/images/plus-icon.png'"
+              alt=""
+            />
+          </div>
+        </div>
+        <div class="form_item">
+          <label for="addresscurrent">
+            <span>CV</span>
+          </label>
+          <p-fileUpload
+            mode="basic"
+            (onSelect)="myUploader($event)"
+            chooseLabel="Tải CV lên"
+          ></p-fileUpload>
+        </div>
+        <div class="form_item">
+          <label for="address">
+            <span>Tài khoản công ty</span>
+          </label>
+          <div class="option_account">
+            <span
+              ><p-triStateCheckbox label="ChatWork"></p-triStateCheckbox
+            ></span>
+            <span><p-triStateCheckbox label="Jira"></p-triStateCheckbox></span>
+            <span
+              ><p-triStateCheckbox label="Mail-Z"></p-triStateCheckbox
+            ></span>
+            <span><p-triStateCheckbox label="Amis"></p-triStateCheckbox></span>
+          </div>
+        </div>
+      </form>
+    </div>
+
     <form class="form">
       <div class="form_item">
-        <label for="email">
-          <span>Email</span>
+        <label for="description">
+          <span>Mô tả chung</span>
+        </label>
+        <textarea
+          placeholder="Enter response here"
+          id="description"
+          [rows]="5"
+          [cols]="30"
+          pInputTextarea
+          [autoResize]="true"
+        ></textarea>
+      </div>
+      <div class="form_item">
+        <label for="position">
+          <span>Đơn vị công tác</span>
           <button
             pButton
             label="bắt buộc"
             class="p-button-outlined p-button-danger p-button-sm"
           ></button>
         </label>
-        <input
-          type="text"
-          id="email"
-          pInputText
-          placeholder="Enter response here"
-        />
+        <p-dropdown
+          placeholder="Chọn"
+          [options]="sex"
+          optionLabel="value"
+        ></p-dropdown>
       </div>
       <div class="form_item">
-        <label for="phone">
-          <span>Số điện thoại</span>
+        <label for="time">
+          <span>Vị trí công việc</span>
           <button
             pButton
             label="bắt buộc"
             class="p-button-outlined p-button-danger p-button-sm"
           ></button>
         </label>
-        <input
-          type="text"
-          id="phone"
-          pInputText
-          placeholder="Enter response here"
-        />
+        <p-dropdown
+          placeholder="Chọn"
+          [options]="sex"
+          optionLabel="value"
+        ></p-dropdown>
       </div>
       <div class="form_item">
-        <label for="skype">
-          <span>SkypeID</span>
+        <label for="status">
+          <span>Trạng thái</span>
         </label>
         <input
           type="text"
-          id="skype"
+          id="status"
           pInputText
           placeholder="Enter response here"
         />
-      </div>
-      <div class="form_item">
-        <label for="birthday">
-          <span>Ảnh</span>
-        </label>
-        <div #drag pDroppable class="avt" (onDragEnter)="handleOnDragEnter()" (onDragLeave)="handleOnDragEnd()">
-        </div>
-      </div>
-      <div class="form_item">
-        <label for="addresscurrent">
-          <span>Nơi ở hiện tại</span>
-        </label>
-        <input type="text" pInputText placeholder="Enter response here" />
-      </div>
-      <div class="form_item">
-        <label for="address">
-          <span>Địa chỉ thường trú</span>
-        </label>
-        <input type="text" pInputText placeholder="Enter response here" />
-      </div>
-      <div class="form_item">
-        <label for="joinday">
-          <span>Ngày nhận việc</span>
-        </label>
-        <p-calendar
-          placeholder="Choose or Enter response here"
-          [showButtonBar]="true"
-          dateFormat="dd.mm.yy"
-        ></p-calendar>
-      </div>
-      <div class="form_item">
-        <label for="passday">
-          <span>Ngày được thuê</span>
-        </label>
-        <p-calendar
-          placeholder="Choose or Enter response here"
-          [showButtonBar]="true"
-          dateFormat="dd.mm.yy"
-        ></p-calendar>
       </div>
     </form>
   </div>
+</div>
+
+<div class="create_new">
+  <button pButton class="p-button-outlined p-button-success" label="TẠO MỚI"></button>
 </div>

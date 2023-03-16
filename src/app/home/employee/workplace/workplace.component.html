@@ -13,6 +13,7 @@
   </div>
   <div class="table">
     <p-table
+      selectionMode="single"
       [value]="positionList"
       styleClass="p-datatable-striped"
       [tableStyle]="{ 'min-width': '50rem' }"
@@ -29,7 +30,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-position>
-        <tr>
+        <tr [pSelectableRow]="position">
           <td>{{ position.code }}</td>
           <td>{{ position.name }}</td>
           <td>{{ position.unit }}</td>
