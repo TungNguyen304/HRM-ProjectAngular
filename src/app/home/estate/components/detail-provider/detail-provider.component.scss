@@ -1,0 +1,22 @@
+.detail_provider {
+    .detail_info {
+      background-color: #fff;
+      padding: 20px 0;
+      border-radius: 5px;
+      .export {
+        text-align: end;
+        margin-bottom: 20px;
+        button {
+            margin-left: 10px;
+        }
+      }
+      .detail_table {
+        border-top: 1px solid #dee2e6;
+      }
+    }
+  
+    .edit {
+      margin-top: 20px;
+      text-align: center;
+    }
+  }

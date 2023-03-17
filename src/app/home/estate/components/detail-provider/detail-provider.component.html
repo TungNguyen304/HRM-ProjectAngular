@@ -1,0 +1,40 @@
+<div class="detail_provider">
+  <div class="detail_info">
+    <div class="export">
+      <button
+        pButton
+        label="Link đánh giá"
+        icon="bi bi-link"
+        class="p-button-secondary p-button-sm"
+      ></button>
+      <button
+        pButton
+        label="Xuất Excel"
+        class="p-button-warning p-button-sm"
+        icon="bi bi-download"
+      ></button>
+    </div>
+
+    <div class="detail_table">
+      <p-table
+        [value]="infoProvider"
+        styleClass="p-datatable-gridlines"
+        [tableStyle]="{ 'min-width': '50rem', 'border-top': '1px solid #dee2e6' }"
+      >
+      <ng-template pTemplate="header"></ng-template>
+        <ng-template pTemplate="body" let-info>
+          <tr>
+            <td style="font-weight: 500;">{{ info.name }}</td>
+            <td style="width: 80%; text-align: start;">
+              {{info.value}}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <div class="edit">
+    <button pButton label="Chỉnh sửa" class="p-button-outlined p-button-sm"></button>
+  </div>
+  
+</div>

@@ -1,60 +1,65 @@
 <div class="login container">
   <div class="virtual"></div>
-  <div class="wrap_login">
-    <h2>Login</h2>
-    <div class="login_form">
-      <form [formGroup]="loginForm" action="" (ngSubmit)="onSubmit()">
-        <div class="form_item">
-          <label for="email">Email</label>
-          <input
-            formControlName="email"
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Type your response here"
-          />
-          <p
-            *ngIf="
-              loginForm.get('email')?.invalid && loginForm.get('email')?.touched
-            "
-            class="warning"
-          >
-            <i class="bi bi-exclamation-octagon"></i>
-            {{ errorEmail }}
-          </p>
-        </div>
-        <div class="form_item">
-          <label for="password">Password</label>
-          <input
-            formControlName="password"
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Type your response here"
-          />
-          <p
-            *ngIf="
-              loginForm.get('password')?.invalid &&
-              loginForm.get('password')?.touched
-            "
-            class="warning"
-          >
-            <i class="bi bi-exclamation-octagon"></i>
-            {{ errorPassword }}
-          </p>
-        </div>
-        <div class="more_option">
-          <div class="remember">
-            <input type="checkbox" id="remember" />
-            <label for="remember">Remember me</label>
+  <div class="main">
+    <div class="wrap_login">
+      <h2>Login</h2>
+      <div class="login_form">
+        <form [formGroup]="loginForm" action="" (ngSubmit)="onSubmit()">
+          <div class="form_item">
+            <label for="email">Email</label>
+            <input
+              formControlName="email"
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Type your response here"
+            />
+            <p
+              *ngIf="
+                loginForm.get('email')?.invalid &&
+                loginForm.get('email')?.touched
+              "
+              class="warning"
+            >
+              <i class="bi bi-exclamation-octagon"></i>
+              {{ errorEmail }}
+            </p>
           </div>
-          <p><a routerLink="/auth/forgot-password">Forgot Password</a></p>
-        </div>
-        <button type="submit">LOGIN</button>
-        <p class="create">
-          New to SproutGigs?<a routerLink="/auth/register">Create an account</a>
-        </p>
-      </form>
+          <div class="form_item">
+            <label for="password">Password</label>
+            <input
+              formControlName="password"
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Type your response here"
+            />
+            <p
+              *ngIf="
+                loginForm.get('password')?.invalid &&
+                loginForm.get('password')?.touched
+              "
+              class="warning"
+            >
+              <i class="bi bi-exclamation-octagon"></i>
+              {{ errorPassword }}
+            </p>
+          </div>
+          <div class="more_option">
+            <div class="remember">
+              <input type="checkbox" id="remember" />
+              <label for="remember">Remember me</label>
+            </div>
+            <p><a routerLink="/auth/forgot-password">Forgot Password</a></p>
+          </div>
+          <button type="submit">LOGIN</button>
+          <p class="create">
+            New to SproutGigs?<a routerLink="/auth/register"
+              >Create an account</a
+            >
+          </p>
+        </form>
+      </div>
     </div>
   </div>
 </div>

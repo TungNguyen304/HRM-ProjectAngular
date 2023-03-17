@@ -219,5 +219,69 @@
       "position": "Fresher",
       "status": "Đang làm việc"
     }
+  ],
+  "provider": [
+    {
+      "id": 1,
+      "priority": 1,
+      "name": "CÔNG TY TNHH TM&DV NGUYỄN HOÀNG HƯƠNG",
+      "item": "BÀN GHẾ TỦ CỦA HOÀ PHÁT",
+      "address": "Số 203 Ông Ích Khiêm-Hải Châu-Đà Nẵng",
+      "contact": "0899852441",
+      "note": "Nhà cung cấp thiết bị cố địng (bàn, ghế, tủ) chính của GMO_ĐN",
+      "conclude": "Chọn",
+      "dateCreated": "18-04-2022 16:29",
+      "dateUpdated": "18-04-2022 16:29"
+    },
+    {
+      "id": 2,
+      "priority": 2,
+      "name": "CÔNG TY TNHH TM&DV NGUYỄN HOÀNG HƯƠNG",
+      "item": "BÀN GHẾ TỦ CỦA HOÀ PHÁT",
+      "address": "Số 203 Ông Ích Khiêm-Hải Châu-Đà Nẵng",
+      "contact": "0899852441",
+      "note": "Nhà cung cấp thiết bị cố địng (bàn, ghế, tủ) chính của GMO_ĐN",
+      "conclude": "Chọn",
+      "dateCreated": "18-04-2022 16:29",
+      "dateUpdated": "18-04-2022 16:29"
+    },
+    {
+      "id": 3,
+      "priority": 3,
+      "name": "CÔNG TY TNHH TM&DV NGUYỄN HOÀNG HƯƠNG",
+      "item": "BÀN GHẾ TỦ CỦA HOÀ PHÁT",
+      "address": "Số 203 Ông Ích Khiêm-Hải Châu-Đà Nẵng",
+      "contact": "0899852441",
+      "note": "Nhà cung cấp thiết bị cố địng (bàn, ghế, tủ) chính của GMO_ĐN",
+      "conclude": "Chọn",
+      "dateCreated": "18-04-2022 16:29",
+      "dateUpdated": "18-04-2022 16:29"
+    }
+  ],
+  "device": [
+    {
+      "codeDevice": "DCDN54254",
+      "type": "Thiết bị điện tử",
+      "nameDevice": "Case",
+      "provider": "Khác",
+      "name": "HỒ THỊ SƯƠNG",
+      "state": "OK"
+    },
+    {
+      "codeDevice": "DCDN54254",
+      "type": "Thiết bị điện tử",
+      "nameDevice": "Case",
+      "provider": "Khác",
+      "name": "HỒ THỊ SƯƠNG",
+      "state": "OK"
+    },
+    {
+      "codeDevice": "DCDN54254",
+      "type": "Thiết bị điện tử",
+      "nameDevice": "Case",
+      "provider": "Khác",
+      "name": "HỒ THỊ SƯƠNG",
+      "state": "OK"
+    }
   ]
 }

@@ -24,9 +24,10 @@
     user-select: none;
     left: 0;
     cursor: pointer;
-    padding: 3px 10px;
+    padding: 3px 11px 3px 8px;
     i {
       font-size: 22px;
+      margin-top: 2px;
     }
     &:hover {
       background-color: #e0e2e2;

@@ -1,0 +1,100 @@
+<div class="create_provider">
+  <div class="create_info">
+    <form action="">
+      <div class="form_item">
+        <label for="name">
+          <span>Tên NCC</span>
+          <button
+            pButton
+            label="bắt buộc"
+            class="p-button-outlined p-button-danger p-button-sm"
+          ></button>
+        </label>
+        <input
+          type="text"
+          id="name"
+          pInputText
+          placeholder="Enter response here"
+        />
+      </div>
+      <div class="form_item">
+        <label for="item">
+          <span>Mặt hàng</span>
+          <button
+            pButton
+            label="bắt buộc"
+            class="p-button-outlined p-button-danger p-button-sm"
+          ></button>
+        </label>
+        <input
+          type="text"
+          id="item"
+          pInputText
+          placeholder="Enter response here"
+        />
+      </div>
+      <div class="form_item">
+        <label for="address">
+          <span>Địa chỉ</span>
+        </label>
+        <input
+          type="text"
+          id="address"
+          pInputText
+          placeholder="Enter response here"
+        />
+      </div>
+      <div class="form_item">
+        <label for="contact">
+          <span>Liên hệ</span>
+          <button
+            pButton
+            label="bắt buộc"
+            class="p-button-outlined p-button-danger p-button-sm"
+          ></button>
+        </label>
+        <input
+          type="text"
+          id="contact"
+          pInputText
+          placeholder="Enter response here"
+        />
+      </div>
+      <div class="form_item">
+        <label for="priority">
+          <span>Ưu tiên</span>
+        </label>
+        <input
+          type="text"
+          id="priority"
+          pInputText
+          placeholder="Enter response here"
+        />
+      </div>
+      <div class="form_item">
+        <label for="note">
+          <span>Ghi chú</span>
+        </label>
+        <input
+          type="text"
+          id="note"
+          pInputText
+          placeholder="Enter response here"
+        />
+      </div>
+      <div class="form_item">
+        <label for="conclude">
+          <span>Kết luận</span>
+        </label>
+        <p-dropdown
+          [options]="sex"
+          placeholder="Chọn"
+          optionLabel="value"
+        ></p-dropdown>
+      </div>
+      <div style="text-align: center;">
+        <button type="submit" pButton class="p-button-outlined p-button-sm" label="Lưu"></button>
+      </div>
+    </form>
+  </div>
+</div>

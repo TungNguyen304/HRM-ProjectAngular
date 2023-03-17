@@ -1,5 +1,5 @@
-<div class="employee">
-  <h2 class="title">QUẢN LÝ NHÂN VIÊN</h2>
+<div class="device">
+  <h2 class="title">QUẢN LÝ THIẾT BỊ</h2>
   <p-accordion>
     <p-accordionTab>
       <ng-template pTemplate="header">
@@ -12,34 +12,7 @@
         <form action="">
           <div class="form_list">
             <div class="form_item">
-              <label for="name">Tên</label>
-              <input
-                placeholder="Enter response here"
-                type="text"
-                id="name"
-                pInputText
-              />
-            </div>
-            <div class="form_item">
-              <label for="email">Email</label>
-              <input
-                placeholder="Enter response here"
-                type="text"
-                id="email"
-                pInputText
-              />
-            </div>
-            <div class="form_item">
-              <label for="status">Trạng thái</label>
-              <p-dropdown
-                id="status"
-                [options]="status"
-                optionLabel="value"
-                placeholder="Chọn"
-              ></p-dropdown>
-            </div>
-            <div class="form_item">
-              <label for="code">Mã nhân viên</label>
+              <label for="code">Mã tài sản</label>
               <input
                 placeholder="Enter response here"
                 type="text"
@@ -48,25 +21,52 @@
               />
             </div>
             <div class="form_item">
-              <label for="sex">Giới tính</label>
+              <label for="name">NV dang sử dụng</label>
               <p-dropdown
+                id="name"
+                [options]="status"
+                optionLabel="value"
+                placeholder="Chọn"
+              ></p-dropdown>
+            </div>
+            <div class="form_item">
+              <label for="type">Loại</label>
+              <p-dropdown
+                id="type"
+                [options]="status"
+                optionLabel="value"
+                placeholder="Chọn"
+              ></p-dropdown>
+            </div>
+            <div class="form_item">
+              <label for="nameDevice">Tên</label>
+              <input
+                placeholder="Enter response here"
+                type="text"
+                id="nameDevice"
+                pInputText
+              />
+            </div>
+            <div class="form_item">
+              <label for="number">Số hoá đơn</label>
+              <input
+                placeholder="Enter response here"
+                type="text"
+                id="number"
+                pInputText
+              />
+            </div>
+            <div class="form_item">
+              <label for="state">Trạng thái mượn</label>
+              <p-dropdown
+                placeholder="Chọn"
                 id="sex"
                 [options]="sex"
-                placeholder="Chọn"
                 optionLabel="value"
               ></p-dropdown>
             </div>
             <div class="form_item">
-              <label for="unit">Đơn vị công tác</label>
-              <p-dropdown
-                placeholder="Chọn"
-                id="sex"
-                [options]="sex"
-                optionLabel="value"
-              ></p-dropdown>
-            </div>
-            <div class="form_item">
-              <label for="position">Vị trí công tác</label>
+              <label for="position">Trạng thái tài sản</label>
               <p-dropdown
                 id="sex"
                 placeholder="Chọn"
@@ -94,15 +94,15 @@
       </div>
     </p-accordionTab>
   </p-accordion>
-
   <div class="more_option">
     <button
       pButton
       icon="pi pi-download"
       class="p-button-outlined p-button-sm p-button-danger"
     ></button>
+    <button pButton icon="pi pi-qrcode" class="p-button-outlined p-button-sm"></button>
     <button
-      (click)="handleDisplayCreateEmployee()"
+      (click)="handleDisplayCreateDevice()"
       pButton
       icon="pi pi-plus"
       iconpos="left"
@@ -110,38 +110,35 @@
       class="p-button-sm p-button-success"
     ></button>
   </div>
-
   <p-table
     selectionMode="single"
-    [value]="employeeList"
+    [value]="deviceList"
     [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
       <tr>
-        <th>150 bản ghi</th>
+        <th>450 bản ghi</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th>Mã NV</th>
-        <th>Họ Tên</th>
-        <th>Email</th>
-        <th>Giới tính</th>
-        <th>Đơn vị</th>
-        <th>Vị trí công việc</th>
+        <th>Mã tài sản</th>
+        <th>Loại</th>
+        <th>Tên tài sản</th>
+        <th>Nhà cung cấp</th>
+        <th>Họ tên</th>
         <th>Trạng thái</th>
         <th>Hành động</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-employee>
-      <tr [pSelectableRow]="employee">
-        <td>{{ employee.code }}</td>
-        <td>{{ employee.name }}</td>
-        <td>{{ employee.email }}</td>
-        <td>{{ employee.sex }}</td>
-        <td>{{ employee.unit }}</td>
-        <td>{{ employee.position }}</td>
-        <td>{{ employee.status }}</td>
+    <ng-template pTemplate="body" let-device>
+      <tr [pSelectableRow]="device">
+        <td>{{ device.codeDevice }}</td>
+        <td>{{ device.type }}</td>
+        <td>{{ device.nameDevice }}</td>
+        <td>{{ device.provider }}</td>
+        <td>{{ device.name }}</td>
+        <td>{{ device.state }}</td>
         <td>
           <div>
             <button
@@ -150,7 +147,6 @@
               class="p-button-rounded p-button-sm p-button-primary"
             ></button>
             <button
-              (click)="handleNavigateDetailEmployee()"
               pButton
               icon="bi bi-file-text"
               class="p-button-rounded p-button-sm p-button-success"

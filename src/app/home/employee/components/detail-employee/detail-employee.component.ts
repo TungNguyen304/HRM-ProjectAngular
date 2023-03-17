@@ -1,7 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, TemplateRef } from '@angular/core';
+import { CommonService } from 'src/app/core/services/common.service';
 
-const labelList = [
+const labelEmployee = [
   { key: "employeeCode", name: "Mã nhân viên" },
   { key: "image", name: "Ảnh" },
   { key: "CV", name: "CV" },
@@ -49,14 +50,12 @@ const labelList = [
   styleUrls: ['./detail-employee.component.scss']
 })
 export class DetailEmployeeComponent {
-  constructor(private location:Location) {}
-  public infoList:any = [];
+  constructor(private location:Location, private commonService:CommonService) {}
+  public infoEmployee:any = [];
   handleBack():void {
     this.location.back()
   }
   checkAvt(url:string):boolean {
-    console.log(url);
-    
       if(url)
         return true;
       return false;
@@ -67,22 +66,7 @@ export class DetailEmployeeComponent {
       employeeCode: "25211216536",
     };
 
-    
-    
-    labelList.forEach((item) => {
-      if (Object.keys(responeFromAPI).includes(item.key)) {
-        this.infoList.push({
-            name: item.name,
-            value: responeFromAPI[item.key as keyof typeof responeFromAPI],
-            key: item.key
-        })
-      } else {
-        this.infoList.push({
-            name: item.name,
-            value: '',
-            key: item.key
-        })
-      }
-    });
+    this.infoEmployee = this.commonService.convertDataForTableRowStyle(labelEmployee, responeFromAPI);
+  
   }
 }

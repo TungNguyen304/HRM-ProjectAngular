@@ -12,6 +12,11 @@ const routes:Routes = [
     component: HomeComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'team-member',
+        pathMatch: 'full'
+      },
+      {
         path: 'team-member',
         component: TeamMemberComponent
       },
@@ -20,13 +25,8 @@ const routes:Routes = [
         loadChildren: () => import('./employee/employee.module').then(m => m.EmployeeModule)
       },
       {
-        path: 'assets',
-        loadChildren: () => import('./assets/assets.module').then(m => m.AssetsModule)
-      },
-      {
-        path: '',
-        redirectTo: 'team-member',
-        pathMatch: 'full'
+        path: 'estate',
+        loadChildren: () => import('./estate/estate.module').then(m => m.EstateModule)
       }
     ]
   }
