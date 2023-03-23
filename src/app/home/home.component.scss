@@ -1,9 +1,46 @@
 .home_container {
-    display: flex;
-    min-height: calc(100vh - var(--height-header));
-    .outlet {
-        padding: 20px 20px 40px;
-        flex: 1;
-        background-color: #eff3f4;
+  display: flex;
+  min-height: calc(100vh - var(--height-header));
+  .outlet {
+    padding: 20px 20px 40px;
+    flex: 1;
+    background-color: #eff3f4;
+    position: relative;
+    .action {
+        top: 20px;
+        left: 20px;
+        position: absolute;
+        z-index: 100;
+        button {
+            padding: 10px 14px 9px;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            outline: none;
+            &:hover {
+                filter: brightness(0.9);
+            }
+        }
     }
+  }
+  .nav {
+    position: relative;
+    transition: all 0.2s ease-in;
+    width: 20em;
+    overflow-x: hidden;
+    // animation: slideIn 0.5s ease-in-out;
+    
+  }
+  
+}
+
+@keyframes slideIn {
+  from {
+    width: 56px;
+  }
+  to {
+    width: 100%;
+  }
 }

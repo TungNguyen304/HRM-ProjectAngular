@@ -1,11 +1,12 @@
 <div class="create_workplace">
-  <form action="">
+  <form action="" [formGroup]="workplaceForm" (ngSubmit)="onSubmit()">
     <div class="form_item">
       <label for="code">
         <span>Mã</span>
         <button pButton label="bắt buộc" class="p-button-danger p-button-outlined p-button-sm"></button>
       </label>
-      <input pInputText type="text" name="" id="code" placeholder="Enter response here"/>
+      <input pInputText formControlName="code" type="text" name="" id="code" placeholder="Enter response here"/>
+      <p *ngIf="getControl('code')?.dirty && getControl('code')?.errors" class="warning"><i class="bi bi-cone-striped"></i>{{warning.code}}</p>
     </div>
 
     <div class="form_item">
@@ -13,15 +14,17 @@
           <span>Tên</span>
           <button pButton label="bắt buộc" class="p-button-danger p-button-outlined p-button-sm"></button>
         </label>
-        <input pInputText type="text" name="" id="name" placeholder="Enter response here"/>
+        <input pInputText formControlName="name" type="text" name="" id="name" placeholder="Enter response here"/>
+        <p *ngIf="getControl('name')?.dirty && getControl('name')?.errors" class="warning"><i class="bi bi-cone-striped"></i>{{warning.name}}</p>
       </div>
 
       <div class="form_item">
-        <label for="newName">
+        <label for="otherName">
           <span>Tên khác</span>
           <button pButton label="bắt buộc" class="p-button-danger p-button-outlined p-button-sm"></button>
         </label>
-        <input pInputText type="text" name="" id="newName" placeholder="Enter response here"/>
+        <input formControlName="otherName" pInputText type="text" name="" id="otherName" placeholder="Enter response here"/>
+        <p *ngIf="getControl('otherName')?.dirty && getControl('otherName')?.errors" class="warning"><i class="bi bi-cone-striped"></i>{{warning.otherName}}</p>
       </div>
 
       <div class="form_item">
@@ -29,14 +32,16 @@
           <span>Loại vị trí</span>
           <button pButton label="bắt buộc" class="p-button-danger p-button-outlined p-button-sm"></button>
         </label>
-        <input pInputText type="text" name="" id="type" placeholder="Enter response here"/>
+        <input formControlName="type" pInputText type="text" name="" id="type" placeholder="Enter response here"/>
+        <p *ngIf="getControl('type')?.dirty && getControl('type')?.errors" class="warning"><i class="bi bi-cone-striped"></i>{{warning.type}}</p>
       </div>
       <div class="form_item">
         <label for="unit">
           <span>Đơn vị</span>
           <button pButton label="bắt buộc" class="p-button-danger p-button-outlined p-button-sm"></button>
         </label>
-        <p-dropdown placeholder="Chọn" [options]="position" optionLabel="value"></p-dropdown>
+        <p-dropdown formControlName="unit" placeholder="Chọn" [options]="position" optionLabel="value"></p-dropdown>
+        <p *ngIf="getControl('unit')?.dirty && getControl('unit')?.errors" class="warning"><i class="bi bi-cone-striped"></i>{{warning.unit}}</p>
       </div>
       <div class="action">
         <button pButton type="submit" label="Lưu" class="p-button-outlined p-button-sm"></button>

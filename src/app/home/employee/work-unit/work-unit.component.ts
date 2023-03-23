@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MemberService } from 'src/app/core/services/api/member.service';
-import { UnitService } from 'src/app/core/services/api/unit.service';
+import { MemberService } from 'src/app/core/services/http/member.service';
+import { UnitService } from 'src/app/core/services/http/unit.service';
 
 @Component({
   selector: 'app-work-unit',

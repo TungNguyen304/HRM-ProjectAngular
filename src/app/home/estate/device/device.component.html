@@ -21,6 +21,15 @@
               />
             </div>
             <div class="form_item">
+              <label for="name">Tên tài sản</label>
+              <input
+                placeholder="Enter response here"
+                type="text"
+                id="name"
+                pInputText
+              />
+            </div>
+            <div class="form_item">
               <label for="name">NV dang sử dụng</label>
               <p-dropdown
                 id="name"
@@ -36,33 +45,6 @@
                 [options]="status"
                 optionLabel="value"
                 placeholder="Chọn"
-              ></p-dropdown>
-            </div>
-            <div class="form_item">
-              <label for="nameDevice">Tên</label>
-              <input
-                placeholder="Enter response here"
-                type="text"
-                id="nameDevice"
-                pInputText
-              />
-            </div>
-            <div class="form_item">
-              <label for="number">Số hoá đơn</label>
-              <input
-                placeholder="Enter response here"
-                type="text"
-                id="number"
-                pInputText
-              />
-            </div>
-            <div class="form_item">
-              <label for="state">Trạng thái mượn</label>
-              <p-dropdown
-                placeholder="Chọn"
-                id="sex"
-                [options]="sex"
-                optionLabel="value"
               ></p-dropdown>
             </div>
             <div class="form_item">
@@ -100,7 +82,7 @@
       icon="pi pi-download"
       class="p-button-outlined p-button-sm p-button-danger"
     ></button>
-    <button pButton icon="pi pi-qrcode" class="p-button-outlined p-button-sm"></button>
+    <button pButton icon="bi bi-qr-code-scan" class="p-button-outlined p-button-sm"></button>
     <button
       (click)="handleDisplayCreateDevice()"
       pButton
@@ -126,7 +108,7 @@
         <th>Loại</th>
         <th>Tên tài sản</th>
         <th>Nhà cung cấp</th>
-        <th>Họ tên</th>
+        <th>Người sử dụng</th>
         <th>Trạng thái</th>
         <th>Hành động</th>
       </tr>
@@ -147,6 +129,7 @@
               class="p-button-rounded p-button-sm p-button-primary"
             ></button>
             <button
+            (click)="handleNavigateDetailDevice(device.id)"
               pButton
               icon="bi bi-file-text"
               class="p-button-rounded p-button-sm p-button-success"
@@ -156,6 +139,7 @@
               icon="bi bi-trash"
               class="p-button-rounded p-button-sm p-button-danger"
             ></button>
+            <button pButton icon="bi bi-qr-code-scan" class="p-button-outlined p-button-sm p-button-rounded"></button>
           </div>
         </td>
       </tr>

@@ -1,67 +1,86 @@
 import { Location } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  ViewChild,
-} from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonService } from 'src/app/core/services/common.service';
+import { emojiValidator } from 'src/app/core/services/helper/validator.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-create-employee',
   templateUrl: './create-employee.component.html',
   styleUrls: ['./create-employee.component.scss'],
+  providers: [MessageService],
 })
 export class CreateEmployeeComponent {
-  public sex = [{ value: 'Nam' }, { value: 'Nữ' }];
-  public url: any = '';
   public assetList = [];
-  constructor(private sanitizer: DomSanitizer, private location:Location) {}
-  @ViewChild('avt') drag: ElementRef;
-  @ViewChild('file') file: ElementRef;
+  constructor(
+    private location: Location,
+    private fb: FormBuilder,
+    private commonService: CommonService,
+    private messageService: MessageService
+  ) {}
+  public employeeForm: FormGroup;
 
-  handleOnDragEnter(event: any) {
-    event.preventDefault();
-    this.drag.nativeElement.style.border = '2px solid var(--primary-color)';
-    this.drag.nativeElement.style.backgroundColor = '#00b7ff1a';
-  }
-
-  handleOnDragEnd() {
-    if (this.url) {
-      this.drag.nativeElement.style.border = '2px solid transparent';
-    } else {
-      this.drag.nativeElement.style.border = '2px dashed black';
-    }
-    this.drag.nativeElement.style.backgroundColor = 'unset';
-  }
-
-  handleOnDrop(event: any) {
-    event.preventDefault();
-    if (event.type === 'change') {
-      this.url = this.sanitize(URL.createObjectURL(event.target.files[0]));
-    } else {
-      this.url = this.sanitize(
-        URL.createObjectURL(event.dataTransfer.files[0])
-      );
-    }
-    this.drag.nativeElement.style.border = '2px solid transparent';
-  }
-
-  handleClickInputFile() {
-    this.file.nativeElement.click();
-  }
-
-  sanitize(url: string) {
-    return this.sanitizer.bypassSecurityTrustUrl(url);
-  }
-
-  handleBack() {
+  handleBack(): void {
     this.location.back();
   }
 
-  myUploader(event: any) {
-    console.log(event.files[0]);
+  onSubmit(): void {
+    this.commonService.markAsDirty(this.employeeForm);
+    console.log(this.employeeForm.value);
   }
 
-  ngAfterViewInit() {}
+  showAlert(noti: any): void {
+    this.messageService.add({
+      severity: noti.severity,
+      summary: noti.summary,
+      detail: noti.detail,
+    });
+  }
+
+  ngOnInit() {
+    this.employeeForm = this.fb.group({
+      basicInfo: this.fb.group({
+        code: [
+          '',
+          [Validators.required, Validators.maxLength(50), emojiValidator],
+        ],
+        name: [
+          '',
+          [Validators.required, Validators.maxLength(255), emojiValidator],
+        ],
+        sex: ['', [Validators.required]],
+        birthDay: ['', [Validators.required]],
+        currentResidence: ['', [Validators.maxLength(255), emojiValidator]],
+        address: ['', [Validators.maxLength(255), emojiValidator]],
+        joinDate: [''],
+        hireDate: '',
+        avt: [''],
+      }),
+      contactInfo: this.fb.group({
+        email: [
+          '',
+          [Validators.required, Validators.maxLength(50), emojiValidator],
+        ],
+        phone: ['', [Validators.required, Validators.maxLength(11)]],
+        skypeId: [
+          '',
+          [Validators.required, Validators.maxLength(255), emojiValidator],
+        ],
+      }),
+      workingProcess: this.fb.group({
+        unit: [''],
+        position: [''],
+        workingTime: [''],
+        workingForm: [''],
+      }),
+      otherInfo: this.fb.group({
+        description: ['', [Validators.maxLength(500)]],
+        unit: ['', Validators.required],
+        position: ['', Validators.required],
+        cv: [''],
+        status: ['', [Validators.required]],
+      }),
+    });
+  }
 }

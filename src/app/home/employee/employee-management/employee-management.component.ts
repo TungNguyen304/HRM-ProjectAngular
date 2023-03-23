@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { EmployeeService } from 'src/app/core/services/api/employee.service';
+import { EmployeeService } from 'src/app/core/services/http/employee.service';
 
 @Component({
   selector: 'app-employee-management',

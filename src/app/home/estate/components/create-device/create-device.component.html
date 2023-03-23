@@ -1,0 +1,176 @@
+<div class="header">
+  <span (click)="handleBack()"
+    ><i class="bi bi-arrow-left-short"></i></span
+  >
+  <h2 class="title">TẠO MỚI</h2>
+</div>
+<div class="create_device">
+  <div class="main_form">
+    <form class="form">
+      <div class="form_item">
+        <label for="code">
+          <span>Mã tài sản</span>
+          <button
+            pButton
+            label="bắt buộc"
+            class="p-button-outlined p-button-danger p-button-sm"
+          ></button>
+        </label>
+        <input
+          type="text"
+          id="code"
+          pInputText
+          placeholder="Enter response here"
+        />
+      </div>
+      <div class="form_item">
+        <label for="name">
+          <span>Tên tài sản</span>
+          <button
+            pButton
+            label="bắt buộc"
+            class="p-button-outlined p-button-danger p-button-sm"
+          ></button>
+        </label>
+        <input
+          type="text"
+          id="name"
+          pInputText
+          placeholder="Enter response here"
+        />
+      </div>
+      <div class="form_item">
+        <label for="type">
+          <span>Loại</span>
+        </label>
+        <p-dropdown [options]="sex" optionLabel="value"></p-dropdown>
+      </div>
+      <div class="form_item">
+        <label for="">
+          <span>Ngày mua</span>
+          <button
+            pButton
+            label="bắt buộc"
+            class="p-button-outlined p-button-danger p-button-sm"
+          ></button>
+        </label>
+        <p-calendar
+          placeholder="Choose or Enter response here"
+          [showButtonBar]="true"
+          dateFormat="dd.mm.yy"
+        ></p-calendar>
+      </div>
+      <div class="form_item">
+        <label for="number">
+          <span>Số hoá đơn</span>
+          <button
+            pButton
+            label="bắt buộc"
+            class="p-button-outlined p-button-danger p-button-sm"
+          ></button>
+        </label>
+        <input
+          id="number"
+          type="text"
+          pInputText
+          placeholder="Enter response here"
+        />
+      </div>
+      <div class="form_item">
+        <label for="sum">
+          <span>Tổng tiền</span>
+        </label>
+        <input
+          type="text"
+          id="sum"
+          pInputText
+          placeholder="Enter response here"
+        />
+      </div>
+      <div class="form_item">
+        <label for="employee">
+          <span>Nhân viên đã từng sử dụng</span>
+        </label>
+        <p-dropdown [options]="sex" optionLabel="value"></p-dropdown>
+      </div>
+      <div class="form_item">
+        <label for="status">
+          <span>Trạng thái</span>
+        </label>
+        <p-dropdown [options]="sex" optionLabel="value"></p-dropdown>
+      </div>
+    </form>
+  </div>
+  <div class="sub_form">
+    <div class="upgrade_info">
+      <h3 class="title">Thông tin nâng cấp / sửa chữa</h3>
+      <form class="form">
+        <div class="form_item">
+          <label for="">
+            <span>Ngày</span>
+          </label>
+          <p-calendar
+            placeholder="Choose or Enter response here"
+            [showButtonBar]="true"
+            dateFormat="dd.mm.yy"
+          ></p-calendar>
+        </div>
+        <div class="form_item">
+          <label for="content">
+            <span>Nội dung</span>
+          </label>
+          <textarea
+            id="content"
+            placeholder="Enter response here"
+            pInputTextarea
+          ></textarea>
+        </div>
+        <div class="form_item">
+          <label for="money">
+            <span>Số tiền</span>
+          </label>
+          <input
+            id="money"
+            type="text"
+            pInputText
+            placeholder="Enter response here"
+          />
+        </div>
+      </form>
+    </div>
+    <div class="current_employee">
+      <h3 class="title">Nhân viên sử dụng hiện tại</h3>
+      <form class="form">
+        <div class="form_item">
+          <label for="email">
+            <span>Email</span>
+          </label>
+          <input
+            type="text"
+            id="email"
+            pInputText
+            placeholder="Enter response here"
+          />
+        </div>
+        <div class="form_item">
+          <label for="name">
+            <span>Ngày sử dụng</span>
+          </label>
+          <p-calendar
+            placeholder="Choose or Enter response here"
+            [showButtonBar]="true"
+            dateFormat="dd.mm.yy"
+          ></p-calendar>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="create_new">
+  <button
+    pButton
+    class="p-button-outlined p-button-success"
+    label="TẠO MỚI"
+  ></button>
+</div>

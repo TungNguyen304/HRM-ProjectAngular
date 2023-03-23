@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AbstractControl, FormArray, isFormControl, isFormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,16 @@ export class CommonService {
       }
     });
     return infoList;
+  }
+
+  markAsDirty(group: AbstractControl) {
+    Object.keys((group as FormArray).controls).map((field) => {
+      const control = group.get(field);
+      if (isFormControl(control)) {
+        control.markAsDirty();
+      } else if (isFormGroup(control)) {
+        this.markAsDirty(control);
+      }
+    });
   }
 }

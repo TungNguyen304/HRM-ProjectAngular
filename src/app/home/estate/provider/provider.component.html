@@ -28,7 +28,6 @@
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th style="text-align: center">Ưu tiên</th>
         <th style="text-align: center">Tên</th>
         <th style="text-align: center">Mặt hàng</th>
         <th style="text-align: center">Địa chỉ</th>
@@ -38,7 +37,6 @@
     </ng-template>
     <ng-template pTemplate="body" let-provider>
       <tr [pSelectableRow]="provider">
-        <td>{{ provider.priority }}</td>
         <td>{{ provider.name }}</td>
         <td>{{ provider.item }}</td>
         <td>{{ provider.address }}</td>
@@ -49,12 +47,6 @@
               pButton
               icon="bi bi-pen"
               class="p-button-rounded p-button-sm p-button-primary"
-            ></button>
-            <button
-              (click)="handleDisplayDetailProvider(provider.id)"
-              pButton
-              icon="bi bi-file-text"
-              class="p-button-rounded p-button-sm p-button-success"
             ></button>
             <button
               pButton
@@ -75,16 +67,6 @@
 
   <ng-template pTemplate="body">
     <app-create-provider></app-create-provider>
-  </ng-template>
-</p-dialog>
-
-<p-dialog [style]="{width: '50vw'}" [modal]="true" [(visible)]="displayDetail">
-  <ng-template pTemplate="header">
-    <h2 class="title">CHI TIẾT</h2>
-  </ng-template>
-
-  <ng-template pTemplate="body">
-    <app-detail-provider [idProvider]="idProvider"></app-detail-provider>
   </ng-template>
 </p-dialog>
 

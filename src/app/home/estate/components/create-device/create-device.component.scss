@@ -24,7 +24,7 @@
     user-select: none;
     background-color: var(--primary-color);
     color: #fff;
-    left: 100px;
+    left: 50px;
     cursor: pointer;
     padding: 3px 11px 3px 8px;
     border-radius: 5px;
@@ -38,52 +38,32 @@
   }
 }
 
-.create_employee {
+.create_device {
   background-color: #fff;
   padding: 30px 20px;
   border-radius: 5px;
   box-shadow: 0 0 8px 2px #ccc;
-  display: flex;
-  justify-content: space-between;
-  .create_left {
-    width: 49%;
-
-    .asset_relate {
-      .nodata {
-        font-size: 20px;
-        text-align: center;
-        font-family: "Times New Roman", Times, serif;
-        padding-bottom: 20px;
-        margin-top: 20px;
-        border-bottom: 1px solid #dee2e6;
-      }
+  .sub_form {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 -10px;
+    .upgrade_info, .current_employee {
+        flex: 1;
+        margin: 0 10px;
+        padding: 20px;
+        box-shadow: 0 0 8px 2px #ccc;
+        border-radius: 5px;
+        .title {
+            margin-bottom: 30px;
+        }
     }
   }
-  .create_right {
-    width: 49%;
-    :host .working_process {
-      flex: 1;
-      box-shadow: 0 0 8px 2px #ccc;
-      border-radius: 5px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-    :host .otherInfo {
-      margin-bottom: 50px;
-    }
-    :host .contact_information {
-      margin-bottom: 30px;
-      box-shadow: 0 0 8px 2px #ccc;
-      border-radius: 5px;
-      padding: 20px;
-    }
-  }
+  
 }
 
 form {
-  :host .form_item {
+  .form_item {
     display: flex;
-    position: relative;
     margin-bottom: 30px;
     flex-direction: column;
     label {
@@ -100,19 +80,6 @@ form {
         pointer-events: none;
       }
     }
-    p {
-      display: flex;
-      align-items: center;
-      position: absolute;
-      top: calc(100% + 10px);
-      font-style: italic;
-      font-size: 12px;
-      right: 0;
-      color: red;
-      i {
-        margin-right: 5px;
-      }
-    }
     .avt {
       width: 200px;
       height: 200px;
@@ -121,16 +88,18 @@ form {
       display: flex;
       justify-content: center;
       align-items: center;
-      border-radius: 10px;
-      overflow: hidden;
       img {
         width: 15%;
         height: 15%;
-        object-fit: cover;
         &.image {
           height: 100%;
           width: 100%;
         }
+      }
+    }
+    .option_account {
+      span {
+        margin-right: 20px;
       }
     }
   }

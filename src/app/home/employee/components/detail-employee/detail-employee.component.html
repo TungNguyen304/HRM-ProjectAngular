@@ -24,7 +24,7 @@
       <ng-template pTemplate="header"></ng-template>
         <ng-template pTemplate="body" let-info>
           <tr>
-            <td>{{ info.name }}</td>
+            <td style="text-align: start; font-weight: 500;">{{ info.name }}</td>
             <td style="width: 80%; text-align: start;">
               <ng-container *ngTemplateOutlet="info.key==='image' ? avt : normal; context:{info: info.value}"></ng-container>
             </td>

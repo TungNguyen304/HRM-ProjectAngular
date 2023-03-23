@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PositionService } from 'src/app/core/services/api/position.service';
+import { PositionService } from 'src/app/core/services/http/position.service';
 
 export interface IPosition {
   name: string;
@@ -19,6 +19,7 @@ export class WorkplaceComponent {
   public displayCreate:boolean = false;
   public displayMember:boolean = false;
   public positionTemp:string;
+  
 
   handleShowOverlayCreateWorkplace() {
     this.displayCreate = !this.displayCreate;

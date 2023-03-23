@@ -22,8 +22,15 @@ import { PanelModule } from 'primeng/panel';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { SafeImagePipe } from 'src/app/core/pipes/safe-image.pipe';
+import { SafeImagePipe } from 'src/app/shared/pipes/safe-image.pipe';
 import { DetailEmployeeComponent } from './components/detail-employee/detail-employee.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { WorkingProcessComponent } from './components/create-employee/working_process.component';
+import { ContactInformationComponent } from './components/create-employee/contact-information.component'
+import { OtherInformationComponent } from './components/create-employee/other-information.component';
+import { BasicInformationComponent } from './components/create-employee/basic-information.component';
+import { ToastModule } from 'primeng/toast';
+
 
 const routes: Routes = [
   {
@@ -72,7 +79,11 @@ const routes: Routes = [
     MemberTableComponent,
     CreateEmployeeComponent,
     SafeImagePipe,
-    DetailEmployeeComponent
+    DetailEmployeeComponent,
+    WorkingProcessComponent,
+    ContactInformationComponent,
+    OtherInformationComponent,
+    BasicInformationComponent
   ],
   imports: [
     CommonModule,
@@ -91,6 +102,8 @@ const routes: Routes = [
     FileUploadModule,
     TriStateCheckboxModule,
     InputTextareaModule,
+    ReactiveFormsModule,
+    ToastModule
   ],
 })
 export class EmployeeModule {}

@@ -41,10 +41,10 @@ Sidebar
 .sidebar {
   position: relative;
   font-size: 16px;
-  width: 17em;
+  width: 20em;
   height: 100%;
   top: 0;
-  background-color: #19222a;
+  background-color: var(--secondary-color);
   -webkit-transform: translateZ(0);
   visibility: visible;
   -webkit-backface-visibility: hidden;
@@ -55,7 +55,7 @@ Sidebar Nav
 ----------------*/
 .sidebar-nav {
   position: fixed;
-  background-color: #19222a;
+  background-color: var(--secondary-color);
   height: 100%;
   font-weight: 400;
   font-size: 1.2em;
@@ -91,7 +91,7 @@ Sidebar Nav
   ----------------*/
 }
 .sidebar-nav ul li a {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-nav-color);
   font-size: 0.75em;
   padding: 1.05em 1em;
   position: relative;
@@ -114,7 +114,7 @@ Sidebar Nav
 }
 .sidebar-nav ul li i {
   font-size: 1.8em;
-  padding-right: 0.5em;
+  padding-right: 1em;
   width: 9em;
   display: inline;
   vertical-align: middle;
@@ -124,7 +124,7 @@ Sidebar Nav
   position: absolute;
   background-color: #080D11;
   z-index: 9;
-  left: 2.5em;
+  left: 3em;
   top: 0;
   height: 100%;
   -webkit-transform: translateX(100%);

@@ -6,7 +6,9 @@ $primary-color: #3B82F6;
 
 :root {
   --primary-color: #3B82F6;
-  --height-header: 55px;
+  --height-header: 60px;
+  --secondary-color: #19222a;
+  --text-nav-color: rgba(255, 255, 255, 0.9);
 }
 * {
   margin: 0;
@@ -30,7 +32,6 @@ a {
 
 h2.title {
   text-align: center;
-  margin-top: 20px;
   display: block;
   color: var(--primary-color);
   font-weight: 700;
@@ -42,12 +43,6 @@ ul {
   list-style: none;
 }
 
-// button {
-//     background-color: white;
-//     border: none;
-//     outline: none;
-// }
-
 p {
   margin-bottom: 0;
 }
@@ -56,3 +51,4 @@ html {
   font-size: 14px;
   font-family: "Roboto", sans-serif;
 }
+

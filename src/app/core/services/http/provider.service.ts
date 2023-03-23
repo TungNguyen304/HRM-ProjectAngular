@@ -5,11 +5,15 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class UnitService {
+export class ProviderService {
 
   constructor(private http: HttpClient) { }
 
-  getUnit():Observable<Object> {
-    return this.http.get("http://localhost:3000/units")
+  getProvider():Observable<Object> {
+    return this.http.get("provider")
+  }
+
+  getProviderById(id:number):Observable<Object> {
+    return this.http.get(`provider/${id}`)
   }
 }

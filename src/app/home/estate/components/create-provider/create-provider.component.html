@@ -1,6 +1,6 @@
 <div class="create_provider">
   <div class="create_info">
-    <form action="">
+    <form [formGroup]="providerForm" (ngSubmit)="onSubmit()" action="">
       <div class="form_item">
         <label for="name">
           <span>Tên NCC</span>
@@ -11,6 +11,7 @@
           ></button>
         </label>
         <input
+          formControlName="name"
           type="text"
           id="name"
           pInputText
@@ -27,6 +28,7 @@
           ></button>
         </label>
         <input
+          formControlName="item"
           type="text"
           id="item"
           pInputText
@@ -38,6 +40,7 @@
           <span>Địa chỉ</span>
         </label>
         <input
+          formControlName="address"
           type="text"
           id="address"
           pInputText
@@ -55,6 +58,7 @@
         </label>
         <input
           type="text"
+          formControlName="contact"
           id="contact"
           pInputText
           placeholder="Enter response here"
@@ -66,6 +70,7 @@
         </label>
         <input
           type="text"
+          formControlName="priority"
           id="priority"
           pInputText
           placeholder="Enter response here"
@@ -77,6 +82,7 @@
         </label>
         <input
           type="text"
+          formControlName="note"
           id="note"
           pInputText
           placeholder="Enter response here"
@@ -88,13 +94,21 @@
         </label>
         <p-dropdown
           [options]="sex"
+          formControlName="conclude"
           placeholder="Chọn"
           optionLabel="value"
         ></p-dropdown>
       </div>
-      <div style="text-align: center;">
-        <button type="submit" pButton class="p-button-outlined p-button-sm" label="Lưu"></button>
+      <div style="text-align: center">
+        <button
+          type="submit"
+          pButton
+          class="p-button-outlined p-button-sm"
+          label="Lưu"
+        ></button>
       </div>
     </form>
+
+    <pre>{{providerForm.value | json}}</pre>
   </div>
 </div>

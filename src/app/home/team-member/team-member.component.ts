@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MemberService } from 'src/app/core/services/api/member.service';
+import { MemberService } from 'src/app/core/services/http/member.service';
 
 export interface IMember {
   id: number,

@@ -260,28 +260,34 @@
   ],
   "device": [
     {
+      "id": 1,
       "codeDevice": "DCDN54254",
       "type": "Thiết bị điện tử",
       "nameDevice": "Case",
       "provider": "Khác",
       "name": "HỒ THỊ SƯƠNG",
-      "state": "OK"
+      "state": "OK",
+      "buyDate": "30/04/2001"
     },
     {
-      "codeDevice": "DCDN54254",
+      "id": 2,
+      "codeDevice": "ABFD36564",
       "type": "Thiết bị điện tử",
       "nameDevice": "Case",
       "provider": "Khác",
-      "name": "HỒ THỊ SƯƠNG",
-      "state": "OK"
+      "name": "HỒ THỊ TUYẾT",
+      "state": "OK",
+      "buyDate": "30/04/2001"
     },
     {
-      "codeDevice": "DCDN54254",
+      "id": 3,
+      "codeDevice": "LKJH76346",
       "type": "Thiết bị điện tử",
       "nameDevice": "Case",
       "provider": "Khác",
-      "name": "HỒ THỊ SƯƠNG",
-      "state": "OK"
+      "name": "HỒ THỊ MÂY",
+      "state": "OK",
+      "buyDate": "30/04/2001"
     }
   ]
 }

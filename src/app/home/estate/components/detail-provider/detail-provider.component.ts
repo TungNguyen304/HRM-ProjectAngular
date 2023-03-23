@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { ProviderService } from 'src/app/core/services/api/provider.service';
+import { ProviderService } from 'src/app/core/services/http/provider.service';
 import { CommonService } from 'src/app/core/services/common.service';
 
 const labelProvider = [

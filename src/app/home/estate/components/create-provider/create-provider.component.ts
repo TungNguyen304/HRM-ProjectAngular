@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { EvaluateService } from 'src/app/core/services/api/evaluate.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EvaluateService } from 'src/app/core/services/http/evaluate.service';
 
 @Component({
   selector: 'app-create-provider',
@@ -10,17 +11,30 @@ import { EvaluateService } from 'src/app/core/services/api/evaluate.service';
 export class CreateProviderComponent {
   public sex = [{ value: 'Nam' }, { value: 'Nữ' }];
   public evaluateList:any;
-  constructor(private location: Location, private evaluateService:EvaluateService) {}
+  public providerForm:FormGroup;
+  constructor(private location: Location, private evaluateService:EvaluateService, private fb:FormBuilder) {}
 
   handleBack(): void {
     this.location.back();
   }
 
+  onSubmit():void {
+    
+  }
+
   ngOnInit() {
     this.evaluateService.getEvaluate().subscribe((data) => {
       this.evaluateList = data
-      console.log(data);
-      
+    })
+
+    this.providerForm = this.fb.group({
+      name: ['', [Validators.required]],
+      item: ['', [Validators.required]],
+      address: ['',],
+      contact: ['', [Validators.required]],
+      priority: ['',],
+      note: [''],
+      conclude: ['']
     })
   }
 }

@@ -13,6 +13,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DialogModule } from 'primeng/dialog';
 import { AccordionModule } from 'primeng/accordion';
+import { CreateDeviceComponent } from './components/create-device/create-device.component';
+import { DetailDeviceComponent } from './components/detail-device/detail-device.component';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -25,6 +29,14 @@ const routes: Routes = [
       {
         path: 'device',
         component: DeviceComponent,
+      },
+      {
+        path: 'device/create-device',
+        component: CreateDeviceComponent
+      },
+      {
+        path: 'device/detail-device/:id',
+        component: DetailDeviceComponent
       },
       {
         path: '',
@@ -41,6 +53,8 @@ const routes: Routes = [
     DeviceComponent,
     DetailProviderComponent,
     CreateProviderComponent,
+    CreateDeviceComponent,
+    DetailDeviceComponent
   ],
   imports: [
     CommonModule,
@@ -52,7 +66,9 @@ const routes: Routes = [
     InputTextModule,
     RadioButtonModule,
     DialogModule,
-    AccordionModule
+    AccordionModule,
+    InputTextareaModule,
+    ReactiveFormsModule
   ],
 })
 export class EstateModule {}

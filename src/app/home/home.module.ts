@@ -5,6 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { TeamMemberComponent } from './team-member/team-member.component';
 import { MemberComponent } from './team-member/member.component';
+import { ButtonModule } from 'primeng/button';
 
 const routes:Routes = [
   {
@@ -41,7 +42,8 @@ const routes:Routes = [
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ButtonModule
   ]
 })
 export class HomeModule { }
