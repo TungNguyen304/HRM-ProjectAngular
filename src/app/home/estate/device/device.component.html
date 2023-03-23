@@ -1,5 +1,6 @@
 <div class="device">
   <h2 class="title">QUẢN LÝ THIẾT BỊ</h2>
+  <p-toast></p-toast>
   <p-accordion>
     <p-accordionTab>
       <ng-template pTemplate="header">
@@ -9,38 +10,63 @@
         </div>
       </ng-template>
       <div class="form_search">
-        <form action="">
+        <form [formGroup]="searchDeviceForm" (ngSubmit)="onSubmit()" action="">
           <div class="form_list">
             <div class="form_item">
               <label for="code">Mã tài sản</label>
               <input
+                formControlName="code"
                 placeholder="Enter response here"
                 type="text"
                 id="code"
                 pInputText
               />
+              <p
+                *ngIf="getControl('code')?.dirty && getControl('code')?.errors"
+                class="warning"
+              >
+                <i class="bi bi-cone-striped"></i>{{ warning.code }}
+              </p>
             </div>
             <div class="form_item">
               <label for="name">Tên tài sản</label>
               <input
+                formControlName="name"
                 placeholder="Enter response here"
                 type="text"
                 id="name"
                 pInputText
               />
+              <p
+                *ngIf="getControl('name')?.dirty && getControl('name')?.errors"
+                class="warning"
+              >
+                <i class="bi bi-cone-striped"></i>{{ warning.name }}
+              </p>
             </div>
             <div class="form_item">
-              <label for="name">NV dang sử dụng</label>
-              <p-dropdown
-                id="name"
-                [options]="status"
-                optionLabel="value"
-                placeholder="Chọn"
-              ></p-dropdown>
+              <label for="employee">NV dang sử dụng</label>
+              <input
+                formControlName="employee"
+                placeholder="Enter response here"
+                type="text"
+                id="employee"
+                pInputText
+              />
+              <p
+                *ngIf="
+                  getControl('employee')?.dirty &&
+                  getControl('employee')?.errors
+                "
+                class="warning"
+              >
+                <i class="bi bi-cone-striped"></i>{{ warning.employee }}
+              </p>
             </div>
             <div class="form_item">
               <label for="type">Loại</label>
               <p-dropdown
+                formControlName="type"
                 id="type"
                 [options]="status"
                 optionLabel="value"
@@ -48,9 +74,10 @@
               ></p-dropdown>
             </div>
             <div class="form_item">
-              <label for="position">Trạng thái tài sản</label>
+              <label for="status">Trạng thái tài sản</label>
               <p-dropdown
-                id="sex"
+                formControlName="status"
+                id="status"
                 placeholder="Chọn"
                 [options]="sex"
                 optionLabel="value"
@@ -66,7 +93,7 @@
               label="Xoá"
             ></button>
             <button
-              type="button"
+              type="submit"
               pButton
               class="p-button-primary p-button-sm"
               label="Tìm kiếm"
@@ -82,7 +109,11 @@
       icon="pi pi-download"
       class="p-button-outlined p-button-sm p-button-danger"
     ></button>
-    <button pButton icon="bi bi-qr-code-scan" class="p-button-outlined p-button-sm"></button>
+    <button
+      pButton
+      icon="bi bi-qr-code-scan"
+      class="p-button-outlined p-button-sm"
+    ></button>
     <button
       (click)="handleDisplayCreateDevice()"
       pButton
@@ -123,23 +154,7 @@
         <td>{{ device.state }}</td>
         <td>
           <div>
-            <button
-              pButton
-              icon="bi bi-pen"
-              class="p-button-rounded p-button-sm p-button-primary"
-            ></button>
-            <button
-            (click)="handleNavigateDetailDevice(device.id)"
-              pButton
-              icon="bi bi-file-text"
-              class="p-button-rounded p-button-sm p-button-success"
-            ></button>
-            <button
-              pButton
-              icon="bi bi-trash"
-              class="p-button-rounded p-button-sm p-button-danger"
-            ></button>
-            <button pButton icon="bi bi-qr-code-scan" class="p-button-outlined p-button-sm p-button-rounded"></button>
+            <p-splitButton (onDropdownClick)="handleActionsClick(device.id)" styleClass="p-button-sm mr-2 mb-2 p-button-outlined" [model]="actions"></p-splitButton>
           </div>
         </td>
       </tr>

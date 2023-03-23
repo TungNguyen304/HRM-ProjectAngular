@@ -1,5 +1,6 @@
 <div class="employee">
   <h2 class="title">QUẢN LÝ NHÂN VIÊN</h2>
+  <p-toast></p-toast>
   <p-accordion>
     <p-accordionTab>
       <ng-template pTemplate="header">
@@ -135,22 +136,7 @@
         <td>{{ employee.status }}</td>
         <td>
           <div>
-            <button
-              pButton
-              icon="bi bi-pen"
-              class="p-button-rounded p-button-sm p-button-primary"
-            ></button>
-            <button
-              (click)="handleNavigateDetailEmployee()"
-              pButton
-              icon="bi bi-file-text"
-              class="p-button-rounded p-button-sm p-button-success"
-            ></button>
-            <button
-              pButton
-              icon="bi bi-trash"
-              class="p-button-rounded p-button-sm p-button-danger"
-            ></button>
+            <p-splitButton styleClass="p-button-sm mr-2 mb-2 p-button-outlined" [model]="actions"></p-splitButton>
           </div>
         </td>
       </tr>

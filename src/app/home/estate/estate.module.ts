@@ -17,6 +17,8 @@ import { CreateDeviceComponent } from './components/create-device/create-device.
 import { DetailDeviceComponent } from './components/detail-device/detail-device.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { ToastModule } from 'primeng/toast';
 
 const routes: Routes = [
   {
@@ -68,7 +70,9 @@ const routes: Routes = [
     DialogModule,
     AccordionModule,
     InputTextareaModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SplitButtonModule,
+    ToastModule
   ],
 })
 export class EstateModule {}

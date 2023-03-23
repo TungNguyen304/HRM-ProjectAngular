@@ -10,15 +10,17 @@
       display: flex;
       align-items: center;
       user-select: none;
-      left: 0;
+      left: 50px;
       cursor: pointer;
-      padding: 3px 10px;
+      padding: 4px 10px 5px;
+      background-color: var(--primary-color);
+      border-radius: 5px;
+      color: #fff;
       i {
         font-size: 22px;
       }
       &:hover {
-        background-color: #e0e2e2;
-        border-radius: 5px;
+        filter: brightness(0.9);
       }
     }
   }

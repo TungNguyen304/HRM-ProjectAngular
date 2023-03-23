@@ -30,6 +30,8 @@ import { ContactInformationComponent } from './components/create-employee/contac
 import { OtherInformationComponent } from './components/create-employee/other-information.component';
 import { BasicInformationComponent } from './components/create-employee/basic-information.component';
 import { ToastModule } from 'primeng/toast';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { SpeedDialModule } from 'primeng/speeddial';
 
 
 const routes: Routes = [
@@ -103,7 +105,9 @@ const routes: Routes = [
     TriStateCheckboxModule,
     InputTextareaModule,
     ReactiveFormsModule,
-    ToastModule
+    ToastModule,
+    SplitButtonModule,
+    SpeedDialModule
   ],
 })
 export class EmployeeModule {}

@@ -5,13 +5,15 @@
       <app-side-bar></app-side-bar>
     </div>
 
-    <div class="outlet">
-      <div (click)="handleSlideIn()" class="action">
-        <button>
-            <i class="bi bi-list"></i>
-        </button>
+    <div class="wrap_outlet">
+      <div class="outlet">
+        <div (click)="handleSlideIn()" class="action">
+          <button>
+              <i class="bi bi-list"></i>
+          </button>
+        </div>
+        <router-outlet></router-outlet>
       </div>
-      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

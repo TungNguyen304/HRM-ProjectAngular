@@ -11,6 +11,7 @@ form {
     display: flex;
     margin-bottom: 30px;
     flex-direction: column;
+    position: relative;
     label {
       margin-bottom: 10px;
       display: flex;
@@ -23,6 +24,19 @@ form {
       }
       button {
         pointer-events: none;
+      }
+    }
+    p {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: calc(100% + 10px);
+      font-style: italic;
+      font-size: 12px;
+      right: 0;
+      color: red;
+      i {
+        margin-right: 5px;
       }
     }
     .avt {

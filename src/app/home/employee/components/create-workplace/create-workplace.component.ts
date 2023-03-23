@@ -90,7 +90,5 @@ export class CreateWorkplaceComponent {
     emojiWarning(this.workplaceForm, this, type, label);
     maxLengthWarning(this.workplaceForm, this, type, label, length);
   }
-
-  
 }
 

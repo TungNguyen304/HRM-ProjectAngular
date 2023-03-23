@@ -17,6 +17,7 @@
           pInputText
           placeholder="Enter response here"
         />
+        <p *ngIf="getControl('name')?.dirty && getControl('name')?.errors" class="warning"><i class="bi bi-cone-striped"></i>{{warning.name}}</p>
       </div>
       <div class="form_item">
         <label for="item">
@@ -34,6 +35,7 @@
           pInputText
           placeholder="Enter response here"
         />
+        <p *ngIf="getControl('item')?.dirty && getControl('item')?.errors" class="warning"><i class="bi bi-cone-striped"></i>{{warning.item}}</p>
       </div>
       <div class="form_item">
         <label for="address">
@@ -63,6 +65,7 @@
           pInputText
           placeholder="Enter response here"
         />
+        <p *ngIf="getControl('contact')?.dirty && getControl('contact')?.errors" class="warning"><i class="bi bi-cone-striped"></i>{{warning.contact}}</p>
       </div>
       <div class="form_item">
         <label for="priority">
@@ -108,7 +111,5 @@
         ></button>
       </div>
     </form>
-
-    <pre>{{providerForm.value | json}}</pre>
   </div>
 </div>

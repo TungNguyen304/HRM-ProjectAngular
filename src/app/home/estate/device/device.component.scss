@@ -12,11 +12,24 @@ form {
     .form_item {
       display: flex;
       flex-direction: column;
+      position: relative;
       label {
         margin-bottom: 10px;
       }
       input {
         background-color: #eaf0f4;
+      }
+      p {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: calc(100% + 10px);
+        font-style: italic;
+        right: 0;
+        color: red;
+        i {
+          margin-right: 5px;
+        }
       }
     }
     ::ng-deep .p-dropdown {

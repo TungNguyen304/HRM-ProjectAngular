@@ -1,7 +1,3 @@
-export interface IEmployee {
-    
-}
-
 export interface IWarningBasicInfo {
     code: string,
     name: string,

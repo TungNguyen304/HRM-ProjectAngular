@@ -1,7 +1,15 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EvaluateService } from 'src/app/core/services/http/evaluate.service';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { CommonService } from 'src/app/core/services/common.service';
+import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
+import { requireWarning } from 'src/app/core/services/helper/warningForm.service';
+import { IWarningProvider } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-create-provider',
@@ -10,31 +18,49 @@ import { EvaluateService } from 'src/app/core/services/http/evaluate.service';
 })
 export class CreateProviderComponent {
   public sex = [{ value: 'Nam' }, { value: 'Nữ' }];
-  public evaluateList:any;
-  public providerForm:FormGroup;
-  constructor(private location: Location, private evaluateService:EvaluateService, private fb:FormBuilder) {}
-
+  public providerForm: FormGroup;
+  constructor(private location: Location, private fb: FormBuilder, private commonService:CommonService) {}
+  public warning: IWarningProvider = {
+    name: '',
+    item: '',
+    contact: '',
+  };
   handleBack(): void {
     this.location.back();
   }
 
-  onSubmit():void {
-    
+  onSubmit(): void {
+    this.commonService.markAsDirty(this.providerForm);
   }
 
   ngOnInit() {
-    this.evaluateService.getEvaluate().subscribe((data) => {
-      this.evaluateList = data
-    })
-
     this.providerForm = this.fb.group({
       name: ['', [Validators.required]],
       item: ['', [Validators.required]],
-      address: ['',],
+      address: [''],
       contact: ['', [Validators.required]],
-      priority: ['',],
+      priority: [''],
       note: [''],
-      conclude: ['']
-    })
+      conclude: [''],
+    });
+
+    this.warningDetect();
+    this.providerForm.valueChanges.subscribe(() => {
+      this.warningDetect();
+    });
+  }
+
+  getControl(control: string): AbstractControl | null {
+    return getControlCommon(this.providerForm, control);
+  }
+
+  warningDetect(): void {
+    this.handleSetWarning('name', 'Tên NCC');
+    this.handleSetWarning('item', 'Mặt hàng');
+    this.handleSetWarning('contact', 'Liên hệ');
+  }
+
+  handleSetWarning(type: keyof IWarningProvider, label: string): void {
+    requireWarning(this.providerForm, this, type, label);
   }
 }

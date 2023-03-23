@@ -10,7 +10,6 @@ export class HomeComponent {
   @ViewChild('nav') nav:ElementRef;
 
   handleSlideIn():void {
-    console.log(this.nav.nativeElement.style.width);
     if(!this.nav.nativeElement.style.width || this.nav.nativeElement.style.width === "20em") {
       this.nav.nativeElement.style.width = "56px"
     } else {
