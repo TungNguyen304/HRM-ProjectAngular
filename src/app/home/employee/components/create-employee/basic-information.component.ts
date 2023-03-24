@@ -287,13 +287,13 @@ export class BasicInformationComponent {
       file?.type === 'image/jpg' ||
       file?.type === 'image/png'
     ) {
-      return true;
+      return true;  
     }
     return false;
   }
 
   handleOnDrop(event: any) {
-    if (this.checkTypeImage(event.dataTransfer?.files[0]) || this.checkTypeImage(event.files[0])) {
+    if (this.checkTypeImage(event.dataTransfer?.files[0]) || (event.files && this.checkTypeImage(event.files[0]))) {
       if (event instanceof DragEvent) {
         event.preventDefault();
         getControlCommon(this.employeeForm, 'basicInfo', 'avt')?.setValue(
