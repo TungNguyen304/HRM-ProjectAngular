@@ -52,11 +52,7 @@ import { IWarningOtherInfo } from 'src/app/shared/interfaces';
       <div class="form_item">
         <label for="position">
           <span>Đơn vị công tác</span>
-          <button
-            pButton
-            label="bắt buộc"
-            class="p-button-outlined p-button-danger p-button-sm"
-          ></button>
+          <span style="color: red;">*</span>
         </label>
         <p-dropdown
           formControlName="unit"
@@ -74,11 +70,7 @@ import { IWarningOtherInfo } from 'src/app/shared/interfaces';
       <div class="form_item">
         <label for="time">
           <span>Vị trí công việc</span>
-          <button
-            pButton
-            label="bắt buộc"
-            class="p-button-outlined p-button-danger p-button-sm"
-          ></button>
+          <span style="color: red;">*</span>
         </label>
         <p-dropdown
           formControlName="position"
@@ -113,11 +105,7 @@ import { IWarningOtherInfo } from 'src/app/shared/interfaces';
       <div class="form_item">
         <label for="status">
           <span>Trạng thái</span>
-          <button
-            pButton
-            label="bắt buộc"
-            class="p-button-outlined p-button-danger p-button-sm"
-          ></button>
+          <span style="color: red;">*</span>
         </label>
         <p-dropdown
           formControlName="status"

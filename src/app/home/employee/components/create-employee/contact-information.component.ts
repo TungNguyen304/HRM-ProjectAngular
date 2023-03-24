@@ -13,11 +13,7 @@ import { IWarningContactInfo } from 'src/app/shared/interfaces';
         <div class="form_item">
           <label for="email">
             <span>Email</span>
-            <button
-              pButton
-              label="bắt buộc"
-              class="p-button-outlined p-button-danger p-button-sm"
-            ></button>
+            <span style="color: red;">*</span>
           </label>
           <input
             formControlName="email"
@@ -31,11 +27,7 @@ import { IWarningContactInfo } from 'src/app/shared/interfaces';
         <div class="form_item">
           <label for="phone">
             <span>Số điện thoại</span>
-            <button
-              pButton
-              label="bắt buộc"
-              class="p-button-outlined p-button-danger p-button-sm"
-            ></button>
+            <span style="color: red;">*</span>
           </label>
           <input
             formControlName="phone"
@@ -49,11 +41,7 @@ import { IWarningContactInfo } from 'src/app/shared/interfaces';
         <div class="form_item">
           <label for="skype">
             <span>SkypeID</span>
-            <button
-              pButton
-              label="bắt buộc"
-              class="p-button-outlined p-button-danger p-button-sm"
-            ></button>  
+            <span style="color: red;">*</span>  
           </label>
           <input
             formControlName="skypeId"

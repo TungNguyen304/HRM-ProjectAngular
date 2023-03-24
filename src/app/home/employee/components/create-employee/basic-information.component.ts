@@ -31,11 +31,7 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
         <div class="form_item">
           <label for="code">
             <span>Mã NV</span>
-            <button
-              pButton
-              label="bắt buộc"
-              class="p-button-outlined p-button-danger p-button-sm"
-            ></button>
+           <span style="color: red;">*</span>
           </label>
           <input
             formControlName="code"
@@ -54,11 +50,7 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
         <div class="form_item">
           <label for="name">
             <span>Họ Tên</span>
-            <button
-              pButton
-              label="bắt buộc"
-              class="p-button-outlined p-button-danger p-button-sm"
-            ></button>
+           <span style="color: red;">*</span>
           </label>
           <input
             formControlName="name"
@@ -77,11 +69,7 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
         <div class="form_item">
           <label for="sex">
             <span>Giới Tính</span>
-            <button
-              pButton
-              label="bắt buộc"
-              class="p-button-outlined p-button-danger p-button-sm"
-            ></button>
+           <span style="color: red;">*</span>
           </label>
           <p-dropdown
             formControlName="sex"
@@ -99,11 +87,7 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
         <div class="form_item">
           <label for="birthday">
             <span>Ngày sinh</span>
-            <button
-              pButton
-              label="bắt buộc"
-              class="p-button-outlined p-button-danger p-button-sm"
-            ></button>
+           <span style="color: red;">*</span>
           </label>
           <p-calendar
             formControlName="birthDay"
