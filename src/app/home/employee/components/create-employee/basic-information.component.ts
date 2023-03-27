@@ -27,10 +27,11 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
   selector: 'app-basic-information',
   template: `
     <div formGroupName="basicInfo" class="main_info">
+    <h3 class="title">{{'title.basicInformation' | translate}}</h3>
       <div>
         <div class="form_item">
           <label for="code">
-            <span>Mã NV</span>
+            <span>{{'employeeManagement.employeeCode' | translate}}</span>
            <span style="color: red;">*</span>
           </label>
           <input
@@ -38,7 +39,6 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
             type="text"
             id="code"
             pInputText
-            placeholder="Enter response here"
           />
           <p
             *ngIf="getControl('code')?.dirty && getControl('code')?.errors"
@@ -49,7 +49,7 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
         </div>
         <div class="form_item">
           <label for="name">
-            <span>Họ Tên</span>
+            <span>{{'employeeManagement.fullName' | translate}}</span>
            <span style="color: red;">*</span>
           </label>
           <input
@@ -57,7 +57,6 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
             type="text"
             id="name"
             pInputText
-            placeholder="Enter response here"
           />
           <p
             *ngIf="getControl('name')?.dirty && getControl('name')?.errors"
@@ -68,12 +67,12 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
         </div>
         <div class="form_item">
           <label for="sex">
-            <span>Giới Tính</span>
+            <span>{{'employeeManagement.sex' | translate}}</span>
            <span style="color: red;">*</span>
           </label>
           <p-dropdown
             formControlName="sex"
-            placeholder="Chọn"
+            [placeholder]="'common.select' | translate"
             [options]="sex"
             optionLabel="value"
           ></p-dropdown>
@@ -86,12 +85,11 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
         </div>
         <div class="form_item">
           <label for="birthday">
-            <span>Ngày sinh</span>
+            <span>{{'createEmployee.birthday' | translate}}</span>
            <span style="color: red;">*</span>
           </label>
           <p-calendar
             formControlName="birthDay"
-            placeholder="Choose or Enter response here"
             [showButtonBar]="true"
             dateFormat="dd.mm.yy"
           ></p-calendar>
@@ -106,13 +104,12 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
         </div>
         <div class="form_item">
           <label for="">
-            <span>Nơi ở hiện tại</span>
+            <span>{{'createEmployee.currentResidence' | translate}}</span>
           </label>
           <input
             type="text"
             formControlName="currentResidence"
             pInputText
-            placeholder="Enter response here"
           />
           <p
             *ngIf="
@@ -126,13 +123,12 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
         </div>
         <div class="form_item">
           <label for="address">
-            <span>Địa chỉ thường trú</span>
+            <span>{{'createEmployee.permanentAddress' | translate}}</span>
           </label>
           <input
             type="text"
             formControlName="address"
             pInputText
-            placeholder="Enter response here"
           />
           <p
             *ngIf="
@@ -145,11 +141,10 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
         </div>
         <div class="form_item">
           <label for="joinDate">
-            <span>Ngày nhận việc</span>
+            <span>{{'createEmployee.jobDate' | translate}}</span>
           </label>
           <p-calendar
             formControlName="joinDate"
-            placeholder="Choose or Enter response here"
             [showButtonBar]="true"
             dateFormat="dd.mm.yy"
           ></p-calendar>
@@ -164,11 +159,10 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
         </div>
         <div class="form_item">
           <label for="hireDate">
-            <span>Ngày được thuê</span>
+            <span>{{'createEmployee.dateOfHire' | translate}}</span>
           </label>
           <p-calendar
             formControlName="hireDate"
-            placeholder="Choose or Enter response here"
             [showButtonBar]="true"
             dateFormat="dd.mm.yy"
           ></p-calendar>
@@ -183,7 +177,7 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
         </div>
         <div class="form_item">
           <label for="avt">
-            <span>Ảnh</span>
+            <span>{{'createEmployee.image' | translate}}</span>
           </label>
           <div
             #avt
@@ -264,7 +258,7 @@ export class BasicInformationComponent {
 
   handleOnDragEnter(event: any) {
     event.preventDefault();
-    this.drag.nativeElement.style.border = '2px solid var(--primary-color)';
+    this.drag.nativeElement.style.border = '2px solid var(--primary-color-main)';
     this.drag.nativeElement.style.backgroundColor = '#00b7ff1a';
   }
 
@@ -293,6 +287,8 @@ export class BasicInformationComponent {
   }
 
   handleOnDrop(event: any) {
+    console.log(event.files[0]);
+    
     if (this.checkTypeImage(event.dataTransfer?.files[0]) || (event.files && this.checkTypeImage(event.files[0]))) {
       if (event instanceof DragEvent) {
         event.preventDefault();

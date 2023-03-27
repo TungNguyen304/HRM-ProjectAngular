@@ -1,26 +1,20 @@
 <div class="device">
-  <h2 class="title">QUẢN LÝ THIẾT BỊ</h2>
+  <h2 class="title">{{ "title.deviceManagement" | translate }}</h2>
   <p-toast></p-toast>
   <p-accordion>
     <p-accordionTab>
       <ng-template pTemplate="header">
-        <div style="color: var(--primary-color)">
+        <div style="color: #fff">
           <i style="margin-right: 10px" class="bi bi-search"></i>
-          <span>Tìm kiếm</span>
+          <span>{{ "common.search" | translate }}</span>
         </div>
       </ng-template>
       <div class="form_search">
         <form [formGroup]="searchDeviceForm" (ngSubmit)="onSubmit()" action="">
           <div class="form_list">
             <div class="form_item">
-              <label for="code">Mã tài sản</label>
-              <input
-                formControlName="code"
-                placeholder="Enter response here"
-                type="text"
-                id="code"
-                pInputText
-              />
+              <label for="code">{{'createDevice.codeOrName' | translate}}</label>
+              <input formControlName="code" type="text" id="code" pInputText />
               <p
                 *ngIf="getControl('code')?.dirty && getControl('code')?.errors"
                 class="warning"
@@ -29,26 +23,9 @@
               </p>
             </div>
             <div class="form_item">
-              <label for="name">Tên tài sản</label>
-              <input
-                formControlName="name"
-                placeholder="Enter response here"
-                type="text"
-                id="name"
-                pInputText
-              />
-              <p
-                *ngIf="getControl('name')?.dirty && getControl('name')?.errors"
-                class="warning"
-              >
-                <i class="bi bi-cone-striped"></i>{{ warning.name }}
-              </p>
-            </div>
-            <div class="form_item">
-              <label for="employee">NV dang sử dụng</label>
+              <label for="employee">{{ "createDevice.staffUsing" | translate }}</label>
               <input
                 formControlName="employee"
-                placeholder="Enter response here"
                 type="text"
                 id="employee"
                 pInputText
@@ -64,21 +41,21 @@
               </p>
             </div>
             <div class="form_item">
-              <label for="type">Loại</label>
+              <label for="type">{{ "createDevice.type" | translate }}</label>
               <p-dropdown
                 formControlName="type"
                 id="type"
                 [options]="status"
                 optionLabel="value"
-                placeholder="Chọn"
+                [placeholder]="'common.select' | translate"
               ></p-dropdown>
             </div>
             <div class="form_item">
-              <label for="status">Trạng thái tài sản</label>
+              <label for="status">{{ "createDevice.propertyStatus" | translate }}</label>
               <p-dropdown
                 formControlName="status"
                 id="status"
-                placeholder="Chọn"
+                [placeholder]="'common.select' | translate"
                 [options]="sex"
                 optionLabel="value"
               ></p-dropdown>
@@ -90,13 +67,13 @@
               type="button"
               pButton
               class="p-button-outlined p-button-danger p-button-sm"
-              label="Xoá"
+              [label]="'common.delete' | translate"
             ></button>
             <button
               type="submit"
               pButton
               class="p-button-primary p-button-sm"
-              label="Tìm kiếm"
+              [label]="'common.search' | translate"
             ></button>
           </div>
         </form>
@@ -119,7 +96,7 @@
       pButton
       icon="pi pi-plus"
       iconpos="left"
-      label="Thêm mới"
+      [label]="'common.addNew' | translate"
       class="p-button-sm p-button-success"
     ></button>
   </div>
@@ -130,18 +107,18 @@
   >
     <ng-template pTemplate="caption">
       <tr>
-        <th>450 bản ghi</th>
+        <th>450 {{ "records" | translate }}</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th>Mã tài sản</th>
-        <th>Loại</th>
-        <th>Tên tài sản</th>
-        <th>Nhà cung cấp</th>
-        <th>Người sử dụng</th>
-        <th>Trạng thái</th>
-        <th>Hành động</th>
+        <th>{{ "createDevice.propertyCode" | translate }}</th>
+        <th>{{ "createDevice.type" | translate }}</th>
+        <th>{{ "createDevice.propertyName" | translate }}</th>
+        <th>{{ "sidebar.provider" | translate }}</th>
+        <th>{{ "createDevice.user" | translate }}</th>
+        <th>{{ "common.status" | translate }}</th>
+        <th>{{ "common.action" | translate }}</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-device>
@@ -154,7 +131,11 @@
         <td>{{ device.state }}</td>
         <td>
           <div>
-            <p-splitButton (onDropdownClick)="handleActionsClick(device.id)" styleClass="p-button-sm mr-2 mb-2 p-button-outlined" [model]="actions"></p-splitButton>
+            <p-splitButton
+              (onDropdownClick)="handleActionsClick(device.id)"
+              styleClass="p-button-sm mr-2 mb-2 p-button-outlined"
+              [model]="actions"
+            ></p-splitButton>
           </div>
         </td>
       </tr>

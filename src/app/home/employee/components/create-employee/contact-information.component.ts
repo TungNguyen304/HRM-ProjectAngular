@@ -8,7 +8,7 @@ import { IWarningContactInfo } from 'src/app/shared/interfaces';
   selector: 'app-contact-information',
   template: `
     <div formGroupName="contactInfo" class="contact_information">
-      <h3 class="title">Thông tin liên hệ</h3>
+      <h3 class="title">{{'title.contactInfo' | translate}}</h3>
       <div>
         <div class="form_item">
           <label for="email">
@@ -20,13 +20,12 @@ import { IWarningContactInfo } from 'src/app/shared/interfaces';
             type="text"
             id="email"
             pInputText
-            placeholder="Enter response here"
           />
           <p *ngIf="getControl('email')?.dirty && getControl('email')?.errors" class="warning"><i class="bi bi-cone-striped"></i>{{warning.email}}</p>
         </div>
         <div class="form_item">
           <label for="phone">
-            <span>Số điện thoại</span>
+            <span>{{'createEmployee.phone' | translate}}</span>
             <span style="color: red;">*</span>
           </label>
           <input
@@ -34,7 +33,6 @@ import { IWarningContactInfo } from 'src/app/shared/interfaces';
             type="text"
             id="phone"
             pInputText
-            placeholder="Enter response here"
           />
           <p *ngIf="getControl('phone')?.dirty && getControl('phone')?.errors" class="warning"><i class="bi bi-cone-striped"></i>{{warning.phone}}</p>
         </div>
@@ -48,7 +46,6 @@ import { IWarningContactInfo } from 'src/app/shared/interfaces';
             type="text"
             id="skype"
             pInputText
-            placeholder="Enter response here"
           />
           <p *ngIf="getControl('skypeId')?.dirty && getControl('skypeId')?.errors" class="warning"><i class="bi bi-cone-striped"></i>{{warning.skypeId}}</p>
         </div>

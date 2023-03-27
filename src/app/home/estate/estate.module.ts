@@ -19,6 +19,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -72,7 +73,8 @@ const routes: Routes = [
     InputTextareaModule,
     ReactiveFormsModule,
     SplitButtonModule,
-    ToastModule
+    ToastModule,
+    TranslateModule
   ],
 })
 export class EstateModule {}

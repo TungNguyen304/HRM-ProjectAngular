@@ -13,7 +13,7 @@
       "unit": "Da Nang Branch"
     },
     {
-      "image": "https://avatars.githubusercontent.com/u/10441177?v=4",
+      "image": "https://antimatter.vn/wp-content/uploads/2022/05/mau-anh-the-hoc-sinh.jpg",
       "name": "Nguyễn Văn Tùng",
       "sex": "nam",
       "code": "3481",
@@ -85,7 +85,7 @@
       "unit": "Da Nang Branch"
     },
     {
-      "image": "https://avatars.githubusercontent.com/u/10441177?v=4",
+      "image": "https://antimatter.vn/wp-content/uploads/2022/05/mau-anh-the-hoc-sinh.jpg",
       "name": "Nguyễn Văn Tùng",
       "sex": "nam",
       "code": "3481",
@@ -231,6 +231,36 @@
     },
     {
       "code": "DN5",
+      "name": "Member of BOM, Branch Director",
+      "unit": "Da Nang Branch",
+      "type": "Member of BOM, Branch Director"
+    },
+    {
+      "code": "DN6",
+      "name": "Member of BOM, Branch Director",
+      "unit": "Da Nang Branch",
+      "type": "Member of BOM, Branch Director"
+    },
+    {
+      "code": "DN7",
+      "name": "Phụ trách chi nhánh",
+      "unit": "Da Nang Branch",
+      "type": "Phụ trách chi nhánh"
+    },
+    {
+      "code": "DN8",
+      "name": "Member of BOM, Branch Director",
+      "unit": "Da Nang Branch",
+      "type": "Member of BOM, Branch Director"
+    },
+    {
+      "name": "Developer",
+      "code": "DN9",
+      "unit": "Da Nang Branch",
+      "type": "Developer"
+    },
+    {
+      "code": "DN10",
       "name": "Member of BOM, Branch Director",
       "unit": "Da Nang Branch",
       "type": "Member of BOM, Branch Director"

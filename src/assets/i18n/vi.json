@@ -1,0 +1,137 @@
+{
+  "sidebar": {
+    "teamMember": "Thành viên",
+    "workUnit": "Đơn vị công tác",
+    "workPlace": "Vị trí công việc",
+    "employeeList": "Danh sách nhân viên",
+    "uploadEmployee": "Tải lên nhân viên",
+    "provider": "Nhà cung cấp",
+    "estate": "Tài sản",
+    "logout": "Đăng xuất"
+  },
+
+  "title": {
+    "unitManagement": "QUẢN LÝ ĐƠN VỊ",
+    "JobPositionManagement": "QUẢN LÝ VỊ TRÍ CÔNG VIỆC",
+    "employeeManager": "QUẢN LÝ NHÂN VIÊN",
+    "createEmployee": "TẠO MỚI NHÂN VIÊN",
+    "create": "TẠO MỚI",
+    "editStaff": "CHỈNH SỬA NHÂN VIÊN",
+    "editDevice": "CHỈNH SỬA THIẾT BỊ",
+    "createDevice": "TẠO MỚI THIẾT BỊ",
+    "addSupplier": "THÊM MỚI NHÀ CUNG CẤP",
+    "editSupplier": "CHỈNH SỬA NHÀ CUNG CẤP",
+    "detail": "CHI TIẾT",
+    "provider": "NHÀ CUNG CẤP",
+    "basicInformation": "Thông tin cơ bản",
+    "propertyStatus": "Trạng thái tài sản",
+    "contactInfo": "Thông tin liên hệ",
+    "workingProcess": "Quá trình công tác",
+    "employeeUpload": "TẢI LÊN NHÂN VIÊN",
+    "deviceManagement": "QUẢN LÝ THIẾT BỊ",
+    "otherInfo": "Thông tin khác",
+    "relatedProperty": "Tài sản liên quan",
+    "infoRepair": "Thông tin nâng cấp / sửa chữa",
+    "currentUser": "Nhân viện sử dụng hiện tại"
+  },
+
+  "upload": {
+    "dragDesc": "Kéo và thả tệp để tải lên",
+    "selectFile": "Chọn tệp"
+  },
+
+  "unitManagement": {
+    "organizationalUnitName": "Tên đơn vị tổ chức",
+    "organizationalUnitCode": "Mã đơn vị tổ chức"
+  },
+
+  "common": {
+    "address": "Địa chỉ",
+    "record": "bản ghi",
+    "search": "Tìm kiếm",
+    "select": "Chọn",
+    "status": "Trạng thái",
+    "action": "Hành động",
+    "addNew": "Thêm mới",
+    "delete": "Xóa",
+    "cancel": "Hủy",
+    "save": "Lưu",
+    "update": "Chỉnh sửa",
+    "exportExcel": "Xuất excel",
+    "back": "Trở lại",
+    "noImage": "KHÔNG CÓ ẢNH",
+    "reviewLink": "Link đánh giá"
+  },
+
+  "workplace": {
+    "code": "Mã",
+    "locationName": "Tên vị trí",
+    "belongingToTheUnit": "Thuộc đơn vị",
+    "positionType": "Loại vị trí",
+    "searchByCode": "Tìm kiếm theo mã",
+    "anotherName": "Tên khác"
+  },
+
+  "employeeManagement": {
+    "employeeCode": "Mã nhân viên",
+    "fullName": "Họ và tên",
+    "sex": "Giới tính",
+    "unit": "Đơn vị",
+    "position": "Vị trí",
+    "codeNameEmail": "Mã/ Tên/ Email"
+  },
+
+  "createEmployee": {
+    "noData": "Không có dữ liệu",
+    "phone": "Số điện thoại",
+    "errorImage": "Chỉ có thể tải các tệp Image và không quá 2MB",
+    "companyAccount": "Tài khoản công ty",
+    "uploadCV": "Tải CV lên",
+    "errorCV": "Chỉ có thể tải các tệp pdf, docx và không quá 2MB",
+    "contract": "Hợp đồng",
+    "number": "Số",
+    "typeOfContract": "Loại hợp đồng",
+    "time": "Thời gian",
+    "workingForm": "Hình thức làm việc",
+    "generalDescription": "Mô tả chung",
+    "birthday": "Ngày sinh",
+    "currentResidence": "Nơi ở hiện tại",
+    "permanentAddress": "Địa chỉ thường trú",
+    "jobDate": "Ngày nhận việc",
+    "dateOfHire": "Ngày được thuê",
+    "image": "Ảnh"
+  },
+
+  "createDevice": {
+    "propertyCode": "Mã tài sản",
+    "type": "Loại",
+    "propertyName": "Tên tài sản",
+    "purchaseDate": "Ngày mua",
+    "someBills": "Số hóa đơn",
+    "totalAmount": "Tổng tiền",
+    "employeeUse": "Nhân viên đã từng sử dụng",
+    "day": "Ngày",
+    "date": "Ngày sử dụng",
+    "content": "Nội dung",
+    "AmountOfMoney": "Số tiền",
+    "user": "Người sử dụng",
+    "codeOrName": "Mã / tên tài sản",
+    "staffUsing": "Nhân viên đang sử dụng",
+    "propertyStatus": "Trạng thái tài sản"
+  },
+
+  "provider": {
+    "supplierName": "Tên NCC",
+    "items": "Mặt hàng",
+    "contact": "Liên hệ"
+  },
+
+  "createProvider": {
+    "note": "Ghi chú",
+    "conclude": "Kết luận",
+    "executor": "Người thực hiện",
+    "prioritize": "Ưu tiên",
+    "code": "Mã",
+    "name": "Tên"
+  }
+}

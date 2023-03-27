@@ -2,7 +2,7 @@
   <div class="header">
     <h2 class="title">CHI TIẾT THIẾT BỊ</h2>
     <span (click)="handleBack()"
-      ><i class="bi bi-arrow-left-short"></i> Trở lại</span
+      ><i class="bi bi-arrow-left-short"></i></span
     >
   </div>
   <div class="detail_info">
@@ -37,7 +37,7 @@
   <div class="edit">
     <button
       pButton
-      label="Chỉnh sửa"
+      [label]="'common.update' | translate"
       class="p-button-outlined p-button-sm"
     ></button>
   </div>

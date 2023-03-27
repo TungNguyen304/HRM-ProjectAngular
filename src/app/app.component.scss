@@ -20,3 +20,35 @@
 ::ng-deep.p-tieredmenu {
     width: unset;
 }
+
+::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link,
+::ng-deep .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+    background: var(--primary-color-main);
+    color: #fff;
+}
+
+::ng-deep .p-accordion .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link,
+::ng-deep .p-accordion .p-accordion-header:not(.p-disabled).p-highlight:hover .p-accordion-header-link {
+    background: var(--primary-color-main);
+    filter: brightness(1.2);
+    color: #fff;
+}
+
+::ng-deep .p-datatable .p-datatable-header {
+    background: var(--primary-color-main);
+    color: #fff;
+}
+
+::ng-deep .p-treetable-thead tr th{
+    background-color: var(--primary-color-main) !important;
+    color: #fff !important;
+}
+
+::ng-deep .p-treetable-scrollable-header-box {
+    padding-right: 0 !important;
+}
+
+::ng-deep .p-button-sm {
+    font-size: 0.775rem;
+    padding: 0.55625rem 0.9375rem;
+  }

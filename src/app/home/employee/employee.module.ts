@@ -32,6 +32,8 @@ import { BasicInformationComponent } from './components/create-employee/basic-in
 import { ToastModule } from 'primeng/toast';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { SpeedDialModule } from 'primeng/speeddial';
+import { PaginatorModule } from 'primeng/paginator';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 const routes: Routes = [
@@ -107,7 +109,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     ToastModule,
     SplitButtonModule,
-    SpeedDialModule
+    SpeedDialModule,
+    PaginatorModule,
+    TranslateModule
   ],
 })
 export class EmployeeModule {}

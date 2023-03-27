@@ -3,37 +3,48 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DeviceService } from 'src/app/core/services/http/device.service';
 import { CommonService } from 'src/app/core/services/common.service';
-
-const labelDevice = [
-  { key: 'codeDevice', name: 'Mã tài sản' },
-  { key: 'nameDevice', name: 'Tên tài sản' },
-  { key: 'type', name: 'Loại' },
-  { key: 'buyDate', name: 'Ngày mua' },
-];
-
+import { labelDeviceVi, labelDeviceEn } from './data';
+import { LanguageService } from 'src/app/core/services/state/language.service';
+import { ILanguage } from 'src/app/shared/interfaces/language';
 @Component({
   selector: 'app-detail-device',
   templateUrl: './detail-device.component.html',
-  styleUrls: ['./detail-device.component.scss']
+  styleUrls: ['./detail-device.component.scss'],
 })
 export class DetailDeviceComponent {
-  public deviceList:any;
-  constructor(private location:Location, private activateRoute:ActivatedRoute, private commonService:CommonService, private deviceService:DeviceService) {}
-  handleBack():void {
-    this.location.back()
+  public deviceList: any;
+  public id: number;
+  public device: any;
+  constructor(
+    private location: Location,
+    private activateRoute: ActivatedRoute,
+    private commonService: CommonService,
+    private deviceService: DeviceService,
+    private languageService: LanguageService
+  ) {}
+  handleBack(): void {
+    this.location.back();
   }
 
   ngOnInit() {
-    this.activateRoute.params.subscribe((data:any) => {
-      this.deviceService.getDeviceById(data.id).subscribe(data2 => {
-        this.deviceList = this.commonService.convertDataForTableRowStyle(
-          labelDevice,
-          data2
-        );
-      })
+    this.activateRoute.params.subscribe((data: any) => {
+      this.id = data.id;
     });
-    
+    this.deviceService.getDeviceById(this.id).subscribe((data2) => {
+      this.device = data2;
+      this.languageService.language$.subscribe((data: ILanguage) => {
+        if (data === 'vi') {
+          this.deviceList = this.commonService.convertDataForTableRowStyle(
+            labelDeviceVi,
+            this.device
+          );
+        } else {
+          this.deviceList = this.commonService.convertDataForTableRowStyle(
+            labelDeviceEn,
+            this.device
+          );
+        }
+      });
+    });
   }
-
-
 }

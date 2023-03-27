@@ -26,13 +26,13 @@ import { IWarningOtherInfo } from 'src/app/shared/interfaces';
   selector: 'app-other-information',
   template: `
     <div class="otherInfo" formGroupName="otherInfo">
+    <h3 class="title">{{'title.otherInfo' | translate}}</h3>
       <div class="form_item">
         <label for="description">
-          <span>Mô tả chung</span>
+          <span>{{'createEmployee.generalDescription' | translate}}</span>
         </label>
         <textarea
           formControlName="description"
-          placeholder="Enter response here"
           id="description"
           [rows]="5"
           [cols]="30"
@@ -51,12 +51,12 @@ import { IWarningOtherInfo } from 'src/app/shared/interfaces';
       </div>
       <div class="form_item">
         <label for="position">
-          <span>Đơn vị công tác</span>
+          <span>{{'sidebar.workUnit' | translate}}</span>
           <span style="color: red;">*</span>
         </label>
         <p-dropdown
           formControlName="unit"
-          placeholder="Chọn"
+          [placeholder]="'common.select' | translate"
           [options]="sex"
           optionLabel="value"
         ></p-dropdown>
@@ -69,12 +69,12 @@ import { IWarningOtherInfo } from 'src/app/shared/interfaces';
       </div>
       <div class="form_item">
         <label for="time">
-          <span>Vị trí công việc</span>
+          <span>{{'sidebar.workPlace' | translate}}</span>
           <span style="color: red;">*</span>
         </label>
         <p-dropdown
           formControlName="position"
-          placeholder="Chọn"
+          [placeholder]="'common.select' | translate"
           [options]="sex"
           optionLabel="value"
         ></p-dropdown>
@@ -96,7 +96,7 @@ import { IWarningOtherInfo } from 'src/app/shared/interfaces';
           (click)="handleResetCV()"
           mode="basic"
           (onSelect)="myUploader($event)"
-          chooseLabel="Tải CV lên"
+          [chooseLabel]="'createEmployee.uploadCV' | translate"
         ></p-fileUpload>
         <p *ngIf="checkValidateSizeCV" class="warning">
           <i class="bi bi-cone-striped"></i>{{ warning.cv }}
@@ -104,12 +104,12 @@ import { IWarningOtherInfo } from 'src/app/shared/interfaces';
       </div>
       <div class="form_item">
         <label for="status">
-          <span>Trạng thái</span>
+          <span>{{'common.status' | translate}}</span>
           <span style="color: red;">*</span>
         </label>
         <p-dropdown
           formControlName="status"
-          placeholder="Chọn"
+          [placeholder]="'common.select' | translate"
           [options]="sex"
           optionLabel="value"
         ></p-dropdown>

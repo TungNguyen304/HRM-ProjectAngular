@@ -4,48 +4,47 @@ import { ControlContainer, FormGroupDirective } from '@angular/forms';
 @Component({
   selector: 'app-working-process',
   template: `<div formGroupName="workingProcess" class="working_process">
-    <h3 class="title">Quá trình công tác</h3>
+    <h3 class="title">{{'title.workingProcess' | translate}}</h3>
     <div>
       <div class="form_item">
         <label for="unit">
-          <span>Đơn vị công tác</span>
+          <span>{{'sidebar.workUnit' | translate}}</span>
         </label>
         <p-dropdown
           formControlName="unit"
-          placeholder="Chọn"
+          [placeholder]="'common.select' | translate"
           [options]="sex"
           optionLabel="value"
         ></p-dropdown>
       </div>
       <div class="form_item">
         <label for="position">
-          <span>Vị trí công việc</span>
+          <span>{{'sidebar.workPlace' | translate}}</span>
         </label>
         <p-dropdown
           formControlName="position"
-          placeholder="Chọn"
+          [placeholder]="'common.select' | translate"
           [options]="sex"
           optionLabel="value"
         ></p-dropdown>
       </div>
       <div class="form_item">
         <label for="time">
-          <span>Thời gian</span>
+          <span>{{'createEmployee.time' | translate}}</span>
         </label>
         <p-calendar
           formControlName="workingTime"
-          placeholder="Choose or Enter response here"
           [showButtonBar]="true"
           dateFormat="dd.mm.yy"
         ></p-calendar>
       </div>
       <div class="form_item">
         <label for="">
-          <span>Hình thức làm việc</span>
+          <span>{{'createEmployee.workingForm' | translate}}</span>
         </label>
         <p-dropdown
           formControlName="workingForm"
-          placeholder="Chọn"
+          [placeholder]="'common.select' | translate"
           [options]="sex"
           optionLabel="value"
         ></p-dropdown>

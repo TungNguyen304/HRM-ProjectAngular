@@ -41,23 +41,23 @@ h2 {
   justify-content: space-between;
 }
 
-::ng-deep .p-datatable-table {
-  .p-datatable-tbody {
-    tr {
-      td {
-        text-align: center;
-      }
-    }
-  }
-  .p-datatable-thead {
-    tr {
-      th {
-        text-align: center;
-        background-color: white;
-      }
-    }
-  }
-}
+// ::ng-deep .p-datatable-table {
+//   .p-datatable-tbody {
+//     tr {
+//       td {
+//         text-align: center;
+//       }
+//     }
+//   }
+//   .p-datatable-thead {
+//     tr {
+//       th {
+//         text-align: center;
+//         background-color: white;
+//       }
+//     }
+//   }
+// }
 
 .more_option {
   text-align: end;

@@ -2,12 +2,12 @@
     <p-table [value]="memberList" [tableStyle]="{'min-width': '50rem'}">
         <ng-template pTemplate="header">
             <tr>
-                <th>Mã NV</th>
-                <th>Họ tên</th>
-                <th>Giới tính</th>
-                <th>Vị trí</th>
-                <th>Đơn vị</th>
-                <th>Hành động</th>
+                <th>{{'employeeManagement.employeeCode' | translate}}</th>
+                <th>{{'employeeManagement.fullName' | translate}}</th>
+                <th>{{'employeeManagement.sex' | translate}}</th>
+                <th>{{'employeeManagement.position' | translate}}</th>
+                <th>{{'employeeManagement.unit' | translate}}</th>
+                <th>{{'common.action' | translate}}</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-member>
@@ -26,4 +26,5 @@
             </tr>
         </ng-template>
     </p-table>
+    <p-paginator (onPageChange)="onPageChange($event)" [first]="0" [rows]="5" [totalRecords]="10" [showFirstLastIcon]="false"></p-paginator>
 </div>

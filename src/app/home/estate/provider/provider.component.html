@@ -1,5 +1,5 @@
 <div class="provider">
-  <h2 class="title">NHÀ CUNG CẤP</h2>
+  <h2 class="title">{{'title.provider' | translate}}</h2>
   <div class="more_option">
     <button
       pButton
@@ -11,7 +11,7 @@
       pButton
       icon="pi pi-plus"
       iconpos="left"
-      label="Thêm mới"
+      [label]="'common.addNew' | translate"
       class="p-button-sm p-button-success"
     ></button>
   </div>
@@ -23,16 +23,16 @@
   >
     <ng-template pTemplate="caption">
       <tr>
-        <th>120 bản ghi</th>
+        <th>120 {{'common.record' | translate}}</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th style="text-align: center">Tên</th>
-        <th style="text-align: center">Mặt hàng</th>
-        <th style="text-align: center">Địa chỉ</th>
-        <th style="text-align: center">Liên hệ</th>
-        <th style="text-align: center">Hành động</th>
+        <th>{{'provider.supplierName' | translate}}</th>
+        <th>{{'provider.items' | translate}}</th>
+        <th>{{'common.address' | translate}}</th>
+        <th>{{'provider.contact' | translate}}</th>
+        <th>{{'common.action' | translate}}</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-provider>
@@ -62,7 +62,7 @@
 
 <p-dialog [style]="{width: '50vw'}" [modal]="true" [(visible)]="displayCreate">
   <ng-template pTemplate="header">
-    <h2 class="title">TẠO MỚI</h2>
+    <h3 class="title">{{'title.create' | translate}}</h3>
   </ng-template>
 
   <ng-template pTemplate="body">

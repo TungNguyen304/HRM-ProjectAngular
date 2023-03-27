@@ -1,0 +1,137 @@
+{
+  "sidebar": {
+    "teamMember": "Team Members",
+    "workUnit": "Work Unit",
+    "workPlace": "Work Place",
+    "employeeList": "Employee List",
+    "uploadEmployee": "Upload Employee",
+    "provider": "Provider",
+    "estate": "Estate",
+    "logout": "Logout"
+  },
+  "title": {
+    "unitManagement": "UNIT MANAGEMENT",
+    "JobPositionManagement": "WORK POSITION MANAGEMENT",
+    "employeeManager": "EMPLOYEE MANAGER",
+    "editStaff": "EDIT STAFF",
+    "editDevice": "EDIT DEVICES",
+    "createDevice": "CREATE NEW DEVICES",
+    "deviceManagement": "DEVICE MANAGEMENT",
+    "addSupplier": "ADD NEW SUPPLIER",
+    "editSupplier": "EDIT SUPPLIER",
+    "detail": "DETAIL",
+    "employeeUpload": "UPLOAD EMPLOYEE",
+    "provider": "SUPPLIER",
+    "propertyStatus": "Property status",
+    "contactInfo": "Contact information",
+    "workingProcess": "Working process",
+    "basicInformation": "Basic information",
+    "create": "CREATE NEW",
+    "createEmployee": "CREATE NEW EMPLOYEE",
+    "otherInfo": "Other information",
+    "relatedProperty": "Related property",
+    "infoRepair": "Information upgrade and repair",
+    "currentUser": "Current user staff"
+  },
+
+  "createDevice": {
+    "propertyCode": "Estate code",
+    "type": "Type",
+    "propertyName": "Estate name",
+    "purchaseDate": "Purchase date",
+    "someBills": "Some bills",
+    "totalAmount": "Total amount",
+    "employeeUse": "Employee use",
+    "day": "Day",
+    "user": "User",
+    "date": "Date",
+    "content": "Content",
+    "AmountOfMoney": "Amount of money",
+    "codeOrName": "Estate code / name",
+    "staffUsing": "Staff are using",
+    "propertyStatus": "Property status"
+  },
+
+  "upload": {
+    "dragDesc": "Drag and drop file here to upload",
+    "selectFile": "Select files"
+  },
+
+  "createEmployee": {
+    "noData": "No Data",
+    "phone": "Phone",
+    "errorImage": "Only Image files can be loaded and no more than 2MB",
+    "companyAccount": "Company account",
+    "uploadCV": "Upload your CV",
+    "errorCV": "Can only download pdf, docx files and no more than 2MB",
+    "contract": "Contract",
+    "number": "Number",
+    "typeOfContract": "Type of contract",
+    "time": "Time",
+    "workingForm": "Working form",
+    "generalDescription": "General description",
+    "birthday": "Date of birth",
+    "currentResidence": "Current residence",
+    "permanentAddress": "Permanent address",
+    "jobDate": "Job date",
+    "image": "Image",
+    "dateOfHire": "Date of hire"
+  },
+
+  "unitManagement": {
+    "organizationalUnitName": "Organizational unit name",
+    "organizationalUnitCode": "Organizational unit code"
+  },
+
+  "common": {
+    "action": "Action",
+    "status": "Status",
+    "record": "records",
+    "select": "Select",
+    "search": "Search",
+    "address": "Address",
+    "addNew": "Add new",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "noImage": "NO IMAGE AVAILABLE",
+    "save": "Save",
+    "update": "Update",
+    "logout": "Logout",
+    "exportExcel": "Export excel",
+    "back": "Back",
+    "reviewLink": "Link đánh giá"
+  },
+
+  "workplace": {
+    "code": "Code",
+    "locationName": "Location name",
+    "belongingToTheUnit": "Belonging to the unit",
+    "positionType": "Position type",
+    "searchByCode": "Search by code",
+    "anotherName": "Another Name"
+  },
+
+  "employeeManagement": {
+    "employeeCode": "Employee code",
+    "fullName": "Full name",
+    "sex": "Sex",
+    "unit": "Unit",
+    "position": "Position",
+    "codeNameEmail": "Code/Name/Email"
+  },
+
+  "provider": {
+    "supplierName": "Supplier Name",
+    "items": "Items",
+    "contact": "Contact"
+  },
+  
+  "createProvider": {
+    "note": "Note",
+    "conclude": "Conclude",
+    "executor": "Executor",
+    "code": "Code",
+    "name": "Name",
+    "prioritize": "Prioritize"
+  }
+}

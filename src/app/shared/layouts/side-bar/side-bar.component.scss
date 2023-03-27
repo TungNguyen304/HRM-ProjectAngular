@@ -1,155 +1,335 @@
-@charset "UTF-8";
-@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600);
-@import '~bootstrap-icons/font/bootstrap-icons.css';
-@import url('https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap');
+/* Google Font Import - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
-body {
-  font-family: "Lato";
-  font-size: 100%;
-  overflow-y: scroll;
-  font-family: sans-serif;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  background-color: #fefefe;
-}
-
-
-a {
-  text-decoration: none;
-  -webkit-transition: all 0.6s ease;
-  -moz-transition: all 0.6s ease;
-  transition: all 0.6s ease;
-}
-a:hover {
-  -webkit-transition: all 0.6s ease;
-  -moz-transition: all 0.6s ease;
-  transition: all 0.6s ease;
-}
-
-.app {
-  height: 100%;
-}
-
-/* -------------
-Sidebar
-----------------*/
-.sidebar {
-  position: relative;
-  font-size: 16px;
-  width: 20em;
-  height: 100%;
-  top: 0;
-  background-color: var(--secondary-color);
-  -webkit-transform: translateZ(0);
-  visibility: visible;
-  -webkit-backface-visibility: hidden;
-}
-
-/* -------------
-Sidebar Nav
-----------------*/
-.sidebar-nav {
-  position: fixed;
-  background-color: var(--secondary-color);
-  height: 100%;
-  font-weight: 400;
-  font-size: 1.2em;
-  overflow: auto;
-  z-index: 9;
-  overflow: hidden;
-  -webkit-overflow-scrolling: touch;
-  /* -------------
-  Chev elements
-  ----------------*/
-  /* -------------
-  Nav-Flyout
-  ----------------*/
-  /* -------------
-  Hover
-  ----------------*/
-}
-.sidebar-nav ul {
-  list-style: none;
-  display: block;
-  padding: 0;
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
-.sidebar-nav ul li {
-  margin-left: 0;
-  padding-left: 0;
-  display: inline-block;
+
+::selection {
+  background-color: var(--primary-color-main);
+  color: #fff;
+}
+
+// .toggle-switch:active .switch::before {
+//   right: 5px;
+//   left: unset;
+// }
+
+/* ===== Sidebar ===== */
+.sidebar {
+  position: fixed;
+  box-shadow: 0 0 8px 2px #ccc;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 250px;
+  padding: 0 14px 10px 14px;
+  background: var(--sidebar-color);
+  transition: var(--tran-05);
+  z-index: 100;
+}
+.sidebar.close {
+  width: 88px;
+}
+
+.sidebar_header {
   width: 100%;
-  cursor: pointer;
-  user-select: none;
-  /* -------------
-  Sidebar: icons
-  ----------------*/
-}
-.sidebar-nav ul li a {
-  color: var(--text-nav-color);
-  font-size: 0.75em;
-  padding: 1.05em 1em;
-  position: relative;
-  display: block;
-  .arrow_right {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    i {
-        font-size: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  height: 78px;
+  background-color: #fff;
+  span {
+    white-space: nowrap;
+    font-family: "Climate Crisis", cursive;
+    font-size: 16px;
+    color: var(--primary-color-main);
+  }
+  .logo {
+    width: 60px;
+    flex-shrink: 0;
+    display: flex;
+    text-align: center;
+    margin-right: 20px;
+    img {
+      width: 45px;
+      margin: 0 auto;
+      height: 45px;
     }
   }
 }
-.sidebar-nav ul li a:not(.active):hover {
-  background-color: #677a8a;
-  -webkit-transition: all 0.6s ease;
-  -moz-transition: all 0.6s ease;
-  transition: all 0.6s ease;
-}
-.sidebar-nav ul li i {
-  font-size: 1.8em;
-  padding-right: 1em;
-  width: 9em;
-  display: inline;
-  vertical-align: middle;
+
+/* ===== Reusable code - Here ===== */
+.sidebar li {
+  height: 50px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
 }
 
-.sidebar-nav .nav-flyout {
-  position: absolute;
-  background-color: #080D11;
-  z-index: 9;
-  left: 3em;
-  top: 0;
+.sidebar header .image,
+.sidebar .icon {
+  min-width: 60px;
+  border-radius: 6px;
+}
+
+.sidebar .icon {
+  min-width: 60px;
+  border-radius: 6px;
   height: 100%;
-  -webkit-transform: translateX(100%);
-  -moz-transform: translateX(100%);
-  -ms-transform: translateX(100%);
-  -o-transform: translateX(100%);
-  transform: translateX(100%);
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
 }
-.sidebar-nav .nav-flyout a:not(.active):hover {
-  background-color: rgba(255, 255, 255, 0.05);
+
+.sidebar .text,
+.sidebar .icon {
+  color: var(--text-color);
+  transition: var(--tran-03);
 }
-.sidebar-nav ul > li:hover .nav-flyout {
-  -webkit-transform: translateX(0);
-  -moz-transform: translateX(0);
-  -ms-transform: translateX(0);
-  -o-transform: translateX(0);
-  transform: translateX(0);
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+
+.sidebar .text {
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 1;
+}
+.sidebar.close .text {
+  opacity: 0;
+}
+/* =========================== */
+
+.sidebar header {
+  position: relative;
+}
+
+.sidebar header .image-text {
+  display: flex;
+  align-items: center;
+}
+.sidebar header .logo-text {
+  display: flex;
+  flex-direction: column;
+}
+header .image-text .name {
+  margin-top: 2px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+header .image-text .profession {
+  font-size: 16px;
+  margin-top: -2px;
+  display: block;
+}
+
+.sidebar header .image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar header .image img {
+  width: 40px;
+  border-radius: 6px;
+}
+
+.sidebar .toggle {
+  position: absolute;
+  top: calc(var(--height-header) + 46px);
+  padding-top: 3px;
+  right: -25px;
+  transform: translateY(-50%) rotate(180deg);
+  height: 25px;
+  width: 25px;
+  box-shadow: 0 0 4px 1px #ccc;
+  border-radius: 50% 0 0 50%;
+  background-color: var(--sidebar-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: var(--tran-05);
 }
 
 .active {
-  background-color: var(--primary-color);
+  background-color: var(--primary-color-main) !important;
+  .icon,
+  .text {
+    color: var(--sidebar-color);
+  }
+}
+
+body.dark .sidebar .toggle {
+  color: var(--text-color);
+}
+
+.sidebar.close .toggle {
+  transform: translateY(-50%) rotate(0deg);
+  border-radius: 0 50% 50% 0;
+}
+
+// .sidebar .menu {
+//   margin-top: 40px;
+// }
+
+.sidebar li.search-box {
+  border-radius: 6px;
+  background-color: var(--primary-color-main-light);
+  cursor: pointer;
+  transition: var(--tran-05);
+}
+
+.sidebar li.search-box input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  background-color: var(--primary-color-main-light);
+  color: var(--text-color);
+  border-radius: 6px;
+  font-size: 17px;
+  font-weight: 500;
+  transition: var(--tran-05);
+}
+.sidebar li a {
+  list-style: none;
+  height: 100%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: var(--tran-03);
+}
+
+.sidebar li a:hover {
+  background-color: var(--primary-color-main);
+}
+.sidebar li a:hover .icon,
+.sidebar li a:hover .text {
+  color: var(--sidebar-color);
+}
+body.dark .sidebar li a:hover .icon,
+body.dark .sidebar li a:hover .text {
+  color: var(--text-color) !important;
+}
+
+body.dark .sidebar li a:hover {
+  background-color: var(--text-color);
+}
+
+.sidebar .menu-bar {
+  height: calc(100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: scroll;
+}
+.menu-bar::-webkit-scrollbar {
+  display: none;
+}
+.sidebar .menu-bar .mode {
+  border-radius: 6px;
+  background-color: var(--primary-color-main-light);
+  position: relative;
+  transition: var(--tran-05);
+}
+
+.menu-bar .mode .sun-moon {
+  height: 50px;
+  width: 60px;
+}
+
+.mode .sun-moon i {
+  position: absolute;
+}
+.mode .sun-moon i.sun {
+  opacity: 0;
+}
+body.dark .mode .sun-moon i.sun {
+  opacity: 1;
+}
+body.dark .mode .sun-moon i.moon {
+  opacity: 0;
+}
+
+.bottom-content li {
+  border-radius: 6px;
+  background-color: #ccc;
+}
+
+.bottom-content li.mode:hover {
+  .sun-moon .icon {
+    color: var(--sidebar-color) !important;
+  }
+  .mode-text {
+    color: var(--sidebar-color) !important;
+  }
+  background-color: var(--primary-color-main) !important;
+  cursor: pointer;
+}
+
+.menu-bar .bottom-content .toggle-switch {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.toggle-switch .switch {
+  position: relative;
+  height: 22px;
+  width: 40px;
+  border-radius: 25px;
+  background-color: var(--toggle-color);
+  transition: var(--tran-05);
+}
+
+.switch .circle {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  background-color: var(--sidebar-color);
+  transition: var(--tran-04);
+}
+
+body.dark .switch::before {
+  left: 20px;
+}
+
+.home {
+  position: absolute;
+  padding: 0 30px;
+  top: 0;
+  top: 0;
+  left: 250px;
+  min-height: 100vh;
+  width: calc(100% - 250px);
+  background-color: #f4f6f9;
+  transition: var(--tran-05);
+}
+
+.sidebar.close ~ .home {
+  left: 78px;
+  min-height: 100vh;
+  width: calc(100% - 78px);
 }

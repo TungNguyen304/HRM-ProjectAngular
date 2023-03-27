@@ -8,9 +8,15 @@ import { AuthModule } from './auth/auth.module';
 import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
 import { ButtonModule } from 'primeng/button';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InterceptorRequest } from './core/services/http/interceptor.request';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {HttpClient, HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
+} 
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,8 +29,15 @@ import { InterceptorRequest } from './core/services/http/interceptor.request';
     ReactiveFormsModule,
     FormsModule,
     ButtonModule,
+    BrowserAnimationsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+  })
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorRequest, multi: true}

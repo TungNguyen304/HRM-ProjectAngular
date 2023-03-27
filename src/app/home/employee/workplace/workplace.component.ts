@@ -30,6 +30,10 @@ export class WorkplaceComponent {
     this.displayMember = !this.displayMember;
   }
 
+  onPageChange1(event:any) {
+    console.log(event);
+  }
+
   ngOnInit(): void {
     this.positionService.getPosition().subscribe((data:any) => {
       this.positionList = data;

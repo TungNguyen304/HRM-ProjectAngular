@@ -1,4 +1,4 @@
-<h2 class="title">QUẢN LÝ ĐƠN VỊ</h2>
+<h2 class="title">{{'title.unitManagement' | translate}}</h2>
 <div class="table">
   <p-treeTable
     selectionMode="single"
@@ -9,9 +9,9 @@
   >
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 500px">Tên đơn vị tổ chức</th>
-        <th>Mã đơn vị tổ chức</th>
-        <th>Địa chỉ</th>
+        <th style="width: 500px">{{'unitManagement.organizationalUnitName' | translate}}</th>
+        <th>{{'unitManagement.organizationalUnitCode' | translate}}</th>
+        <th>{{'common.address' | translate}}</th>
         <th></th>
       </tr>
     </ng-template>
@@ -39,8 +39,7 @@
 </div>
 
 <p-dialog [(visible)]="display">
-  <ng-template pTemplate="header">
-    Danh sách nhân viên thuộc mã đơn vị {{ unitTemp }}</ng-template
+  <ng-template pTemplate="header">{{ unitTemp }}</ng-template
   >
   <ng-template pTemplate="content">
     <app-member-table></app-member-table>
