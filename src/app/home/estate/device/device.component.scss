@@ -25,6 +25,7 @@ form {
         position: absolute;
         top: calc(100% + 10px);
         font-style: italic;
+        font-size: 12px;
         right: 0;
         color: red;
         i {
@@ -62,7 +63,6 @@ form {
   .p-datatable-tbody {
     tr {
       td {
-        text-align: center;
         div {
           button {
             margin: 0 5px;
@@ -74,7 +74,6 @@ form {
   .p-datatable-thead {
     tr {
       th {
-        text-align: center;
         background-color: white;
       }
     }

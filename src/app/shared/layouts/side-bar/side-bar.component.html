@@ -1,73 +1,90 @@
-<section class="app">
-  <aside class="sidebar">
-    <nav class="sidebar-nav">
-      <ul>
-        <li>
-          <a routerLink="/team-member" routerLinkActive="active">
-            <div>
-              <i class="bi bi-person-fill"></i> <span>Team members</span>
-            </div>
+  <nav #sidebar class="sidebar close">
+    <div class="sidebar_header">
+      <div class="logo">
+        <img src="../../../../assets/images/logo.png" alt="">
+      </div>
+      <span>HRM - LOGO</span>
+    </div>
+    <div class="menu-bar">
+      <div class="menu">
+        <ul class="menu-links">
+          <li class="nav-link">
+            <a routerLink="/team-member" routerLinkActive="active">
+              <i class='bi bi-person icon'></i>
+              <span class="text nav-text">{{'sidebar.teamMember' | translate}}</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a routerLink="/employee/work-unit" routerLinkActive="active">
+              <i class='bi bi-folder2-open icon'></i>
+              <span class="text nav-text">{{'sidebar.workUnit' | translate}}</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a routerLink="/employee/workplace" routerLinkActive="active">
+              <i class='bi bi-pin-map icon'></i>
+              <span class="text nav-text">{{'sidebar.workPlace' | translate}}</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a routerLink="/employee/management" routerLinkActive="active">
+              <i class='bi bi-briefcase icon'></i>
+              <span class="text nav-text">{{'sidebar.employeeList' | translate}}</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a routerLink="/employee/upload" routerLinkActive="active">
+              <i class='bi bi-upload icon'></i>
+              <span class="text nav-text">{{'sidebar.uploadEmployee' | translate}}</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a routerLink="/estate/provider" routerLinkActive="active">
+              <i class='bi bi-houses icon'></i>
+              <span class="text nav-text">{{'sidebar.provider' | translate}}</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a routerLink="/estate/device" routerLinkActive="active">
+              <i class='bi bi-coin icon'></i>
+              <span class="text nav-text">{{'sidebar.estate' | translate}}</span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
+      <div class="bottom-content">
+        <li class="">
+          <a href="#">
+            <i class='bx bx-log-out icon'></i>
+            <span class="text nav-text">{{'sidebar.logout' | translate}}</span>
           </a>
         </li>
-        <li>
-          <a routerLink="/employee" routerLinkActive="active"
-            ><i class="bi bi-people-fill"></i> <span class="">Nhân viên</span>
-            <div class="arrow_right">
-              <i class="bi bi-chevron-right"></i>
-            </div>
-          </a>
-          <ul class="nav-flyout">
-            <li>
-              <a routerLink="/employee/work-unit" routerLinkActive="active"><i class="bi bi-shop-window"></i> Đơn vị công tác</a>
-            </li>
-            <li>
-              <a routerLink="/employee/workplace" routerLinkActive="active"><i class="bi bi-card-text"></i> Vị trí công việc</a>
-            </li>
-            <li>
-              <a routerLink="/employee/management" routerLinkActive="active"><i class="bi bi-handbag-fill"></i> DS Nhân viên</a>
-          </ul>
-        </li>
-        <li>
-          <a routerLink="/estate" routerLinkActive="active"
-            ><i class="bi bi-coin"></i> <span class="">Tài sản</span>
-            <div class="arrow_right">
-              <i class="bi bi-chevron-right"></i>
-            </div>
-          </a>
-          <ul class="nav-flyout">
-            <li>
-              <a routerLink="/estate/provider" routerLinkActive="active"><i class="bi bi-building-fill"></i> Nhà cung cấp</a>
-            </li>
-            <li>
-              <a routerLink="/estate/device" routerLinkActive="active"
-                ><i class="bi bi-book-fill"></i> Sách - Thiết Bị Test</a
-              >
-            </li>
-            <li>
-              <a href="#" routerLinkActive="active"><i class="bi bi-receipt-cutoff"></i> Tài sản</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#"
-            ><i class="bi bi-briefcase-fill"></i><span class="">Mượn trả</span>
-            <div class="arrow_right">
-              <i class="bi bi-chevron-right"></i>
-            </div>
-          </a>
-          <ul class="nav-flyout">
-            <li>
-              <a href="#"><i class="bi bi-book-half"></i> Sách</a>
-            </li>
-            <li>
-              <a href="#"><i class="bi bi-music-player"></i> Thiết bị</a>
-            </li>
-            <li>
-              <a href="#"><i class="bi bi-camera-reels-fill"></i> Tài sản</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
-  </aside>
-</section>
+
+        <!-- <li class="mode">
+          <div class="sun-moon">
+            <i class='bx bx-moon icon moon'></i>
+            <i class='bx bx-sun icon sun'></i>
+          </div>
+          <span class="mode-text text">Dark mode</span>
+          <div class="toggle-switch">
+            <span class="switch">
+              <span class="circle"></span>
+            </span>
+          </div>
+        </li> -->
+
+      </div>
+    </div>
+  </nav>
+  <section class="home">
+    <app-header (displaySidebar)="displaySidebar()"></app-header>
+    <ng-content></ng-content>
+  </section>

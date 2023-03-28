@@ -22,16 +22,18 @@ import { PanelModule } from 'primeng/panel';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { SafeImagePipe } from 'src/app/shared/pipes/safe-image.pipe';
 import { DetailEmployeeComponent } from './components/detail-employee/detail-employee.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { WorkingProcessComponent } from './components/create-employee/working_process.component';
-import { ContactInformationComponent } from './components/create-employee/contact-information.component'
-import { OtherInformationComponent } from './components/create-employee/other-information.component';
-import { BasicInformationComponent } from './components/create-employee/basic-information.component';
+import { WorkingProcessComponent } from './components/create-employee/working-process/working-process.component';
+import { ContactInformationComponent } from './components/create-employee/contact-information/contact-information.component'
+import { OtherInformationComponent } from './components/create-employee/other-information/other-information.component';
+import { BasicInformationComponent } from './components/create-employee/basic-information/basic-information.component';
 import { ToastModule } from 'primeng/toast';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { SpeedDialModule } from 'primeng/speeddial';
+import { PaginatorModule } from 'primeng/paginator';
+import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 const routes: Routes = [
@@ -80,12 +82,11 @@ const routes: Routes = [
     CreateWorkplaceComponent,
     MemberTableComponent,
     CreateEmployeeComponent,
-    SafeImagePipe,
     DetailEmployeeComponent,
     WorkingProcessComponent,
     ContactInformationComponent,
     OtherInformationComponent,
-    BasicInformationComponent
+    BasicInformationComponent,
   ],
   imports: [
     CommonModule,
@@ -107,7 +108,10 @@ const routes: Routes = [
     ReactiveFormsModule,
     ToastModule,
     SplitButtonModule,
-    SpeedDialModule
+    SpeedDialModule,
+    PaginatorModule,
+    TranslateModule,
+    SharedModule
   ],
 })
 export class EmployeeModule {}

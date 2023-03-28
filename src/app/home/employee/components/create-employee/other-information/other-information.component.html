@@ -1,0 +1,107 @@
+<div class="otherInfo" formGroupName="otherInfo">
+    <h3 class="title">{{ 'title.otherInfo' | translate }}</h3>
+    <div class="form_item">
+      <label for="description">
+        <span>{{ 'createEmployee.generalDescription' | translate }}</span>
+      </label>
+      <textarea
+        formControlName="description"
+        id="description"
+        [rows]="5"
+        [cols]="30"
+        pInputTextarea
+        [autoResize]="true"
+      ></textarea>
+      <p
+        *ngIf="
+          getControl('description')?.dirty &&
+          getControl('description')?.errors
+        "
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ 'createEmployee.generalDescription' | translate }}
+        {{
+          warning.description?.type
+            | typeError
+            | translate : warning.description
+        }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="position">
+        <span>{{ 'sidebar.workUnit' | translate }}</span>
+        <span style="color: red;">*</span>
+      </label>
+      <p-dropdown
+        formControlName="unit"
+        [placeholder]="'common.select' | translate"
+        [options]="sex"
+        optionLabel="value"
+      ></p-dropdown>
+      <p
+        *ngIf="getControl('unit')?.dirty && getControl('unit')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ 'employeeManagement.unit' | translate }}
+        {{ warning.unit?.type | typeError | translate : warning.unit }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="time">
+        <span>{{ 'sidebar.workPlace' | translate }}</span>
+        <span style="color: red;">*</span>
+      </label>
+      <p-dropdown
+        formControlName="position"
+        [placeholder]="'common.select' | translate"
+        [options]="sex"
+        optionLabel="value"
+      ></p-dropdown>
+      <p
+        *ngIf="
+          getControl('position')?.dirty && getControl('position')?.errors
+        "
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ 'employeeManagement.position' | translate }}
+        {{
+          warning.position?.type | typeError | translate : warning.position
+        }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="addresscurrent">
+        <span>CV</span>
+      </label>
+      <p-fileUpload
+        #cv
+        (click)="handleResetCV()"
+        mode="basic"
+        (onSelect)="myUploader($event)"
+        [chooseLabel]="'createEmployee.uploadCV' | translate"
+      ></p-fileUpload>
+    </div>
+    <div class="form_item">
+      <label for="status">
+        <span>{{ 'common.status' | translate }}</span>
+        <span style="color: red;">*</span>
+      </label>
+      <p-dropdown
+        formControlName="status"
+        [placeholder]="'common.select' | translate"
+        [options]="sex"
+        optionLabel="value"
+      ></p-dropdown>
+      <p
+        *ngIf="getControl('status')?.dirty && getControl('status')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ 'common.status' | translate }}
+        {{ warning.status?.type | typeError | translate : warning.status }}
+      </p>
+    </div>
+  </div>

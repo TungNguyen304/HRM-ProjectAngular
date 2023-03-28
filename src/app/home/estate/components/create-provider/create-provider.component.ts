@@ -21,9 +21,9 @@ export class CreateProviderComponent {
   public providerForm: FormGroup;
   constructor(private location: Location, private fb: FormBuilder, private commonService:CommonService) {}
   public warning: IWarningProvider = {
-    name: '',
-    item: '',
-    contact: '',
+    name: null,
+    item: null,
+    contact: null,
   };
   handleBack(): void {
     this.location.back();

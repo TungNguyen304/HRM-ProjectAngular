@@ -7,10 +7,6 @@
   max-width: unset;
 }
 
-::ng-deep .p-datatable .p-datatable-thead > tr > th {
-  text-align: center;
-}
-
 .header {
   position: relative;
   h2.title {
@@ -22,9 +18,9 @@
     display: flex;
     align-items: center;
     user-select: none;
-    background-color: var(--primary-color);
+    background-color: var(--primary-color-main);
     color: #fff;
-    left: 50px;
+    left: 0;
     cursor: pointer;
     padding: 3px 11px 3px 8px;
     border-radius: 5px;
@@ -46,8 +42,14 @@
   display: flex;
   justify-content: space-between;
   .create_left {
-    width: 49%;
-
+    flex: 1;
+    margin: 0 10px;
+    :host .main_info {
+      border-radius: 5px;
+      padding: 20px 20px 40px 20px;
+      box-shadow: 0 0 8px 2px #ccc;
+      margin-bottom: 50px;
+    }
     .asset_relate {
       .nodata {
         font-size: 20px;
@@ -60,22 +62,26 @@
     }
   }
   .create_right {
-    width: 49%;
+    flex: 1;
+    margin: 0 10px;
     :host .working_process {
       flex: 1;
       box-shadow: 0 0 8px 2px #ccc;
       border-radius: 5px;
-      padding: 20px;
+      padding: 20px 20px 40px 20px;
       margin-bottom: 20px;
     }
     :host .otherInfo {
-      margin-bottom: 50px;
-    }
-    :host .contact_information {
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+      padding: 20px 20px 40px 20px;
       box-shadow: 0 0 8px 2px #ccc;
       border-radius: 5px;
-      padding: 20px;
+    }
+    :host .contact_information {
+      margin-bottom: 20px;
+      box-shadow: 0 0 8px 2px #ccc;
+      border-radius: 5px;
+      padding: 20px 20px 40px 20px;
     }
   }
 }
@@ -133,6 +139,10 @@ form {
         }
       }
     }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -143,7 +153,7 @@ form {
 
 h3.title {
   font-size: 20px;
-  font-family: "Times New Roman", Times, serif;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   margin-bottom: 10px;
   text-align: center;
 }

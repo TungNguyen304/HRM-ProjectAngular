@@ -7,10 +7,6 @@
   max-width: unset;
 }
 
-::ng-deep .p-datatable .p-datatable-thead > tr > th {
-  text-align: center;
-}
-
 .header {
   position: relative;
   h2.title {
@@ -22,9 +18,9 @@
     display: flex;
     align-items: center;
     user-select: none;
-    background-color: var(--primary-color);
+    background-color: var(--primary-color-main);
     color: #fff;
-    left: 50px;
+    left: 0;
     cursor: pointer;
     padding: 3px 11px 3px 8px;
     border-radius: 5px;
@@ -43,13 +39,25 @@
   padding: 30px 20px;
   border-radius: 5px;
   box-shadow: 0 0 8px 2px #ccc;
+  display: flex;
+  margin: 0 -10px;
+  .main_form {
+    flex: 1;
+    margin: 0 10px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 8px 2px #ccc;
+  }
   .sub_form {
+    margin: 0 10px;
+    flex: 1;
     display: flex;
-    justify-content: space-between;
-    margin: 0 -10px;
+    flex-direction: column;
+    .upgrade_info {
+      margin-bottom: 20px;
+    }
     .upgrade_info, .current_employee {
-        flex: 1;
-        margin: 0 10px;
+      flex: 1;
         padding: 20px;
         box-shadow: 0 0 8px 2px #ccc;
         border-radius: 5px;

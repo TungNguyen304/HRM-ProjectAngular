@@ -10,6 +10,10 @@ export class MemberTableComponent {
   public memberList:any;
   constructor(private memberService:MemberService) {}
 
+  onPageChange(event:any) {
+    console.log(event);
+  }
+
   ngOnInit() {
     this.memberService.getMember().subscribe((data: any) => {
       this.memberList = data

@@ -24,11 +24,11 @@ export class CreateWorkplaceComponent {
   public position: any;
   public workplaceForm: FormGroup;
   public warning:IWarningCreateWorkplace = {
-    code: '',
-    name: '',
-    otherName: '',
-    type: '',
-    unit: '',
+    code: null,
+    name: null,
+    otherName: null,
+    type: null,
+    unit: null,
   };
 
   constructor(private fb: FormBuilder, private commonService:CommonService) {

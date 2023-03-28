@@ -1,19 +1,9 @@
 <div>
-  <app-header></app-header>
   <div class="home_container">
-    <div #nav class="nav">
-      <app-side-bar></app-side-bar>
-    </div>
-
-    <div class="wrap_outlet">
-      <div class="outlet">
-        <div (click)="handleSlideIn()" class="action">
-          <button>
-              <i class="bi bi-list"></i>
-          </button>
+      <app-side-bar>
+        <div style="padding-bottom: 30px;">
+          <router-outlet></router-outlet>
         </div>
-        <router-outlet></router-outlet>
-      </div>
-    </div>
+      </app-side-bar>
   </div>
 </div>

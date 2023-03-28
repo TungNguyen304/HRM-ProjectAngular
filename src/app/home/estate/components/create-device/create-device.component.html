@@ -1,85 +1,64 @@
 <div class="header">
-  <span (click)="handleBack()"
-    ><i class="bi bi-arrow-left-short"></i></span
-  >
-  <h2 class="title">TẠO MỚI</h2>
+  <span (click)="handleBack()"><i class="bi bi-arrow-left-short"></i></span>
+  <h2 class="title">{{ "title.createDevice" | translate }}</h2>
 </div>
 <div class="create_device">
   <div class="main_form">
+    <h3 class="title">{{ "title.basicInformation" | translate }}</h3>
     <form class="form">
       <div class="form_item">
         <label for="code">
-          <span>Mã tài sản</span>
-          <span style="color: red;">*</span>
+          <span>{{ "createDevice.propertyCode" | translate }}</span>
+          <span style="color: red">*</span>
         </label>
-        <input
-          type="text"
-          id="code"
-          pInputText
-          placeholder="Enter response here"
-        />
+        <input type="text" id="code" pInputText />
       </div>
       <div class="form_item">
         <label for="name">
-          <span>Tên tài sản</span>
-          <span style="color: red;">*</span>
+          <span>{{ "createDevice.propertyName" | translate }}</span>
+          <span style="color: red">*</span>
         </label>
-        <input
-          type="text"
-          id="name"
-          pInputText
-          placeholder="Enter response here"
-        />
+        <input type="text" id="name" pInputText />
       </div>
       <div class="form_item">
         <label for="type">
-          <span>Loại</span>
+          <span>{{ "createDevice.type" | translate }}</span>
         </label>
         <p-dropdown [options]="sex" optionLabel="value"></p-dropdown>
       </div>
       <div class="form_item">
         <label for="">
-          <span>Ngày mua</span>
-          <span style="color: red;">*</span>
+          <span>{{ "createDevice.purchaseDate" | translate }}</span>
+          <span style="color: red">*</span>
         </label>
-        <p-calendar
-          placeholder="Choose or Enter response here"
-          [showButtonBar]="true"
-          dateFormat="dd.mm.yy"
-        ></p-calendar>
+        <p-calendar [showButtonBar]="true" dateFormat="dd.mm.yy"></p-calendar>
       </div>
       <div class="form_item">
         <label for="number">
-          <span>Số hoá đơn</span>
-          <span style="color: red;">*</span>
+          <span>{{ "createDevice.someBills" | translate }}</span>
+          <span style="color: red">*</span>
         </label>
-        <input
-          id="number"
-          type="text"
-          pInputText
-          placeholder="Enter response here"
-        />
+        <input id="number" type="text" pInputText />
       </div>
       <div class="form_item">
         <label for="sum">
-          <span>Tổng tiền</span>
+          <span>{{ "createDevice.totalAmount" | translate }}</span>
         </label>
-        <input
-          type="text"
-          id="sum"
-          pInputText
-          placeholder="Enter response here"
-        />
+
+        <div class="p-inputgroup">
+          <input type="number" id="sum" pInputText />
+          <span class="p-inputgroup-addon">$</span>
+        </div>
       </div>
       <div class="form_item">
         <label for="employee">
-          <span>Nhân viên đã từng sử dụng</span>
+          <span>{{ "createDevice.employeeUse" | translate }}</span>
         </label>
         <p-dropdown [options]="sex" optionLabel="value"></p-dropdown>
       </div>
       <div class="form_item">
         <label for="status">
-          <span>Trạng thái</span>
+          <span>{{ "common.status" | translate }}</span>
         </label>
         <p-dropdown [options]="sex" optionLabel="value"></p-dropdown>
       </div>
@@ -87,64 +66,45 @@
   </div>
   <div class="sub_form">
     <div class="upgrade_info">
-      <h3 class="title">Thông tin nâng cấp / sửa chữa</h3>
+      <h3 class="title">{{ "title.infoRepair" | translate }}</h3>
       <form class="form">
         <div class="form_item">
           <label for="">
-            <span>Ngày</span>
+            <span>{{ "createDevice.day" | translate }}</span>
           </label>
-          <p-calendar
-            placeholder="Choose or Enter response here"
-            [showButtonBar]="true"
-            dateFormat="dd.mm.yy"
-          ></p-calendar>
+          <p-calendar [showButtonBar]="true" dateFormat="dd.mm.yy"></p-calendar>
         </div>
         <div class="form_item">
           <label for="content">
-            <span>Nội dung</span>
+            <span>{{ "createDevice.content" | translate }}</span>
           </label>
-          <textarea
-            id="content"
-            placeholder="Enter response here"
-            pInputTextarea
-          ></textarea>
+          <textarea id="content" pInputTextarea></textarea>
         </div>
         <div class="form_item">
           <label for="money">
-            <span>Số tiền</span>
+            <span>{{ "createDevice.AmountOfMoney" | translate }}</span>
           </label>
-          <input
-            id="money"
-            type="text"
-            pInputText
-            placeholder="Enter response here"
-          />
+          <div class="p-inputgroup">
+            <input style="flex: 1" id="money" type="number" pInputText />
+            <span class="p-inputgroup-addon">$</span>
+          </div>
         </div>
       </form>
     </div>
     <div class="current_employee">
-      <h3 class="title">Nhân viên sử dụng hiện tại</h3>
+      <h3 class="title">{{ "title.currentUser" | translate }}</h3>
       <form class="form">
         <div class="form_item">
           <label for="email">
             <span>Email</span>
           </label>
-          <input
-            type="text"
-            id="email"
-            pInputText
-            placeholder="Enter response here"
-          />
+          <input type="text" id="email" pInputText />
         </div>
         <div class="form_item">
           <label for="name">
-            <span>Ngày sử dụng</span>
+            <span>{{ "createDevice.date" | translate }}</span>
           </label>
-          <p-calendar
-            placeholder="Choose or Enter response here"
-            [showButtonBar]="true"
-            dateFormat="dd.mm.yy"
-          ></p-calendar>
+          <p-calendar [showButtonBar]="true" dateFormat="dd.mm.yy"></p-calendar>
         </div>
       </form>
     </div>
@@ -155,6 +115,6 @@
   <button
     pButton
     class="p-button-outlined p-button-success"
-    label="TẠO MỚI"
+    [label]="'title.create' | translate"
   ></button>
 </div>

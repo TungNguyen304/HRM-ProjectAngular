@@ -1,0 +1,49 @@
+<div formGroupName="contactInfo" class="contact_information">
+    <h3 class="title">{{ 'title.contactInfo' | translate }}</h3>
+    <div>
+      <div class="form_item">
+        <label for="email">
+          <span>Email</span>
+          <span style="color: red;">*</span>
+        </label>
+        <input formControlName="email" type="text" id="email" pInputText />
+        <p
+          *ngIf="getControl('email')?.dirty && getControl('email')?.errors"
+          class="warning"
+        >
+          <i class="bi bi-cone-striped"></i>
+          Email {{warning.email?.type | typeError | translate:warning.email}}
+        </p>
+      </div>
+      <div class="form_item">
+        <label for="phone">
+          <span>{{ 'createEmployee.phone' | translate }}</span>
+          <span style="color: red;">*</span>
+        </label>
+        <input formControlName="phone" type="text" id="phone" pInputText />
+        <p
+          *ngIf="getControl('phone')?.dirty && getControl('phone')?.errors"
+          class="warning"
+        >
+          <i class="bi bi-cone-striped"></i>
+          {{ 'createEmployee.phone' | translate }} {{warning.phone?.type | typeError | translate:warning.phone}}
+        </p>
+      </div>
+      <div class="form_item">
+        <label for="skype">
+          <span>SkypeID</span>
+          <span style="color: red;">*</span>
+        </label>
+        <input formControlName="skypeId" type="text" id="skype" pInputText />
+        <p
+          *ngIf="
+            getControl('skypeId')?.dirty && getControl('skypeId')?.errors
+          "
+          class="warning"
+        >
+          <i class="bi bi-cone-striped"></i>
+          SkypeID {{warning.skypeId?.type | typeError | translate:warning.skypeId}}
+        </p>
+      </div>
+    </div>
+  </div>

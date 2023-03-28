@@ -1,11 +1,19 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { CommonService } from 'src/app/core/services/common.service';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import { emojiValidator } from 'src/app/core/services/helper/validator.service';
-import { emojiWarning, maxLengthWarning } from 'src/app/core/services/helper/warningForm.service';
+import {
+  emojiWarning,
+  maxLengthWarning,
+} from 'src/app/core/services/helper/warningForm.service';
 import { DeviceService } from 'src/app/core/services/http/device.service';
 import { IWarningDeviceSearch } from 'src/app/shared/interfaces';
 
@@ -21,17 +29,16 @@ export class DeviceComponent {
   public deviceList: any;
   public searchDeviceForm: FormGroup;
   public actions: any;
-  public idDeviceTemp: number
+  public idDeviceTemp: number;
   public warning: IWarningDeviceSearch = {
-    code: '',
-    name: '',
-    employee: '',
+    code: null,
+    employee: null,
   };
   constructor(
     private deviceService: DeviceService,
     private router: Router,
     private fb: FormBuilder,
-    private commonService:CommonService,
+    private commonService: CommonService,
     private messageService: MessageService
   ) {
     this.actions = [
@@ -49,14 +56,24 @@ export class DeviceComponent {
           this.delete();
         },
       },
-      { label: 'Detail', icon: 'bi bi-card-text',command: () => {
-        this.handleNavigateDetailDevice(this.idDeviceTemp);
-      },},
+      {
+        label: 'Detail',
+        icon: 'bi bi-card-text',
+        command: () => {
+          this.handleNavigateDetailDevice(this.idDeviceTemp);
+        },
+      },
+      {
+        label: 'QR',
+        icon: 'bi bi-qr-code-scan',
+        command: () => {
+        },
+      },
     ];
   }
 
-  handleActionsClick(id:number) {
-    this.idDeviceTemp = id    
+  handleActionsClick(id: number) {
+    this.idDeviceTemp = id;
   }
 
   update() {
@@ -84,20 +101,24 @@ export class DeviceComponent {
 
   warningDetect(): void {
     this.handleSetWarning('code', 'Mã tài sản', 255);
-    this.handleSetWarning('name', 'Tên tài sản', 255);
     this.handleSetWarning('employee', 'Nhân viên sử dụng', 255);
   }
 
-  handleSetWarning(type: keyof IWarningDeviceSearch, label: string, length?:number): void {
+  handleSetWarning(
+    type: keyof IWarningDeviceSearch,
+    label: string,
+    length?: number
+  ): void {
     emojiWarning(this.searchDeviceForm, this, type, label);
-    length && maxLengthWarning(this.searchDeviceForm, this, type, label, length);
+    length &&
+      maxLengthWarning(this.searchDeviceForm, this, type, label, length);
   }
 
-  getControl(control:string):AbstractControl|null {
+  getControl(control: string): AbstractControl | null {
     return getControlCommon(this.searchDeviceForm, control);
   }
 
-  onSubmit():void {
+  onSubmit(): void {
     console.log(this.searchDeviceForm);
   }
 
@@ -108,7 +129,6 @@ export class DeviceComponent {
 
     this.searchDeviceForm = this.fb.group({
       code: ['', [Validators.maxLength(255), emojiValidator]],
-      name: ['', [Validators.maxLength(255), emojiValidator]],
       employee: ['', [Validators.maxLength(255), emojiValidator]],
       type: [''],
       status: [''],

@@ -44,7 +44,7 @@
   <div class="avt_template">
     <img *ngIf="info" [src]="info" alt="">
     <div *ngIf="!info" class="avt_empty">
-      <div>NO IMAGE AVAILABLE</div>
+      <div>{{'common.noImage' | translate}}</div>
     </div>
   </div>
 </ng-template>

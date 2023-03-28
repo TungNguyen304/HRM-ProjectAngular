@@ -3,90 +3,77 @@
     <form [formGroup]="providerForm" (ngSubmit)="onSubmit()" action="">
       <div class="form_item">
         <label for="name">
-          <span>Tên NCC</span>
-          <span style="color: red;">*</span>
+          <span>{{ "provider.supplierName" | translate }}</span>
+          <span style="color: red">*</span>
         </label>
-        <input
-          formControlName="name"
-          type="text"
-          id="name"
-          pInputText
-          placeholder="Enter response here"
-        />
-        <p *ngIf="getControl('name')?.dirty && getControl('name')?.errors" class="warning"><i class="bi bi-cone-striped"></i>{{warning.name}}</p>
+        <input formControlName="name" type="text" id="name" pInputText />
+        <p
+          *ngIf="getControl('name')?.dirty && getControl('name')?.errors"
+          class="warning"
+        >
+          <i class="bi bi-cone-striped"></i>
+          {{ 'provider.supplierName' | translate }} {{warning.name?.type | typeError | translate:warning.name}}
+        </p>
       </div>
       <div class="form_item">
         <label for="item">
-          <span>Mặt hàng</span>
-          <span style="color: red;">*</span>
+          <span>{{ "provider.items" | translate }}</span>
+          <span style="color: red">*</span>
         </label>
-        <input
-          formControlName="item"
-          type="text"
-          id="item"
-          pInputText
-          placeholder="Enter response here"
-        />
-        <p *ngIf="getControl('item')?.dirty && getControl('item')?.errors" class="warning"><i class="bi bi-cone-striped"></i>{{warning.item}}</p>
+        <input formControlName="item" type="text" id="item" pInputText />
+        <p
+          *ngIf="getControl('item')?.dirty && getControl('item')?.errors"
+          class="warning"
+        >
+          <i class="bi bi-cone-striped"></i>
+          {{ 'provider.contact' | translate }} {{warning.contact?.type | typeError | translate:warning.contact}}
+        </p>
       </div>
       <div class="form_item">
         <label for="address">
-          <span>Địa chỉ</span>
+          <span>{{ "common.address" | translate }}</span>
         </label>
-        <input
-          formControlName="address"
-          type="text"
-          id="address"
-          pInputText
-          placeholder="Enter response here"
-        />
+        <input formControlName="address" type="text" id="address" pInputText />
       </div>
       <div class="form_item">
         <label for="contact">
-          <span>Liên hệ</span>
-          <span style="color: red;">*</span>
+          <span>{{ "provider.contact" | translate }}</span>
+          <span style="color: red">*</span>
         </label>
-        <input
-          type="text"
-          formControlName="contact"
-          id="contact"
-          pInputText
-          placeholder="Enter response here"
-        />
-        <p *ngIf="getControl('contact')?.dirty && getControl('contact')?.errors" class="warning"><i class="bi bi-cone-striped"></i>{{warning.contact}}</p>
+        <input type="text" formControlName="contact" id="contact" pInputText />
+        <p
+          *ngIf="getControl('contact')?.dirty && getControl('contact')?.errors"
+          class="warning"
+        >
+          <i class="bi bi-cone-striped"></i>
+          {{ 'provider.supplierName' | translate }} {{warning.name?.type | typeError | translate:warning.name}}
+        </p>
       </div>
       <div class="form_item">
         <label for="priority">
-          <span>Ưu tiên</span>
+          <span>{{ "createProvider.prioritize" | translate }}</span>
         </label>
         <input
           type="text"
           formControlName="priority"
           id="priority"
           pInputText
-          placeholder="Enter response here"
         />
       </div>
       <div class="form_item">
         <label for="note">
-          <span>Ghi chú</span>
+          <span>{{ "createProvider.note" | translate }}</span>
         </label>
-        <input
-          type="text"
-          formControlName="note"
-          id="note"
-          pInputText
-          placeholder="Enter response here"
-        />
+        <input type="text" formControlName="note" id="note" pInputText />
       </div>
       <div class="form_item">
         <label for="conclude">
-          <span>Kết luận</span>
+          <span>{{ "createProvider.conclude" | translate }}</span>
         </label>
         <p-dropdown
           [options]="sex"
           formControlName="conclude"
-          placeholder="Chọn"
+          [placeholder]="'common.select' | translate"
           optionLabel="value"
         ></p-dropdown>
       </div>
@@ -95,7 +82,7 @@
           type="submit"
           pButton
           class="p-button-outlined p-button-sm"
-          label="Lưu"
+          [label]="'common.save' | translate"
         ></button>
       </div>
     </form>

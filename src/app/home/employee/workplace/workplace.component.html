@@ -1,11 +1,11 @@
 <div class="workplace">
-  <h2 class="title">QUẢN LÝ VỊ TRÍ CÔNG VIỆC</h2>
+  <h2 class="title">{{'title.JobPositionManagement' | translate}}</h2>
   <div style="text-align: end">
     <button
       pButton
       type="button"
       icon="pi pi-plus"
-      label="Thêm mới"
+      [label]="'common.addNew' | translate"
       class="p-button-success p-button-sm"
       iconPos="left"
       (click)="handleShowOverlayCreateWorkplace()"
@@ -20,12 +20,12 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="code">Mã <p-sortIcon field="code"></p-sortIcon></th>
-          <th pSortableColumn="name">Tên vị trí <p-sortIcon field="name"></p-sortIcon></th>
-          <th pSortableColumn="unit">Thuộc đơn vị <p-sortIcon field="unit"></p-sortIcon></th>
-          <th pSortableColumn="type">Loại vị trí <p-sortIcon field="type"></p-sortIcon></th>
+          <th pSortableColumn="code">{{'workplace.code' | translate}} <p-sortIcon field="code"></p-sortIcon></th>
+          <th pSortableColumn="name">{{'workplace.locationName' | translate}} <p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="unit">{{'workplace.belongingToTheUnit' | translate}} <p-sortIcon field="unit"></p-sortIcon></th>
+          <th pSortableColumn="type">{{'workplace.positionType' | translate}} <p-sortIcon field="type"></p-sortIcon></th>
           <th style="text-align: end;">
-            <input style="width: 100%;" type="text" pInputText placeholder="Tìm kiếm theo mã" />
+            <input style="width: 100%;" type="text" pInputText [placeholder]="'workplace.searchByCode' | translate" />
           </th>
         </tr>
       </ng-template>
@@ -42,17 +42,19 @@
         </tr>
       </ng-template>
     </p-table>
+
+    <p-paginator (onPageChange)="onPageChange1($event)" [first]="0" [rows]="5" [totalRecords]="10" [showFirstLastIcon]="false"></p-paginator>
   </div>
 </div>
 
-<p-dialog header="TẠO MỚI" [(visible)]="displayCreate">
+<p-dialog [header]="'title.create' | translate" [(visible)]="displayCreate">
   <ng-template pTemplate="content">
     <app-create-workplace></app-create-workplace>
   </ng-template>
 </p-dialog>
 
 <p-dialog [(visible)]="displayMember">
-  <ng-template pTemplate="header"> Danh sách nhân viên thuộc vị trí {{positionTemp}}</ng-template>
+  <ng-template pTemplate="header">{{positionTemp}}</ng-template>
   <ng-template pTemplate="content">
     <app-member-table></app-member-table>
 </ng-template>

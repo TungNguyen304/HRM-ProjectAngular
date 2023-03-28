@@ -27,7 +27,6 @@ export class CreateEmployeeComponent {
 
   onSubmit(): void {
     this.commonService.markAsDirty(this.employeeForm);
-    console.log(this.employeeForm.value);
   }
 
   showAlert(noti: any): void {

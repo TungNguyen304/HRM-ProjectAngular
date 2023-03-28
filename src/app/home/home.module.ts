@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TeamMemberComponent } from './team-member/team-member.component';
 import { MemberComponent } from './team-member/member.component';
 import { ButtonModule } from 'primeng/button';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes:Routes = [
   {
@@ -43,7 +44,8 @@ const routes:Routes = [
     CommonModule,
     SharedModule,
     RouterModule.forChild(routes),
-    ButtonModule
+    ButtonModule,
+    TranslateModule
   ]
 })
 export class HomeModule { }
