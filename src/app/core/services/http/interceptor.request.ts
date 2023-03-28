@@ -12,7 +12,7 @@ export class InterceptorRequest {
     }
     return next.handle(
       request.clone({
-        url: 'http://localhost:3000/' + request.url,
+        url: 'http://103.18.7.212:1734/api/' + request.url,
       })
     );
   }
