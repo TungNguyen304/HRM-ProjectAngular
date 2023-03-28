@@ -9,11 +9,12 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { TypeErrorPipe } from './pipes/type-error.pipe';
 import { DragDropAvtDirective } from './directives/drag-drop-avt.directive';
+import { LoadingComponent } from './layouts/loading/loading.component';
 
 
 
 @NgModule({
-  declarations: [PageNotFoundComponent, HeaderComponent, SideBarComponent, TypeErrorPipe, DragDropAvtDirective],
+  declarations: [PageNotFoundComponent, HeaderComponent, SideBarComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -21,6 +22,6 @@ import { DragDropAvtDirective } from './directives/drag-drop-avt.directive';
     FormsModule,
     TranslateModule
   ],
-  exports: [PageNotFoundComponent, SideBarComponent, HeaderComponent, TypeErrorPipe, DragDropAvtDirective]
+  exports: [PageNotFoundComponent, SideBarComponent, HeaderComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent]
 })
 export class SharedModule { }

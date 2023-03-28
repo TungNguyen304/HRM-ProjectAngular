@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from './core/services/state/language.service';
+import { LoadingService } from './core/services/state/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,8 @@ import { LanguageService } from './core/services/state/language.service';
 })
 export class AppComponent {
   title = 'HRM-Project';
-  constructor(private translate: TranslateService, private languageService:LanguageService) {
+  public display:boolean = false;
+  constructor(private translate: TranslateService, private languageService:LanguageService, private loadingService:LoadingService) {
     translate.setDefaultLang('en');
     translate.use('en');
     const language = JSON.parse(localStorage.getItem('language') as string);
@@ -17,5 +19,13 @@ export class AppComponent {
       languageService.setLanguage(language.name);
       translate.use(language.name);
     }
+  }
+
+  ngOnInit() {
+    this.loadingService.loading$.subscribe((value) => {
+      console.log(value);
+      
+      this.display = value;
+    })
   }
 }

@@ -1,21 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { delay, Observable } from 'rxjs';
 
 interface ILogin {
-    email: string,
-    password: string
+  email: string;
+  password: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class DeviceService {
+export class AuthService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  login(data:ILogin):Observable<Object> {
-    return this.http.get("auth/login");
+  login(data: ILogin): Observable<Object> {
+    return this.http.post('auth/login', data).pipe(delay(3000));
   }
-
 }
