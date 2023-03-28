@@ -10,11 +10,18 @@
         </div>
       </ng-template>
       <div class="form_search">
-        <form action="">
+        <form [formGroup]="searchForm" action="">
           <div class="form_list">
             <div class="form_item">
               <label for="name">{{ "employeeManagement.codeNameEmail" | translate }}</label>
-              <input type="text" id="name" pInputText />
+              <input formControlName="codeNameEmail" type="text" id="name" pInputText />
+              <p
+                *ngIf="getControl('codeNameEmail')?.dirty && getControl('codeNameEmail')?.errors"
+                class="warning"
+              >
+                <i class="bi bi-cone-striped"></i>
+                {{ 'employeeManagement.codeNameEmail' | translate }} {{warning.codeNameEmail?.type | typeError | translate:warning.codeNameEmail}}
+              </p>
             </div>
             <div class="form_item">
               <label for="sex">{{

@@ -19,7 +19,8 @@
                 *ngIf="getControl('code')?.dirty && getControl('code')?.errors"
                 class="warning"
               >
-                <i class="bi bi-cone-striped"></i>{{ warning.code }}
+                <i class="bi bi-cone-striped"></i>
+                {{ 'createDevice.propertyCode' | translate }} / {{'createDevice.propertyName' | translate}} {{warning.code?.type | typeError | translate:warning.code}}
               </p>
             </div>
             <div class="form_item">
@@ -37,7 +38,8 @@
                 "
                 class="warning"
               >
-                <i class="bi bi-cone-striped"></i>{{ warning.employee }}
+                <i class="bi bi-cone-striped"></i>
+                {{'createDevice.staffUsing' | translate}} {{warning.employee?.type | typeError | translate:warning.employee}}
               </p>
             </div>
             <div class="form_item">

@@ -1,9 +1,4 @@
-import { Component } from '@angular/core';
-import { ControlContainer, FormGroupDirective } from '@angular/forms';
-
-@Component({
-  selector: 'app-working-process',
-  template: `<div formGroupName="workingProcess" class="working_process">
+<div formGroupName="workingProcess" class="working_process">
     <h3 class="title">{{'title.workingProcess' | translate}}</h3>
     <div>
       <div class="form_item">
@@ -50,12 +45,4 @@ import { ControlContainer, FormGroupDirective } from '@angular/forms';
         ></p-dropdown>
       </div>
     </div>
-  </div>`,
-  styleUrls: ['./create-employee.component.scss'],
-  viewProviders: [
-    { provide: ControlContainer, useExisting: FormGroupDirective },
-  ],
-})
-export class WorkingProcessComponent {
-  public sex = [{ value: 'Nam' }, { value: 'Nữ' }];
-}
+  </div>

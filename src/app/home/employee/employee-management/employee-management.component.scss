@@ -14,11 +14,25 @@ h2 {
       .form_item {
         display: flex;
         flex-direction: column;
+        position: relative;
         label {
           margin-bottom: 10px;
         }
         input {
           background-color: #eaf0f4;
+        }
+        p {
+          display: flex;
+          align-items: center;
+          position: absolute;
+          top: calc(100% + 10px);
+          font-style: italic;
+          font-size: 12px;
+          right: 0;
+          color: red;
+          i {
+            margin-right: 5px;
+          }
         }
       }
       ::ng-deep .p-dropdown {
@@ -40,24 +54,6 @@ h2 {
   flex-direction: row-reverse;
   justify-content: space-between;
 }
-
-// ::ng-deep .p-datatable-table {
-//   .p-datatable-tbody {
-//     tr {
-//       td {
-//         text-align: center;
-//       }
-//     }
-//   }
-//   .p-datatable-thead {
-//     tr {
-//       th {
-//         text-align: center;
-//         background-color: white;
-//       }
-//     }
-//   }
-// }
 
 .more_option {
   text-align: end;

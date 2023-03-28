@@ -31,9 +31,8 @@ export class DeviceComponent {
   public actions: any;
   public idDeviceTemp: number;
   public warning: IWarningDeviceSearch = {
-    code: '',
-    name: '',
-    employee: '',
+    code: null,
+    employee: null,
   };
   constructor(
     private deviceService: DeviceService,
@@ -102,7 +101,6 @@ export class DeviceComponent {
 
   warningDetect(): void {
     this.handleSetWarning('code', 'Mã tài sản', 255);
-    this.handleSetWarning('name', 'Tên tài sản', 255);
     this.handleSetWarning('employee', 'Nhân viên sử dụng', 255);
   }
 
@@ -131,7 +129,6 @@ export class DeviceComponent {
 
     this.searchDeviceForm = this.fb.group({
       code: ['', [Validators.maxLength(255), emojiValidator]],
-      name: ['', [Validators.maxLength(255), emojiValidator]],
       employee: ['', [Validators.maxLength(255), emojiValidator]],
       type: [''],
       status: [''],

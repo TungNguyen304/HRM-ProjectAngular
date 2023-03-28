@@ -84,10 +84,8 @@
   "createEmployee": {
     "noData": "Không có dữ liệu",
     "phone": "Số điện thoại",
-    "errorImage": "Chỉ có thể tải các tệp Image và không quá 2MB",
     "companyAccount": "Tài khoản công ty",
     "uploadCV": "Tải CV lên",
-    "errorCV": "Chỉ có thể tải các tệp pdf, docx và không quá 2MB",
     "contract": "Hợp đồng",
     "number": "Số",
     "typeOfContract": "Loại hợp đồng",
@@ -133,5 +131,12 @@
     "prioritize": "Ưu tiên",
     "code": "Mã",
     "name": "Tên"
+  },
+
+  "warning": {
+    "required": "không được để trống",
+    "maxLength": "không được dài quá {{length}} ký tự",
+    "emoji": "không được chứa emoji",
+    "file": "Dung lượng của tệp không được quá {{mb}}mb"
   }
 }

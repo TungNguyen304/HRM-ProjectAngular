@@ -1,33 +1,39 @@
-export interface IWarningBasicInfo {
-    code: string,
+export interface Iwarning {
     name: string,
-    sex: string,
-    birthDay: string,
-    currentResidence: string,
-    address: string,
-    joinDate: string,
-    hireDate: string,
-    avt: string
+    type: string,
+    length?: number
+}
+
+export interface IWarningBasicInfo {
+    code: Iwarning | null,
+    name: Iwarning | null,
+    sex: Iwarning | null,
+    birthDay: Iwarning | null,
+    currentResidence: Iwarning | null,
+    address: Iwarning | null,
+    joinDate: Iwarning | null,
+    hireDate: Iwarning | null,
+    avt: Iwarning | null
 }
 
 export interface IWarningCreateWorkplace {
-    code: string,
-    name: string,
-    otherName: string,
-    type: string,
-    unit: string,
+    code: Iwarning | null,
+    name: Iwarning | null,
+    otherName: Iwarning | null,
+    type: Iwarning | null,
+    unit: Iwarning | null,
 }
 
 export interface IWarningContactInfo {
-    email: string,
-    phone: string,
-    skypeId: string
+    email: Iwarning | null,
+    phone: Iwarning | null,
+    skypeId: Iwarning | null
 }
 
 export interface IWarningOtherInfo {
-    unit: string,
-    position: string,
-    status: string,
-    description: string,
-    cv: string
+    unit: Iwarning | null,
+    position: Iwarning | null,
+    status: Iwarning | null,
+    description: Iwarning | null,
+    cv: Iwarning | null
 }

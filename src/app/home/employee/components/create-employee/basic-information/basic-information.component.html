@@ -1,0 +1,176 @@
+<div formGroupName="basicInfo" class="main_info">
+  <h3 class="title">{{ "title.basicInformation" | translate }}</h3>
+  <div>
+    <div class="form_item">
+      <label for="code">
+        <span>{{ "employeeManagement.employeeCode" | translate }}</span>
+        <span style="color: red">*</span>
+      </label>
+      <input formControlName="code" type="text" id="code" pInputText />
+      <p
+        *ngIf="getControl('code')?.dirty && getControl('code')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ "employeeManagement.employeeCode" | translate }}
+        {{ warning.code?.type | typeError | translate : warning.code }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="name">
+        <span>{{ "employeeManagement.fullName" | translate }}</span>
+        <span style="color: red">*</span>
+      </label>
+      <input formControlName="name" type="text" id="name" pInputText />
+      <p
+        *ngIf="getControl('name')?.dirty && getControl('name')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ "employeeManagement.fullName" | translate }}
+        {{ warning.name?.type | typeError | translate : warning.name }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="sex">
+        <span>{{ "employeeManagement.sex" | translate }}</span>
+        <span style="color: red">*</span>
+      </label>
+      <p-dropdown
+        formControlName="sex"
+        [placeholder]="'common.select' | translate"
+        [options]="sex"
+        optionLabel="value"
+      ></p-dropdown>
+      <p
+        *ngIf="getControl('sex')?.dirty && getControl('sex')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ "employeeManagement.sex" | translate }}
+        {{ warning.sex?.type | typeError | translate : warning.sex }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="birthday">
+        <span>{{ "createEmployee.birthday" | translate }}</span>
+        <span style="color: red">*</span>
+      </label>
+      <p-calendar
+        formControlName="birthDay"
+        [showButtonBar]="true"
+        dateFormat="dd.mm.yy"
+      ></p-calendar>
+      <p
+        *ngIf="getControl('birthDay')?.dirty && getControl('birthDay')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ "createEmployee.birthday" | translate }}
+        {{ warning.birthDay?.type | typeError | translate : warning.birthDay }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="">
+        <span>{{ "createEmployee.currentResidence" | translate }}</span>
+      </label>
+      <input type="text" formControlName="currentResidence" pInputText />
+      <p
+        *ngIf="
+          getControl('currentResidence')?.dirty &&
+          getControl('currentResidence')?.errors
+        "
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ "createEmployee.currentResidence" | translate }}
+        {{
+          warning.currentResidence?.type
+            | typeError
+            | translate : warning.currentResidence
+        }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="address">
+        <span>{{ "createEmployee.permanentAddress" | translate }}</span>
+      </label>
+      <input type="text" formControlName="address" pInputText />
+      <p
+        *ngIf="getControl('address')?.dirty && getControl('address')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ "createEmployee.permanentAddress" | translate }}
+        {{ warning.address?.type | typeError | translate : warning.address }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="joinDate">
+        <span>{{ "createEmployee.jobDate" | translate }}</span>
+      </label>
+      <p-calendar
+        formControlName="joinDate"
+        [showButtonBar]="true"
+        dateFormat="dd.mm.yy"
+      ></p-calendar>
+      <p
+        *ngIf="getControl('joinDate')?.dirty && getControl('joinDate')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ "createEmployee.jobDate" | translate }}
+        {{ warning.joinDate?.type | typeError | translate : warning.joinDate }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="hireDate">
+        <span>{{ "createEmployee.dateOfHire" | translate }}</span>
+      </label>
+      <p-calendar
+        formControlName="hireDate"
+        [showButtonBar]="true"
+        dateFormat="dd.mm.yy"
+      ></p-calendar>
+      <p
+        *ngIf="getControl('hireDate')?.dirty && getControl('hireDate')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ "createEmployee.dateOfHire" | translate }}
+        {{ warning.hireDate?.type | typeError | translate : warning.hireDate }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="avt">
+        <span>{{ "createEmployee.image" | translate }}</span>
+      </label>
+      <div
+        #avt
+        class="avt"
+        [appDragDropAvt]="url"
+        [avtSize]="avtSize"
+        [file]="file"
+        (showAlert)="showAlertFromBasicInfo($event)"
+        (handleSetUrl)="handleSetUrl($event)"
+        [employeeForm]="employeeForm"
+        (click)="handleClickInputFile()"
+      >
+        <div style="display: none">
+          <p-fileUpload
+            #file
+            type="file"
+            showButtons="false"
+            mode="basic"
+          ></p-fileUpload>
+        </div>
+        <img
+          [ngClass]="{ image: url ? true : false }"
+          draggable="false"
+          [src]="url || '../../../../../assets/images/plus-icon.png'"
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+</div>

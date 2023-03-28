@@ -133,5 +133,12 @@
     "code": "Code",
     "name": "Name",
     "prioritize": "Prioritize"
+  },
+
+  "warning": {
+    "required": "can't be empty",
+    "maxLength": "cannot be longer than {{length}} characters",
+    "emoji": "are not allowed to contain emoji",
+    "file": "The size of the file should not be more than {{mb}}mb"
   }
 }

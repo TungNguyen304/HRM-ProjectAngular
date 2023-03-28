@@ -1,11 +1,12 @@
+import { Iwarning } from "./employee"
+
 export interface IWarningProvider {
-    name: string,
-    item: string,
-    contact: string
+    name: Iwarning | null,
+    item: Iwarning | null,
+    contact: Iwarning | null
 }
 
 export interface IWarningDeviceSearch {
-    code: string,
-    name: string,
-    employee: string,
+    code: Iwarning | null,
+    employee: Iwarning | null,
 }

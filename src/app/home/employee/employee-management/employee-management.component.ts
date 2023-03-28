@@ -3,6 +3,10 @@ import { Router } from '@angular/router';
 import { EmployeeService } from 'src/app/core/services/http/employee.service';
 import { MessageService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { emojiValidator } from 'src/app/core/services/helper/validator.service';
+import { emojiWarning, maxLengthWarning } from 'src/app/core/services/helper/warningForm.service';
+import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 
 @Component({
   selector: 'app-employee-management',
@@ -16,7 +20,10 @@ export class EmployeeManagementComponent {
   public employeeList: any;
   public showCreateEmployee: boolean = false;
   public actions: any[];
-
+  public searchForm:FormGroup;
+  public warning:{codeNameEmail: any} = {
+    codeNameEmail: null
+  };
   constructor(
     private employeeService: EmployeeService,
     private router: Router,
@@ -45,10 +52,34 @@ export class EmployeeManagementComponent {
     ];
   }
 
+  getControl(control: string): AbstractControl | null {
+    return getControlCommon(this.searchForm, control);
+  }
+
   ngOnInit() {
+    this.searchForm = new FormGroup({
+      codeNameEmail: new FormControl('', [Validators.maxLength(255), emojiValidator])
+    })
     this.employeeService.getEmployee().subscribe((data) => {
       this.employeeList = data;
     });
+    this.warningDetect();
+    this.searchForm.valueChanges.subscribe(() => {
+      this.warningDetect();
+    })
+  }
+
+  warningDetect(): void {
+    this.handleSetWarning('codeNameEmail', 'Mã tài sản', 255);
+  }
+
+  handleSetWarning(
+    type: string,
+    label: string,
+    length?: number
+  ): void {
+    emojiWarning(this.searchForm, this, type, label);
+    length && maxLengthWarning(this.searchForm, this, type, label, length);
   }
 
   update() {
