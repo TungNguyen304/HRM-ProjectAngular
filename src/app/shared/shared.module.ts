@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { TypeErrorPipe } from './pipes/type-error.pipe';
 import { DragDropAvtDirective } from './directives/drag-drop-avt.directive';
-
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({
@@ -19,7 +19,8 @@ import { DragDropAvtDirective } from './directives/drag-drop-avt.directive';
     RouterModule,
     InputSwitchModule,
     FormsModule,
-    TranslateModule
+    TranslateModule,
+    BreadcrumbModule
   ],
   exports: [PageNotFoundComponent, SideBarComponent, HeaderComponent, TypeErrorPipe, DragDropAvtDirective]
 })
