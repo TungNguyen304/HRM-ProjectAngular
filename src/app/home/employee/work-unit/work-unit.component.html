@@ -25,7 +25,7 @@
         <td>{{ rowData.address }}</td>
         <td style="text-align: end">
           <button
-            (click)="handleShowMember(rowData.organization_unit_code)"
+            (click)="handleShowMember(rowData.organization_unit_id)"
             pButton
             class="p-button-outlined p-button-sm"
             type="button"
@@ -42,6 +42,6 @@
   <ng-template pTemplate="header">{{ unitTemp }}</ng-template
   >
   <ng-template pTemplate="content">
-    <app-member-table></app-member-table>
+    <app-member-table [memberList]="memberList"></app-member-table>
   </ng-template>
 </p-dialog>

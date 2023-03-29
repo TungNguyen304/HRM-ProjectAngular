@@ -8,6 +8,7 @@ import { IUnit, IUnitList } from 'src/app/shared/interfaces';
   styleUrls: ['./work-unit.component.scss'],
 })
 export class WorkUnitComponent {
+  public memberList = [];
   public unitTemp: string;
   public display: boolean = false;
   public units:IUnitList[] = [
@@ -17,7 +18,6 @@ export class WorkUnitComponent {
   ngOnInit() {
     this.unitService.getUnit().subscribe((data: any) => {
       this.units = this.handleFormatData(data.response.data);
-      console.log(this.units);
     });
   }
 
@@ -40,6 +40,9 @@ export class WorkUnitComponent {
   }
 
   handleShowMember(unitCode: string) {
+    this.unitService.getMemberByUnitId(unitCode).subscribe((data:any) => {
+      this.memberList = data.response.users;
+    });
     this.unitTemp = unitCode;
     this.display = !this.display;
   }

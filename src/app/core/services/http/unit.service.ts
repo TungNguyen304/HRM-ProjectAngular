@@ -12,4 +12,8 @@ export class UnitService {
   getUnit():Observable<Object> {
     return this.http.get("organization-units")
   }
+
+  getMemberByUnitId(id:string):Observable<Object> {
+    return this.http.get(`organization-units/${id}/members`);
+  }
 }
