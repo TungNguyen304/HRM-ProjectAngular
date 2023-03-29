@@ -5,24 +5,31 @@
   <div class="nav">
     <ul>
       <li (click)="displayPopupLanguage()">
-        <img #country [src]="'../../../../assets/images/' + flag" alt=""><i class="bi bi-chevron-down"></i>
+        <img #country [src]="'../../../../assets/images/' + flag" alt="" /><i
+          class="bi bi-chevron-down"
+        ></i>
         <div #popupLanguage class="popup_language">
-          <span *ngFor="let language of languages" (click)="handleChoseLanguage(language)">
-            <img [src]="'../../../../assets/images/' + language.image" alt="">
-            <p>{{language.name | uppercase}}</p>
+          <span
+            *ngFor="let language of languages"
+            (click)="handleChoseLanguage(language)"
+          >
+            <img [src]="'../../../../assets/images/' + language.image" alt="" />
+            <p>{{ language.name | uppercase }}</p>
           </span>
         </div>
       </li>
       <li><i class="bi bi-bell"></i></li>
     </ul>
     <div class="personal">
-      <div>
+      <div class="avt">
         <img
-          src="https://i.pinimg.com/736x/8b/d6/68/8bd668fbf81efb332088eb6a5b6c60c5.jpg"
+          [src]="
+            account?.image_url || '../../../../assets/images/avt-default.png'
+          "
           alt=""
         />
       </div>
-      <span>tungnv1@runsystem.net</span>
+      <span>{{ account?.email }}</span>
       <i class="bi bi-chevron-down"></i>
     </div>
   </div>

@@ -10,10 +10,16 @@ export class InterceptorRequest {
             request.clone()
         )
     }
+    if(localStorage.getItem('token')) {
+      request = request.clone({
+        setHeaders: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
+    }
+    request = request.clone({
+      url: 'http://103.18.7.212:1734/api/' + request.url
+    })
     return next.handle(
-      request.clone({
-        url: 'http://103.18.7.212:1734/api/' + request.url,
-      })
+      request
     );
   }
 }
