@@ -1,6 +1,8 @@
 import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { AccountService } from 'src/app/core/services/state/account.service';
 import { LanguageService } from 'src/app/core/services/state/language.service';
+import { IAccount } from '../../interfaces';
 
 @Component({
   selector: 'app-header',
@@ -8,9 +10,10 @@ import { LanguageService } from 'src/app/core/services/state/language.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  constructor(private translate:TranslateService, private languageService:LanguageService) {
+  constructor(private translate:TranslateService, private languageService:LanguageService, private accountService:AccountService) {
 
   }
+
   @Output() displaySidebar: EventEmitter<void> = new EventEmitter<void>();
   public checked: boolean = false;
   public languages = [
@@ -43,9 +46,18 @@ export class HeaderComponent {
       image: 'australia_flag.gif'
     }
   ]
+  public account:IAccount | null;
+
   public flag:string = JSON.parse(localStorage.getItem('language') as string)?.image || 'england_flag.gif';
   @ViewChild('popupLanguage') popupLanguage:ElementRef;
   @ViewChild('country') country:ElementRef;
+
+  ngOnInit() {
+    this.accountService.account$.subscribe((data) => {
+      this.account = data
+    })
+  }
+
   displayPopupLanguage():void {
     if(this.popupLanguage.nativeElement.style.display === 'grid') {
       this.popupLanguage.nativeElement.style.display = 'none'

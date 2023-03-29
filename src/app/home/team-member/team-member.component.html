@@ -2,12 +2,14 @@
   <h2 class="title">DA NANG - OUTSOURCES (UIT DEPT)</h2>
   <div class="search">
     <div class="search_left">
-      <i class="bi bi-search"></i>
       <input type="text" [placeholder]="'common.search' | translate" />
     </div>
-    <i class="bi bi-chevron-right"></i>
+    <span><i class="bi bi-search"></i></span>
   </div>
   <div class="team_list">
-    <app-member *ngFor="let member of memberList" [memberInfo]="member"></app-member>
+    <app-member
+      *ngFor="let member of memberList"
+      [memberInfo]="member"
+    ></app-member>
   </div>
 </div>
