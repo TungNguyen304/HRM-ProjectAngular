@@ -13,7 +13,9 @@ import {
 } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
+import { AccountService } from 'src/app/core/services/state/account.service';
 import { LanguageService } from 'src/app/core/services/state/language.service';
+import { IAccount } from '../../interfaces';
 
 @Component({
   selector: 'app-header',

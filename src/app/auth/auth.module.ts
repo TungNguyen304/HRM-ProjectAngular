@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { ToastModule } from 'primeng/toast';
 
 const routes:Routes = [
   {
@@ -33,7 +34,8 @@ const routes:Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    ToastModule 
   ]
 })
 export class AuthModule { }

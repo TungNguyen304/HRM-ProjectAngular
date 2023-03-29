@@ -1,5 +1,5 @@
 <div class="login container">
-  <div class="virtual"></div>
+  <p-toast></p-toast>
   <div class="main">
     <div class="wrap_login">
       <h2>Login</h2>
@@ -12,12 +12,11 @@
               type="email"
               id="email"
               name="email"
-              placeholder="Type your response here"
+              placeholder="Enter your email..."
             />
             <p
               *ngIf="
-                loginForm.get('email')?.invalid &&
-                loginForm.get('email')?.touched
+                loginForm.get('email')?.invalid && loginForm.get('email')?.dirty
               "
               class="warning"
             >
@@ -27,17 +26,21 @@
           </div>
           <div class="form_item">
             <label for="password">Password</label>
-            <input
-              formControlName="password"
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Type your response here"
-            />
+            <div class="wrap_pass">
+              <input
+                #pass
+                formControlName="password"
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password..."
+              />
+              <i (click)="handleDisplayPassword($event)" class="bi bi-eye-fill eye"></i>
+            </div>
             <p
               *ngIf="
                 loginForm.get('password')?.invalid &&
-                loginForm.get('password')?.touched
+                loginForm.get('password')?.dirty
               "
               class="warning"
             >
@@ -54,9 +57,7 @@
           </div>
           <button type="submit">LOGIN</button>
           <p class="create">
-            New to SproutGigs?<a routerLink="/auth/register"
-              >Create an account</a
-            >
+            <a routerLink="/auth/register">Create an account</a>
           </p>
         </form>
       </div>

@@ -136,15 +136,19 @@ header {
     align-items: center;
     background-color: var(--primary-color-main);
     color: #fff;
-    // border: 2px solid #fff;
-
-    img {
-      border: 2px solid #000;
+    .avt {
       margin-right: 20px;
+      background-color: #fff;
+      overflow: hidden;
+      border-radius: 100%;
+      width: 35px;
+      height: 35px;
+    }
+    img {
       width: 35px;
       height: 35px;
       display: block;
-      border-radius: 100%;
+      object-fit: cover;
     }
     span {
       font-size: 14px;
