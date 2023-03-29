@@ -36,7 +36,8 @@ export class WorkplaceComponent {
 
   ngOnInit(): void {
     this.positionService.getPosition().subscribe((data:any) => {
-      this.positionList = data;
+      // console.log(data);
+      // this.positionList = data;
     })
   }
 }

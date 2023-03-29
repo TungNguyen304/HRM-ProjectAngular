@@ -10,6 +10,6 @@ export class UnitService {
   constructor(private http: HttpClient) { }
 
   getUnit():Observable<Object> {
-    return this.http.get("units")
+    return this.http.get("organization-units")
   }
 }
