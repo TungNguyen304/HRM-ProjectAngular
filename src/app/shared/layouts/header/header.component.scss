@@ -7,23 +7,49 @@ header {
   color: var(--text-color);
   height: var(--height-header);
   color: #fff;
-  .menu {
+  .follow {
     display: flex;
     align-items: center;
-    i {
-      font-size: 20px;
-      border-radius: 50%;
-      padding: 5px 7px;
-      cursor: pointer;
-      background-color: #fff;
-      color: var(--primary-color-main);
-      border: 2px solid var(--primary-color-main);
-      &:hover {
-        transition: all 0.3s ease-out;
-        box-shadow: 0px 0px 8px 1px #ccc;
+    .menu {
+      display: flex;
+      align-items: center;
+      i {
+        font-size: 20px;
+        border-radius: 50%;
+        padding: 5px 7px;
+        cursor: pointer;
+        background-color: #fff;
+        color: var(--primary-color-main);
+        border: 2px solid var(--primary-color-main);
+        &:hover {
+          transition: all 0.3s ease-out;
+          box-shadow: 0px 0px 8px 1px #ccc;
+        }
+      }
+    }
+
+    .breadcrumb {
+      margin-left: 20px;
+      ::ng-deep .p-breadcrumb {
+        border: none;
+        background-color: var(--primary-color-main);
+        ul {
+          li {
+            a {
+              color: #fff;
+              span {
+                color: #fff;
+              }
+            }
+            &::before {
+              color: #fff;
+            }
+          }
+        }
       }
     }
   }
+
   .nav {
     display: flex;
     align-items: center;
@@ -39,20 +65,20 @@ header {
         border: 2px solid var(--primary-color-main);
         padding: 5px 7px;
         border-radius: 50%;
-        
+
         &:first-child {
           font-size: 12px;
           font-weight: 700;
-          border-radius: 7px;
-          background-color: var(--primary-color-main);
-          color: #fff;
-          border: 2px solid #fff;
+          border-radius: 50%;
+          background-color: #fff;
+          color: var(--primary-color-main);
+          border: 2px solid var(--primary-color-main);
           position: relative;
           img {
-            border-radius: 2px;
-            margin-right: 10px;
-            width: 25px;
+            border-radius: 50%;
+            width: 20px;
             height: 20px;
+            object-fit: cover;
           }
           i {
             font-weight: bold;
@@ -80,6 +106,7 @@ header {
                 height: 15px;
                 border-radius: 0;
                 object-fit: cover;
+                margin-right: 10px;
               }
               &:hover {
                 background-color: #5d718e;
@@ -130,7 +157,6 @@ header {
     i {
       margin-left: 10px;
       padding: 5px 10px;
-      border: 2px solid #fff;
       border-radius: 5px;
       font-size: 11px;
       &:hover {

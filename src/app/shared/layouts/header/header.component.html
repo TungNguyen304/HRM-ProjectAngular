@@ -1,13 +1,18 @@
 <header>
-  <span class="menu">
-    <i (click)="display()" class="bi bi-list"></i>
-  </span>
+  <div class="follow">
+    <span class="menu">
+      <i (click)="display()" class="bi bi-list"></i>
+    </span>
+    <div class="breadcrumb">
+      <div class="card flex justify-content-center">
+        <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+      </div>
+    </div>
+  </div>
   <div class="nav">
     <ul>
       <li (click)="displayPopupLanguage()">
-        <img #country [src]="'../../../../assets/images/' + flag" alt="" /><i
-          class="bi bi-chevron-down"
-        ></i>
+        <img #country [src]="'../../../../assets/images/' + flag" alt="" />
         <div #popupLanguage class="popup_language">
           <span
             *ngFor="let language of languages"
