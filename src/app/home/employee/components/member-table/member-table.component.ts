@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MemberService } from 'src/app/core/services/http/member.service';
 
 @Component({
@@ -7,16 +7,13 @@ import { MemberService } from 'src/app/core/services/http/member.service';
   styleUrls: ['./member-table.component.scss']
 })
 export class MemberTableComponent {
-  public memberList:any;
   constructor(private memberService:MemberService) {}
-
+  @Input() memberList:any[]
   onPageChange(event:any) {
     console.log(event);
   }
 
   ngOnInit() {
-    this.memberService.getMember().subscribe((data: any) => {
-      this.memberList = data
-    })
+    console.log(this.memberList);
   }
 }
