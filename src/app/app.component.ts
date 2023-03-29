@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from './core/services/http/auth.service';
 import { AccountService } from './core/services/state/account.service';
 import { LanguageService } from './core/services/state/language.service';
+import { LoadingService } from './core/services/state/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -27,10 +28,12 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    this.loadingService.loading$.subscribe((value) => {
+      console.log(value);
+      this.display = value;
     this.authService.getMyInfo().subscribe((data:any) => {
       this.accountService.setAccount(data);
     }, (err) => {
-
     })
   }
 }

@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -9,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class SideBarComponent {
   public checked:boolean = false;
   @ViewChild('sidebar') sidebar:ElementRef;
-  constructor(private translate: TranslateService) {}
+  constructor(private translate: TranslateService, private router:Router) {}
   displaySidebar():void {
     this.sidebar.nativeElement.classList.toggle('close');
   }
@@ -40,5 +41,11 @@ export class SideBarComponent {
         (modeText as HTMLSpanElement).innerText = 'Dark mode';
       }
     });
+  }
+
+  handleLogout(event:MouseEvent):void {
+    event.preventDefault();
+    localStorage.removeItem('token')
+    this.router.navigate(['auth', 'login'])
   }
 }

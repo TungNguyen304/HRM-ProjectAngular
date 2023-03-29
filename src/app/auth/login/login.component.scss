@@ -7,16 +7,19 @@
   }
   .main {
     flex: 2;
+    display: flex;
+    justify-content: center;
     .wrap_login {
+      margin: 0 auto;
       background-color: white;
       display: inline-block;
-      width: 50%;
+      width: 500px;
       padding: 30px 20px;
       border-radius: 5px;
       box-shadow: 0 0 8px 3px #bbb;
       h2 {
         font-size: 28px;
-        color: #203259;
+        color: var(--primary-color-main);
         margin-bottom: 20px;
       }
       .login_form {
@@ -28,11 +31,12 @@
             position: relative;
             label {
               margin-bottom: 8px;
-              color: #a8b0bf;
+              color: #7685a1;
               font-weight: 500;
             }
             input {
               padding: 10px 11px;
+              width: 100%;
               border: none;
               outline: none;
               background-color: #f5f7fa;
@@ -41,6 +45,22 @@
               margin-bottom: 30px;
               &:focus {
                 border-bottom: 2px solid var(--primary-color-main);
+              }
+            }
+            .eye {
+              position: absolute;
+              top: 50%;
+              right: 10px;
+              color: var(--primary-color-main);
+              transform: translateY(-50%);
+              cursor: pointer;
+              font-size: 16px;
+            }
+            .wrap_pass {
+              position: relative;
+              margin-bottom: 30px;
+              input {
+                margin-bottom: 0;
               }
             }
             .warning {
