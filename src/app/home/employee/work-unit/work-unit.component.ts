@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MemberService } from 'src/app/core/services/http/member.service';
 import { UnitService } from 'src/app/core/services/http/unit.service';
+import { IUnit, IUnitList } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-work-unit',
@@ -8,19 +8,41 @@ import { UnitService } from 'src/app/core/services/http/unit.service';
   styleUrls: ['./work-unit.component.scss'],
 })
 export class WorkUnitComponent {
-  public products: any;
-  public unitTemp:string;
-  public display:boolean = false;
+  public memberList = [];
+  public unitTemp: string;
+  public display: boolean = false;
+  public units:IUnitList[] = [
+  ];
   constructor(private unitService: UnitService) {}
 
-  
   ngOnInit() {
-    this.unitService
-      .getUnit()
-      .subscribe((data) => (this.products = data));
+    this.unitService.getUnit().subscribe((data: any) => {
+      this.units = this.handleFormatData(data.response.data);
+    });
   }
 
-  handleShowMember(unitCode:string) {
+  handleFormatData(units: IUnit[]): any[] {
+    return units.map((unit: IUnit) => {
+      if (unit.children && unit.children.length > 0) {
+        return {
+          data: {
+            ...unit,
+          },
+          children: this.handleFormatData(unit.children),
+        };
+      }
+      return {
+        data: {
+          ...unit,
+        },
+      };
+    });
+  }
+
+  handleShowMember(unitCode: string) {
+    this.unitService.getMemberByUnitId(unitCode).subscribe((data:any) => {
+      this.memberList = data.response.users;
+    });
     this.unitTemp = unitCode;
     this.display = !this.display;
   }

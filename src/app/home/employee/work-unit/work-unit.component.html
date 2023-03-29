@@ -4,7 +4,7 @@
     selectionMode="single"
     [scrollable]="true"
     scrollHeight="500px"
-    [value]="products"
+    [value]="units"
     styleClass="p-datatable-gridlines"
   >
     <ng-template pTemplate="header">
@@ -19,13 +19,13 @@
       <tr>
         <td style="width: 500px">
           <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-          {{ rowData.NameDV }}
+          {{ rowData.organization_unit_name }}
         </td>
-        <td>{{ rowData.MADV }}</td>
+        <td>{{ rowData.organization_unit_code }}</td>
         <td>{{ rowData.address }}</td>
         <td style="text-align: end">
           <button
-            (click)="handleShowMember(rowData.MADV)"
+            (click)="handleShowMember(rowData.organization_unit_id)"
             pButton
             class="p-button-outlined p-button-sm"
             type="button"
@@ -42,6 +42,6 @@
   <ng-template pTemplate="header">{{ unitTemp }}</ng-template
   >
   <ng-template pTemplate="content">
-    <app-member-table></app-member-table>
+    <app-member-table [memberList]="memberList"></app-member-table>
   </ng-template>
 </p-dialog>
