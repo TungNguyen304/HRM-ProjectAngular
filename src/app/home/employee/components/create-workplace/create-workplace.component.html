@@ -78,12 +78,15 @@
         <span>{{ "workplace.belongingToTheUnit" | translate }}</span>
         <span style="color: red">*</span>
       </label>
-      <p-dropdown
-        formControlName="unit"
-        [placeholder]="'common.select' | translate"
-        [options]="position"
-        optionLabel="value"
-      ></p-dropdown>
+      <div formGroupName="unit">
+        <p-treeSelect
+          class="md:w-20rem w-full"
+          containerStyleClass="w-full"
+          formControlName="selectedNodes"
+          [options]="unitList"
+          placeholder="Select Item"
+        ></p-treeSelect>
+      </div>
       <p
         *ngIf="getControl('unit')?.dirty && getControl('unit')?.errors"
         class="warning"

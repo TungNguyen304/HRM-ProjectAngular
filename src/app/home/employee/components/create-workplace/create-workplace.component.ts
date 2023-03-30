@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonService } from 'src/app/core/services/common.service';
+import { handleFormatDataUnit, handleFormatDataUnitTreeSelect } from 'src/app/core/services/helper/unit.service';
 import { emojiValidator } from 'src/app/core/services/helper/validator.service';
 
 import {
@@ -13,6 +14,7 @@ import {
   maxLengthWarning,
   requireWarning,
 } from 'src/app/core/services/helper/warningForm.service';
+import { UnitService } from 'src/app/core/services/http/unit.service';
 import { IWarningCreateWorkplace } from 'src/app/shared/interfaces';
 
 @Component({
@@ -23,6 +25,7 @@ import { IWarningCreateWorkplace } from 'src/app/shared/interfaces';
 export class CreateWorkplaceComponent {
   public position: any;
   public workplaceForm: FormGroup;
+  public unitList:any[];
   public warning:IWarningCreateWorkplace = {
     code: null,
     name: null,
@@ -31,7 +34,7 @@ export class CreateWorkplaceComponent {
     unit: null,
   };
 
-  constructor(private fb: FormBuilder, private commonService:CommonService) {
+  constructor(private fb: FormBuilder, private commonService:CommonService, private unitService:UnitService) {
     this.position = [
       { value: 'Đơn vị 1' },
       { value: 'Đơn vị 2' },
@@ -68,13 +71,19 @@ export class CreateWorkplaceComponent {
           '',
           [Validators.required, emojiValidator, Validators.maxLength(255)],
         ],
-        unit: ['', [Validators.required]],
+        unit: this.fb.group({
+          selectedNodes: ['', [Validators.required]]
+        }),
       }
     );
     this.warningDetect();
     this.workplaceForm.valueChanges.subscribe(() => {
       this.warningDetect();
     });
+
+    this.unitService.getUnit().subscribe((data:any) => {
+      this.unitList = handleFormatDataUnitTreeSelect(data.response.data);
+    })
   }
 
   warningDetect(): void {

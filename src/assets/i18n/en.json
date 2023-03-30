@@ -106,7 +106,7 @@
 
   "workplace": {
     "code": "Code",
-    "locationName": "Location name",
+    "locationName": "Position name",
     "belongingToTheUnit": "Belonging to the unit",
     "positionType": "Position type",
     "searchByCode": "Search by code",

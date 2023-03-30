@@ -52,3 +52,7 @@
     font-size: 0.775rem;
     padding: 0.55625rem 0.9375rem;
   }
+
+::ng-deep .p-treeselect {
+    width: 100%;
+}

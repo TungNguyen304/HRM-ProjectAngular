@@ -31,10 +31,10 @@
       </ng-template>
       <ng-template pTemplate="body" let-position>
         <tr [pSelectableRow]="position">
-          <td>{{ position.code }}</td>
-          <td>{{ position.name }}</td>
-          <td>{{ position.unit }}</td>
-          <td>{{ position.type }}</td>
+          <td>{{ position.job_position_code }}</td>
+          <td>{{ position.job_position_name }}</td>
+          <td>{{ position.organization }}</td>
+          <td>{{ position.job_position_category }}</td>
           <td style="text-align: end;">
             <button (click)="handleShowOverlayMember(position.name)" style="margin-right: 10px;" pButton class="p-button-outlined p-button-sm" type="button" icon="bi bi-people-fill" iconPos="left"></button>
             <button pButton class="p-button-outlined p-button-sm p-button-success" type="button" icon="bi bi-pencil-square" iconPos="left"></button>
@@ -43,7 +43,7 @@
       </ng-template>
     </p-table>
 
-    <p-paginator (onPageChange)="onPageChange1($event)" [first]="0" [rows]="5" [totalRecords]="10" [showFirstLastIcon]="false"></p-paginator>
+    <p-paginator (onPageChange)="onPageChange1($event)" [first]="0" [rows]="limit" [totalRecords]="total" [showFirstLastIcon]="false"></p-paginator>
   </div>
 </div>
 

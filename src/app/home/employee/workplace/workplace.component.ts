@@ -19,7 +19,8 @@ export class WorkplaceComponent {
   public displayCreate:boolean = false;
   public displayMember:boolean = false;
   public positionTemp:string;
-  
+  public limit:number = 2;
+  public total:number;
 
   handleShowOverlayCreateWorkplace() {
     this.displayCreate = !this.displayCreate;
@@ -31,13 +32,16 @@ export class WorkplaceComponent {
   }
 
   onPageChange1(event:any) {
-    console.log(event);
+    this.positionService.getPosition(event.page+1,this.limit).subscribe((data:any) => {
+      this.total = data.response.total;
+      this.positionList = data.response.data;
+    })
   }
 
   ngOnInit(): void {
-    this.positionService.getPosition().subscribe((data:any) => {
-      // console.log(data);
-      // this.positionList = data;
+    this.positionService.getPosition(1,this.limit).subscribe((data:any) => {
+      this.total = data.response.total;
+      this.positionList = data.response.data;
     })
   }
 }

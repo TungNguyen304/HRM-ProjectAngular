@@ -34,6 +34,7 @@ import { SpeedDialModule } from 'primeng/speeddial';
 import { PaginatorModule } from 'primeng/paginator';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TreeSelectModule } from 'primeng/treeselect';
 
 
 const routes: Routes = [
@@ -111,7 +112,8 @@ const routes: Routes = [
     SpeedDialModule,
     PaginatorModule,
     TranslateModule,
-    SharedModule
+    SharedModule,
+    TreeSelectModule
   ],
 })
 export class EmployeeModule {}

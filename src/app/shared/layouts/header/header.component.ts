@@ -109,8 +109,6 @@ export class HeaderComponent {
         if (item === 'employee' || item === 'estate') {
           return {};
         }
-        console.log(this.language);
-        
         return {
           label:
             this.language === 'en'
