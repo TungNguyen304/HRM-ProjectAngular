@@ -15,6 +15,7 @@ export interface IPosition {
 })
 export class WorkplaceComponent {
   public positionList: IPosition[];
+  public limit = 10;
   constructor(private positionService: PositionService) {}
   public displayCreate:boolean = false;
   public displayMember:boolean = false;
@@ -35,7 +36,8 @@ export class WorkplaceComponent {
   }
 
   ngOnInit(): void {
-    this.positionService.getPosition().subscribe((data:any) => {
+    this.positionService.getPosition(1, this.limit).subscribe((data:any) => {
+      console.log(data.response.data);
       this.positionList = data;
     })
   }

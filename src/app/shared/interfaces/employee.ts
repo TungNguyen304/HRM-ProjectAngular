@@ -37,3 +37,13 @@ export interface IWarningOtherInfo {
     description: Iwarning | null,
     cv: Iwarning | null
 }
+
+export interface IPosition {
+    job_position_code: string,
+    job_position_name: string,
+    job_position_category: string,
+    job_position_code_name: string,
+    job_position_other_name: string,
+    organization_unit_id: string,
+    description: string
+}
