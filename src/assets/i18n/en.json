@@ -7,7 +7,9 @@
     "uploadEmployee": "Upload Employee",
     "provider": "Provider",
     "estate": "Estate",
-    "logout": "Logout"
+    "logout": "Logout",
+    "createDevice": "Create device",
+    "createEmployee": "Create employee"
   },
   "title": {
     "unitManagement": "UNIT MANAGEMENT",
@@ -17,11 +19,11 @@
     "editDevice": "EDIT DEVICES",
     "createDevice": "CREATE NEW DEVICES",
     "deviceManagement": "DEVICE MANAGEMENT",
-    "addSupplier": "ADD NEW SUPPLIER",
-    "editSupplier": "EDIT SUPPLIER",
+    "addSupplier": "ADD NEW PROVIDER",
+    "editSupplier": "EDIT PROVIDER",
     "detail": "DETAIL",
     "employeeUpload": "UPLOAD EMPLOYEE",
-    "provider": "SUPPLIER",
+    "provider": "PROVIDER",
     "propertyStatus": "Property status",
     "contactInfo": "Contact information",
     "workingProcess": "Working process",

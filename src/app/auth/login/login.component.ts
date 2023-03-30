@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/core/services/http/auth.service';
+import { AccountService } from 'src/app/core/services/state/account.service';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
 
 type errorEmail = 'errorEmail';
@@ -30,7 +31,8 @@ export class LoginComponent {
     private authService: AuthService,
     private messageService: MessageService,
     private router: Router,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private accountService:AccountService
   ) {}
   public loginForm: FormGroup;
   public errorEmail: string = 'Email is empty!';
@@ -123,7 +125,9 @@ export class LoginComponent {
         })
         .subscribe(
           (data: any) => {
+            console.log(data);
             this.loadingService.setloading(false);
+            this.accountService.setAccount(data.response.user)
             localStorage.setItem('token', data.response.access_token);
             this.messageService.add({
               severity: 'success',

@@ -12,11 +12,13 @@ import { LoadingService } from './core/services/state/loading.service';
 })
 export class AppComponent {
   title = 'HRM-Project';
+  public display: boolean = false;
   constructor(
     private translate: TranslateService,
     private languageService: LanguageService,
     private authService: AuthService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private loadingService: LoadingService
   ) {
     translate.setDefaultLang('en');
     translate.use('en');
@@ -29,11 +31,13 @@ export class AppComponent {
 
   ngOnInit() {
     this.loadingService.loading$.subscribe((value) => {
-      console.log(value);
       this.display = value;
-    this.authService.getMyInfo().subscribe((data:any) => {
-      this.accountService.setAccount(data);
-    }, (err) => {
-    })
+      this.authService.getMyInfo().subscribe(
+        (data: any) => {
+          this.accountService.setAccount(data);
+        },
+        (err) => {}
+      );
+    });
   }
 }

@@ -20,15 +20,18 @@
         flex: 1;
         border: none;
         font-size: 16px;
+        border-top: 2px solid transparent;
         border-bottom: 2px solid transparent;
         &::placeholder {
           font-size: 16px;
           margin-top: 2px;
           padding-top: 2px;
           top: 2px;
+          font-style: italic;
         }
         &:focus {
           border-bottom: 2px solid var(--primary-color-main);
+          border-top: 2px solid var(--primary-color-main);
         }
       }
     }

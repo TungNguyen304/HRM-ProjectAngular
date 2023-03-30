@@ -7,7 +7,9 @@
     "uploadEmployee": "Tải lên nhân viên",
     "provider": "Nhà cung cấp",
     "estate": "Tài sản",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "createDevice": "Thêm thiết bị",
+    "createEmployee": "Thêm nhân viên"
   },
 
   "title": {
