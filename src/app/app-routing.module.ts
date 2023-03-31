@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { LoginGuard } from './guard/login.guard';
 import { PageNotFoundComponent } from './shared/layouts/page-not-found/page-not-found.component';
+import { LoginGuard } from './guard/login.guard';
 
 const routes: Routes = [
   {
