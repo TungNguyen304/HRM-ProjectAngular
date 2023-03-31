@@ -11,10 +11,11 @@ import { TypeErrorPipe } from './pipes/type-error.pipe';
 import { DragDropAvtDirective } from './directives/drag-drop-avt.directive';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { LoadingComponent } from './layouts/loading/loading.component';
+import { LoadSmallComponent } from './layouts/load-small/load-small.component';
 
 
 @NgModule({
-  declarations: [PageNotFoundComponent, HeaderComponent, SideBarComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent],
+  declarations: [PageNotFoundComponent, HeaderComponent, SideBarComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent, LoadSmallComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -23,6 +24,6 @@ import { LoadingComponent } from './layouts/loading/loading.component';
     TranslateModule,
     BreadcrumbModule
   ],
-  exports: [PageNotFoundComponent, SideBarComponent, HeaderComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent]
+  exports: [PageNotFoundComponent, SideBarComponent, HeaderComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent, LoadSmallComponent]
 })
 export class SharedModule { }

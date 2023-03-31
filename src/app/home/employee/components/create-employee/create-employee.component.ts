@@ -9,10 +9,11 @@ import { MessageService } from 'primeng/api';
   selector: 'app-create-employee',
   templateUrl: './create-employee.component.html',
   styleUrls: ['./create-employee.component.scss'],
-  providers: [MessageService],
+  providers: [MessageService]
 })
 export class CreateEmployeeComponent {
   public assetList = [];
+  
   constructor(
     private location: Location,
     private fb: FormBuilder,

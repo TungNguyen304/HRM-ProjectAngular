@@ -6,14 +6,14 @@ import { IMember } from './team-member.component';
   template: `
     <div class="team_item">
       <div class="avt">
-        <img [src]="memberInfo.image" alt="" />
+        <img [src]="memberInfo.image_url" alt="" />
       </div>
       <div class="info">
-        <p class="name">{{ memberInfo.name }}</p>
+        <p class="name">{{ memberInfo.full_name }}</p>
         <div>
-          <p class="code">{{ memberInfo.code }}</p>
-          <p class="birthday">({{ memberInfo.birthday }})</p>
-          <p class="phone">{{ memberInfo.phone }}</p>
+          <p class="code">{{ memberInfo.employee_code }}</p>
+          <p class="birthday">({{ memberInfo.birth_date }})</p>
+          <p class="phone">{{ memberInfo.mobile }}</p>
         </div>
       </div>
     </div>
@@ -58,6 +58,10 @@ import { IMember } from './team-member.component';
         .birthday {
           margin-bottom: 10px;
           color: #7a7e80;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
         .phone {
           color: #7a7e80;

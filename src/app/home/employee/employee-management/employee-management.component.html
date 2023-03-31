@@ -1,7 +1,7 @@
 <div class="employee">
   <h2 class="title">{{ "title.employeeManager" | translate }}</h2>
   <p-toast></p-toast>
-  <p-accordion>
+  <p-accordion [activeIndex]="0">
     <p-accordionTab>
       <ng-template pTemplate="header">
         <div style="color: #fff">
@@ -117,13 +117,13 @@
     </ng-template>
     <ng-template pTemplate="body" let-employee>
       <tr [pSelectableRow]="employee">
-        <td>{{ employee.code }}</td>
-        <td>{{ employee.name }}</td>
+        <td>{{ employee.employee_code }}</td>
+        <td>{{ employee.full_name }}</td>
         <td>{{ employee.email }}</td>
-        <td>{{ employee.sex }}</td>
-        <td>{{ employee.unit }}</td>
-        <td>{{ employee.position }}</td>
-        <td>{{ employee.status }}</td>
+        <td>{{ employee.gender }}</td>
+        <td>{{ employee.organization?.organization_unit_name }}</td>
+        <td>{{ employee.job_position?.job_position_name }}</td>
+        <td>{{ employee.employee_status?.employee_status_name }}</td>
         <td>
           <div>
             <p-splitButton
@@ -134,5 +134,9 @@
         </td>
       </tr>
     </ng-template>
+    <ng-template pTemplate="footer">
+      <app-load-small *ngIf="loadDisplay"></app-load-small>
+    </ng-template>
   </p-table>
+  <p-paginator (onPageChange)="onPageChange($event)" [first]="0" [rows]="limit" [totalRecords]="total" [showFirstLastIcon]="false"></p-paginator>
 </div>

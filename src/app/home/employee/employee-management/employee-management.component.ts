@@ -3,9 +3,17 @@ import { Router } from '@angular/router';
 import { EmployeeService } from 'src/app/core/services/http/employee.service';
 import { MessageService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { emojiValidator } from 'src/app/core/services/helper/validator.service';
-import { emojiWarning, maxLengthWarning } from 'src/app/core/services/helper/warningForm.service';
+import {
+  emojiWarning,
+  maxLengthWarning,
+} from 'src/app/core/services/helper/warningForm.service';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 
 @Component({
@@ -20,10 +28,13 @@ export class EmployeeManagementComponent {
   public employeeList: any;
   public showCreateEmployee: boolean = false;
   public actions: any[];
-  public searchForm:FormGroup;
-  public warning:{codeNameEmail: any} = {
-    codeNameEmail: null
+  public searchForm: FormGroup;
+  public warning: { codeNameEmail: any } = {
+    codeNameEmail: null,
   };
+  public loadDisplay: boolean = false;
+  public limit: number = 5;
+  public total: number;
   constructor(
     private employeeService: EmployeeService,
     private router: Router,
@@ -46,9 +57,13 @@ export class EmployeeManagementComponent {
           this.delete();
         },
       },
-      { label: 'Detail', icon: 'bi bi-card-text',command: () => {
-        this.handleNavigateDetailEmployee();
-      },},
+      {
+        label: 'Detail',
+        icon: 'bi bi-card-text',
+        command: () => {
+          this.handleNavigateDetailEmployee();
+        },
+      },
     ];
   }
 
@@ -56,28 +71,31 @@ export class EmployeeManagementComponent {
     return getControlCommon(this.searchForm, control);
   }
 
+  onPageChange(event: any): void {}
+
   ngOnInit() {
     this.searchForm = new FormGroup({
-      codeNameEmail: new FormControl('', [Validators.maxLength(255), emojiValidator])
-    })
-    this.employeeService.getEmployee().subscribe((data) => {
-      this.employeeList = data;
+      codeNameEmail: new FormControl('', [
+        Validators.maxLength(255),
+        emojiValidator,
+      ]),
+    });
+    this.loadDisplay = true;
+    this.employeeService.getEmployee(1, this.limit).subscribe((data: any) => {
+      this.employeeList = data.response.data;
+      this.loadDisplay = false;
     });
     this.warningDetect();
     this.searchForm.valueChanges.subscribe(() => {
       this.warningDetect();
-    })
+    });
   }
 
   warningDetect(): void {
     this.handleSetWarning('codeNameEmail', 'Mã tài sản', 255);
   }
 
-  handleSetWarning(
-    type: string,
-    label: string,
-    length?: number
-  ): void {
+  handleSetWarning(type: string, label: string, length?: number): void {
     emojiWarning(this.searchForm, this, type, label);
     length && maxLengthWarning(this.searchForm, this, type, label, length);
   }

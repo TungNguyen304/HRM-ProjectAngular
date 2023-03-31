@@ -25,7 +25,7 @@
         <td>{{ rowData.address }}</td>
         <td style="text-align: end">
           <button
-            (click)="handleShowMember(rowData.organization_unit_id)"
+            (click)="handleShowMember(rowData.organization_unit_id, rowData.organization_unit_name)"
             pButton
             class="p-button-outlined p-button-sm"
             type="button"
@@ -34,6 +34,9 @@
           ></button>
         </td>
       </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <app-load-small *ngIf="loadDisplay"></app-load-small>
     </ng-template>
   </p-treeTable>
 </div>

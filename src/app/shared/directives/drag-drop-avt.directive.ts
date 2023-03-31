@@ -89,6 +89,7 @@ export class DragDropAvtDirective {
           detail: 'Tải ảnh lên thành công',
         });
       } else {
+        event.preventDefault();
         this.showAlert.emit({
           severity: 'error',
           summary: 'Fail',

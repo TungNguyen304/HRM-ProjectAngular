@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MemberService } from 'src/app/core/services/http/member.service';
 
 export interface IMember {
-  id: number,
-  name: string,
-  code: number,
-  birthday: string,
-  phone: string,
-  image: string
+  employee_id: number,
+  full_name: string,
+  employee_code: number,
+  birth_date: string,
+  mobile: string,
+  image_url: string,
+  email: string,
+  gender: string
 }
 
 @Component({
@@ -18,10 +21,21 @@ export interface IMember {
 
 export class TeamMemberComponent {
   public memberList:IMember[];
+  public limit:number = 5;
+  public total:number;
+  public searchInput:FormControl = new FormControl('');
+  public loadDisplay:boolean = false;
   constructor(private memberService:MemberService) {}
   ngOnInit():void {
-    this.memberService.getMember().subscribe((data:any) => {
-      this.memberList = data
+    this.loadDisplay = true;
+    this.memberService.getMember(1, this.limit).subscribe((data:any) => {
+      this.memberList = data.response.data;
+      this.total = data.response.total;
+      this.loadDisplay = false;
     })
+  }
+
+  onPageChange(event:any):void {
+
   }
 }

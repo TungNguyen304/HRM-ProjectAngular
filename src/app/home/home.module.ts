@@ -7,6 +7,7 @@ import { TeamMemberComponent } from './team-member/team-member.component';
 import { MemberComponent } from './team-member/member.component';
 import { ButtonModule } from 'primeng/button';
 import { TranslateModule } from '@ngx-translate/core';
+import { PaginatorModule } from 'primeng/paginator';
 
 const routes:Routes = [
   {
@@ -45,7 +46,8 @@ const routes:Routes = [
     SharedModule,
     RouterModule.forChild(routes),
     ButtonModule,
-    TranslateModule
+    TranslateModule,
+    PaginatorModule
   ]
 })
 export class HomeModule { }

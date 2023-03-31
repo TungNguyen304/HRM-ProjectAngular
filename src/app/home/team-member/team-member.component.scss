@@ -46,9 +46,11 @@
     }
   }
   .team_list {
+    height: 350px;
     display: grid;
     margin-top: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-gap: 20px;
+    margin-bottom: 20px;
   }
 }

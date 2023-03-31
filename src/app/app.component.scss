@@ -56,3 +56,28 @@
 ::ng-deep .p-treeselect {
     width: 100%;
 }
+
+::ng-deep .p-tree .p-tree-container .p-treenode .p-treenode-content {
+    background-color: #e5f1f3;
+    color: var(--primary-color-main);
+}
+
+::ng-deep .p-tree .p-tree-container .p-treenode .p-treenode-content.p-treenode-selectable:not(.p-highlight):hover {
+    background-color: var(--primary-color-main);
+    color: #fff;
+}
+
+::ng-deep .p-tree .p-tree-container .p-treenode .p-treenode-content.p-highlight {
+    background-color: #374454;
+    color: #fff;
+}
+
+::ng-deep .p-treetable .p-treetable-scrollable-header, .p-treetable .p-treetable-scrollable-footer {
+    background-color: #fff;
+    position: relative;
+}
+
+::ng-deep .p-treeselect-items-wrapper {
+    box-shadow: 0 0 8px 2px #a69e9e;
+    border-radius: 10px
+}

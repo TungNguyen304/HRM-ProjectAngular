@@ -33,7 +33,7 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
 export class BasicInformationComponent {
   public sex = [{ value: 'Nam' }, { value: 'Nữ' }];
   public url: any = '';
-  public avtSize: number = 1;
+  public avtSize: number = 0.1;
   public warning: IWarningBasicInfo = {
     code: null,
     name: null,

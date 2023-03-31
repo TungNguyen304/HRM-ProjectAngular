@@ -78,17 +78,20 @@
         <span>{{ "workplace.belongingToTheUnit" | translate }}</span>
         <span style="color: red">*</span>
       </label>
-      <div formGroupName="unit">
+      <div formGroupName="unitSelect">
         <p-treeSelect
           class="md:w-20rem w-full"
           containerStyleClass="w-full"
-          formControlName="selectedNodes"
+          formControlName="unit"
           [options]="unitList"
-          placeholder="Select Item"
+          placeholder="Select"
         ></p-treeSelect>
       </div>
       <p
-        *ngIf="getControl('unit')?.dirty && getControl('unit')?.errors"
+        *ngIf="
+          getControl('unitSelect')?.get('unit')?.dirty &&
+          getControl('unitSelect')?.get('unit')?.errors
+        "
         class="warning"
       >
         <i class="bi bi-cone-striped"></i>
@@ -98,12 +101,15 @@
     </div>
     <div class="action">
       <button
-        style="margin-top: 10px"
+        [disabled]="disable"
+        #buttonSave
+        style="margin-top: 10px; width: 100%"
         pButton
         type="submit"
-        [label]="'common.save' | translate"
-        class="p-button-outlined p-button-sm"
-      ></button>
+        class="p-button-warning button"
+      >
+        <span class="button__text">{{ "common.save" | translate }}</span>
+      </button>
     </div>
   </form>
 </div>

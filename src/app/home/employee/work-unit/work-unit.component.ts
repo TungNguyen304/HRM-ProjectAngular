@@ -12,23 +12,26 @@ export class WorkUnitComponent {
   public memberList = [];
   public unitTemp: string;
   public display: boolean = false;
+  public loadDisplay: boolean = false;
   public units:IUnitList[] = [
   ];
   constructor(private unitService: UnitService) {}
 
   ngOnInit() {
+    this.loadDisplay = true;
     this.unitService.getUnit().subscribe((data: any) => {
       this.units = handleFormatDataUnit(data.response.data);
+      this.loadDisplay = false;
     });
   }
 
   
 
-  handleShowMember(unitCode: string) {
+  handleShowMember(unitCode: string, unitName: string) {
     this.unitService.getMemberByUnitId(unitCode).subscribe((data:any) => {
       this.memberList = data.response.users;
     });
-    this.unitTemp = unitCode;
+    this.unitTemp = unitName;
     this.display = !this.display;
   }
 }

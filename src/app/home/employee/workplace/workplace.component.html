@@ -1,4 +1,5 @@
 <div class="workplace">
+  <p-toast></p-toast>
   <h2 class="title">{{'title.JobPositionManagement' | translate}}</h2>
   <div style="text-align: end">
     <button
@@ -25,31 +26,35 @@
           <th pSortableColumn="unit">{{'workplace.belongingToTheUnit' | translate}} <p-sortIcon field="unit"></p-sortIcon></th>
           <th pSortableColumn="type">{{'workplace.positionType' | translate}} <p-sortIcon field="type"></p-sortIcon></th>
           <th style="text-align: end;">
-            <input style="width: 100%;" type="text" pInputText [placeholder]="'workplace.searchByCode' | translate" />
+            <input style="width: 100%;" [formControl]="searchInput" type="text" pInputText [placeholder]="'workplace.searchByCode' | translate" />
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-position>
-        <tr [pSelectableRow]="position">
+        <tr *ngIf="!loadDisplay" [pSelectableRow]="position">
           <td>{{ position.job_position_code }}</td>
           <td>{{ position.job_position_name }}</td>
-          <td>{{ position.organization }}</td>
+          <td>{{ position.organization?.organization_unit_name }}</td>
           <td>{{ position.job_position_category }}</td>
           <td style="text-align: end;">
             <button (click)="handleShowOverlayMember(position.name)" style="margin-right: 10px;" pButton class="p-button-outlined p-button-sm" type="button" icon="bi bi-people-fill" iconPos="left"></button>
-            <button pButton class="p-button-outlined p-button-sm p-button-success" type="button" icon="bi bi-pencil-square" iconPos="left"></button>
+            <button (click)="handleShowOverlayUpdate(position)" pButton class="p-button-outlined p-button-sm p-button-success" type="button" icon="bi bi-pencil-square" iconPos="left"></button>
           </td>
         </tr>
       </ng-template>
+      <ng-template pTemplate="footer">
+        <app-load-small *ngIf="loadDisplay"></app-load-small>
+      </ng-template>
     </p-table>
 
-    <p-paginator (onPageChange)="onPageChange1($event)" [first]="0" [rows]="limit" [totalRecords]="total" [showFirstLastIcon]="false"></p-paginator>
+
+    <p-paginator #paginator (onPageChange)="onPageChange($event)" [first]="0" [rows]="limit" [totalRecords]="total" [showFirstLastIcon]="false"></p-paginator>
   </div>
 </div>
 
 <p-dialog [header]="'title.create' | translate" [(visible)]="displayCreate">
   <ng-template pTemplate="content">
-    <app-create-workplace></app-create-workplace>
+    <app-create-workplace [infoUpdate]="infoUpdate" [typeAction]="typeAction" (showMessage)="showMessage($event)"></app-create-workplace>
   </ng-template>
 </p-dialog>
 

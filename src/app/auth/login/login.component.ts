@@ -125,7 +125,6 @@ export class LoginComponent {
         })
         .subscribe(
           (data: any) => {
-            console.log(data);
             this.loadingService.setloading(false);
             this.accountService.setAccount(data.response.user)
             localStorage.setItem('token', data.response.access_token);

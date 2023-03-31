@@ -11,5 +11,9 @@
       *ngFor="let member of memberList"
       [memberInfo]="member"
     ></app-member>
+    <div class="load">
+      <app-load-small *ngIf="loadDisplay"></app-load-small>
+    </div>
   </div>
+  <p-paginator  (onPageChange)="onPageChange($event)" [first]="0" [rows]="limit" [totalRecords]="total" [showFirstLastIcon]="false"></p-paginator>
 </div>
