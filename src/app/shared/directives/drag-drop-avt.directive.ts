@@ -27,9 +27,9 @@ export class DragDropAvtDirective {
   @Input('file') file: FileUpload;
 
   ngOnInit() {
-    this.file.onSelect.emit = (event:any) => {
+    this.file.onSelect.emit = (event: any) => {
       this.handleDropFile(event);
-    }
+    };
   }
 
   @HostListener('dragover', ['$event']) dragover(event: DragEvent) {
@@ -52,7 +52,7 @@ export class DragDropAvtDirective {
     this.handleDropFile(event);
   }
 
-  handleDropFile(event:any) {
+  handleDropFile(event: any) {
     if (
       this.checkTypeImage(event.dataTransfer?.files[0]) ||
       (event.files && this.checkTypeImage(event.files[0]))
@@ -89,7 +89,9 @@ export class DragDropAvtDirective {
           detail: 'Tải ảnh lên thành công',
         });
       } else {
-        event.preventDefault();
+        if (event instanceof DragEvent) {
+          event.preventDefault();
+        }
         this.showAlert.emit({
           severity: 'error',
           summary: 'Fail',

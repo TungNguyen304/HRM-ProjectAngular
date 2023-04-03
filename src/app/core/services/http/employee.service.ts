@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, debounceTime, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, debounceTime, delay, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -30,5 +30,13 @@ export class EmployeeService {
       debounceTime(2000),
       switchMap((url) => this.http.get(url))
     );
+  }
+
+  getStatus():Observable<Object> {
+       return this.http.get("users/status/list");
+  }
+
+  addEmployee(data:any):Observable<Object> {
+    return this.http.post("users", data).pipe(delay(2000));
   }
 }

@@ -31,6 +31,10 @@ export class PositionService {
     );
   }
 
+  getPositionByUnitId(id:string):Observable<Object> {
+    return this.http.get(`job-positions?page=1&limit=0&organization_unit_id=${id}`)
+  }
+
   addPosition(data: IPosition): Observable<Object> {
     return this.http.post(`job-positions`, data).pipe(delay(1000));
   }

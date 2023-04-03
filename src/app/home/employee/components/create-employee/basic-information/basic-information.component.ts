@@ -31,7 +31,7 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
   ],
 })
 export class BasicInformationComponent {
-  public sex = [{ value: 'Nam' }, { value: 'Nữ' }];
+  public sex = [{ value: 'Male' }, { value: 'FeMale' }];
   public url: any = '';
   public avtSize: number = 0.1;
   public warning: IWarningBasicInfo = {

@@ -70,11 +70,11 @@ export class CreateWorkplaceComponent {
         job_position_name: this.getControl('name')?.value,
         job_position_category: this.getControl('type')?.value,
         job_position_other_name: this.getControl('otherName')?.value,
-        organization_unit_id: this.getControl('unitSelect')?.value.unit.key,
+        organization_unit_id: this.getControl('unitSelect')?.value?.unit?.key,
       };
       this.buttonSave.nativeElement.classList.toggle('button--loading');
       this.disable = true;
-      this.handleTypeRequestApi(data, this.infoUpdate.job_position_id).subscribe(
+      this.handleTypeRequestApi(data, this.infoUpdate?.job_position_id).subscribe(
         () => {
           this.showMessage.emit(true);
         },

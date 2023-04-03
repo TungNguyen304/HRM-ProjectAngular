@@ -1,10 +1,14 @@
 <div class="header">
-  <span (click)="handleBack()"
-    ><i class="bi bi-arrow-left-short"></i></span
-  >
-  <h2 class="title">{{'title.createEmployee' | translate}}</h2>
+  <span (click)="handleBack()"><i class="bi bi-arrow-left-short"></i></span>
+  <h2 class="title">{{ "title.createEmployee" | translate }}</h2>
 </div>
-<p-toast></p-toast>
+
+<p-toast
+  [showTransformOptions]="'translateY(100%)'"
+  [showTransitionOptions]="'300ms'"
+  [hideTransitionOptions]="'500ms'"
+  [showTransformOptions]="'translateX(100%)'"
+></p-toast>
 <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
   <div class="create_employee">
     <div class="create_left">
@@ -13,22 +17,24 @@
         [employeeForm]="employeeForm"
       ></app-basic-information>
       <div class="asset_relate">
-        <h3 class="title">{{'title.relatedProperty' | translate}}</h3>
+        <h3 class="title">{{ "title.relatedProperty" | translate }}</h3>
         <p-table selectionMode="single" [value]="assetList">
           <ng-template pTemplate="header">
             <tr>
-              <th style="text-align: center;">{{'code' | translate}}</th>
-              <th style="text-align: center;">{{'name' | translate}}</th>
+              <th style="text-align: center">{{ "code" | translate }}</th>
+              <th style="text-align: center">{{ "name" | translate }}</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-asset>
             <tr [pSelectableRow]="asset">
-              <td style="text-align: center;">{{ asset.code }}</td>
-              <td style="text-align: center;">{{ asset.name }}</td>
+              <td style="text-align: center">{{ asset.code }}</td>
+              <td style="text-align: center">{{ asset.name }}</td>
             </tr>
           </ng-template>
         </p-table>
-        <p class="nodata" *ngIf="assetList.length === 0">{{'createEmployee.noData' | translate}}</p>
+        <p class="nodata" *ngIf="assetList.length === 0">
+          {{ "createEmployee.noData" | translate }}
+        </p>
       </div>
     </div>
 
@@ -37,10 +43,11 @@
         [employeeForm]="employeeForm"
       ></app-contact-information>
       <app-other-information
+        [unitList]="unitList"
         [employeeForm]="employeeForm"
         (showAlert)="showAlert($event)"
       ></app-other-information>
-      <app-working-process></app-working-process>
+      <app-working-process [employeeForm]="employeeForm" [unitList]="unitList"></app-working-process>
     </div>
   </div>
   <div class="create_new">
