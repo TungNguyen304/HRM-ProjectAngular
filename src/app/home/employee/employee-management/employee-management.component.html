@@ -1,81 +1,98 @@
 <div class="employee">
   <h2 class="title">{{ "title.employeeManager" | translate }}</h2>
   <p-toast></p-toast>
-  <p-accordion [activeIndex]="0">
-    <p-accordionTab>
-      <ng-template pTemplate="header">
-        <div style="color: #fff">
-          <i style="margin-right: 10px" class="bi bi-search"></i>
-          <span>{{ "common.search" | translate }}</span>
-        </div>
-      </ng-template>
-      <div class="form_search">
-        <form [formGroup]="searchForm" action="">
-          <div class="form_list">
-            <div class="form_item">
-              <label for="name">{{ "employeeManagement.codeNameEmail" | translate }}</label>
-              <input formControlName="codeNameEmail" type="text" id="name" pInputText />
-              <p
-                *ngIf="getControl('codeNameEmail')?.dirty && getControl('codeNameEmail')?.errors"
-                class="warning"
-              >
-                <i class="bi bi-cone-striped"></i>
-                {{ 'employeeManagement.codeNameEmail' | translate }} {{warning.codeNameEmail?.type | typeError | translate:warning.codeNameEmail}}
-              </p>
-            </div>
-            <div class="form_item">
-              <label for="sex">{{
-                "employeeManagement.sex" | translate
-              }}</label>
-              <p-dropdown
-                id="sex"
-                [options]="sex"
-                [placeholder]="'select' | translate"
-                optionLabel="value"
-              ></p-dropdown>
-            </div>
-            <div class="form_item">
-              <label for="unit">{{
-                "employeeManagement.unit" | translate
-              }}</label>
-              <p-dropdown
-                [placeholder]="'select' | translate"
-                id="sex"
-                [options]="sex"
-                optionLabel="value"
-              ></p-dropdown>
-            </div>
-            <div class="form_item">
-              <label for="position">{{
-                "employeeManagement.position" | translate
-              }}</label>
-              <p-dropdown
-                id="sex"
-                [placeholder]="'select' | translate"
-                [options]="sex"
-                optionLabel="value"
-              ></p-dropdown>
-            </div>
+  <div class="accordion">
+    <p-accordion [activeIndex]="0">
+      <p-accordionTab>
+        <ng-template pTemplate="header">
+          <div style="color: #fff">
+            <i style="margin-right: 10px" class="bi bi-search"></i>
+            <span>{{ "common.search" | translate }}</span>
           </div>
+        </ng-template>
+        <div class="form_search">
+          <form [formGroup]="searchForm" action="">
+            <div class="form_list">
+              <div class="form_item">
+                <label for="name">{{
+                  "employeeManagement.codeNameEmail" | translate
+                }}</label>
+                <input
+                  formControlName="codeNameEmail"
+                  type="text"
+                  id="name"
+                  pInputText
+                />
+                <p
+                  *ngIf="
+                    getControl('codeNameEmail')?.dirty &&
+                    getControl('codeNameEmail')?.errors
+                  "
+                  class="warning"
+                >
+                  <i class="bi bi-cone-striped"></i>
+                  {{ "employeeManagement.codeNameEmail" | translate }}
+                  {{
+                    warning.codeNameEmail?.type
+                      | typeError
+                      | translate : warning.codeNameEmail
+                  }}
+                </p>
+              </div>
+              <div class="form_item">
+                <label for="sex">{{
+                  "employeeManagement.sex" | translate
+                }}</label>
+                <p-dropdown
+                  id="sex"
+                  [options]="sex"
+                  [placeholder]="'select' | translate"
+                  optionLabel="value"
+                ></p-dropdown>
+              </div>
+              <div class="form_item">
+                <label for="unit">{{
+                  "employeeManagement.unit" | translate
+                }}</label>
+                <p-dropdown
+                  [placeholder]="'select' | translate"
+                  id="sex"
+                  [options]="sex"
+                  optionLabel="value"
+                ></p-dropdown>
+              </div>
+              <div class="form_item">
+                <label for="position">{{
+                  "employeeManagement.position" | translate
+                }}</label>
+                <p-dropdown
+                  id="sex"
+                  [placeholder]="'select' | translate"
+                  [options]="sex"
+                  optionLabel="value"
+                ></p-dropdown>
+              </div>
+            </div>
 
-          <div class="action">
-            <button
-              type="button"
-              pButton
-              class="p-button-outlined p-button-danger p-button-sm"
-              [label]="'common.delete' | translate"
-            ></button>
-            <button
-              type="button"
-              pButton
-              class="p-button-primary p-button-sm"
-              [label]="'common.search' | translate"
-            ></button>
-          </div>
-        </form>
-      </div>
-    </p-accordionTab>
-  </p-accordion>
+            <div class="action">
+              <button
+                type="button"
+                pButton
+                class="p-button-outlined p-button-danger p-button-sm"
+                [label]="'common.delete' | translate"
+              ></button>
+              <button
+                type="button"
+                pButton
+                class="p-button-primary p-button-sm"
+                [label]="'common.search' | translate"
+              ></button>
+            </div>
+          </form>
+        </div>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
 
   <div class="more_option">
     <button
@@ -93,50 +110,59 @@
     ></button>
   </div>
 
-  <p-table
-    selectionMode="single"
-    [value]="employeeList"
-    [tableStyle]="{ 'min-width': '50rem' }"
-  >
-    <ng-template pTemplate="caption">
-      <tr>
-        <th>150 {{ "common.record" | translate }}</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="header">
-      <tr>
-        <th>{{ "employeeManagement.employeeCode" | translate }}</th>
-        <th>{{ "employeeManagement.fullName" | translate }}</th>
-        <th>Email</th>
-        <th>{{ "employeeManagement.sex" | translate }}</th>
-        <th>{{ "employeeManagement.unit" | translate }}</th>
-        <th>{{ "employeeManagement.position" | translate }}</th>
-        <th>{{ "common.status" | translate }}</th>
-        <th>{{ "common.action" | translate }}</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-employee>
-      <tr [pSelectableRow]="employee">
-        <td>{{ employee.employee_code }}</td>
-        <td>{{ employee.full_name }}</td>
-        <td>{{ employee.email }}</td>
-        <td>{{ employee.gender }}</td>
-        <td>{{ employee.organization?.organization_unit_name }}</td>
-        <td>{{ employee.job_position?.job_position_name }}</td>
-        <td>{{ employee.employee_status?.employee_status_name }}</td>
-        <td>
-          <div>
-            <p-splitButton
-              styleClass="p-button-sm mr-2 mb-2 p-button-outlined"
-              [model]="actions"
-            ></p-splitButton>
-          </div>
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="footer">
-      <app-load-small *ngIf="loadDisplay"></app-load-small>
-    </ng-template>
-  </p-table>
-  <p-paginator (onPageChange)="onPageChange($event)" [first]="0" [rows]="limit" [totalRecords]="total" [showFirstLastIcon]="false"></p-paginator>
+  <div class="employee_table">
+    <p-table
+      selectionMode="single"
+      [value]="employeeList"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      style="border-radius: 5px;"
+    >
+      <ng-template style="border-radius: 5px;" pTemplate="caption">
+        <tr>
+          <th>150 {{ "common.record" | translate }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ "employeeManagement.employeeCode" | translate }}</th>
+          <th>{{ "employeeManagement.fullName" | translate }}</th>
+          <th>Email</th>
+          <th>{{ "employeeManagement.sex" | translate }}</th>
+          <th>{{ "employeeManagement.unit" | translate }}</th>
+          <th>{{ "employeeManagement.position" | translate }}</th>
+          <th>{{ "common.status" | translate }}</th>
+          <th>{{ "common.action" | translate }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-employee>
+        <tr [pSelectableRow]="employee">
+          <td>{{ employee.employee_code }}</td>
+          <td>{{ employee.full_name }}</td>
+          <td>{{ employee.email }}</td>
+          <td>{{ employee.gender }}</td>
+          <td>{{ employee.organization?.organization_unit_name }}</td>
+          <td>{{ employee.job_position?.job_position_name }}</td>
+          <td>{{ employee.employee_status?.employee_status_name }}</td>
+          <td>
+            <div>
+              <p-splitButton
+                styleClass="p-button-sm mr-2 mb-2 p-button-outlined"
+                [model]="actions"
+              ></p-splitButton>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <app-load-small *ngIf="loadDisplay"></app-load-small>
+      </ng-template>
+    </p-table>
+    <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [first]="0"
+      [rows]="limit"
+      [totalRecords]="total"
+      [showFirstLastIcon]="false"
+    ></p-paginator>
+  </div>
 </div>
