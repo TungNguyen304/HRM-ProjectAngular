@@ -38,6 +38,7 @@ export class LoginComponent {
   public errorEmail: string = 'Email is empty!';
   public errorPassword: string = 'Password is empty!';
   @ViewChild('pass') pass: ElementRef;
+  public display:boolean = false;
   ngOnInit() {
     this.loginForm = this.fb.group({
       email: [
@@ -97,17 +98,8 @@ export class LoginComponent {
     }
   }
 
-  handleDisplayPassword(event: MouseEvent) {
-    if (
-      (event?.target as HTMLIFrameElement).className.includes('bi-eye-fill')
-    ) {
-      this.pass.nativeElement.type = 'text';
-      (event?.target as HTMLIFrameElement).className =
-        'bi bi bi-eye-slash-fill eye';
-    } else {
-      (event?.target as HTMLIFrameElement).className = 'bi bi-eye-fill eye';
-      this.pass.nativeElement.type = 'password';
-    }
+  handleDisplayPassword() {
+    this.display = !this.display;
   }
 
   onSubmit() {

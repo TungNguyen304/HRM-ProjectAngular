@@ -30,12 +30,12 @@
               <input
                 #pass
                 formControlName="password"
-                type="password"
+                [type]="display ? 'text' : 'password'"
                 id="password"
                 name="password"
                 placeholder="Enter your password..."
               />
-              <i (click)="handleDisplayPassword($event)" class="bi bi-eye-fill eye"></i>
+              <i (click)="handleDisplayPassword()" [ngClass]="display ? 'bi bi-eye-fill eye' : 'bi bi-eye-slash-fill eye'" class="eye"></i>
             </div>
             <p
               *ngIf="
