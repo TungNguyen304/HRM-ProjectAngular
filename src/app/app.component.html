@@ -1,2 +1,8 @@
 <router-outlet></router-outlet>
-<app-loading *ngIf="display"></app-loading>
+<app-loading *ngIf="display$ | async"></app-loading>
+<!-- <div class="confirm_modal">
+    <p-toast></p-toast>
+    <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+    <p-button icon="pi pi-check" label="Confirm"></p-button>
+    <p-button icon="pi pi-times" label="Delete" class="p-button-danger"></p-button>
+</div> -->

@@ -31,6 +31,10 @@ export class PositionService {
     );
   }
 
+  getMemberByPositionId(id:string):Observable<Object> {
+    return this.http.get(`users?job_position_id=${id}`);
+  }
+
   getPositionByUnitId(id:string):Observable<Object> {
     return this.http.get(`job-positions?page=1&limit=0&organization_unit_id=${id}`)
   }

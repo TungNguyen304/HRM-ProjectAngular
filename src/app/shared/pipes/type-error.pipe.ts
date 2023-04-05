@@ -6,7 +6,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TypeErrorPipe implements PipeTransform {
 
   transform(value: string | undefined, ...args: unknown[]): string {
-    return value === 'required' ? 'warning.required' : value === 'maxLength' ? 'warning.maxLength': value === 'emoji' ? 'warning.emoji' : value === 'file' ? 'warning.file' : '';
+    switch(value) {
+      case 'required': return 'warning.required';
+      case 'maxLength': return 'warning.maxLength';
+      case 'emoji': return 'warning.emoji';
+      case 'file': return 'warning.file';
+      default: return value || '';
+    }
   }
 
 }

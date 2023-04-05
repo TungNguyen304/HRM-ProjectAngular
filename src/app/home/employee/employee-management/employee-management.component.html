@@ -2,7 +2,7 @@
   <h2 class="title">{{ "title.employeeManager" | translate }}</h2>
   <p-toast></p-toast>
   <div class="accordion">
-    <p-accordion [activeIndex]="0">
+    <p-accordion>
       <p-accordionTab>
         <ng-template pTemplate="header">
           <div style="color: #fff">
@@ -46,7 +46,7 @@
                 <p-dropdown
                   id="sex"
                   [options]="sex"
-                  [placeholder]="'select' | translate"
+                  [placeholder]="'common.select' | translate"
                   optionLabel="value"
                 ></p-dropdown>
               </div>
@@ -55,7 +55,7 @@
                   "employeeManagement.unit" | translate
                 }}</label>
                 <p-dropdown
-                  [placeholder]="'select' | translate"
+                  [placeholder]="'common.select' | translate"
                   id="sex"
                   [options]="sex"
                   optionLabel="value"
@@ -67,7 +67,7 @@
                 }}</label>
                 <p-dropdown
                   id="sex"
-                  [placeholder]="'select' | translate"
+                  [placeholder]="'common.select' | translate"
                   [options]="sex"
                   optionLabel="value"
                 ></p-dropdown>
@@ -78,7 +78,7 @@
               <button
                 type="button"
                 pButton
-                class="p-button-outlined p-button-danger p-button-sm"
+                class="p-button-danger p-button-sm"
                 [label]="'common.delete' | translate"
               ></button>
               <button
@@ -94,33 +94,39 @@
     </p-accordion>
   </div>
 
-  <div class="more_option">
-    <button
-      pButton
-      icon="pi pi-download"
-      class="p-button-outlined p-button-sm p-button-danger"
-    ></button>
-    <button
-      (click)="handleDisplayCreateEmployee()"
-      pButton
-      icon="pi pi-plus"
-      iconpos="left"
-      [label]="'common.addNew' | translate"
-      class="p-button-sm p-button-success"
-    ></button>
-  </div>
-
   <div class="employee_table">
     <p-table
       selectionMode="single"
       [value]="employeeList"
       [tableStyle]="{ 'min-width': '50rem' }"
-      style="border-radius: 5px;"
     >
-      <ng-template style="border-radius: 5px;" pTemplate="caption">
-        <tr>
-          <th>150 {{ "common.record" | translate }}</th>
-        </tr>
+      <ng-template pTemplate="caption">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+          class="flex align-items-center justify-content-between"
+        >
+          <div>150 {{ "common.record" | translate }}</div>
+          <div>
+            <button
+              pButton
+              icon="pi pi-download"
+              class="p-button-sm p-button-danger p-button-raised"
+            ></button>
+            <button
+              style="margin-left: 10px"
+              (click)="handleDisplayCreateEmployee()"
+              pButton
+              icon="pi pi-plus"
+              iconpos="left"
+              [label]="'common.addNew' | translate"
+              class="p-button-sm p-button-danger p-button-raised"
+            ></button>
+          </div>
+        </div>
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
@@ -146,8 +152,9 @@
           <td>
             <div>
               <p-splitButton
-                styleClass="p-button-sm mr-2 mb-2 p-button-outlined"
+                styleClass="p-button-sm mr-2 mb-2"
                 [model]="actions"
+                (onDropdownClick)="handleActionsClick(employee.employee_id)"
               ></p-splitButton>
             </div>
           </td>

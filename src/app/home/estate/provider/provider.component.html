@@ -1,20 +1,5 @@
 <div class="provider">
   <h2 class="title">{{'title.provider' | translate}}</h2>
-  <div class="more_option">
-    <button
-      pButton
-      icon="pi pi-download"
-      class="p-button-outlined p-button-sm p-button-danger"
-    ></button>
-    <button
-      (click)="handleDisplayCreateProvider()"
-      pButton
-      icon="pi pi-plus"
-      iconpos="left"
-      [label]="'common.addNew' | translate"
-      class="p-button-sm p-button-success"
-    ></button>
-  </div>
 
   <p-table
     selectionMode="single"
@@ -22,9 +7,32 @@
     [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
-      <tr>
-        <th>120 {{'common.record' | translate}}</th>
-      </tr>
+      <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+          class="flex align-items-center justify-content-between"
+        >
+          <div>150 {{ "common.record" | translate }}</div>
+          <div>
+            <button
+              pButton
+              icon="pi pi-download"
+              class="p-button-sm p-button-danger p-button-raised"
+            ></button>
+            <button
+              style="margin-left: 10px"
+              (click)="handleDisplayCreateProvider()"
+              pButton
+              icon="pi pi-plus"
+              iconpos="left"
+              [label]="'common.addNew' | translate"
+              class="p-button-sm p-button-danger p-button-raised"
+            ></button>
+          </div>
+        </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
@@ -46,12 +54,12 @@
             <button
               pButton
               icon="bi bi-pen"
-              class="p-button-outlined p-button-sm p-button-primary"
+              class="p-button-outlined p-button-sm p-button-primary p-button-raised"
             ></button>
             <button
               pButton
               icon="bi bi-trash"
-              class="p-button-outlined p-button-sm p-button-danger"
+              class="p-button-outlined p-button-sm p-button-danger p-button-raised"
             ></button>
           </div>
         </td>

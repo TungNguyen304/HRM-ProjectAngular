@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -16,7 +16,7 @@ import { IWarningProvider } from 'src/app/shared/interfaces';
   templateUrl: './create-provider.component.html',
   styleUrls: ['./create-provider.component.scss'],
 })
-export class CreateProviderComponent {
+export class CreateProviderComponent implements OnInit {
   public sex = [{ value: 'Nam' }, { value: 'Nữ' }];
   public providerForm: FormGroup;
   constructor(private location: Location, private fb: FormBuilder, private commonService:CommonService) {}
@@ -55,12 +55,12 @@ export class CreateProviderComponent {
   }
 
   warningDetect(): void {
-    this.handleSetWarning('name', 'Tên NCC');
-    this.handleSetWarning('item', 'Mặt hàng');
-    this.handleSetWarning('contact', 'Liên hệ');
+    this.handleSetWarning('name');
+    this.handleSetWarning('item');
+    this.handleSetWarning('contact');
   }
 
-  handleSetWarning(type: keyof IWarningProvider, label: string): void {
-    requireWarning(this.providerForm, this, type, label);
+  handleSetWarning(type: keyof IWarningProvider): void {
+    requireWarning(this.providerForm, this, type);
   }
 }

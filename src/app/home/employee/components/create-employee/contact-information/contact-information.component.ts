@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   AbstractControl,
   ControlContainer,
@@ -21,7 +21,7 @@ import { IWarningContactInfo } from 'src/app/shared/interfaces';
     { provide: ControlContainer, useExisting: FormGroupDirective },
   ],
 })
-export class ContactInformationComponent {
+export class ContactInformationComponent implements OnInit {
   constructor() {}
   @Input() employeeForm: FormGroup;
   public warning: IWarningContactInfo = {
@@ -46,24 +46,22 @@ export class ContactInformationComponent {
   }
 
   warningDetect(): void {
-    this.handleSetWarning('email', 'Email', 255);
-    this.handleSetWarning('phone', 'Số điện thoại', 11);
-    this.handleSetWarning('skypeId', 'SkypeID', 255);
+    this.handleSetWarning('email', 255);
+    this.handleSetWarning('phone', 11);
+    this.handleSetWarning('skypeId', 255);
   }
 
   handleSetWarning(
     type: keyof IWarningContactInfo,
-    label: string,
     length?: number
   ): void {
-    requireWarning(this.employeeForm.get('contactInfo'), this, type, label);
-    emojiWarning(this.employeeForm.get('contactInfo'), this, type, label);
+    requireWarning(this.employeeForm.get('contactInfo'), this, type);
+    emojiWarning(this.employeeForm.get('contactInfo'), this, type);
     length &&
       maxLengthWarning(
         this.employeeForm.get('contactInfo'),
         this,
         type,
-        label,
         length
       );
   }

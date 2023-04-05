@@ -1,6 +1,7 @@
 import { HttpHandler, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class InterceptorRequest {
@@ -16,7 +17,7 @@ export class InterceptorRequest {
       });
     }
     request = request.clone({
-      url: 'http://103.18.7.212:1734/api/' + request.url
+      url: environment.apiUrl + request.url
     })
     return next.handle(
       request

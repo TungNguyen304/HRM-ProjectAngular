@@ -5,6 +5,7 @@
     width: 100vw;
     height: 100vh;
     background-color: rgba(0,0,0,0.9);
+    z-index: 2000;
 }
 
 .ring
@@ -21,7 +22,7 @@
   text-align:center;
   line-height:150px;
   font-family:sans-serif;
-  font-size:20px;
+  font-size:12px;
   color:#fff000;
   letter-spacing:4px;
   text-transform:uppercase;

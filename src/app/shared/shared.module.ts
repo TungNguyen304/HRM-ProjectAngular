@@ -12,7 +12,8 @@ import { DragDropAvtDirective } from './directives/drag-drop-avt.directive';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { LoadingComponent } from './layouts/loading/loading.component';
 import { LoadSmallComponent } from './layouts/load-small/load-small.component';
-
+import { DropdownModule } from 'primeng/dropdown';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [PageNotFoundComponent, HeaderComponent, SideBarComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent, LoadSmallComponent],
@@ -22,7 +23,9 @@ import { LoadSmallComponent } from './layouts/load-small/load-small.component';
     InputSwitchModule,
     FormsModule,
     TranslateModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    DropdownModule,
+    ProgressSpinnerModule
   ],
   exports: [PageNotFoundComponent, SideBarComponent, HeaderComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent, LoadSmallComponent]
 })

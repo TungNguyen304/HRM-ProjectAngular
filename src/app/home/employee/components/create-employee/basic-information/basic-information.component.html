@@ -148,12 +148,10 @@
       <div
         #avt
         class="avt"
-        [appDragDropAvt]="url"
-        [avtSize]="avtSize"
-        [file]="file"
+        [appDragDropAvt]="dataForDirective"
+        [handleInDirective]="handleInDirective"
         (showAlert)="showAlertFromBasicInfo($event)"
         (handleSetUrl)="handleSetUrl($event)"
-        [employeeForm]="employeeForm"
         (click)="handleClickInputFile()"
       >
         <div style="display: none">

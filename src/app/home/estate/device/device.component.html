@@ -1,106 +1,101 @@
 <div class="device">
   <h2 class="title">{{ "title.deviceManagement" | translate }}</h2>
   <p-toast></p-toast>
-  <p-accordion>
-    <p-accordionTab>
-      <ng-template pTemplate="header">
-        <div style="color: #fff">
-          <i style="margin-right: 10px" class="bi bi-search"></i>
-          <span>{{ "common.search" | translate }}</span>
+  <div class="search_form">
+    <p-accordion>
+      <p-accordionTab>
+        <ng-template pTemplate="header">
+          <div style="color: #fff">
+            <i style="margin-right: 10px" class="bi bi-search"></i>
+            <span>{{ "common.search" | translate }}</span>
+          </div>
+        </ng-template>
+        <div class="form_search">
+          <form [formGroup]="searchDeviceForm" (ngSubmit)="onSubmit()" action="">
+            <div class="form_list">
+              <div class="form_item">
+                <label for="code">{{
+                  "createDevice.codeOrName" | translate
+                }}</label>
+                <input formControlName="code" type="text" id="code" pInputText />
+                <p
+                  *ngIf="getControl('code')?.dirty && getControl('code')?.errors"
+                  class="warning"
+                >
+                  <i class="bi bi-cone-striped"></i>
+                  {{ "createDevice.propertyCode" | translate }} /
+                  {{ "createDevice.propertyName" | translate }}
+                  {{ warning.code?.type | typeError | translate : warning.code }}
+                </p>
+              </div>
+              <div class="form_item">
+                <label for="employee">{{
+                  "createDevice.staffUsing" | translate
+                }}</label>
+                <input
+                  formControlName="employee"
+                  type="text"
+                  id="employee"
+                  pInputText
+                />
+                <p
+                  *ngIf="
+                    getControl('employee')?.dirty &&
+                    getControl('employee')?.errors
+                  "
+                  class="warning"
+                >
+                  <i class="bi bi-cone-striped"></i>
+                  {{ "createDevice.staffUsing" | translate }}
+                  {{
+                    warning.employee?.type
+                      | typeError
+                      | translate : warning.employee
+                  }}
+                </p>
+              </div>
+              <div class="form_item">
+                <label for="type">{{ "createDevice.type" | translate }}</label>
+                <p-dropdown
+                  formControlName="type"
+                  id="type"
+                  [options]="status"
+                  optionLabel="value"
+                  [placeholder]="'common.select' | translate"
+                ></p-dropdown>
+              </div>
+              <div class="form_item">
+                <label for="status">{{
+                  "createDevice.propertyStatus" | translate
+                }}</label>
+                <p-dropdown
+                  formControlName="status"
+                  id="status"
+                  [placeholder]="'common.select' | translate"
+                  [options]="sex"
+                  optionLabel="value"
+                ></p-dropdown>
+              </div>
+            </div>
+  
+            <div class="action">
+              <button
+                type="button"
+                pButton
+                class="p-button-danger p-button-sm p-button-raised"
+                [label]="'common.delete' | translate"
+              ></button>
+              <button
+                type="submit"
+                pButton
+                class="p-button-primary p-button-sm p-button-raised"
+                [label]="'common.search' | translate"
+              ></button>
+            </div>
+          </form>
         </div>
-      </ng-template>
-      <div class="form_search">
-        <form [formGroup]="searchDeviceForm" (ngSubmit)="onSubmit()" action="">
-          <div class="form_list">
-            <div class="form_item">
-              <label for="code">{{'createDevice.codeOrName' | translate}}</label>
-              <input formControlName="code" type="text" id="code" pInputText />
-              <p
-                *ngIf="getControl('code')?.dirty && getControl('code')?.errors"
-                class="warning"
-              >
-                <i class="bi bi-cone-striped"></i>
-                {{ 'createDevice.propertyCode' | translate }} / {{'createDevice.propertyName' | translate}} {{warning.code?.type | typeError | translate:warning.code}}
-              </p>
-            </div>
-            <div class="form_item">
-              <label for="employee">{{ "createDevice.staffUsing" | translate }}</label>
-              <input
-                formControlName="employee"
-                type="text"
-                id="employee"
-                pInputText
-              />
-              <p
-                *ngIf="
-                  getControl('employee')?.dirty &&
-                  getControl('employee')?.errors
-                "
-                class="warning"
-              >
-                <i class="bi bi-cone-striped"></i>
-                {{'createDevice.staffUsing' | translate}} {{warning.employee?.type | typeError | translate:warning.employee}}
-              </p>
-            </div>
-            <div class="form_item">
-              <label for="type">{{ "createDevice.type" | translate }}</label>
-              <p-dropdown
-                formControlName="type"
-                id="type"
-                [options]="status"
-                optionLabel="value"
-                [placeholder]="'common.select' | translate"
-              ></p-dropdown>
-            </div>
-            <div class="form_item">
-              <label for="status">{{ "createDevice.propertyStatus" | translate }}</label>
-              <p-dropdown
-                formControlName="status"
-                id="status"
-                [placeholder]="'common.select' | translate"
-                [options]="sex"
-                optionLabel="value"
-              ></p-dropdown>
-            </div>
-          </div>
-
-          <div class="action">
-            <button
-              type="button"
-              pButton
-              class="p-button-outlined p-button-danger p-button-sm"
-              [label]="'common.delete' | translate"
-            ></button>
-            <button
-              type="submit"
-              pButton
-              class="p-button-primary p-button-sm"
-              [label]="'common.search' | translate"
-            ></button>
-          </div>
-        </form>
-      </div>
-    </p-accordionTab>
-  </p-accordion>
-  <div class="more_option">
-    <button
-      pButton
-      icon="pi pi-download"
-      class="p-button-outlined p-button-sm p-button-danger"
-    ></button>
-    <button
-      pButton
-      icon="bi bi-qr-code-scan"
-      class="p-button-outlined p-button-sm"
-    ></button>
-    <button
-      (click)="handleDisplayCreateDevice()"
-      pButton
-      icon="pi pi-plus"
-      iconpos="left"
-      [label]="'common.addNew' | translate"
-      class="p-button-sm p-button-success"
-    ></button>
+      </p-accordionTab>
+    </p-accordion>
   </div>
   <p-table
     selectionMode="single"
@@ -108,9 +103,36 @@
     [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="caption">
-      <tr>
-        <th>450 {{ "records" | translate }}</th>
-      </tr>
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+        class="flex align-items-center justify-content-between"
+      >
+        <div>150 {{ "common.record" | translate }}</div>
+        <div style="display: flex; gap: 10px;">
+          <button
+            pButton
+            icon="pi pi-download"
+            class="p-button-sm p-button-danger p-button-raised"
+          ></button>
+          <button
+            pButton
+            icon="bi bi-qr-code-scan"
+            class="p-button-sm p-button-danger p-button-raised"
+          ></button>
+          <button
+            (click)="handleDisplayCreateDevice()"
+            pButton
+            icon="pi pi-plus"
+            iconpos="left"
+            [label]="'common.addNew' | translate"
+            class="p-button-sm p-button-danger p-button-raised"
+          ></button>
+        </div>
+      </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>

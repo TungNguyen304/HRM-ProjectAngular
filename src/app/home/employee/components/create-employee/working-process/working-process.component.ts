@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ControlContainer, FormGroup, FormGroupDirective } from '@angular/forms';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import { PositionService } from 'src/app/core/services/http/position.service';
@@ -12,7 +12,7 @@ import { IPosition, IUnit } from 'src/app/shared/interfaces';
     { provide: ControlContainer, useExisting: FormGroupDirective },
   ],
 })
-export class WorkingProcessComponent {
+export class WorkingProcessComponent implements OnInit {
   public workingForm = [
     {
       value: "FULL_TIME",

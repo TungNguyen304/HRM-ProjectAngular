@@ -4,6 +4,7 @@ import {
   EventEmitter,
   HostListener,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -11,23 +12,32 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FileUpload } from 'primeng/fileupload';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 
+export interface IData {
+  url:string,
+  size: number
+}
+
+export interface IHandle {
+  form: FormGroup,
+  controls: string[],
+  inputFileElement: FileUpload
+}
+
 @Directive({
   selector: '[appDragDropAvt]',
 })
-export class DragDropAvtDirective {
+export class DragDropAvtDirective implements OnInit {
   constructor(
     private elementRef: ElementRef,
     private sanitizer: DomSanitizer
   ) {}
-  @Input('appDragDropAvt') url: string;
-  @Input('avtSize') avtSize: number;
-  @Input('employeeForm') employeeForm: FormGroup;
+  @Input('appDragDropAvt') dataForDirective: IData;
+  @Input('handleInDirective') handleInDirective: IHandle;
   @Output() showAlert = new EventEmitter<any>();
   @Output() handleSetUrl = new EventEmitter<any>();
-  @Input('file') file: FileUpload;
 
   ngOnInit() {
-    this.file.onSelect.emit = (event: any) => {
+    this.handleInDirective.inputFileElement.onSelect.emit = (event: any) => {
       this.handleDropFile(event);
     };
   }
@@ -40,7 +50,7 @@ export class DragDropAvtDirective {
   }
 
   @HostListener('dragleave') dragleave() {
-    if (this.url) {
+    if (this.dataForDirective.url) {
       this.elementRef.nativeElement.style.border = '2px solid transparent';
     } else {
       this.elementRef.nativeElement.style.border = '2px dashed black';
@@ -63,7 +73,7 @@ export class DragDropAvtDirective {
       ) {
         if (event instanceof DragEvent) {
           event.preventDefault();
-          getControlCommon(this.employeeForm, 'basicInfo', 'avt')?.setValue(
+          getControlCommon(this.handleInDirective.form, ...this.handleInDirective.controls)?.setValue(
             event.dataTransfer?.files[0]
           );
           this.handleSetUrl.emit(
@@ -73,7 +83,7 @@ export class DragDropAvtDirective {
           );
         } else {
           if (this.checkTypeImage(event.files[0])) {
-            getControlCommon(this.employeeForm, 'basicInfo', 'avt')?.setValue(
+            getControlCommon(this.handleInDirective.form, ...this.handleInDirective.controls)?.setValue(
               event.files[0]
             );
             this.handleSetUrl.emit(
@@ -95,7 +105,7 @@ export class DragDropAvtDirective {
         this.showAlert.emit({
           severity: 'error',
           summary: 'Fail',
-          detail: `The size of the Avt should not be more than ${this.avtSize}mb`,
+          detail: `The size of the Avt should not be more than ${this.dataForDirective.size}mb`,
         });
         this.handleOnDragEnd();
       }
@@ -111,7 +121,7 @@ export class DragDropAvtDirective {
       });
       this.handleOnDragEnd();
     }
-    this.file.clear();
+    this.handleInDirective.inputFileElement.clear();
   }
 
   sanitize(url: string) {
@@ -132,7 +142,7 @@ export class DragDropAvtDirective {
   checkSizeImage(file: File | undefined): boolean {
     if (
       file?.size &&
-      Number((file?.size / (1024 * 1024)).toFixed(2)) < this.avtSize
+      Number((file?.size / (1024 * 1024)).toFixed(2)) < this.dataForDirective.size
     ) {
       return true;
     }
@@ -147,7 +157,7 @@ export class DragDropAvtDirective {
   }
 
   handleOnDragEnd() {
-    if (this.url) {
+    if (this.dataForDirective.url) {
       this.elementRef.nativeElement.style.border = '2px solid transparent';
     } else {
       this.elementRef.nativeElement.style.border = '2px dashed black';

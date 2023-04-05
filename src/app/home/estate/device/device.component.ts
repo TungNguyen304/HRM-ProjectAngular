@@ -100,18 +100,17 @@ export class DeviceComponent {
   }
 
   warningDetect(): void {
-    this.handleSetWarning('code', 'Mã tài sản', 255);
-    this.handleSetWarning('employee', 'Nhân viên sử dụng', 255);
+    this.handleSetWarning('code', 255);
+    this.handleSetWarning('employee', 255);
   }
 
   handleSetWarning(
     type: keyof IWarningDeviceSearch,
-    label: string,
     length?: number
   ): void {
-    emojiWarning(this.searchDeviceForm, this, type, label);
+    emojiWarning(this.searchDeviceForm, this, type);
     length &&
-      maxLengthWarning(this.searchDeviceForm, this, type, label, length);
+      maxLengthWarning(this.searchDeviceForm, this, type, length);
   }
 
   getControl(control: string): AbstractControl | null {

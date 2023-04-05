@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -25,20 +25,20 @@ const regex = {
   styleUrls: ['./login.component.scss'],
   providers: [MessageService],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private messageService: MessageService,
     private router: Router,
     private loadingService: LoadingService,
-    private accountService:AccountService
+    private accountService: AccountService
   ) {}
   public loginForm: FormGroup;
   public errorEmail: string = 'Email is empty!';
   public errorPassword: string = 'Password is empty!';
   @ViewChild('pass') pass: ElementRef;
-  public display:boolean = false;
+  public display: boolean = false;
   ngOnInit() {
     this.loginForm = this.fb.group({
       email: [
@@ -117,8 +117,7 @@ export class LoginComponent {
         })
         .subscribe(
           (data: any) => {
-            this.loadingService.setloading(false);
-            this.accountService.setAccount(data.response.user)
+            this.accountService.setAccount(data.response.user);
             localStorage.setItem('token', data.response.access_token);
             this.messageService.add({
               severity: 'success',
@@ -128,7 +127,6 @@ export class LoginComponent {
             this.router.navigate(['/']);
           },
           (err) => {
-            this.loadingService.setloading(false);
             this.messageService.add({
               severity: 'error',
               summary: 'Fail',
@@ -143,9 +141,11 @@ export class LoginComponent {
                 this.loginForm.get(item)?.markAsPristine();
               }
             });
+          },
+          () => {
+            this.loadingService.setloading(false);
           }
         );
-      
     }
   }
 }

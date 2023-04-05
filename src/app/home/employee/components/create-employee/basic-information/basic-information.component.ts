@@ -3,6 +3,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -20,6 +21,7 @@ import {
   maxLengthWarning,
   requireWarning,
 } from 'src/app/core/services/helper/warningForm.service';
+import { IData, IHandle } from 'src/app/shared/directives/drag-drop-avt.directive';
 import { IWarningBasicInfo } from 'src/app/shared/interfaces';
 
 @Component({
@@ -30,7 +32,7 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
     { provide: ControlContainer, useExisting: FormGroupDirective },
   ],
 })
-export class BasicInformationComponent {
+export class BasicInformationComponent implements OnInit {
   public sex = [{ value: 'Male' }, { value: 'FeMale' }];
   public url: any = '';
   public avtSize: number = 0.1;
@@ -46,14 +48,26 @@ export class BasicInformationComponent {
     avt: null,
   };
 
+  public dataForDirective:IData = {
+    url: this.url,
+    size: this.avtSize,
+  };
+
+  public handleInDirective:IHandle;
+
   @ViewChild('avt') drag: ElementRef;
-  @ViewChild('file') file: FileUpload;
+  @ViewChild('file', {static: true}) file: FileUpload;
   @Input() employeeForm: FormGroup;
   @Output() showAlert = new EventEmitter<any>();
 
   constructor(private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
+    this.handleInDirective = {
+      form: this.employeeForm,
+      controls: ['basicInfo', 'avt'],
+      inputFileElement: this.file
+    };
     this.warningDetect();
     getControlCommon(this.employeeForm, 'basicInfo')?.valueChanges.subscribe(
       () => {
@@ -62,13 +76,13 @@ export class BasicInformationComponent {
     );
   }
 
-  showAlertFromBasicInfo(alert:any) {
+  showAlertFromBasicInfo(alert: any) {
     this.showAlert.emit(alert);
   }
 
-  handleSetUrl(url:any) {
-    this.url = url
-  } 
+  handleSetUrl(url: any) {
+    this.url = url;
+  }
 
   handleClickInputFile() {
     this.file.basicFileInput.nativeElement.click();
@@ -79,30 +93,20 @@ export class BasicInformationComponent {
   }
 
   warningDetect(): void {
-    this.handleSetWarning('code', 'Mã NV', 100);
-    this.handleSetWarning('name', 'Họ Tên', 255);
-    this.handleSetWarning('sex', 'Giới tính');
-    this.handleSetWarning('birthDay', 'Ngày sinh');
-    this.handleSetWarning('currentResidence', 'Nơi ở hiện tại', 255);
-    this.handleSetWarning('address', 'Địa chỉ thường trú', 255);
-    this.handleSetWarning('joinDate', 'Ngày nhận việc');
-    this.handleSetWarning('hireDate', 'Ngày được  thuê');
+    this.handleSetWarning('code', 100);
+    this.handleSetWarning('name', 255);
+    this.handleSetWarning('sex');
+    this.handleSetWarning('birthDay');
+    this.handleSetWarning('currentResidence', 255);
+    this.handleSetWarning('address', 255);
+    this.handleSetWarning('joinDate');
+    this.handleSetWarning('hireDate');
   }
 
-  handleSetWarning(
-    type: keyof IWarningBasicInfo,
-    label: string,
-    length?: number
-  ): void {
-    requireWarning(this.employeeForm.get('basicInfo'), this, type, label);
-    emojiWarning(this.employeeForm.get('basicInfo'), this, type, label);
+  handleSetWarning(type: keyof IWarningBasicInfo, length?: number): void {
+    requireWarning(this.employeeForm.get('basicInfo'), this, type);
+    emojiWarning(this.employeeForm.get('basicInfo'), this, type);
     length &&
-      maxLengthWarning(
-        this.employeeForm.get('basicInfo'),
-        this,
-        type,
-        label,
-        length
-      );
+      maxLengthWarning(this.employeeForm.get('basicInfo'), this, type, length);
   }
 }

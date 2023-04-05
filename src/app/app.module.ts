@@ -12,6 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InterceptorRequest } from './core/services/http/interceptor.request';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {HttpClient, HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -28,9 +30,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AuthModule,
     ReactiveFormsModule,
     FormsModule,
+    ToastModule,
     ButtonModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ConfirmDialogModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

@@ -32,6 +32,12 @@ export class EmployeeService {
     );
   }
 
+  getEmployeeById(id:string):Observable<Object> {
+    return this.http.get(`users/${id}`).pipe(
+      delay(2000)
+    );
+  }
+
   getStatus():Observable<Object> {
        return this.http.get("users/status/list");
   }

@@ -46,17 +46,14 @@ form {
     }
   }
 }
+
 ::ng-deep .p-accordion-header-link {
   flex-direction: row-reverse;
   justify-content: space-between;
 }
 
-.more_option {
-  text-align: end;
-  margin: 30px 0;
-  button {
-    margin-left: 10px;
-  }
+.search_form {
+  margin-bottom: 30px;
 }
 
 ::ng-deep .p-datatable-table {

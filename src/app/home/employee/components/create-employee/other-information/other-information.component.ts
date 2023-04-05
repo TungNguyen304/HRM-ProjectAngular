@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -31,7 +32,7 @@ import { IPosition, IUnit, IWarningOtherInfo } from 'src/app/shared/interfaces';
     { provide: ControlContainer, useExisting: FormGroupDirective },
   ],
 })
-export class OtherInformationComponent {
+export class OtherInformationComponent implements OnInit {
   constructor(private unitService:UnitService, private employeeService:EmployeeService, private positionService:PositionService) {}
   public sex = [{ value: 'Nam' }, { value: 'Nữ' }];
   public statusList:any[];
@@ -128,24 +129,22 @@ export class OtherInformationComponent {
     }
   }
   warningDetect(): void {
-    this.handleSetWarning('unit', 'Đơn vị công tác');
-    this.handleSetWarning('position', 'Vị trí công việc');
-    this.handleSetWarning('status', 'Trạng thái');
-    this.handleSetWarning('description', 'Mô tả chung', 500);
+    this.handleSetWarning('unit');
+    this.handleSetWarning('position');
+    this.handleSetWarning('status');
+    this.handleSetWarning('description', 500);
   }
 
   handleSetWarning(
     type: keyof IWarningOtherInfo,
-    label: string,
     length?: number
   ): void {
-    requireWarning(this.employeeForm.get('otherInfo'), this, type, label);
+    requireWarning(this.employeeForm.get('otherInfo'), this, type);
     length &&
       maxLengthWarning(
         this.employeeForm.get('otherInfo'),
         this,
         type,
-        label,
         length
       );
   }

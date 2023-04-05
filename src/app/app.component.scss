@@ -1,3 +1,13 @@
+.confirm_modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    // background-color: red;
+    z-index: 100;
+}
+
 ::ng-deep .p-tieredmenu.p-tieredmenu-overlay {
     top: calc(100% + 10px) !important;
     right: 0 !important;
@@ -85,4 +95,32 @@
 ::ng-deep .p-datatable .p-datatable-thead > tr > th,
 ::ng-deep .p-treetable .p-treetable-thead > tr > th {
     font-size: 16px;
+}
+
+
+::ng-deep .p-button {
+    background-color: var(--primary-color-main);
+}
+
+::ng-deep .p-fileupload-choose:not(.p-disabled):hover,
+::ng-deep .p-button:enabled:hover {
+    background: var(--primary-color-main);
+    filter: brightness(0.9);
+    border-color: unset;
+}
+
+::ng-deep .p-progress-spinner {
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+::ng-deep .p-splitbutton.p-button-outlined > .p-button,
+::ng-deep .p-splitbutton.p-button-outlined > .p-button:enabled:hover, .p-splitbutton.p-button-outlined > .p-button:not(button):not(a):not(.p-disabled):hover {
+    color: var(--primary-color-main);
+}
+
+::ng-deep .p-paginator {
+    padding: 0;
 }

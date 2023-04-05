@@ -1,4 +1,12 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -30,10 +38,10 @@ import { IPosition, IWarningCreateWorkplace } from 'src/app/shared/interfaces';
   styleUrls: ['./create-workplace.component.scss'],
   providers: [MessageService],
 })
-export class CreateWorkplaceComponent {
+export class CreateWorkplaceComponent implements OnInit {
   public workplaceForm: FormGroup;
   public unitList: any[];
-  public disable:boolean = false;
+  public disable: boolean = false;
   public warning: IWarningCreateWorkplace = {
     code: null,
     name: null,
@@ -44,7 +52,7 @@ export class CreateWorkplaceComponent {
   };
   @Input() infoUpdate: IPosition;
   @Input() typeAction: 'Add' | 'Update';
-  @ViewChild('buttonSave') buttonSave:ElementRef;
+  @ViewChild('buttonSave') buttonSave: ElementRef;
   @Output() showMessage: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
@@ -74,7 +82,10 @@ export class CreateWorkplaceComponent {
       };
       this.buttonSave.nativeElement.classList.toggle('button--loading');
       this.disable = true;
-      this.handleTypeRequestApi(data, this.infoUpdate?.job_position_id).subscribe(
+      this.handleTypeRequestApi(
+        data,
+        this.infoUpdate?.job_position_id
+      ).subscribe(
         () => {
           this.showMessage.emit(true);
         },
@@ -138,22 +149,21 @@ export class CreateWorkplaceComponent {
   }
 
   warningDetect(): void {
-    this.handleSetWarning('code', 'Mã', 100);
-    this.handleSetWarning('name', 'Tên', 255);
-    this.handleSetWarning('otherName', 'Tên khác', 255);
-    this.handleSetWarning('type', 'Loại vị trí', 255);
-    this.handleSetWarning(['unitSelect', 'unit'], 'Đơn vị', 255);
+    this.handleSetWarning('code', 100);
+    this.handleSetWarning('name', 255);
+    this.handleSetWarning('otherName', 255);
+    this.handleSetWarning('type', 255);
+    this.handleSetWarning(['unitSelect', 'unit'], 255);
   }
 
   handleSetWarning(
     type: keyof IWarningCreateWorkplace | Array<keyof IWarningCreateWorkplace>,
-    label: string,
     length: number
   ): void {
-    requireWarning(this.workplaceForm, this, type, label);
+    requireWarning(this.workplaceForm, this, type);
     if (!(type instanceof Array)) {
-      emojiWarning(this.workplaceForm, this, type, label);
-      maxLengthWarning(this.workplaceForm, this, type, label, length);
+      emojiWarning(this.workplaceForm, this, type);
+      maxLengthWarning(this.workplaceForm, this, type, length);
     }
   }
 }

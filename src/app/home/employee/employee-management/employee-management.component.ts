@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmployeeService } from 'src/app/core/services/http/employee.service';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import {
   AbstractControl,
@@ -20,7 +20,7 @@ import { getControlCommon } from 'src/app/core/services/helper/formControl.servi
   selector: 'app-employee-management',
   templateUrl: './employee-management.component.html',
   styleUrls: ['./employee-management.component.scss'],
-  providers: [MessageService],
+  providers: [ConfirmationService, MessageService]
 })
 export class EmployeeManagementComponent {
   public status: { value: string }[];
@@ -32,13 +32,15 @@ export class EmployeeManagementComponent {
   public warning: { codeNameEmail: any } = {
     codeNameEmail: null,
   };
+  public idEmployee:string;
   public loadDisplay: boolean = false;
   public limit: number = 5;
   public total: number;
   constructor(
     private employeeService: EmployeeService,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {
     this.status = [{ value: 'On' }, { value: 'Off' }];
     this.sex = [{ value: 'Nam' }, { value: 'Nữ' }];
@@ -61,10 +63,14 @@ export class EmployeeManagementComponent {
         label: 'Detail',
         icon: 'bi bi-card-text',
         command: () => {
-          this.handleNavigateDetailEmployee();
+          this.handleNavigateDetailEmployee(this.idEmployee);
         },
       },
     ];
+  }
+
+  handleActionsClick(event:any) {
+    this.idEmployee = event;
   }
 
   getControl(control: string): AbstractControl | null {
@@ -83,7 +89,8 @@ export class EmployeeManagementComponent {
     this.loadDisplay = true;
     this.employeeService.getEmployee(1, this.limit).subscribe((data: any) => {
       this.employeeList = data.response.data;
-      this.loadDisplay = false;
+      this.loadDisplay = false;  
+      this.total = data.response.total
     });
     this.warningDetect();
     this.searchForm.valueChanges.subscribe(() => {
@@ -92,12 +99,12 @@ export class EmployeeManagementComponent {
   }
 
   warningDetect(): void {
-    this.handleSetWarning('codeNameEmail', 'Mã tài sản', 255);
+    this.handleSetWarning('codeNameEmail', 255);
   }
 
-  handleSetWarning(type: string, label: string, length?: number): void {
-    emojiWarning(this.searchForm, this, type, label);
-    length && maxLengthWarning(this.searchForm, this, type, label, length);
+  handleSetWarning(type: string, length?: number): void {
+    emojiWarning(this.searchForm, this, type);
+    length && maxLengthWarning(this.searchForm, this, type, length);
   }
 
   update() {
@@ -121,7 +128,49 @@ export class EmployeeManagementComponent {
     this.router.navigate(['employee', 'management', 'create-employee']);
   }
 
-  handleNavigateDetailEmployee(): void {
-    this.router.navigate(['employee', 'management', 'detail-employee']);
+  handleNavigateDetailEmployee(id:string): void {
+    this.router.navigate(['employee', 'management', 'detail-employee', id]);
   }
+
+  confirm1() {
+    this.confirmationService.confirm({
+        message: 'Are you sure that you want to proceed?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
+        },
+        reject: (type:any) => {
+            switch (type) {
+                case ConfirmEventType.REJECT:
+                    this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+                    break;
+                case ConfirmEventType.CANCEL:
+                    this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+                    break;
+            }
+        }
+    });
+}
+
+confirm2() {
+    this.confirmationService.confirm({
+        message: 'Do you want to delete this record?',
+        header: 'Delete Confirmation',
+        icon: 'pi pi-info-circle',
+        accept: () => {
+            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
+        },
+        reject: (type:any) => {
+            switch (type) {
+                case ConfirmEventType.REJECT:
+                    this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+                    break;
+                case ConfirmEventType.CANCEL:
+                    this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+                    break;
+            }
+        }
+    });
+}
 }

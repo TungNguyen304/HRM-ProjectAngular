@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { debounceTime, delay, switchMap, tap } from 'rxjs';
 import { PositionService } from 'src/app/core/services/http/position.service';
-import { IPosition } from 'src/app/shared/interfaces';
+import { IAccount, IPosition } from 'src/app/shared/interfaces';
 
 export interface IPositionForm {
   name: string;
@@ -19,7 +19,7 @@ export interface IPositionForm {
   styleUrls: ['./workplace.component.scss'],
   providers: [MessageService],
 })
-export class WorkplaceComponent {
+export class WorkplaceComponent implements OnInit {
   public positionList: IPosition[];
   constructor(
     private positionService: PositionService,
@@ -36,6 +36,7 @@ export class WorkplaceComponent {
   public loadDisplay: boolean = false;
   public infoUpdate: any;
   public typeAction: 'Add' | 'Update';
+  public memberList: any[];
   public searchInput: FormControl = new FormControl('');
 
   handleShowOverlayCreateWorkplace() {
@@ -43,9 +44,13 @@ export class WorkplaceComponent {
     this.displayCreate = !this.displayCreate;
   }
 
-  handleShowOverlayMember(position: string): void {
-    this.positionTemp = position;
-    this.displayMember = !this.displayMember;
+  handleShowOverlayMember(id: string, name:string): void {
+    this.positionService.getMemberByPositionId(id).subscribe((data:any) => {
+      console.log(data);
+      this.memberList = data.response.data;
+      this.displayMember = !this.displayMember;
+      this.positionTemp = name;
+    })
   }
 
   setLoadingDisplay(type: boolean): void {
@@ -74,7 +79,11 @@ export class WorkplaceComponent {
     if (this.pageCurrent !== event.page + 1) {
       this.loadDisplay = true;
       this.pageCurrent = event.page + 1;
-      this.positionService.getPosition(event.page + 1, this.limit, this.searchInput.value);
+      this.positionService.getPosition(
+        event.page + 1,
+        this.limit,
+        this.searchInput.value
+      );
     }
   }
 
@@ -99,7 +108,7 @@ export class WorkplaceComponent {
     this.handleGetPosition();
     this.searchInput.valueChanges.subscribe(() => {
       this.loadDisplay = true;
-      this.positionService.getPosition(1, this.limit, this.searchInput.value)
+      this.positionService.getPosition(1, this.limit, this.searchInput.value);
     });
   }
 }
