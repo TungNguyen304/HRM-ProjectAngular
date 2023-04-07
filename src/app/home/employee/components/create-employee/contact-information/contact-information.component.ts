@@ -10,12 +10,14 @@ import {
   Validators,
 } from '@angular/forms';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
+import { ToastService } from 'src/app/core/services/helper/toast.service';
 import {
   emojiWarning,
   maxLengthWarning,
   requireWarning,
 } from 'src/app/core/services/helper/warningForm.service';
 import { IWarningContactInfo } from 'src/app/shared/interfaces';
+import { toast } from 'src/app/shared/toastMessage';
 
 type Tsocial = 'type' | 'name';
 
@@ -31,7 +33,7 @@ type Tsocial = 'type' | 'name';
   ],
 })
 export class ContactInformationComponent implements OnInit {
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private toastService:ToastService) {}
   public socialNetworks = [
     { value: 'FaceBook', label: 'bi bi-facebook' },
     { value: 'Twitter', label: 'bi bi-twitter' },
@@ -40,7 +42,6 @@ export class ContactInformationComponent implements OnInit {
     { value: 'WeChat', label: 'bi bi-wechat' },
   ];
   @Input() employeeForm: FormGroup;
-  @Output() showAlert: EventEmitter<any> = new EventEmitter<any>();
   public warning: IWarningContactInfo = {
     email: null,
     phone: null,
@@ -119,11 +120,7 @@ export class ContactInformationComponent implements OnInit {
         })
       );
     } else {
-      this.showAlert.emit({
-        severity: 'warn',
-        summary: 'Add social network fail',
-        detail: 'Social media accounts can only kick 5 accounts',
-      });
+      this.toastService.toastWarn(toast.maxLengthSocial.summary, toast.maxLengthSocial.detail);
     }
   }
 

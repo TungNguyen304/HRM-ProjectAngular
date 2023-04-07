@@ -91,6 +91,8 @@ export class CreateWorkplaceComponent implements OnInit {
         },
         () => {
           this.showMessage.emit(false);
+          this.buttonSave.nativeElement.classList.toggle('button--loading');
+          this.disable = false;
         }
       );
     }

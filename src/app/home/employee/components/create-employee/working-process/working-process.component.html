@@ -54,7 +54,7 @@
             </label>
 
             <p-dropdown
-              [options]="positionList"
+              [options]="positionList[item]"
               formControlName="position"
               [placeholder]="'common.select' | translate"
               optionLabel="job_position_name"

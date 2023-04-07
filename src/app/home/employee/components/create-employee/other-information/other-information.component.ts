@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { FileUpload } from 'primeng/fileupload';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
+import { ToastService } from 'src/app/core/services/helper/toast.service';
 import {
   maxLengthWarning,
   requireWarning,
@@ -22,6 +23,7 @@ import { EmployeeService } from 'src/app/core/services/http/employee.service';
 import { PositionService } from 'src/app/core/services/http/position.service';
 import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
 import { IPosition, IUnit, IWarningOtherInfo } from 'src/app/shared/interfaces';
+import { toast } from 'src/app/shared/toastMessage';
 
 @Component({
   selector: 'app-other-information',
@@ -32,15 +34,19 @@ import { IPosition, IUnit, IWarningOtherInfo } from 'src/app/shared/interfaces';
   ],
 })
 export class OtherInformationComponent implements OnInit {
-  constructor(private unitTreeService:UnitTreeService, private employeeService:EmployeeService, private positionService:PositionService) {}
+  constructor(
+    private unitTreeService: UnitTreeService,
+    private employeeService: EmployeeService,
+    private positionService: PositionService,
+    private toastService: ToastService
+  ) {}
   public sex = [{ value: 'Nam' }, { value: 'Nữ' }];
-  public statusList:any[];
+  public statusList: any[];
   public cvSize = 2;
-  public unitList:IUnit[];
+  public unitList: IUnit[];
   @Input() employeeForm: FormGroup;
-  public positionList:IPosition[];
+  public positionList: IPosition[];
   @ViewChild('cv', { static: true }) cv: any;
-  @Output() showAlert: EventEmitter<any> = new EventEmitter<any>();
   public warning: IWarningOtherInfo = {
     unit: null,
     position: null,
@@ -50,15 +56,15 @@ export class OtherInformationComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.unitTreeService.unitTree$.subscribe((data:any) => {
+    this.unitTreeService.unitTree$.subscribe((data: any) => {
       this.unitList = data;
-    })
+    });
     getControlCommon(this.employeeForm, 'otherInfo', 'position')?.disable();
-    this.employeeService.getStatus().subscribe((data:any) => {
+    this.employeeService.getStatus().subscribe((data: any) => {
       this.statusList = data.response.data;
-    })
+    });
     this.warningDetect();
-    
+
     getControlCommon(this.employeeForm, 'otherInfo')?.valueChanges.subscribe(
       () => {
         this.warningDetect();
@@ -75,11 +81,13 @@ export class OtherInformationComponent implements OnInit {
     }
   }
 
-  onSelectedChange(event:any):void {
-    this.positionService.getPositionByUnitId(event.node.key).subscribe((data:any) => {
-      this.positionList = data.response.data;
-      getControlCommon(this.employeeForm, 'otherInfo', 'position')?.enable();
-    })
+  onSelectedChange(event: any): void {
+    this.positionService
+      .getPositionByUnitId(event.node.key)
+      .subscribe((data: any) => {
+        this.positionList = data.response.data;
+        getControlCommon(this.employeeForm, 'otherInfo', 'position')?.enable();
+      });
   }
 
   getControl(control: string): AbstractControl | null {
@@ -87,9 +95,7 @@ export class OtherInformationComponent implements OnInit {
   }
 
   checkTypeCV(file: File | undefined): boolean {
-    if (
-      file?.type === 'application/pdf'
-    ) {
+    if (file?.type === 'application/pdf') {
       return true;
     }
     return false;
@@ -109,26 +115,14 @@ export class OtherInformationComponent implements OnInit {
     if (this.checkTypeCV(event.files[0])) {
       if (this.checkSizeCV(event.files[0])) {
         this.employeeForm.get('otherInfo')?.get('cv')?.setValue(event.files[0]);
-        this.showAlert.emit({
-          severity: 'success',
-          summary: 'Upload Success',
-          detail: 'CV upload success',
-        });
+        this.toastService.toastSuccess(toast.uploadCvSuccess.summary, toast.uploadCvSuccess.detail)
       } else {
         this.cv.clear();
-        this.showAlert.emit({
-          severity: 'error',
-          summary: 'Upload Fail',
-          detail: `The size of the CV should not be more than ${this.cvSize}mb`,
-        });
+        this.toastService.toastError(toast.uploadCvSizeFail.summary, (toast.uploadCvSizeFail.detail as Function)(this.cvSize))
       }
     } else {
       this.cv.clear();
-      this.showAlert.emit({
-        severity: 'error',
-        summary: 'Upload Fail',
-        detail: 'CV must be a pdf file',
-      });
+      this.toastService.toastError(toast.uploadCvTypeFail.summary, toast.uploadCvTypeFail.detail)
     }
   }
   warningDetect(): void {
@@ -138,17 +132,9 @@ export class OtherInformationComponent implements OnInit {
     this.handleSetWarning('description', 500);
   }
 
-  handleSetWarning(
-    type: keyof IWarningOtherInfo,
-    length?: number
-  ): void {
+  handleSetWarning(type: keyof IWarningOtherInfo, length?: number): void {
     requireWarning(this.employeeForm.get('otherInfo'), this, type);
     length &&
-      maxLengthWarning(
-        this.employeeForm.get('otherInfo'),
-        this,
-        type,
-        length
-      );
+      maxLengthWarning(this.employeeForm.get('otherInfo'), this, type, length);
   }
 }

@@ -6,6 +6,7 @@ import { PositionService } from 'src/app/core/services/http/position.service';
 import { IPosition } from 'src/app/shared/interfaces';
 import { IPropsMember } from '../components/member-table/member-table.component';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
+import { toast } from 'src/app/shared/toastMessage';
 
 export interface IPositionForm {
   name: string;
@@ -58,12 +59,12 @@ export class WorkplaceComponent implements OnInit {
   }
 
   showMessage(type: boolean): void {
-    this.displayCreate = false;
     if (type === true) {
-      this.toastService.toastSuccess("Success", `${this.typeAction} Position Success`);
+      this.displayCreate = false;
+      this.toastService.toastSuccess(toast.workplaceSuccess.summary, (toast.workplaceSuccess.detail as Function)(this.typeAction));
       this.handleGetPosition();
     } else {
-      this.toastService.toastError("Fail", `${this.typeAction} Position Fail`)
+      this.toastService.toastError(toast.workplaceFail.summary, (toast.workplaceFail.detail as Function)(this.typeAction));
     }
   }
 

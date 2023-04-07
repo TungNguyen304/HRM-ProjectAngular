@@ -8,15 +8,16 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastService } from './core/services/helper/toast.service';
+import { ModalService } from './core/services/helper/modal.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [ConfirmationService, MessageService, ToastService]
+  providers: [ConfirmationService, MessageService, ToastService, ModalService],
 })
 export class AppComponent implements OnInit {
-  title:any = 'HRM-Project';
-  public display$:Observable<boolean>;
+  title: any = 'HRM-Project';
+  public display$: Observable<boolean>;
   constructor(
     private translate: TranslateService,
     private languageService: LanguageService,
@@ -25,7 +26,6 @@ export class AppComponent implements OnInit {
     private accountService: AccountService,
     private loadingService: LoadingService,
     private router: Router,
-    private toastService:ToastService
   ) {
     translate.setDefaultLang('en');
     translate.use('en');
@@ -56,6 +56,6 @@ export class AppComponent implements OnInit {
         }
       );
     }
-    this.display$ = this.loadingService.loading$
+    this.display$ = this.loadingService.loading$;
   }
 }

@@ -13,6 +13,7 @@ import { EmployeeService } from 'src/app/core/services/http/employee.service';
 import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
+import { toast } from 'src/app/shared/toastMessage';
 
 @Component({
   selector: 'app-create-employee',
@@ -80,15 +81,15 @@ export class CreateEmployeeComponent {
       this.employeeService.addEmployee(this.formData).subscribe(
         (data: any) => {
           this.location.back();
-          this.toastService.toastSuccess('Create employee Success', 'One new employee has been added');
+          this.toastService.toastSuccess(toast.createEmployeeSuccess.summary, toast.createEmployeeSuccess.detail);
           this.loadingService.setloading(false);
         },
         () => {
-          this.toastService.toastWarn('Create employee Fail', 'You have not completed all required fields');
+          this.toastService.toastWarn(toast.createEmployeeFail.summary, toast.createEmployeeFail.detail);
         }
       );
     } else {
-      this.toastService.toastWarn('Create employee Fail', 'You have not completed all required fields');
+      this.toastService.toastWarn(toast.createEmployeeFail.summary, toast.createEmployeeFail.detail);
     }
   }
 

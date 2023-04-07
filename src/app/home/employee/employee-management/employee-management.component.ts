@@ -19,11 +19,14 @@ import {
   maxLengthWarning,
 } from 'src/app/core/services/helper/warningForm.service';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
+import { ToastService } from 'src/app/core/services/helper/toast.service';
+import { toast } from 'src/app/shared/toastMessage';
+import { ModalService } from 'src/app/core/services/helper/modal.service';
 
 @Component({
   selector: 'app-employee-management',
   templateUrl: './employee-management.component.html',
-  styleUrls: ['./employee-management.component.scss']
+  styleUrls: ['./employee-management.component.scss'],
 })
 export class EmployeeManagementComponent {
   public status: { value: string }[];
@@ -42,8 +45,8 @@ export class EmployeeManagementComponent {
   constructor(
     private employeeService: EmployeeService,
     private router: Router,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private modalService: ModalService,
+    private toastService: ToastService
   ) {
     this.status = [{ value: 'On' }, { value: 'Off' }];
     this.sex = [{ value: 'Nam' }, { value: 'Nữ' }];
@@ -111,19 +114,18 @@ export class EmployeeManagementComponent {
   }
 
   update() {
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Data Updated',
-    });
+    this.modalService.confirm1();
+    // this.toastService.toastSuccess(
+    //   toast.updateEmployeeSuccess.summary,
+    //   toast.updateEmployeeSuccess.detail
+    // );
   }
-
   delete() {
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Data Deleted',
-    });
+    this.modalService.confirm2();
+    // this.toastService.toastSuccess(
+    //   toast.deleteEmployeeSuccess.summary,
+    //   toast.deleteEmployeeSuccess.detail
+    // );
   }
 
   handleDisplayCreateEmployee(): void {
@@ -135,69 +137,69 @@ export class EmployeeManagementComponent {
     this.router.navigate(['employee', 'management', 'detail-employee', id]);
   }
 
-  confirm1() {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.messageService.add({
-          severity: 'info',
-          summary: 'Confirmed',
-          detail: 'You have accepted',
-        });
-      },
-      reject: (type: any) => {
-        switch (type) {
-          case ConfirmEventType.REJECT:
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Rejected',
-              detail: 'You have rejected',
-            });
-            break;
-          case ConfirmEventType.CANCEL:
-            this.messageService.add({
-              severity: 'warn',
-              summary: 'Cancelled',
-              detail: 'You have cancelled',
-            });
-            break;
-        }
-      },
-    });
-  }
+  // confirm1() {
+  //   this.confirmationService.confirm({
+  //     message: 'Are you sure that you want to proceed?',
+  //     header: 'Confirmation',
+  //     icon: 'pi pi-exclamation-triangle',
+  //     accept: () => {
+  //       this.messageService.add({
+  //         severity: 'info',
+  //         summary: 'Confirmed',
+  //         detail: 'You have accepted',
+  //       });
+  //     },
+  //     reject: (type: any) => {
+  //       switch (type) {
+  //         case ConfirmEventType.REJECT:
+  //           this.messageService.add({
+  //             severity: 'error',
+  //             summary: 'Rejected',
+  //             detail: 'You have rejected',
+  //           });
+  //           break;
+  //         case ConfirmEventType.CANCEL:
+  //           this.messageService.add({
+  //             severity: 'warn',
+  //             summary: 'Cancelled',
+  //             detail: 'You have cancelled',
+  //           });
+  //           break;
+  //       }
+  //     },
+  //   });
+  // }
 
-  confirm2() {
-    this.confirmationService.confirm({
-      message: 'Do you want to delete this record?',
-      header: 'Delete Confirmation',
-      icon: 'pi pi-info-circle',
-      accept: () => {
-        this.messageService.add({
-          severity: 'info',
-          summary: 'Confirmed',
-          detail: 'Record deleted',
-        });
-      },
-      reject: (type: any) => {
-        switch (type) {
-          case ConfirmEventType.REJECT:
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Rejected',
-              detail: 'You have rejected',
-            });
-            break;
-          case ConfirmEventType.CANCEL:
-            this.messageService.add({
-              severity: 'warn',
-              summary: 'Cancelled',
-              detail: 'You have cancelled',
-            });
-            break;
-        }
-      },
-    });
-  }
+  // confirm2() {
+  //   this.confirmationService.confirm({
+  //     message: 'Do you want to delete this record?',
+  //     header: 'Delete Confirmation',
+  //     icon: 'pi pi-info-circle',
+  //     accept: () => {
+  //       this.messageService.add({
+  //         severity: 'info',
+  //         summary: 'Confirmed',
+  //         detail: 'Record deleted',
+  //       });
+  //     },
+  //     reject: (type: any) => {
+  //       switch (type) {
+  //         case ConfirmEventType.REJECT:
+  //           this.messageService.add({
+  //             severity: 'error',
+  //             summary: 'Rejected',
+  //             detail: 'You have rejected',
+  //           });
+  //           break;
+  //         case ConfirmEventType.CANCEL:
+  //           this.messageService.add({
+  //             severity: 'warn',
+  //             summary: 'Cancelled',
+  //             detail: 'You have cancelled',
+  //           });
+  //           break;
+  //       }
+  //     },
+  //   });
+  // }
 }

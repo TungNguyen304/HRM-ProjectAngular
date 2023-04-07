@@ -14,35 +14,35 @@ const type = {
 export class ToastService {
 
   constructor(private messageService: MessageService) { }
-  toastSuccess(summary:string, detail:string) {
+  toastSuccess(summary:string, detail:string | Function) {
     this.messageService.add({
         severity: type.success,
         summary: summary,
-        detail: detail,
+        detail: detail  as string,
       });
   }
 
-  toastError(summary:string, detail:string) {
+  toastError(summary:string, detail:string | Function) {
     this.messageService.add({
         severity: type.error,
         summary: summary,
-        detail: detail,
+        detail: detail  as string,
       });
   }
 
-  toastWarn(summary:string, detail:string) {
+  toastWarn(summary:string, detail:string | Function) {
     this.messageService.add({
         severity: type.warn,
         summary: summary,
-        detail: detail,
+        detail: detail  as string,
       });
   }
 
-  toastInfo(summary:string, detail:string) {
+  toastInfo(summary:string, detail:string | Function) {
     this.messageService.add({
         severity: type.info,
         summary: summary,
-        detail: detail,
+        detail: detail  as string,
       });
   }
 }

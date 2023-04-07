@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import {
   AbstractControl,
   ControlContainer,
@@ -56,13 +56,14 @@ export class WorkingProcessComponent implements OnInit {
     workingForm: null,
   };
   @Input() employeeForm: FormGroup;
-  public positionList: IPosition[];
+  public positionList: Array<IPosition[]> = [];
   public processControlList: FormArray;
   public disableSelectPosition: boolean = true;
   constructor(
     private positionService: PositionService,
     private unitTreeService: UnitTreeService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {}
   ngOnInit() {
     this.warningDetect();
@@ -84,7 +85,7 @@ export class WorkingProcessComponent implements OnInit {
     this.positionService
       .getPositionByUnitId(event.node.key)
       .subscribe((data: any) => {
-        this.positionList = data.response.data;
+        this.positionList[index] = data.response.data;
         getControlCommon(
           this.employeeForm,
           'workingProcess',
@@ -120,6 +121,7 @@ export class WorkingProcessComponent implements OnInit {
 
   handleDeleteProcess(index: number): void {
     this.processControlList?.controls.splice(index, 1);
+    this.positionList.splice(index, 1);
   }
 
   warningDetect(): void {

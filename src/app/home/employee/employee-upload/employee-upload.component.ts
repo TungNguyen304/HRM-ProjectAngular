@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
+import { toast } from 'src/app/shared/toastMessage';
 
 @Component({
   selector: 'app-employee-upload',
@@ -47,13 +48,13 @@ export class EmployeeUploadComponent {
       } else {
         this.file = event.target.files[0];
       }
-      this.toastService.toastSuccess('Success', 'Tải file lên thành công');
+      this.toastService.toastSuccess(toast.uploadFileSuccess.summary, toast.uploadFileSuccess.detail);
       this.drop.nativeElement.style.border = '2px solid var(--primary-color-main)';
     } else {
       if (event instanceof DragEvent) {
         event.preventDefault();
       }
-      this.toastService.toastError('Fail', 'Loại File phải là ảnh xlsx hoặc xls');
+      this.toastService.toastError(toast.uploadFileFail.summary, toast.uploadFileFail.detail);
       this.handleOnDragEnd();
     }
     this.upload.nativeElement.value = "";
