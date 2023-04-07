@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormArray, isFormControl, isFormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, isFormArray, isFormControl, isFormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +12,15 @@ export class CommonService {
     const infoList:any = [];
     labelList.forEach((item:any) => {
       if (Object.keys(data).includes(item.key)) {
-        infoList.push({
+        if(data[item.key] instanceof Object || data[item.key] instanceof Array) {
+          infoList.push(...this.convertDataForTableRowStyle(item.children, data[item.key]));
+        } else {
+          infoList.push({
             name: item.name,
-            value: data[item.key as keyof typeof data],
+            value: data[item.key],
             key: item.key
         })
+        }
       } else {
         infoList.push({
             name: item.name,
@@ -29,11 +33,12 @@ export class CommonService {
   }
 
   markAsDirty(group: AbstractControl) {
-    Object.keys((group as FormArray).controls).map((field) => {
+    Object.keys((group as FormArray).controls).forEach((field) => {
       const control = group.get(field);
       if (isFormControl(control)) {
         control.markAsDirty();
-      } else if (isFormGroup(control)) {
+      }
+      else if (isFormGroup(control) || isFormArray(control)) {
         this.markAsDirty(control);
       }
     });

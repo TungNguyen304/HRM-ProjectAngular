@@ -14,14 +14,13 @@ import {
 } from '@angular/forms';
 import { FileUpload } from 'primeng/fileupload';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
-import { handleFormatDataUnitTreeSelect } from 'src/app/core/services/helper/unit.service';
 import {
   maxLengthWarning,
   requireWarning,
 } from 'src/app/core/services/helper/warningForm.service';
 import { EmployeeService } from 'src/app/core/services/http/employee.service';
 import { PositionService } from 'src/app/core/services/http/position.service';
-import { UnitService } from 'src/app/core/services/http/unit.service';
+import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
 import { IPosition, IUnit, IWarningOtherInfo } from 'src/app/shared/interfaces';
 
 @Component({
@@ -33,11 +32,11 @@ import { IPosition, IUnit, IWarningOtherInfo } from 'src/app/shared/interfaces';
   ],
 })
 export class OtherInformationComponent implements OnInit {
-  constructor(private unitService:UnitService, private employeeService:EmployeeService, private positionService:PositionService) {}
+  constructor(private unitTreeService:UnitTreeService, private employeeService:EmployeeService, private positionService:PositionService) {}
   public sex = [{ value: 'Nam' }, { value: 'Nữ' }];
   public statusList:any[];
   public cvSize = 2;
-  @Input() unitList:IUnit[];
+  public unitList:IUnit[];
   @Input() employeeForm: FormGroup;
   public positionList:IPosition[];
   @ViewChild('cv', { static: true }) cv: any;
@@ -51,11 +50,15 @@ export class OtherInformationComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.unitTreeService.unitTree$.subscribe((data:any) => {
+      this.unitList = data;
+    })
     getControlCommon(this.employeeForm, 'otherInfo', 'position')?.disable();
     this.employeeService.getStatus().subscribe((data:any) => {
       this.statusList = data.response.data;
     })
     this.warningDetect();
+    
     getControlCommon(this.employeeForm, 'otherInfo')?.valueChanges.subscribe(
       () => {
         this.warningDetect();

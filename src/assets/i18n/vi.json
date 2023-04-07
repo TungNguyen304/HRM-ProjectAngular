@@ -34,7 +34,8 @@
     "otherInfo": "Thông tin khác",
     "relatedProperty": "Tài sản liên quan",
     "infoRepair": "Thông tin nâng cấp / sửa chữa",
-    "currentUser": "Nhân viện sử dụng hiện tại"
+    "currentUser": "Nhân viện sử dụng hiện tại",
+    "socialNetwork": "Mạng xã hội"
   },
 
   "upload": {
@@ -99,7 +100,11 @@
     "permanentAddress": "Địa chỉ thường trú",
     "jobDate": "Ngày nhận việc",
     "dateOfHire": "Ngày được thuê",
-    "image": "Ảnh"
+    "image": "Ảnh",
+    "typeSocial": "Loại mạng xã hội",
+    "link": "Địa chỉ tài khoản",
+    "addSocial": "Tạo form mạng xã hội",
+    "addProcess": "Tạo form quá trình công tác"
   },
 
   "createDevice": {

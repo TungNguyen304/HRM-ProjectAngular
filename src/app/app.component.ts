@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   constructor(
     private translate: TranslateService,
     private languageService: LanguageService,
+    private messageService: MessageService,
     private authService: AuthService,
     private accountService: AccountService,
     private loadingService: LoadingService,
@@ -31,6 +32,14 @@ export class AppComponent implements OnInit {
       languageService.setLanguage(language.name);
       translate.use(language.name);
     }
+  }
+
+  showAlert(noti: any): void {
+    this.messageService.add({
+      severity: noti.severity,
+      summary: noti.summary,
+      detail: noti.detail,
+    });
   }
 
   ngOnInit() {

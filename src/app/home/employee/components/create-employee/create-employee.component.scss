@@ -48,28 +48,27 @@
       border-radius: 5px;
       padding: 20px 20px 40px 20px;
       box-shadow: 0 0 8px 2px #ccc;
-      margin-bottom: 50px;
+      margin-bottom: 20px;
     }
-    .asset_relate {
-      .nodata {
-        font-size: 20px;
-        text-align: center;
-        font-family: "Times New Roman", Times, serif;
-        padding-bottom: 20px;
-        margin-top: 20px;
-        border-bottom: 1px solid #dee2e6;
-      }
-    }
-  }
-  .create_right {
-    flex: 1;
-    margin: 0 10px;
     :host .working_process {
       flex: 1;
       box-shadow: 0 0 8px 2px #ccc;
       border-radius: 5px;
       padding: 20px 20px 40px 20px;
       margin-bottom: 20px;
+    }
+  }
+  .create_right {
+    flex: 1;
+    margin: 0 10px;
+    .asset_relate {
+      .nodata {
+        font-size: 15px;
+        text-align: center;
+        padding-bottom: 20px;
+        margin-top: 20px;
+        border-bottom: 1px solid #dee2e6;
+      }
     }
     :host .otherInfo {
       margin-bottom: 20px;
@@ -153,7 +152,7 @@ form {
 
 h3.title {
   font-size: 20px;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   margin-bottom: 10px;
   text-align: center;
 }

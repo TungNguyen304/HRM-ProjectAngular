@@ -4,7 +4,7 @@ import { getControlCommon } from './formControl.service';
 export const requireWarning = (
   form: AbstractControl | null,
   component: any,
-  type: string | Array<string>,
+  type: string | Array<string>
 ): void => {
   if (type instanceof Array) {
     if (getControlCommon(form, ...type)?.errors?.['required']) {
@@ -15,6 +15,7 @@ export const requireWarning = (
       };
     }
   } else {
+    
     if (getControlCommon(form, type)?.errors?.['required']) {
       component.warning[type as keyof typeof component.warning] = {
         type: 'required',

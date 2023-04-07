@@ -1,7 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmployeeService } from 'src/app/core/services/http/employee.service';
-import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
+import {
+  ConfirmationService,
+  MessageService,
+  ConfirmEventType,
+} from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import {
   AbstractControl,
@@ -20,7 +24,7 @@ import { getControlCommon } from 'src/app/core/services/helper/formControl.servi
   selector: 'app-employee-management',
   templateUrl: './employee-management.component.html',
   styleUrls: ['./employee-management.component.scss'],
-  providers: [ConfirmationService, MessageService]
+  providers: [ConfirmationService, MessageService],
 })
 export class EmployeeManagementComponent {
   public status: { value: string }[];
@@ -32,7 +36,7 @@ export class EmployeeManagementComponent {
   public warning: { codeNameEmail: any } = {
     codeNameEmail: null,
   };
-  public idEmployee:string;
+  public idEmployee: string;
   public loadDisplay: boolean = false;
   public limit: number = 5;
   public total: number;
@@ -69,7 +73,7 @@ export class EmployeeManagementComponent {
     ];
   }
 
-  handleActionsClick(event:any) {
+  handleActionsClick(event: any) {
     this.idEmployee = event;
   }
 
@@ -89,8 +93,8 @@ export class EmployeeManagementComponent {
     this.loadDisplay = true;
     this.employeeService.getEmployee(1, this.limit).subscribe((data: any) => {
       this.employeeList = data.response.data;
-      this.loadDisplay = false;  
-      this.total = data.response.total
+      this.loadDisplay = false;
+      this.total = data.response.total;
     });
     this.warningDetect();
     this.searchForm.valueChanges.subscribe(() => {
@@ -128,49 +132,73 @@ export class EmployeeManagementComponent {
     this.router.navigate(['employee', 'management', 'create-employee']);
   }
 
-  handleNavigateDetailEmployee(id:string): void {
+  handleNavigateDetailEmployee(id: string): void {
     this.router.navigate(['employee', 'management', 'detail-employee', id]);
   }
 
   confirm1() {
     this.confirmationService.confirm({
-        message: 'Are you sure that you want to proceed?',
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
-        },
-        reject: (type:any) => {
-            switch (type) {
-                case ConfirmEventType.REJECT:
-                    this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
-                    break;
-                case ConfirmEventType.CANCEL:
-                    this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
-                    break;
-            }
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Confirmed',
+          detail: 'You have accepted',
+        });
+      },
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Rejected',
+              detail: 'You have rejected',
+            });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Cancelled',
+              detail: 'You have cancelled',
+            });
+            break;
         }
+      },
     });
-}
+  }
 
-confirm2() {
+  confirm2() {
     this.confirmationService.confirm({
-        message: 'Do you want to delete this record?',
-        header: 'Delete Confirmation',
-        icon: 'pi pi-info-circle',
-        accept: () => {
-            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
-        },
-        reject: (type:any) => {
-            switch (type) {
-                case ConfirmEventType.REJECT:
-                    this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
-                    break;
-                case ConfirmEventType.CANCEL:
-                    this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
-                    break;
-            }
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Confirmed',
+          detail: 'Record deleted',
+        });
+      },
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Rejected',
+              detail: 'You have rejected',
+            });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Cancelled',
+              detail: 'You have cancelled',
+            });
+            break;
         }
+      },
     });
-}
+  }
 }

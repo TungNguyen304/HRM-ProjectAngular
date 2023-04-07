@@ -2,19 +2,17 @@ import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   AbstractControl,
+  FormArray,
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
 import { CommonService } from 'src/app/core/services/common.service';
 import { emojiValidator } from 'src/app/core/services/helper/validator.service';
 import { MessageService } from 'primeng/api';
-import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
-import { UnitService } from 'src/app/core/services/http/unit.service';
-import { IUnit } from 'src/app/shared/interfaces';
-import { handleFormatDataUnitTreeSelect } from 'src/app/core/services/helper/unit.service';
 import { EmployeeService } from 'src/app/core/services/http/employee.service';
+import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
+import { LoadingService } from 'src/app/core/services/state/loading.service';
 
 @Component({
   selector: 'app-create-employee',
@@ -24,16 +22,16 @@ import { EmployeeService } from 'src/app/core/services/http/employee.service';
 })
 export class CreateEmployeeComponent {
   public assetList = [];
-
+  public formData: FormData = new FormData();
   constructor(
     private location: Location,
     private fb: FormBuilder,
     private commonService: CommonService,
     private messageService: MessageService,
-    private unitService: UnitService,
-    private employeeService: EmployeeService
+    private unitTreeService: UnitTreeService,
+    private employeeService: EmployeeService,
+    private loadingService:LoadingService
   ) {}
-  public unitList: IUnit[];
   public employeeForm: FormGroup;
 
   handleBack(): void {
@@ -49,8 +47,10 @@ export class CreateEmployeeComponent {
 
   onSubmit(): void {
     this.commonService.markAsDirty(this.employeeForm);
-    console.log(this.employeeForm.value);
+    console.log(this.employeeForm);
+
     if (this.employeeForm.valid) {
+      this.loadingService.setloading(true);
       const data = {
         employee_code: this.getControl('basicInfo', 'code')?.value,
         image_url: this.getControl('basicInfo', 'avt')?.value,
@@ -70,26 +70,8 @@ export class CreateEmployeeComponent {
         temporary_address: this.getControl('basicInfo', 'address')?.value,
         email: this.getControl('contactInfo', 'email')?.value,
         mobile: this.getControl('contactInfo', 'phone')?.value,
-        social_network: [],
-        working_history: [
-          {
-            organization_unit_id: this.getControl('workingProcess', 'unit')
-              ?.value.key,
-            job_position_id: this.getControl('workingProcess', 'position')
-              ?.value.job_position_id,
-            from: this.getControl(
-              'workingProcess',
-              'workingTime'
-            )?.value[0]?.toISOString(),
-            to: this.getControl(
-              'workingProcess',
-              'workingTime'
-            )?.value[1]?.toISOString(),
-            working_type: this.getControl('workingProcess', 'workingForm')
-              ?.value,
-          },
-        ],
-        cv_url: this.getControl('otherInfo', 'cv')?.value,
+        social_network: this.getSocialNetwork(),
+        working_history: this.getWorkingHistory(),
         description: this.getControl('otherInfo', 'description')?.value,
         organization_unit_id: this.getControl('otherInfo', 'unit')?.value.key,
         job_position_id: this.getControl('otherInfo', 'position')?.value
@@ -97,37 +79,17 @@ export class CreateEmployeeComponent {
         employee_status_id: this.getControl('otherInfo', 'status')?.value
           .employee_status_id,
       };
-      const formData = new FormData();
-      Object.keys(data).forEach((item) => {
-        const employeeItem = data[item as keyof typeof data];
-        if (
-          item !== 'image_url' &&
-          (employeeItem instanceof Array || employeeItem instanceof Object)
-        ) {
-          Object.keys(employeeItem).forEach((childItem) => {
-            formData.append(`${item}[${childItem}]`, JSON.stringify(employeeItem[childItem]));
-          });
-        } else {
-          if (item === 'image_url') {
-            console.log(employeeItem);
-            formData.append(item, employeeItem, employeeItem.name);
-          } else formData.append(item, employeeItem);
-        }
-      });
-      console.log(formData);
-      console.log(data);
-
-      this.employeeService.addEmployee(formData).subscribe(
+      this.handleTransformDataEmployee(data);
+      this.employeeService.addEmployee(this.formData).subscribe(
         (data: any) => {
-          // if(data.response.statuscode === 200) {
-
-          // }
           console.log(data);
+          this.location.back();
           this.showAlert({
             severity: 'success',
             summary: 'Create employee Success',
             detail: 'One new employee has been added',
           });
+          this.loadingService.setloading(false);
         },
         () => {
           this.showAlert({
@@ -146,6 +108,42 @@ export class CreateEmployeeComponent {
     }
   }
 
+  getWorkingHistory(): any[] {
+    if (
+      (this.employeeForm.get('workingProcess') as FormArray).controls.length > 0
+    ) {
+      return (
+        this.employeeForm.get('workingProcess') as FormArray
+      ).controls.map((item) => {
+        return {
+          organization_unit_id: item.get('unit')?.value.key,
+          job_position_id: item.get('position')?.value.job_position_id,
+          from: item.get('workingTime')?.value[0]?.toISOString(),
+          to: item.get('workingTime')?.value[1]?.toISOString(),
+          working_type: item.get('workingForm')?.value.value,
+        };
+      });
+    }
+    return [];
+  }
+
+  getSocialNetwork(): any[] {
+    if (
+      (this.getControl('contactInfo', 'socials') as FormArray).controls.length >
+      0
+    ) {
+      return (
+        this.getControl('contactInfo', 'socials') as FormArray
+      ).controls.map((item) => {
+        return {
+          name: item.get('name')?.value.value,
+          value: item.get('value')?.value,
+        };
+      });
+    }
+    return [];
+  }
+
   showAlert(noti: any): void {
     this.messageService.add({
       severity: noti.severity,
@@ -154,11 +152,61 @@ export class CreateEmployeeComponent {
     });
   }
 
-  ngOnInit() {
-    this.unitService.getUnit().subscribe((data: any) => {
-      this.unitList = handleFormatDataUnitTreeSelect(data.response.data);
+  handleTransformDataEmployee(data: any): void {
+    Object.keys(data).forEach((item) => {
+      const employeeItem = data[item as keyof typeof data];
+      if (
+        item !== 'image_url' &&
+        (employeeItem instanceof Array || employeeItem instanceof Object)
+      ) {
+        if (Object.keys(employeeItem).length > 0) {
+          this.handleTransformDataEmployeeChildObject(employeeItem, item);
+        } else {
+          this.formData.append(item, '');
+        }
+      } else {
+        if (item === 'image_url') {
+          this.formData.append(item, employeeItem, employeeItem.name);
+        } else this.formData.append(item, employeeItem);
+      }
     });
+  }
 
+  handleTransformDataEmployeeChildObject(
+    employeeItem: any,
+    parent: string
+  ): void {
+    let url = parent;
+    if (parent === 'social_network[0]') {
+      console.log(employeeItem);
+      console.log(employeeItem instanceof Array);
+    }
+    if (employeeItem instanceof Array) {
+      employeeItem.forEach((childItem, index) => {
+        url = parent + `[${index}]`;
+        if (childItem instanceof Array || childItem instanceof Object) {
+          this.handleTransformDataEmployeeChildObject(childItem, url);
+        } else {
+          this.formData.append(url, childItem);
+        }
+      });
+    } else {
+      Object.keys(employeeItem).forEach((item) => {
+        url = parent + `[${item}]`;
+        if (
+          employeeItem[item] instanceof Array ||
+          employeeItem[item] instanceof Object
+        ) {
+          this.handleTransformDataEmployeeChildObject(employeeItem[item], url);
+        } else {
+          this.formData.append(url, employeeItem[item]);
+        }
+      });
+    }
+  }
+
+  ngOnInit() {
+    this.unitTreeService.getUnitTreeByUnitId();
     this.employeeForm = this.fb.group({
       basicInfo: this.fb.group({
         code: [
@@ -187,13 +235,9 @@ export class CreateEmployeeComponent {
           '',
           [Validators.required, Validators.maxLength(255), emojiValidator],
         ],
+        socials: this.fb.array([]),
       }),
-      workingProcess: this.fb.group({
-        unit: [''],
-        position: [''],
-        workingTime: [''],
-        workingForm: [''],
-      }),
+      workingProcess: this.fb.array([]),
       otherInfo: this.fb.group({
         description: ['', [Validators.maxLength(500)]],
         unit: ['', Validators.required],

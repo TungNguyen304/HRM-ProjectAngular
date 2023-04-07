@@ -16,6 +16,18 @@
         (showAlert)="showAlert($event)"
         [employeeForm]="employeeForm"
       ></app-basic-information>
+      <app-working-process [employeeForm]="employeeForm"></app-working-process>
+    </div>
+
+    <div class="create_right">
+      <app-contact-information
+        [employeeForm]="employeeForm"
+        (showAlert)="showAlert($event)"
+      ></app-contact-information>
+      <app-other-information
+        [employeeForm]="employeeForm"
+        (showAlert)="showAlert($event)"
+      ></app-other-information>
       <div class="asset_relate">
         <h3 class="title">{{ "title.relatedProperty" | translate }}</h3>
         <p-table selectionMode="single" [value]="assetList">
@@ -37,24 +49,12 @@
         </p>
       </div>
     </div>
-
-    <div class="create_right">
-      <app-contact-information
-        [employeeForm]="employeeForm"
-      ></app-contact-information>
-      <app-other-information
-        [unitList]="unitList"
-        [employeeForm]="employeeForm"
-        (showAlert)="showAlert($event)"
-      ></app-other-information>
-      <app-working-process [employeeForm]="employeeForm" [unitList]="unitList"></app-working-process>
-    </div>
   </div>
   <div class="create_new">
     <button
       type="submit"
       pButton
-      class="p-button-outlined p-button-success"
+      class="p-button-raised"
       [label]="'title.create' | translate"
     ></button>
   </div>

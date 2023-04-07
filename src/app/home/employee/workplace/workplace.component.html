@@ -7,7 +7,7 @@
       type="button"
       icon="pi pi-plus"
       [label]="'common.addNew' | translate"
-      class="p-button-success p-button-sm"
+      class="p-button-danger p-button-raised p-button-sm"
       iconPos="left"
       (click)="handleShowOverlayCreateWorkplace()"
     ></button>
@@ -37,8 +37,8 @@
           <td>{{ position.organization?.organization_unit_name }}</td>
           <td>{{ position.job_position_category }}</td>
           <td style="text-align: end;">
-            <button (click)="handleShowOverlayMember(position.job_position_id, position.job_position_name)" style="margin-right: 10px;" pButton class="p-button-outlined p-button-sm" type="button" icon="bi bi-people-fill" iconPos="left"></button>
-            <button (click)="handleShowOverlayUpdate(position)" pButton class="p-button-outlined p-button-sm p-button-success" type="button" icon="bi bi-pencil-square" iconPos="left"></button>
+            <button (click)="handleShowOverlayMember(position.job_position_id, position.job_position_name)" style="margin-right: 10px;" pButton class="p-button-outlined p-button-raised p-button-sm" type="button" icon="bi bi-people-fill" iconPos="left"></button>
+            <button (click)="handleShowOverlayUpdate(position)" pButton class="p-button-outlined p-button-raised p-button-sm p-button-success" type="button" icon="bi bi-pencil-square" iconPos="left"></button>
           </td>
         </tr>
       </ng-template>

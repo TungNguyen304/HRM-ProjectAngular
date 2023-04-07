@@ -1,5 +1,4 @@
 export interface IWarning {
-  name: string;
   type: string;
   length?: number;
 }
@@ -29,6 +28,8 @@ export interface IWarningContactInfo {
   email: IWarning | null;
   phone: IWarning | null;
   skypeId: IWarning | null;
+  name: IWarning | null;
+  value: IWarning | null
 }
 
 export interface IWarningOtherInfo {
@@ -37,6 +38,13 @@ export interface IWarningOtherInfo {
   status: IWarning | null;
   description: IWarning | null;
   cv: IWarning | null;
+}
+
+export interface IWarningWorkingProcess {
+  unit: IWarning | null,
+  position: IWarning | null,
+  workingTime: IWarning | null,
+  workingForm: IWarning | null
 }
 
 export interface IPosition {
