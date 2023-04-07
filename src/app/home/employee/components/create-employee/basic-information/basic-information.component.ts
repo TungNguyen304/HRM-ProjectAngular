@@ -13,7 +13,6 @@ import {
   FormGroup,
   FormGroupDirective,
 } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { FileUpload } from 'primeng/fileupload';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import {
@@ -58,9 +57,8 @@ export class BasicInformationComponent implements OnInit {
   @ViewChild('avt') drag: ElementRef;
   @ViewChild('file', {static: true}) file: FileUpload;
   @Input() employeeForm: FormGroup;
-  @Output() showAlert = new EventEmitter<any>();
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor() {}
 
   ngOnInit() {
     this.handleInDirective = {
@@ -74,10 +72,6 @@ export class BasicInformationComponent implements OnInit {
         this.warningDetect();
       }
     );
-  }
-
-  showAlertFromBasicInfo(alert: any) {
-    this.showAlert.emit(alert);
   }
 
   handleSetUrl(url: any) {

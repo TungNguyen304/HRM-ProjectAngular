@@ -27,7 +27,7 @@
           <button
             (click)="handleShowMember(rowData.organization_unit_id, rowData.organization_unit_name)"
             pButton
-            class="p-button-outlined p-button-sm"
+            class="p-button-outlined p-button-sm p-button-raised"
             type="button"
             icon="bi bi-people-fill"
             iconPos="left"
@@ -45,6 +45,6 @@
   <ng-template pTemplate="header">{{ unitTemp }}</ng-template
   >
   <ng-template pTemplate="content">
-    <app-member-table [memberList]="memberList"></app-member-table>
+    <app-member-table [props]="props"></app-member-table>
   </ng-template>
 </p-dialog>

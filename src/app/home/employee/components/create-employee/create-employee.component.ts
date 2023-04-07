@@ -9,16 +9,15 @@ import {
 } from '@angular/forms';
 import { CommonService } from 'src/app/core/services/common.service';
 import { emojiValidator } from 'src/app/core/services/helper/validator.service';
-import { MessageService } from 'primeng/api';
 import { EmployeeService } from 'src/app/core/services/http/employee.service';
 import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
+import { ToastService } from 'src/app/core/services/helper/toast.service';
 
 @Component({
   selector: 'app-create-employee',
   templateUrl: './create-employee.component.html',
   styleUrls: ['./create-employee.component.scss'],
-  providers: [MessageService],
 })
 export class CreateEmployeeComponent {
   public assetList = [];
@@ -27,10 +26,10 @@ export class CreateEmployeeComponent {
     private location: Location,
     private fb: FormBuilder,
     private commonService: CommonService,
-    private messageService: MessageService,
     private unitTreeService: UnitTreeService,
     private employeeService: EmployeeService,
-    private loadingService:LoadingService
+    private loadingService:LoadingService,
+    private toastService:ToastService
   ) {}
   public employeeForm: FormGroup;
 
@@ -47,8 +46,6 @@ export class CreateEmployeeComponent {
 
   onSubmit(): void {
     this.commonService.markAsDirty(this.employeeForm);
-    console.log(this.employeeForm);
-
     if (this.employeeForm.valid) {
       this.loadingService.setloading(true);
       const data = {
@@ -82,29 +79,16 @@ export class CreateEmployeeComponent {
       this.handleTransformDataEmployee(data);
       this.employeeService.addEmployee(this.formData).subscribe(
         (data: any) => {
-          console.log(data);
           this.location.back();
-          this.showAlert({
-            severity: 'success',
-            summary: 'Create employee Success',
-            detail: 'One new employee has been added',
-          });
+          this.toastService.toastSuccess('Create employee Success', 'One new employee has been added');
           this.loadingService.setloading(false);
         },
         () => {
-          this.showAlert({
-            severity: 'warn',
-            summary: 'Create employee Fail',
-            detail: 'You have not completed all required fields',
-          });
+          this.toastService.toastWarn('Create employee Fail', 'You have not completed all required fields');
         }
       );
     } else {
-      this.showAlert({
-        severity: 'warn',
-        summary: 'Create employee Fail',
-        detail: 'You have not completed all required fields',
-      });
+      this.toastService.toastWarn('Create employee Fail', 'You have not completed all required fields');
     }
   }
 
@@ -142,14 +126,6 @@ export class CreateEmployeeComponent {
       });
     }
     return [];
-  }
-
-  showAlert(noti: any): void {
-    this.messageService.add({
-      severity: noti.severity,
-      summary: noti.summary,
-      detail: noti.detail,
-    });
   }
 
   handleTransformDataEmployee(data: any): void {

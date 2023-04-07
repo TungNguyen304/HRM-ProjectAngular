@@ -1,5 +1,4 @@
 <div class="workplace">
-  <p-toast></p-toast>
   <h2 class="title">{{'title.JobPositionManagement' | translate}}</h2>
   <div style="text-align: end">
     <button
@@ -61,7 +60,7 @@
 <p-dialog [(visible)]="displayMember">
   <ng-template pTemplate="header">{{positionTemp}}</ng-template>
   <ng-template pTemplate="content">
-    <app-member-table [memberList]="memberList"></app-member-table>
+    <app-member-table [props]="props"></app-member-table>
 </ng-template>
 </p-dialog>
 

@@ -11,6 +11,7 @@ import { FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FileUpload } from 'primeng/fileupload';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
+import { ToastService } from 'src/app/core/services/helper/toast.service';
 
 export interface IData {
   url:string,
@@ -29,11 +30,11 @@ export interface IHandle {
 export class DragDropAvtDirective implements OnInit {
   constructor(
     private elementRef: ElementRef,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private toastService:ToastService
   ) {}
   @Input('appDragDropAvt') dataForDirective: IData;
   @Input('handleInDirective') handleInDirective: IHandle;
-  @Output() showAlert = new EventEmitter<any>();
   @Output() handleSetUrl = new EventEmitter<any>();
 
   ngOnInit() {
@@ -93,20 +94,12 @@ export class DragDropAvtDirective implements OnInit {
             );
           }
         }
-        this.showAlert.emit({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Tải ảnh lên thành công',
-        });
+        this.toastService.toastSuccess('Success', 'Upload image success');
       } else {
         if (event instanceof DragEvent) {
           event.preventDefault();
         }
-        this.showAlert.emit({
-          severity: 'error',
-          summary: 'Fail',
-          detail: `The size of the Avt should not be more than ${this.dataForDirective.size}mb`,
-        });
+        this.toastService.toastError('Fail', `The size of the Avt should not be more than ${this.dataForDirective.size}mb`);
         this.handleOnDragEnd();
       }
       this.elementRef.nativeElement.style.border = '2px solid black';
@@ -114,11 +107,7 @@ export class DragDropAvtDirective implements OnInit {
       if (event instanceof DragEvent) {
         event.preventDefault();
       }
-      this.showAlert.emit({
-        severity: 'error',
-        summary: 'Fail',
-        detail: 'Avt must be a png/jpg file',
-      });
+      this.toastService.toastError('Fail', 'Avt must be a png/jpg file');
       this.handleOnDragEnd();
     }
     this.handleInDirective.inputFileElement.clear();

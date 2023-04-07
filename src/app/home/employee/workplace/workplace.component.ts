@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { debounceTime, delay, switchMap, tap } from 'rxjs';
 import { PositionService } from 'src/app/core/services/http/position.service';
-import { IAccount, IPosition } from 'src/app/shared/interfaces';
+import { IPosition } from 'src/app/shared/interfaces';
+import { IPropsMember } from '../components/member-table/member-table.component';
+import { ToastService } from 'src/app/core/services/helper/toast.service';
 
 export interface IPositionForm {
   name: string;
@@ -17,14 +18,13 @@ export interface IPositionForm {
   selector: 'app-workplace',
   templateUrl: './workplace.component.html',
   styleUrls: ['./workplace.component.scss'],
-  providers: [MessageService],
 })
 export class WorkplaceComponent implements OnInit {
   public positionList: IPosition[];
   constructor(
     private positionService: PositionService,
-    private messageService: MessageService,
-    private http: HttpClient
+    private http: HttpClient,
+    private toastService:ToastService
   ) {}
   @ViewChild('paginator') paginator: ElementRef;
   public displayCreate: boolean = false;
@@ -36,7 +36,7 @@ export class WorkplaceComponent implements OnInit {
   public loadDisplay: boolean = false;
   public infoUpdate: any;
   public typeAction: 'Add' | 'Update';
-  public memberList: any[];
+  public props: IPropsMember;
   public searchInput: FormControl = new FormControl('');
 
   handleShowOverlayCreateWorkplace() {
@@ -44,13 +44,13 @@ export class WorkplaceComponent implements OnInit {
     this.displayCreate = !this.displayCreate;
   }
 
-  handleShowOverlayMember(id: string, name:string): void {
-    this.positionService.getMemberByPositionId(id).subscribe((data:any) => {
-      console.log(data);
-      this.memberList = data.response.data;
-      this.displayMember = !this.displayMember;
-      this.positionTemp = name;
-    })
+  handleShowOverlayMember(id: string, name: string): void {
+    this.props = {
+      type: 'position',
+      id: id,
+    };
+    this.displayMember = !this.displayMember;
+    this.positionTemp = name;
   }
 
   setLoadingDisplay(type: boolean): void {
@@ -60,18 +60,10 @@ export class WorkplaceComponent implements OnInit {
   showMessage(type: boolean): void {
     this.displayCreate = false;
     if (type === true) {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: `${this.typeAction} Position Success`,
-      });
+      this.toastService.toastSuccess("Success", `${this.typeAction} Position Success`);
       this.handleGetPosition();
     } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Fail',
-        detail: `${this.typeAction} Position Fail`,
-      });
+      this.toastService.toastError("Fail", `${this.typeAction} Position Fail`)
     }
   }
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { handleFormatDataUnit } from 'src/app/core/services/helper/unit.service';
 import { UnitService } from 'src/app/core/services/http/unit.service';
 import { IUnit, IUnitList } from 'src/app/shared/interfaces';
+import { IPropsMember } from '../components/member-table/member-table.component';
 
 @Component({
   selector: 'app-work-unit',
@@ -9,7 +10,7 @@ import { IUnit, IUnitList } from 'src/app/shared/interfaces';
   styleUrls: ['./work-unit.component.scss'],
 })
 export class WorkUnitComponent {
-  public memberList = [];
+  public props: IPropsMember;
   public unitTemp: string;
   public display: boolean = false;
   public loadDisplay: boolean = false;
@@ -28,9 +29,11 @@ export class WorkUnitComponent {
   
 
   handleShowMember(unitCode: string, unitName: string) {
-    this.unitService.getMemberByUnitId(unitCode).subscribe((data:any) => {
-      this.memberList = data.response.users;
-    });
+    console.log(unitCode, unitName);
+    this.props = {
+      type: "unit",
+      id: unitCode
+    }
     this.unitTemp = unitName;
     this.display = !this.display;
   }

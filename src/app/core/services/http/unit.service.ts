@@ -15,7 +15,7 @@ export class UnitService {
     )
   }
 
-  getMemberByUnitId(id:string):Observable<Object> {
-    return this.http.get(`organization-units/${id}/members`);
+  getMemberByUnitId(id:string, page?:number, limit?:number):Observable<Object> {
+    return this.http.get(`users?${page ? `page=${page}&` : ''}${limit ? `limit=${limit}&` : ''}organization_unit_id=${id}`);
   }
 }

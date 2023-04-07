@@ -31,8 +31,8 @@ export class PositionService {
     );
   }
 
-  getMemberByPositionId(id:string):Observable<Object> {
-    return this.http.get(`users?job_position_id=${id}`);
+  getMemberByPositionId(id:string, page?:number, limit?:number):Observable<Object> {
+    return this.http.get(`users?${page ? `page=${page}&` : ''}${limit ? `limit=${limit}&` : ''}job_position_id=${id}`);
   }
 
   getPositionByUnitId(id:string):Observable<Object> {
