@@ -38,10 +38,11 @@ export class EmployeeManagementComponent {
   public warning: { codeNameEmail: any } = {
     codeNameEmail: null,
   };
-  public idEmployee: string;
+  public employeeActive: any;
   public loadDisplay: boolean = false;
   public limit: number = 5;
   public total: number;
+  public page:number = 1;
   constructor(
     private employeeService: EmployeeService,
     private router: Router,
@@ -69,21 +70,25 @@ export class EmployeeManagementComponent {
         label: 'Detail',
         icon: 'bi bi-card-text',
         command: () => {
-          this.handleNavigateDetailEmployee(this.idEmployee);
+          this.handleNavigateDetailEmployee(this.employeeActive.employee_id);
         },
       },
     ];
   }
 
   handleActionsClick(event: any) {
-    this.idEmployee = event;
+    this.employeeActive = event;
   }
 
   getControl(control: string): AbstractControl | null {
     return getControlCommon(this.searchForm, control);
   }
 
-  onPageChange(event: any): void {}
+  onPageChange(event: any): void {
+    this.page = event.page + 1;
+    this.loadDisplay = true;
+    this.employeeService.getEmployee(this.page, this.limit);
+  }
 
   ngOnInit() {
     this.searchForm = new FormGroup({
@@ -93,7 +98,7 @@ export class EmployeeManagementComponent {
       ]),
     });
     this.loadDisplay = true;
-    this.employeeService.getEmployee(1, this.limit).subscribe((data: any) => {
+    this.employeeService.getEmployee(this.page, this.limit).subscribe((data: any) => {
       this.employeeList = data.response.data;
       this.loadDisplay = false;
       this.total = data.response.total;
@@ -114,18 +119,22 @@ export class EmployeeManagementComponent {
   }
 
   update() {
-    this.modalService.confirm1();
+    this.router.navigate(['employee', 'management', 'update-employee', this.employeeActive.employee_id])
     // this.toastService.toastSuccess(
     //   toast.updateEmployeeSuccess.summary,
     //   toast.updateEmployeeSuccess.detail
     // );
   }
   delete() {
-    this.modalService.confirm2();
-    // this.toastService.toastSuccess(
-    //   toast.deleteEmployeeSuccess.summary,
-    //   toast.deleteEmployeeSuccess.detail
-    // );
+    this.modalService.confirmDetele(this.employeeActive.full_name, () => {
+      this.loadDisplay = true;
+      this.employeeService.deleteEmployeeById(this.employeeActive.employee_id).subscribe(() => {
+        this.toastService.toastSuccess(toast.deleteEmployeeSuccess.summary, toast.deleteEmployeeSuccess.detail);
+      }, () => {
+        this.toastService.toastError(toast.deleteEmployeeFail.summary, toast.deleteEmployeeFail.detail);
+      })
+      this.employeeService.getEmployee(this.page, this.limit);
+    });
   }
 
   handleDisplayCreateEmployee(): void {

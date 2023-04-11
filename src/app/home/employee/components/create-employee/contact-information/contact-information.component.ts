@@ -18,6 +18,7 @@ import {
 } from 'src/app/core/services/helper/warningForm.service';
 import { IWarningContactInfo } from 'src/app/shared/interfaces';
 import { toast } from 'src/app/shared/toastMessage';
+import { socialNetworks } from './data';
 
 type Tsocial = 'type' | 'name';
 
@@ -34,13 +35,7 @@ type Tsocial = 'type' | 'name';
 })
 export class ContactInformationComponent implements OnInit {
   constructor(private fb: FormBuilder, private toastService:ToastService) {}
-  public socialNetworks = [
-    { value: 'FaceBook', label: 'bi bi-facebook' },
-    { value: 'Twitter', label: 'bi bi-twitter' },
-    { value: 'Instagram', label: 'bi bi-instagram' },
-    { value: 'WhatsApp', label: 'bi bi-whatsapp' },
-    { value: 'WeChat', label: 'bi bi-wechat' },
-  ];
+  public socialNetworks = socialNetworks;
   @Input() employeeForm: FormGroup;
   public warning: IWarningContactInfo = {
     email: null,

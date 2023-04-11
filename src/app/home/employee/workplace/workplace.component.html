@@ -1,5 +1,5 @@
 <div class="workplace">
-  <h2 class="title">{{'title.JobPositionManagement' | translate}}</h2>
+  <h2 class="title">{{ "title.JobPositionManagement" | translate }}</h2>
   <div style="text-align: end">
     <button
       pButton
@@ -13,31 +13,88 @@
   </div>
   <div class="table">
     <p-table
-      selectionMode="single"
       [value]="positionList"
-      styleClass="p-datatable-striped"
-      [tableStyle]="{ 'min-width': '50rem' }"
+      responsiveLayout="stack"
+      [breakpoint]="'960px'"
     >
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="code">{{'workplace.code' | translate}} <p-sortIcon field="code"></p-sortIcon></th>
-          <th pSortableColumn="name">{{'workplace.locationName' | translate}} <p-sortIcon field="name"></p-sortIcon></th>
-          <th pSortableColumn="unit">{{'workplace.belongingToTheUnit' | translate}} <p-sortIcon field="unit"></p-sortIcon></th>
-          <th pSortableColumn="type">{{'workplace.positionType' | translate}} <p-sortIcon field="type"></p-sortIcon></th>
-          <th style="text-align: end;">
-            <input style="width: 100%;" [formControl]="searchInput" type="text" pInputText [placeholder]="'workplace.searchByCode' | translate" />
+          <th pSortableColumn="code">
+            {{ "workplace.code" | translate }}
+            <p-sortIcon field="code"></p-sortIcon>
+          </th>
+          <th pSortableColumn="name">
+            {{ "workplace.locationName" | translate }}
+            <p-sortIcon field="name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="unit">
+            {{ "workplace.belongingToTheUnit" | translate }}
+            <p-sortIcon field="unit"></p-sortIcon>
+          </th>
+          <th pSortableColumn="type">
+            {{ "workplace.positionType" | translate }}
+            <p-sortIcon field="type"></p-sortIcon>
+          </th>
+          <th style="text-align: end">
+            <input
+              style="width: 100%"
+              [formControl]="searchInput"
+              type="text"
+              pInputText
+              [placeholder]="'workplace.searchByCode' | translate"
+            />
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-position>
+      <ng-template pTemplate="body" let-position let-columns="columns">
         <tr *ngIf="!loadDisplay" [pSelectableRow]="position">
-          <td>{{ position.job_position_code }}</td>
-          <td>{{ position.job_position_name }}</td>
-          <td>{{ position.organization?.organization_unit_name }}</td>
-          <td>{{ position.job_position_category }}</td>
-          <td style="text-align: end;">
-            <button (click)="handleShowOverlayMember(position.job_position_id, position.job_position_name)" style="margin-right: 10px;" pButton class="p-button-outlined p-button-raised p-button-sm" type="button" icon="bi bi-people-fill" iconPos="left"></button>
-            <button (click)="handleShowOverlayUpdate(position)" pButton class="p-button-outlined p-button-raised p-button-sm p-button-success" type="button" icon="bi bi-pencil-square" iconPos="left"></button>
+          <td>
+            <span class="p-column-title">{{
+              "workplace.code" | translate
+            }}</span
+            >{{ position.job_position_code }}
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "workplace.locationName" | translate
+            }}</span
+            >{{ position.job_position_name }}
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "workplace.belongingToTheUnit" | translate
+            }}</span
+            >{{ position.organization?.organization_unit_name }}
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "workplace.positionType" | translate
+            }}</span
+            >{{ position.job_position_category }}
+          </td>
+          <td style="text-align: end">
+            <button
+              (click)="
+                handleShowOverlayMember(
+                  position.job_position_id,
+                  position.job_position_name
+                )
+              "
+              style="margin-right: 10px"
+              pButton
+              class="p-button-outlined p-button-raised p-button-sm"
+              type="button"
+              icon="bi bi-people-fill"
+              iconPos="left"
+            ></button>
+            <button
+              (click)="handleShowOverlayUpdate(position)"
+              pButton
+              class="p-button-outlined p-button-raised p-button-sm p-button-success"
+              type="button"
+              icon="bi bi-pencil-square"
+              iconPos="left"
+            ></button>
           </td>
         </tr>
       </ng-template>
@@ -46,21 +103,30 @@
       </ng-template>
     </p-table>
 
-
-    <p-paginator #paginator (onPageChange)="onPageChange($event)" [first]="0" [rows]="limit" [totalRecords]="total" [showFirstLastIcon]="false"></p-paginator>
+    <p-paginator
+      #paginator
+      (onPageChange)="onPageChange($event)"
+      [first]="0"
+      [rows]="limit"
+      [totalRecords]="total"
+      [showFirstLastIcon]="false"
+    ></p-paginator>
   </div>
 </div>
 
 <p-dialog [header]="'title.create' | translate" [(visible)]="displayCreate">
   <ng-template pTemplate="content">
-    <app-create-workplace [infoUpdate]="infoUpdate" [typeAction]="typeAction" (showMessage)="showMessage($event)"></app-create-workplace>
+    <app-create-workplace
+      [infoUpdate]="infoUpdate"
+      [typeAction]="typeAction"
+      (showMessage)="showMessage($event)"
+    ></app-create-workplace>
   </ng-template>
 </p-dialog>
 
 <p-dialog [(visible)]="displayMember">
-  <ng-template pTemplate="header">{{positionTemp}}</ng-template>
+  <ng-template pTemplate="header">{{ positionTemp }}</ng-template>
   <ng-template pTemplate="content">
     <app-member-table [props]="props"></app-member-table>
-</ng-template>
+  </ng-template>
 </p-dialog>
-

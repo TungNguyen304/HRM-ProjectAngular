@@ -96,8 +96,9 @@
   <div class="employee_table">
     <p-table
       selectionMode="single"
+      responsiveLayout="stack"
+      [breakpoint]="'960px'"
       [value]="employeeList"
-      [tableStyle]="{ 'min-width': '50rem' }"
     >
       <ng-template pTemplate="caption">
         <div
@@ -108,7 +109,9 @@
           "
           class="flex align-items-center justify-content-between"
         >
-          <div>150 {{ "common.record" | translate }}</div>
+          <div>
+            {{ total ? total : "..." }} {{ "common.record" | translate }}
+          </div>
           <div>
             <button
               pButton
@@ -140,20 +143,51 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-employee>
-        <tr [pSelectableRow]="employee">
-          <td>{{ employee.employee_code }}</td>
-          <td>{{ employee.full_name }}</td>
-          <td>{{ employee.email }}</td>
-          <td>{{ employee.gender }}</td>
-          <td>{{ employee.organization?.organization_unit_name }}</td>
-          <td>{{ employee.job_position?.job_position_name }}</td>
-          <td>{{ employee.employee_status?.employee_status_name }}</td>
+        <tr *ngIf="!loadDisplay" [pSelectableRow]="employee">
           <td>
+            <span class="p-column-title">{{
+              "employeeManagement.employeeCode" | translate
+            }}</span>
+            {{ employee.employee_code }}
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "employeeManagement.fullName" | translate
+            }}</span
+            >{{ employee.full_name }}
+          </td>
+          <td><span class="p-column-title">email</span>{{ employee.email }}</td>
+          <td>
+            <span class="p-column-title">{{
+              "employeeManagement.sex" | translate
+            }}</span
+            >{{ employee.gender }}
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "employeeManagement.unit" | translate
+            }}</span
+            >{{ employee.organization?.organization_unit_name }}
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "employeeManagement.position" | translate
+            }}</span>
+            {{ employee.job_position?.job_position_name }}
+          </td>
+          <td>
+            <span class="p-column-title">{{ "common.status" | translate }}</span
+            >{{ employee.employee_status?.employee_status_name }}
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "common.action" | translate
+            }}</span>
             <div>
               <p-splitButton
                 styleClass="p-button-sm mr-2 mb-2"
                 [model]="actions"
-                (onDropdownClick)="handleActionsClick(employee.employee_id)"
+                (onDropdownClick)="handleActionsClick(employee)"
               ></p-splitButton>
             </div>
           </td>

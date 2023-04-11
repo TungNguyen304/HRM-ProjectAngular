@@ -60,6 +60,7 @@
       width: 45px;
       margin: 0 auto;
       height: 45px;
+      object-fit: cover;
     }
   }
 }
@@ -329,7 +330,7 @@ body.dark .switch::before {
 }
 
 .sidebar.close ~ .home {
-  left: 78px;
+  left: 88px;
   min-height: 100vh;
-  width: calc(100% - 78px);
+  width: calc(100% - 88px);
 }

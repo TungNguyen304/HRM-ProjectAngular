@@ -1,19 +1,15 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   AbstractControl,
   ControlContainer,
   FormArray,
   FormBuilder,
-  FormControl,
   FormGroup,
   FormGroupDirective,
   Validators,
 } from '@angular/forms';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
-import {
-  emojiWarning,
-  requireWarning,
-} from 'src/app/core/services/helper/warningForm.service';
+import { requireWarning } from 'src/app/core/services/helper/warningForm.service';
 import { PositionService } from 'src/app/core/services/http/position.service';
 import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
 import {
@@ -21,6 +17,7 @@ import {
   IUnit,
   IWarningWorkingProcess,
 } from 'src/app/shared/interfaces';
+import { workingForm } from './data';
 
 @Component({
   selector: 'app-working-process',
@@ -34,20 +31,7 @@ import {
   ],
 })
 export class WorkingProcessComponent implements OnInit {
-  public workingForm = [
-    {
-      value: 'FULL_TIME',
-      label: 'Toàn thời gian',
-    },
-    {
-      value: 'HALF_TIME',
-      label: 'Bán thời gian',
-    },
-    {
-      value: 'COLLABORATORS',
-      label: 'Cộng tác viên',
-    },
-  ];
+  public workingForm = workingForm;
   public unitList: IUnit[];
   public warning: IWarningWorkingProcess = {
     unit: null,
@@ -62,8 +46,7 @@ export class WorkingProcessComponent implements OnInit {
   constructor(
     private positionService: PositionService,
     private unitTreeService: UnitTreeService,
-    private fb: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private fb: FormBuilder
   ) {}
   ngOnInit() {
     this.warningDetect();
@@ -81,11 +64,34 @@ export class WorkingProcessComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    getControlCommon(this.employeeForm, 'otherInfo')?.valueChanges.subscribe(
+      () => {
+        const workingProcess = getControlCommon(
+          this.employeeForm,
+          'workingProcess'
+        )?.value;
+        workingProcess.forEach((item: any, index: number) => {
+          this.onSelectedChange({ node: { key: item.unit.key } }, index);
+        });
+
+        this.warningDetect();
+      }
+    );
+  }
+
   onSelectedChange(event: any, index: number) {
-    this.positionService
+    event.node.key && this.positionService
       .getPositionByUnitId(event.node.key)
       .subscribe((data: any) => {
-        this.positionList[index] = data.response.data;
+        this.positionList[index] = data.response.data.map((position: any) => {
+          return {
+            job_position_id: position.job_position_id,
+            job_position_name: position.job_position_name,
+            job_position_code: position.job_position_code,
+            job_position_code_name: position.job_position_code_name,
+          };
+        });
         getControlCommon(
           this.employeeForm,
           'workingProcess',
@@ -109,7 +115,7 @@ export class WorkingProcessComponent implements OnInit {
       })
     );
     this.processControlList.controls.forEach((control) => {
-      if(!control.get('unit')?.valid) {
+      if (!control.get('unit')?.valid) {
         control.get('position')?.disable();
       }
     });

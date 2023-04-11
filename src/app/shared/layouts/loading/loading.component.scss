@@ -4,7 +4,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(0,0,0,1);
     z-index: 2000;
 }
 
@@ -27,7 +27,7 @@
   letter-spacing:4px;
   text-transform:uppercase;
   text-shadow:0 0 10px #fff000;
-  box-shadow:0 0 20px rgba(0,0,0,.5);
+  box-shadow:0 0 20px rgba(0,0,0,0.5);
 }
 .ring:before
 {

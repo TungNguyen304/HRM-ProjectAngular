@@ -14,14 +14,14 @@ import { getControlCommon } from 'src/app/core/services/helper/formControl.servi
 import { ToastService } from 'src/app/core/services/helper/toast.service';
 
 export interface IData {
-  url:string,
-  size: number
+  url: string;
+  size: number;
 }
 
 export interface IHandle {
-  form: FormGroup,
-  controls: string[],
-  inputFileElement: FileUpload
+  form: FormGroup;
+  controls: string[];
+  inputFileElement: FileUpload;
 }
 
 @Directive({
@@ -31,7 +31,7 @@ export class DragDropAvtDirective implements OnInit {
   constructor(
     private elementRef: ElementRef,
     private sanitizer: DomSanitizer,
-    private toastService:ToastService
+    private toastService: ToastService
   ) {}
   @Input('appDragDropAvt') dataForDirective: IData;
   @Input('handleInDirective') handleInDirective: IHandle;
@@ -41,6 +41,12 @@ export class DragDropAvtDirective implements OnInit {
     this.handleInDirective.inputFileElement.onSelect.emit = (event: any) => {
       this.handleDropFile(event);
     };
+  }
+
+  ngOnChanges() {
+    if (this.dataForDirective.url) {
+      this.elementRef.nativeElement.style.border = '2px solid #000';
+    }
   }
 
   @HostListener('dragover', ['$event']) dragover(event: DragEvent) {
@@ -74,9 +80,10 @@ export class DragDropAvtDirective implements OnInit {
       ) {
         if (event instanceof DragEvent) {
           event.preventDefault();
-          getControlCommon(this.handleInDirective.form, ...this.handleInDirective.controls)?.setValue(
-            event.dataTransfer?.files[0]
-          );
+          getControlCommon(
+            this.handleInDirective.form,
+            ...this.handleInDirective.controls
+          )?.setValue(event.dataTransfer?.files[0]);
           this.handleSetUrl.emit(
             this.sanitize(
               URL.createObjectURL(event.dataTransfer?.files[0] as Blob)
@@ -84,9 +91,10 @@ export class DragDropAvtDirective implements OnInit {
           );
         } else {
           if (this.checkTypeImage(event.files[0])) {
-            getControlCommon(this.handleInDirective.form, ...this.handleInDirective.controls)?.setValue(
-              event.files[0]
-            );
+            getControlCommon(
+              this.handleInDirective.form,
+              ...this.handleInDirective.controls
+            )?.setValue(event.files[0]);
             this.handleSetUrl.emit(
               this.sanitize(
                 event.files[0].objectURL.changingThisBreaksApplicationSecurity
@@ -99,7 +107,10 @@ export class DragDropAvtDirective implements OnInit {
         if (event instanceof DragEvent) {
           event.preventDefault();
         }
-        this.toastService.toastError('Fail', `The size of the Avt should not be more than ${this.dataForDirective.size}mb`);
+        this.toastService.toastError(
+          'Fail',
+          `The size of the Avt should not be more than ${this.dataForDirective.size}mb`
+        );
         this.handleOnDragEnd();
       }
       this.elementRef.nativeElement.style.border = '2px solid black';
@@ -131,7 +142,8 @@ export class DragDropAvtDirective implements OnInit {
   checkSizeImage(file: File | undefined): boolean {
     if (
       file?.size &&
-      Number((file?.size / (1024 * 1024)).toFixed(2)) < this.dataForDirective.size
+      Number((file?.size / (1024 * 1024)).toFixed(2)) <
+        this.dataForDirective.size
     ) {
       return true;
     }

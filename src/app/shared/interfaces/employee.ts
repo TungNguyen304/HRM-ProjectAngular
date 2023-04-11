@@ -58,3 +58,18 @@ export interface IPosition {
   description?: string;
   organization?:any
 }
+
+export interface IStatus {
+  employee_status_id: string,
+  employee_status_name: string
+}
+
+
+export interface ISex {
+  value: 'Male' | 'FeMale'
+}
+
+export enum ESex {
+  MALE = 'Male',
+  FEMALE = 'FeMale'
+}

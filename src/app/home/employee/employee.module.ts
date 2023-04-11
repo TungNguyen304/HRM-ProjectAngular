@@ -65,6 +65,10 @@ const routes: Routes = [
         component: DetailEmployeeComponent
       },
       {
+        path: 'management/update-employee/:id',
+        component: CreateEmployeeComponent
+      },
+      {
         path: '',
         redirectTo: 'work-unit',
         pathMatch: 'full',

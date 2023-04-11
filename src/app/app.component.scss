@@ -124,3 +124,35 @@
 ::ng-deep .p-paginator {
     padding: 0;
 }
+
+::ng-deep .p-datatable-table {
+    background-color: #fff;
+}
+
+
+::ng-deep .p-confirm-dialog {
+    .p-dialog-header {
+        span {
+            font-size: 22px !important;
+        }
+        color: red !important;
+    }
+    button {
+        border: none;
+    }
+    .p-confirm-dialog-reject {
+        background-color: #fff;
+        border: 1px solid var(--primary-color-main);
+        color: var(--primary-color-main);
+        &:hover {
+            background-color: #fff;
+            border: 1px solid var(--primary-color-main);
+            color: var(--primary-color-main);
+            filter: brightness(0.9); 
+        }
+    }
+}
+
+::ng-deep .p-datatable-tbody>tr>td>.p-column-title {
+    font-weight: bold;
+}

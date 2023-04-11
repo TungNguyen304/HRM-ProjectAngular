@@ -14,6 +14,14 @@ import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
 import { toast } from 'src/app/shared/toastMessage';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, finalize, switchMap } from 'rxjs';
+import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
+import { socialNetworks, socials } from './contact-information/data';
+import { workingFormStruct } from './working-process/data';
+import { ESex } from 'src/app/shared/interfaces';
+
+type typeAction = 'update' | 'add';
 
 @Component({
   selector: 'app-create-employee',
@@ -23,17 +31,22 @@ import { toast } from 'src/app/shared/toastMessage';
 export class CreateEmployeeComponent {
   public assetList = [];
   public formData: FormData = new FormData();
+  public employeeInfo: any;
   constructor(
     private location: Location,
     private fb: FormBuilder,
     private commonService: CommonService,
     private unitTreeService: UnitTreeService,
     private employeeService: EmployeeService,
-    private loadingService:LoadingService,
-    private toastService:ToastService
+    private loadingService: LoadingService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private toastService: ToastService
   ) {}
   public employeeForm: FormGroup;
-
+  public typeAction: typeAction = this.router.url.includes('update-employee')
+    ? 'update'
+    : 'add';
   handleBack(): void {
     this.location.back();
   }
@@ -45,25 +58,44 @@ export class CreateEmployeeComponent {
     return this.employeeForm.get(type)?.get(control);
   }
 
+  handleConvertDateToIOString(date: any): string {
+    if (!date) return '';
+    if (typeof date === 'string') {
+      const [day, month, year] = date.split("/");
+      return new Date([year, month, day].join('/')).toISOString();
+    }
+    return date.toISOString();
+  }
+
+  handleTypeApi(formData: FormData): Observable<Object> {
+    if (this.typeAction === 'add') {
+      return this.employeeService.addEmployee(formData);
+    }
+    return this.employeeService.updateEmployee(
+      this.employeeInfo.employee_id,
+      formData
+    );
+  }
+
   onSubmit(): void {
     this.commonService.markAsDirty(this.employeeForm);
     if (this.employeeForm.valid) {
-      this.loadingService.setloading(true);
-      const data = {
+      setTimeout(() => {
+        this.loadingService.setloading(true);
+      });
+      const data:any = {
         employee_code: this.getControl('basicInfo', 'code')?.value,
-        image_url: this.getControl('basicInfo', 'avt')?.value,
         full_name: this.getControl('basicInfo', 'name')?.value,
         gender: this.getControl('basicInfo', 'sex')?.value.value.toUpperCase(),
-        birth_date: this.getControl(
-          'basicInfo',
-          'birthDay'
-        )?.value.toISOString(),
-        hire_date:
-          this.getControl('basicInfo', 'hireDate')?.value &&
-          this.getControl('basicInfo', 'hireDate')?.value.toISOString(),
-        receive_date:
-          this.getControl('basicInfo', 'joinDate')?.value &&
-          this.getControl('basicInfo', 'joinDate')?.value?.toISOString(),
+        birth_date: this.handleConvertDateToIOString(
+          this.getControl('basicInfo', 'birthDay')?.value
+        ),
+        hire_date: this.handleConvertDateToIOString(
+          this.getControl('basicInfo', 'hireDate')?.value
+        ),
+        receive_date: this.handleConvertDateToIOString(
+          this.getControl('basicInfo', 'joinDate')?.value
+        ),
         home_land: this.getControl('basicInfo', 'currentResidence')?.value,
         temporary_address: this.getControl('basicInfo', 'address')?.value,
         email: this.getControl('contactInfo', 'email')?.value,
@@ -77,19 +109,40 @@ export class CreateEmployeeComponent {
         employee_status_id: this.getControl('otherInfo', 'status')?.value
           .employee_status_id,
       };
+      if(this.typeAction==="update") {
+        if(this.getControl('basicInfo', 'avt')?.value) {
+          data.image_url = this.getControl('basicInfo', 'avt')?.value;
+        }
+      } else {
+        data.image_url = this.getControl('basicInfo', 'avt')?.value;
+      }
       this.handleTransformDataEmployee(data);
-      this.employeeService.addEmployee(this.formData).subscribe(
+      this.handleTypeApi(this.formData).pipe(
+        finalize(() => {
+          this.loadingService.setloading(false);
+        })
+      ).subscribe(
         (data: any) => {
           this.location.back();
-          this.toastService.toastSuccess(toast.createEmployeeSuccess.summary, toast.createEmployeeSuccess.detail);
-          this.loadingService.setloading(false);
+          this.toastService.toastSuccess(
+            toast.createEmployeeSuccess.summary,
+            toast.createEmployeeSuccess.detail
+          );
+          
         },
-        () => {
-          this.toastService.toastWarn(toast.createEmployeeFail.summary, toast.createEmployeeFail.detail);
+        (err) => {
+          console.log(err);
+          this.toastService.toastWarn(
+            toast.createEmployeeFail.summary,
+            toast.createEmployeeFail.detail
+          );
         }
       );
     } else {
-      this.toastService.toastWarn(toast.createEmployeeFail.summary, toast.createEmployeeFail.detail);
+      this.toastService.toastWarn(
+        toast.createEmployeeFail.summary,
+        toast.createEmployeeFail.detail
+      );
     }
   }
 
@@ -103,8 +156,12 @@ export class CreateEmployeeComponent {
         return {
           organization_unit_id: item.get('unit')?.value.key,
           job_position_id: item.get('position')?.value.job_position_id,
-          from: item.get('workingTime')?.value[0]?.toISOString(),
-          to: item.get('workingTime')?.value[1]?.toISOString(),
+          from: this.handleConvertDateToIOString(
+            item.get('workingTime')?.value[0]
+          ),
+          to: this.handleConvertDateToIOString(
+            item.get('workingTime')?.value[1]
+          ),
           working_type: item.get('workingForm')?.value.value,
         };
       });
@@ -154,10 +211,6 @@ export class CreateEmployeeComponent {
     parent: string
   ): void {
     let url = parent;
-    if (parent === 'social_network[0]') {
-      console.log(employeeItem);
-      console.log(employeeItem instanceof Array);
-    }
     if (employeeItem instanceof Array) {
       employeeItem.forEach((childItem, index) => {
         url = parent + `[${index}]`;
@@ -182,8 +235,94 @@ export class CreateEmployeeComponent {
     }
   }
 
+  handleTransformDataWorkingHistory(data: any): any[] {
+    const newData = data.user_working_histories.map((item: any) => {
+      (getControlCommon(this.employeeForm, 'workingProcess') as FormArray).push(
+        this.fb.group({
+          unit: ['', [Validators.required]],
+          position: ['', [Validators.required]],
+          workingTime: ['', [Validators.required]],
+          workingForm: ['', [Validators.required]],
+        })
+      );
+      return {
+        unit: {
+          key: item.wk_organization.organization_unit_id,
+          label: item.wk_organization.organization_unit_name,
+        },
+        position: item.wk_job_position,
+        workingTime: [new Date(item.from), new Date(item.to)],
+        workingForm: {
+          value: item.working_type,
+          label:
+            workingFormStruct[
+              item.working_type as keyof typeof workingFormStruct
+            ],
+        },
+      };
+    });
+    return newData;
+  }
+
+  patchValueForForm(data: any) {
+    const newData = {
+      basicInfo: {
+        code: data.employee_code,
+        name: data.full_name,
+        sex: {
+          value: data.gender === 'MALE' ? ESex.MALE : ESex.FEMALE,
+        },
+        birthDay: this.commonService.convertDateVi(data.birth_date),
+        hireDate: this.commonService.convertDateVi(data.hire_date),
+        joinDate: this.commonService.convertDateVi(data.receive_date),
+        currentResidence: data.home_land,
+        address: data.temporary_address,
+      },
+      contactInfo: {
+        email: data.email,
+        phone: data.mobile,
+        socials: this.handleTransformDataSocialNetwork(data),
+      },
+      otherInfo: {
+        description: data.description,
+        unit: {
+          key: data.organization.organization_unit_id,
+          label: data.organization.organization_unit_name,
+        },
+        position: data.job_position,
+        status: data.employee_status,
+      },
+      workingProcess: this.handleTransformDataWorkingHistory(data),
+    };
+    this.employeeForm.patchValue(newData);
+  }
+
+  handleTransformDataSocialNetwork(data: any): any[] {
+    return data.social_network.map((item: any) => {
+      const social = JSON.parse(item);
+      (
+        getControlCommon(
+          this.employeeForm,
+          'contactInfo',
+          'socials'
+        ) as FormArray
+      ).push(
+        this.fb.group({
+          name: ['', [Validators.required]],
+          value: ['', [Validators.required]],
+        })
+      );
+      return {
+        name: {
+          value: social.name,
+          label: socials[social.name as keyof typeof socials],
+        },
+        value: social.value,
+      };
+    });
+  }
+
   ngOnInit() {
-    this.unitTreeService.getUnitTreeByUnitId();
     this.employeeForm = this.fb.group({
       basicInfo: this.fb.group({
         code: [
@@ -223,5 +362,24 @@ export class CreateEmployeeComponent {
         status: ['', [Validators.required]],
       }),
     });
+
+    if (this.typeAction === 'update') {
+      setTimeout(() => {
+        this.loadingService.setloading(true);
+      });
+      this.activatedRoute.params
+        .pipe(
+          switchMap((params) => {
+            return this.employeeService.getEmployeeById(params.id);
+          })
+        )
+        .subscribe((data: any) => {
+          this.loadingService.setloading(false);
+          this.employeeInfo = data.response;
+          this.patchValueForForm(this.employeeInfo);
+        });
+    }
+
+    this.unitTreeService.getUnitTreeByUnitId();
   }
 }

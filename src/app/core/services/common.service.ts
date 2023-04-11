@@ -43,4 +43,10 @@ export class CommonService {
       }
     });
   }
+
+  convertDateVi(date:string):string {
+    if(!date) return "";
+    const [year, month, day] = date.split("-");
+    return new Date([month, day, year].join("/")).toLocaleDateString("vi-VN");
+  }
 }

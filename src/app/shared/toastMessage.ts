@@ -40,6 +40,10 @@ export const toast: IToast = {
     summary: 'Delete Success',
     detail: 'Employee deleted'
   },
+  deleteEmployeeFail: {
+    summary: 'Delete Fail',
+    detail: 'Employee not deleted'
+  },
   uploadFileSuccess: {
     summary: 'Upload Success',
     detail: 'Tải file lên thành công'
@@ -59,5 +63,13 @@ export const toast: IToast = {
     detail: (value:string) => {
         return `${value} Position Fail`
     }
+  },
+  rejected: {
+    summary: 'Rejected',
+    detail: 'You have rejected'
+  },
+  cancelled: {
+    summary: 'Cancelled',
+    detail: 'You have cancelled'
   }
 };
