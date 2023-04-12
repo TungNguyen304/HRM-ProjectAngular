@@ -44,6 +44,7 @@
                 }}</label>
                 <p-dropdown
                   id="sex"
+                  formControlName="sex"
                   [options]="sex"
                   [placeholder]="'common.select' | translate"
                   optionLabel="value"
@@ -53,22 +54,24 @@
                 <label for="unit">{{
                   "employeeManagement.unit" | translate
                 }}</label>
-                <p-dropdown
+                <p-treeSelect
+                  class="md:w-20rem w-full"
+                  containerStyleClass="w-full"
+                  formControlName="unit"
+                  [options]="unitList"
+                  (onNodeSelect)="onSelectedChange($event)"
                   [placeholder]="'common.select' | translate"
-                  id="sex"
-                  [options]="sex"
-                  optionLabel="value"
-                ></p-dropdown>
+                ></p-treeSelect>
               </div>
               <div class="form_item">
                 <label for="position">{{
                   "employeeManagement.position" | translate
                 }}</label>
                 <p-dropdown
-                  id="sex"
+                  [options]="positionList"
+                  formControlName="position"
                   [placeholder]="'common.select' | translate"
-                  [options]="sex"
-                  optionLabel="value"
+                  optionLabel="job_position_name"
                 ></p-dropdown>
               </div>
             </div>
@@ -81,6 +84,7 @@
                 [label]="'common.delete' | translate"
               ></button>
               <button
+                (click)="handleSendRequestGetEmployee()"
                 type="button"
                 pButton
                 class="p-button-primary p-button-sm"

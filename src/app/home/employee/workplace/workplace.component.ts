@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MessageService } from 'primeng/api';
 import { PositionService } from 'src/app/core/services/http/position.service';
 import { IPosition } from 'src/app/shared/interfaces';
 import { IPropsMember } from '../components/member-table/member-table.component';
@@ -24,7 +22,6 @@ export class WorkplaceComponent implements OnInit {
   public positionList: IPosition[];
   constructor(
     private positionService: PositionService,
-    private http: HttpClient,
     private toastService:ToastService
   ) {}
   @ViewChild('paginator') paginator: ElementRef;
