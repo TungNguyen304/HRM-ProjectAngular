@@ -333,3 +333,17 @@ body.dark .switch::before {
   min-height: 100vh;
   width: calc(100% - 78px);
 }
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+    &.close ~ .home {
+      left: 0;
+      width: 100vw;
+    }
+  }
+  .home {
+    width: 100vw;
+    left: 0;
+  }
+}
