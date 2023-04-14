@@ -8,7 +8,7 @@ form {
   .form_list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-gap: 40px;
+    grid-gap: 20px 40px;
     .form_item {
       display: flex;
       flex-direction: column;
@@ -73,6 +73,14 @@ form {
       th {
         background-color: white;
       }
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  form {
+    .form_list {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 }

@@ -8,14 +8,23 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./side-bar.component.scss'],
 })
 export class SideBarComponent {
-  public checked:boolean = false;
-  @ViewChild('sidebar') sidebar:ElementRef;
-  constructor(private translate: TranslateService, private router:Router) {}
-  displaySidebar():void {
+  public checked: boolean = false;
+  @ViewChild('sidebar') sidebar: ElementRef;
+  constructor(private translate: TranslateService, private router: Router) {}
+  displaySidebar(): void {
     this.sidebar.nativeElement.classList.toggle('close');
   }
 
+  handleResponsiveSidebar(): void {
+    window.onresize = (e) => {
+      if (window.innerWidth <= 1024) {
+        this.sidebar.nativeElement.classList.add('close');
+      }
+    };
+  }
+
   ngOnInit() {
+    this.handleResponsiveSidebar();
     const body = document.querySelector('body'),
       sidebar = body?.querySelector('nav'),
       toggle = body?.querySelector('.toggle'),
@@ -43,9 +52,9 @@ export class SideBarComponent {
     });
   }
 
-  handleLogout(event:MouseEvent):void {
+  handleLogout(event: MouseEvent): void {
     event.preventDefault();
-    localStorage.removeItem('token')
-    this.router.navigate(['auth', 'login'])
+    localStorage.removeItem('token');
+    this.router.navigate(['auth', 'login']);
   }
 }
