@@ -48,13 +48,13 @@ export class EmployeeUploadComponent {
       } else {
         this.file = event.target.files[0];
       }
-      this.toastService.toastSuccess(toast.uploadFileSuccess.summary, toast.uploadFileSuccess.detail);
+      this.toastService.toastSuccess(toast.uploadFileSuccess);
       this.drop.nativeElement.style.border = '2px solid var(--primary-color-main)';
     } else {
       if (event instanceof DragEvent) {
         event.preventDefault();
       }
-      this.toastService.toastError(toast.uploadFileFail.summary, toast.uploadFileFail.detail);
+      this.toastService.toastError(toast.uploadFileFail.summary);
       this.handleOnDragEnd();
     }
     this.upload.nativeElement.value = "";

@@ -101,7 +101,7 @@ export class WorkingProcessComponent implements OnInit {
     this.processControlList.controls[index].get('position')?.enable();
   }
 
-  getWorkingProcessList(): AbstractControl<any>[] {
+  get workingProcessList(): AbstractControl<any>[] {
     return this.processControlList.controls;
   }
 

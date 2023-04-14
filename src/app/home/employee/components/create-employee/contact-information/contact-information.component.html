@@ -69,11 +69,11 @@
       </div>
       <div
         class="social_network_wrap"
-        [ngClass]="{ border: getSocialControlList().length > 0 }"
+        [ngClass]="{ border: socialControlList.length > 0 }"
       >
         <div
           formArrayName="socials"
-          *ngFor="let social of getSocialControlList(); index as item"
+          *ngFor="let social of socialControlList; index as item"
           class="social_network"
         >
           <h3 class="title">{{ "title.socialNetwork" | translate }}</h3>

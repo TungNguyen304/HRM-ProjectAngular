@@ -5,6 +5,7 @@ import {
   Observable,
   map,
   of,
+  startWith,
   switchAll,
   switchMap,
 } from 'rxjs';
@@ -17,8 +18,9 @@ export class UnitTreeService {
   constructor(private http: HttpClient) {}
   public unitTree$ = new BehaviorSubject<any>(null);
   getUnitTreeByUnitId() {
-    of('organization-units')
+    of('')
       .pipe(
+        startWith('organization-units'),
         switchMap((url) => {
           return this.http.get(url);
         })

@@ -60,10 +60,10 @@ export class ModalService {
       reject: (type: any) => {
         switch (type) {
           case ConfirmEventType.REJECT:
-            this.toastService.toastError(toast.rejected.summary, toast.rejected.detail);
+            this.toastService.toastError(toast.rejected);
             break;
           case ConfirmEventType.CANCEL:
-            this.toastService.toastWarn(toast.cancelled.summary, toast.cancelled.detail);
+            this.toastService.toastWarn(toast.cancelled);
             break;
         }
       },

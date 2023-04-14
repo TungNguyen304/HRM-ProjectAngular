@@ -5,6 +5,7 @@ import { IPosition } from 'src/app/shared/interfaces';
 import { IPropsMember } from '../components/member-table/member-table.component';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
 import { toast } from 'src/app/shared/toastMessage';
+import { finalize } from 'rxjs';
 
 export interface IPositionForm {
   name: string;
@@ -22,7 +23,7 @@ export class WorkplaceComponent implements OnInit {
   public positionList: IPosition[];
   constructor(
     private positionService: PositionService,
-    private toastService:ToastService
+    private toastService: ToastService
   ) {}
   @ViewChild('paginator') paginator: ElementRef;
   public displayCreate: boolean = false;
@@ -58,10 +59,10 @@ export class WorkplaceComponent implements OnInit {
   showMessage(type: boolean): void {
     if (type === true) {
       this.displayCreate = false;
-      this.toastService.toastSuccess(toast.workplaceSuccess.summary, (toast.workplaceSuccess.detail as Function)(this.typeAction));
+      this.toastService.toastSuccess(toast.workplaceSuccess, this.typeAction);
       this.handleGetPosition();
     } else {
-      this.toastService.toastError(toast.workplaceFail.summary, (toast.workplaceFail.detail as Function)(this.typeAction));
+      this.toastService.toastError(toast.workplaceFail, this.typeAction);
     }
   }
 
@@ -87,10 +88,16 @@ export class WorkplaceComponent implements OnInit {
     this.loadDisplay = true;
     this.positionService
       .getPosition(1, this.limit, this.searchInput.value)
+      .pipe(
+        finalize(() => {
+          this.loadDisplay = false;
+        })
+      )
       .subscribe((data: any) => {
-        this.total = data.response.total;
-        this.positionList = data.response.data;
-        this.loadDisplay = false;
+        if (data.response.statusCode === 200) {
+          this.total = data.response.total;
+          this.positionList = data.response.data;
+        }
       });
   }
 

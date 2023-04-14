@@ -6,6 +6,7 @@ import {
   FormGroupDirective,
 } from '@angular/forms';
 import { FileUpload } from 'primeng/fileupload';
+import { CommonService } from 'src/app/core/services/common.service';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
 import {
@@ -36,7 +37,8 @@ export class OtherInformationComponent implements OnInit {
     private unitTreeService: UnitTreeService,
     private employeeService: EmployeeService,
     private positionService: PositionService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private commonService: CommonService
   ) {}
   public statusList: IStatus[];
   public cvSize = 2;
@@ -60,10 +62,12 @@ export class OtherInformationComponent implements OnInit {
     getControlCommon(this.employeeForm, 'otherInfo', 'position')?.disable();
 
     this.employeeService.getStatus().subscribe((data: any) => {
-      this.statusList = data.response.data.map((status: any) => ({
-        employee_status_id: status.employee_status_id,
-        employee_status_name: status.employee_status_name,
-      }));
+      if (data.response.statusCode === 200) {
+        this.statusList = data.response.data.map((status: any) => ({
+          employee_status_id: status.employee_status_id,
+          employee_status_name: status.employee_status_name,
+        }));
+      }
     });
 
     this.warningDetect();
@@ -101,21 +105,26 @@ export class OtherInformationComponent implements OnInit {
   onSelectedChange(event: any): void {
     if (event.node.key !== this.unitId) {
       this.unitId = event.node.key;
-      this.positionService
-        .getPositionByUnitId(event.node.key)
-        .subscribe((data: any) => {
-          this.positionList = data.response.data.map((position: any) => ({
-            job_position_id: position.job_position_id,
-            job_position_name: position.job_position_name,
-            job_position_code: position.job_position_code,
-            job_position_code_name: position.job_position_code_name,
-          }));
-          getControlCommon(
-            this.employeeForm,
-            'otherInfo',
-            'position'
-          )?.enable();
-        });
+      this.positionService.getPositionByUnitId(event.node.key).subscribe(
+        (data: any) => {
+          if (data.response.statusCode === 200) {
+            this.positionList = data.response.data.map((position: any) => ({
+              job_position_id: position.job_position_id,
+              job_position_name: position.job_position_name,
+              job_position_code: position.job_position_code,
+              job_position_code_name: position.job_position_code_name,
+            }));
+            getControlCommon(
+              this.employeeForm,
+              'otherInfo',
+              'position'
+            )?.enable();
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     }
   }
 
@@ -123,43 +132,23 @@ export class OtherInformationComponent implements OnInit {
     return getControlCommon(this.employeeForm, 'otherInfo', control);
   }
 
-  checkTypeCV(file: File | undefined): boolean {
-    if (file?.type === 'application/pdf') {
-      return true;
-    }
-    return false;
-  }
-
-  checkSizeCV(file: File | undefined): boolean {
-    if (
-      file?.size &&
-      Number((file?.size / (1024 * 1024)).toFixed(2)) < this.cvSize
-    ) {
-      return true;
-    }
-    return false;
-  }
-
   myUploader(event: FileUpload) {
-    if (this.checkTypeCV(event.files[0])) {
-      if (this.checkSizeCV(event.files[0])) {
+    if (this.commonService.checkTypeCV(event.files[0], 'application/pdf')) {
+      if (this.commonService.checkSizeCV(event.files[0], this.cvSize)) {
         this.employeeForm.get('otherInfo')?.get('cv')?.setValue(event.files[0]);
         this.toastService.toastSuccess(
-          toast.uploadCvSuccess.summary,
-          toast.uploadCvSuccess.detail
+          toast.uploadCvSuccess
         );
       } else {
         this.cv.clear();
         this.toastService.toastError(
-          toast.uploadCvSizeFail.summary,
-          (toast.uploadCvSizeFail.detail as Function)(this.cvSize)
+          toast.uploadCvSizeFail, this.cvSize
         );
       }
     } else {
       this.cv.clear();
       this.toastService.toastError(
-        toast.uploadCvTypeFail.summary,
-        toast.uploadCvTypeFail.detail
+        toast.uploadCvTypeFail
       );
     }
   }

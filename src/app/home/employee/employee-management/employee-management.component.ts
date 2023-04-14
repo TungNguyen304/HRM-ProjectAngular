@@ -176,9 +176,7 @@ export class EmployeeManagementComponent {
 
   update() {
     this.router.navigate([
-      'employee',
-      'management',
-      'update-employee',
+      'employee/management/update-employee',
       this.employeeActive.employee_id,
     ]);
   }
@@ -190,14 +188,12 @@ export class EmployeeManagementComponent {
         .subscribe(
           () => {
             this.toastService.toastSuccess(
-              toast.deleteEmployeeSuccess.summary,
-              toast.deleteEmployeeSuccess.detail
+              toast.deleteEmployeeSuccess
             );
           },
           () => {
             this.toastService.toastError(
-              toast.deleteEmployeeFail.summary,
-              toast.deleteEmployeeFail.detail
+              toast.deleteEmployeeFail.summary
             );
           }
         );
@@ -207,10 +203,10 @@ export class EmployeeManagementComponent {
 
   handleDisplayCreateEmployee(): void {
     this.showCreateEmployee = !this.showCreateEmployee;
-    this.router.navigate(['employee', 'management', 'create-employee']);
+    this.router.navigate(['employee/management/create-employee']);
   }
 
   handleNavigateDetailEmployee(id: string): void {
-    this.router.navigate(['employee', 'management', 'detail-employee', id]);
+    this.router.navigate(['employee/management/detail-employee', id]);
   }
 }

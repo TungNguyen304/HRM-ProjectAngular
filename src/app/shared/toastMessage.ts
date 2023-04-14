@@ -1,4 +1,4 @@
-interface IToast {
+export interface IToast {
   [key:string]: {
     summary: string;
     detail: string | Function;
@@ -6,6 +6,14 @@ interface IToast {
 }
 
 export const toast: IToast = {
+  loginSuccess: {
+    summary: 'Success',
+    detail: 'Login success',
+  },
+  loginFail: {
+    summary: 'Fail',
+    detail: 'Email or password is not correct',
+  },
   createEmployeeSuccess: {
     summary: 'Create Employee Success',
     detail: 'One new employee has been added',
@@ -18,6 +26,20 @@ export const toast: IToast = {
     summary: 'Add social network fail',
     detail: 'Social media accounts can only kick 5 accounts'
   },
+  UploadImageSuccess: {
+    summary: 'Upload Success',
+    detail: 'Image upload success'
+  },
+  UploadImageTypeFail: {
+    summary: 'Upload Fail',
+    detail: 'Avt must be a png/jpg file'
+  },
+  UploadImageSizeFail: {
+    summary: 'Upload Fail',
+    detail: (value:number) => {
+      return `The size of the Avt should not be more than ${value}mb`
+    }
+  },
   uploadCvSuccess: {
     summary: 'Upload Success',
     detail: 'CV upload success'
@@ -28,7 +50,7 @@ export const toast: IToast = {
   },
   uploadCvSizeFail: {
     summary: 'Upload Fail',
-    detail: (value:string) => {
+    detail: (value:number) => {
       return `The size of the CV should not be more than ${value}mb`
     } 
   },

@@ -12,6 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FileUpload } from 'primeng/fileupload';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
+import { toast } from '../toastMessage';
 
 export interface IData {
   url: string;
@@ -102,14 +103,14 @@ export class DragDropAvtDirective implements OnInit {
             );
           }
         }
-        this.toastService.toastSuccess('Success', 'Upload image success');
+        this.toastService.toastSuccess(toast.UploadImageSuccess);
       } else {
         if (event instanceof DragEvent) {
           event.preventDefault();
         }
         this.toastService.toastError(
-          'Fail',
-          `The size of the Avt should not be more than ${this.dataForDirective.size}mb`
+          toast.UploadImageSizeFail,
+          this.dataForDirective.size
         );
         this.handleOnDragEnd();
       }
@@ -118,7 +119,7 @@ export class DragDropAvtDirective implements OnInit {
       if (event instanceof DragEvent) {
         event.preventDefault();
       }
-      this.toastService.toastError('Fail', 'Avt must be a png/jpg file');
+      this.toastService.toastError(toast.UploadImageTypeFail);
       this.handleOnDragEnd();
     }
     this.handleInDirective.inputFileElement.clear();

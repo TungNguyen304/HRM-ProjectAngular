@@ -67,7 +67,7 @@ export class ContactInformationComponent implements OnInit {
     ).controls[id].get(control);
   }
 
-  getSocialControlList(): AbstractControl<any>[] {
+  get socialControlList(): AbstractControl<any>[] {
     return (
       getControlCommon(this.employeeForm, 'contactInfo', 'socials') as FormArray
     ).controls;
@@ -115,7 +115,7 @@ export class ContactInformationComponent implements OnInit {
         })
       );
     } else {
-      this.toastService.toastWarn(toast.maxLengthSocial.summary, toast.maxLengthSocial.detail);
+      this.toastService.toastWarn(toast.maxLengthSocial);
     }
   }
 

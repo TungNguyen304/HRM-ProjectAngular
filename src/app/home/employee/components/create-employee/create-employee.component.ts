@@ -20,6 +20,7 @@ import { getControlCommon } from 'src/app/core/services/helper/formControl.servi
 import { socialNetworks, socials } from './contact-information/data';
 import { workingFormStruct } from './working-process/data';
 import { ESex } from 'src/app/shared/interfaces';
+import { DateService } from 'src/app/core/services/helper/date.service';
 
 type typeAction = 'update' | 'add';
 
@@ -41,7 +42,8 @@ export class CreateEmployeeComponent {
     private loadingService: LoadingService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private dateService: DateService
   ) {}
   public employeeForm: FormGroup;
   public typeAction: typeAction = this.router.url.includes('update-employee')
@@ -56,15 +58,6 @@ export class CreateEmployeeComponent {
     control: string
   ): AbstractControl | null | undefined {
     return this.employeeForm.get(type)?.get(control);
-  }
-
-  handleConvertDateToIOString(date: any): string {
-    if (!date) return '';
-    if (typeof date === 'string') {
-      const [day, month, year] = date.split("/");
-      return new Date([year, month, day].join('/')).toISOString();
-    }
-    return date.toISOString();
   }
 
   handleTypeApi(formData: FormData): Observable<Object> {
@@ -83,83 +76,85 @@ export class CreateEmployeeComponent {
       setTimeout(() => {
         this.loadingService.setloading(true);
       });
-      const data:any = {
-        employee_code: this.getControl('basicInfo', 'code')?.value,
-        full_name: this.getControl('basicInfo', 'name')?.value,
-        gender: this.getControl('basicInfo', 'sex')?.value.value.toUpperCase(),
-        birth_date: this.handleConvertDateToIOString(
-          this.getControl('basicInfo', 'birthDay')?.value
+      const data: any = {
+        employee_code: this.employeeForm.get('basicInfo.code')?.value,
+        full_name: this.employeeForm.get('basicInfo.name')?.value,
+        gender: this.employeeForm
+          .get('basicInfo.sex')
+          ?.value.value.toUpperCase(),
+        birth_date: this.dateService.handleConvertDateToIOString(
+          this.employeeForm.get('basicInfo.birthDay')?.value
         ),
-        hire_date: this.handleConvertDateToIOString(
-          this.getControl('basicInfo', 'hireDate')?.value
+        hire_date: this.dateService.handleConvertDateToIOString(
+          this.employeeForm.get('basicInfo.hireDate')?.value
         ),
-        receive_date: this.handleConvertDateToIOString(
-          this.getControl('basicInfo', 'joinDate')?.value
+        receive_date: this.dateService.handleConvertDateToIOString(
+          this.employeeForm.get('basicInfo.joinDate')?.value
         ),
-        home_land: this.getControl('basicInfo', 'currentResidence')?.value,
-        temporary_address: this.getControl('basicInfo', 'address')?.value,
-        email: this.getControl('contactInfo', 'email')?.value,
-        mobile: this.getControl('contactInfo', 'phone')?.value,
+        home_land: this.employeeForm.get('basicInfo.currentResidence')?.value,
+        temporary_address: this.employeeForm.get('basicInfo.address')?.value,
+        email: this.employeeForm.get('contactInfo.email')?.value,
+        mobile: this.employeeForm.get('contactInfo.phone')?.value,
         social_network: this.getSocialNetwork(),
         working_history: this.getWorkingHistory(),
-        description: this.getControl('otherInfo', 'description')?.value,
-        organization_unit_id: this.getControl('otherInfo', 'unit')?.value.key,
-        job_position_id: this.getControl('otherInfo', 'position')?.value
-          .job_position_id,
-        employee_status_id: this.getControl('otherInfo', 'status')?.value
-          .employee_status_id,
+        description: this.employeeForm.get('otherInfo.description')?.value,
+        organization_unit_id:
+          this.employeeForm.get('otherInfo.unit')?.value.key,
+        job_position_id:
+          this.employeeForm.get('otherInfo.position')?.value.job_position_id,
+        employee_status_id:
+          this.employeeForm.get('otherInfo.status')?.value.employee_status_id,
       };
-      if(this.typeAction==="update") {
-        if(this.getControl('basicInfo', 'avt')?.value) {
+      if (this.typeAction === 'update') {
+        if (this.getControl('basicInfo', 'avt')?.value) {
           data.image_url = this.getControl('basicInfo', 'avt')?.value;
         }
       } else {
-        data.image_url = this.getControl('basicInfo', 'avt')?.value;
+        data.image_url = this.employeeForm.get('basicInfo.avt')?.value;
       }
       this.handleTransformDataEmployee(data);
-      this.handleTypeApi(this.formData).pipe(
-        finalize(() => {
-          this.loadingService.setloading(false);
-        })
-      ).subscribe(
-        (data: any) => {
-          this.location.back();
-          this.toastService.toastSuccess(
-            toast.createEmployeeSuccess.summary,
-            toast.createEmployeeSuccess.detail
-          );
-          
-        },
-        (err) => {
-          console.log(err);
-          this.toastService.toastWarn(
-            toast.createEmployeeFail.summary,
-            toast.createEmployeeFail.detail
-          );
-        }
-      );
+      this.handleTypeApi(this.formData)
+        .pipe(
+          finalize(() => {
+            this.loadingService.setloading(false);
+          })
+        )
+        .subscribe(
+          (data: any) => {
+            if (data.response.statusCode === 200) {
+              this.location.back();
+              this.toastService.toastSuccess(
+                toast.createEmployeeSuccess
+              );
+            }
+          },
+          (err) => {
+            this.toastService.toastWarn(
+              toast.createEmployeeFail
+            );
+          }
+        );
     } else {
       this.toastService.toastWarn(
-        toast.createEmployeeFail.summary,
-        toast.createEmployeeFail.detail
+        toast.createEmployeeFail
       );
     }
   }
 
+  get workingHistory(): AbstractControl<any>[] {
+    return (this.employeeForm.get('workingProcess') as FormArray).controls;
+  }
+
   getWorkingHistory(): any[] {
-    if (
-      (this.employeeForm.get('workingProcess') as FormArray).controls.length > 0
-    ) {
-      return (
-        this.employeeForm.get('workingProcess') as FormArray
-      ).controls.map((item) => {
+    if (this.workingHistory.length > 0) {
+      return this.workingHistory.map((item) => {
         return {
           organization_unit_id: item.get('unit')?.value.key,
           job_position_id: item.get('position')?.value.job_position_id,
-          from: this.handleConvertDateToIOString(
+          from: this.dateService.handleConvertDateToIOString(
             item.get('workingTime')?.value[0]
           ),
-          to: this.handleConvertDateToIOString(
+          to: this.dateService.handleConvertDateToIOString(
             item.get('workingTime')?.value[1]
           ),
           working_type: item.get('workingForm')?.value.value,
@@ -169,14 +164,13 @@ export class CreateEmployeeComponent {
     return [];
   }
 
+  get socialNetwork(): AbstractControl<any>[] {
+    return (this.employeeForm.get('contactInfo') as FormArray).controls;
+  }
+
   getSocialNetwork(): any[] {
-    if (
-      (this.getControl('contactInfo', 'socials') as FormArray).controls.length >
-      0
-    ) {
-      return (
-        this.getControl('contactInfo', 'socials') as FormArray
-      ).controls.map((item) => {
+    if (this.socialNetwork.length > 0) {
+      return this.socialNetwork.map((item) => {
         return {
           name: item.get('name')?.value.value,
           value: item.get('value')?.value,
