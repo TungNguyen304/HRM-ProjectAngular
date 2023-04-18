@@ -43,6 +43,7 @@ import { IMember } from './team-member.component';
             height: 120px;
             border-radius: 100%;
             object-fit: cover;
+            border: 1px solid var(--primary-color-main);
           }
           i {
             font-size: 120px;

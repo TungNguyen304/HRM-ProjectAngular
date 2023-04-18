@@ -13,18 +13,20 @@ header {
     .menu {
       display: flex;
       align-items: center;
+      width: 44px;
+      height: 43px;
+      justify-content: center;
+      background-color: #fff;
+      border-radius: 50%;
+      border: 2px solid var(--primary-color-main);
       i {
         font-size: 20px;
-        border-radius: 50%;
-        padding: 5px 7px;
         cursor: pointer;
-        background-color: #fff;
         color: var(--primary-color-main);
-        border: 2px solid var(--primary-color-main);
-        &:hover {
-          transition: all 0.3s ease-out;
-          box-shadow: 0px 0px 8px 1px #ccc;
-        }
+      }
+      &:hover {
+        transition: all 0.3s ease-out;
+        box-shadow: 0px 0px 8px 1px #ccc;
       }
     }
 
@@ -67,10 +69,15 @@ header {
         border-radius: 50%;
 
         &:first-child {
-          padding: 6px 15px;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 46px;
+          height: 45px;
           font-size: 12px;
           font-weight: 700;
-          border-radius: 10px;
+          border-radius: 50%;
           background-color: #fff;
           color: var(--primary-color-main);
           border: 2px solid var(--primary-color-main);
@@ -81,6 +88,7 @@ header {
             height: 25px;
             object-fit: cover;
             border: 1px solid var(--primary-color-main);
+            display: block;
           }
           i {
             font-weight: bold;
@@ -142,8 +150,8 @@ header {
       background-color: #fff;
       overflow: hidden;
       border-radius: 100%;
-      width: 40px;
-      height: 40px;
+      box-shadow: 0 0 6px 1px #fff;
+      border: 1px solid #fff;
     }
     img {
       width: 40px;
