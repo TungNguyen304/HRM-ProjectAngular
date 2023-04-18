@@ -63,22 +63,24 @@ header {
         background-color: #fff;
         color: var(--primary-color-main);
         border: 2px solid var(--primary-color-main);
-        padding: 5px 7px;
+        padding: 7px;
         border-radius: 50%;
 
         &:first-child {
+          padding: 6px 15px;
           font-size: 12px;
           font-weight: 700;
-          border-radius: 50%;
+          border-radius: 10px;
           background-color: #fff;
           color: var(--primary-color-main);
           border: 2px solid var(--primary-color-main);
           position: relative;
           img {
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
             object-fit: cover;
+            border: 1px solid var(--primary-color-main);
           }
           i {
             font-weight: bold;
@@ -90,7 +92,7 @@ header {
             position: absolute;
             z-index: 10;
             grid-template-columns: repeat(2, 1fr);
-            background-color: #38475e;
+            background-color: #315e4c;
             color: #fff;
             top: calc(100% + 10px);
             border-radius: 3px;
@@ -109,7 +111,7 @@ header {
                 margin-right: 10px;
               }
               &:hover {
-                background-color: #5d718e;
+                background-color: #072f1e;
                 color: #fff;
               }
             }
@@ -128,25 +130,24 @@ header {
   }
   .personal {
     cursor: pointer;
-
     padding: 5px 10px;
-    margin-right: 20px;
     border-radius: 10px;
     display: flex;
     align-items: center;
     background-color: var(--primary-color-main);
     color: #fff;
     .avt {
-      margin-right: 20px;
+      margin-left: 20px;
+      margin-right: 10px;
       background-color: #fff;
       overflow: hidden;
       border-radius: 100%;
-      width: 34px;
-      height: 34px;
+      width: 40px;
+      height: 40px;
     }
     img {
-      width: 34px;
-      height: 34px;
+      width: 40px;
+      height: 40px;
       display: block;
       object-fit: cover;
     }

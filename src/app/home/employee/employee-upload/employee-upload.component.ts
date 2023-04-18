@@ -1,18 +1,18 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/core/services/helper/toast.service';
+import { toast } from 'src/app/shared/toastMessage';
 
 @Component({
   selector: 'app-employee-upload',
   templateUrl: './employee-upload.component.html',
   styleUrls: ['./employee-upload.component.scss'],
-  providers: [MessageService]
 })
 export class EmployeeUploadComponent {
   @ViewChild('drop') drop: ElementRef;
   @ViewChild('upload') upload: ElementRef;
   public file: File | undefined;
 
-  constructor(private messageService: MessageService) {
+  constructor(private toastService: ToastService) {
     
   }
 
@@ -40,14 +40,6 @@ export class EmployeeUploadComponent {
     return false;
   }
 
-  showAlert(noti: any): void {
-    this.messageService.add({
-      severity: noti.severity,
-      summary: noti.summary,
-      detail: noti.detail,
-    });
-  }
-
   handleOnDrop(event:any) {
     if (this.checkTypeImage(event.dataTransfer?.files[0]) || (event.target.files && this.checkTypeImage(event.target.files[0]))) {
       if (event instanceof DragEvent) {
@@ -56,21 +48,13 @@ export class EmployeeUploadComponent {
       } else {
         this.file = event.target.files[0];
       }
-      this.showAlert({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Tải file lên thành công',
-      });
+      this.toastService.toastSuccess(toast.uploadFileSuccess);
       this.drop.nativeElement.style.border = '2px solid var(--primary-color-main)';
     } else {
       if (event instanceof DragEvent) {
         event.preventDefault();
       }
-      this.showAlert({
-        severity: 'error',
-        summary: 'Fail',
-        detail: 'Loại File phải là ảnh xlsx hoặc xls',
-      });
+      this.toastService.toastError(toast.uploadFileFail.summary);
       this.handleOnDragEnd();
     }
     this.upload.nativeElement.value = "";

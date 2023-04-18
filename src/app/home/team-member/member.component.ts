@@ -6,7 +6,8 @@ import { IMember } from './team-member.component';
   template: `
     <div class="team_item">
       <div class="avt">
-        <img [src]="memberInfo.image_url" alt="" />
+        <img *ngIf="memberInfo.image_url" [src]="memberInfo.image_url" alt="" />
+        <i *ngIf="!memberInfo.image_url" class="bi bi-person-circle"></i>
       </div>
       <div class="info">
         <p class="name">{{ memberInfo.full_name }}</p>
@@ -21,6 +22,8 @@ import { IMember } from './team-member.component';
   styles: [
     `
       .team_item {
+        height: 350px;
+        border: 1px solid var(--primary-color-main);
         height: 100%;
         &:hover {
           box-shadow: 0 0 8px 2px #ccc;
@@ -41,6 +44,10 @@ import { IMember } from './team-member.component';
             border-radius: 100%;
             object-fit: cover;
           }
+          i {
+            font-size: 120px;
+            color: var(--primary-color-main);
+          }
         }
         .info {
           flex: 1;
@@ -50,13 +57,13 @@ import { IMember } from './team-member.component';
         }
         .name {
           font-family: 'Times New Roman', Times, serif;
-          margin-bottom: 10px;
+          margin-bottom: 20px;
           font-size: 20px;
           font-weight: 600;
         }
         .code,
         .birthday {
-          margin-bottom: 10px;
+          margin-bottom: 20px;
           color: #7a7e80;
           display: -webkit-box;
           -webkit-line-clamp: 1;

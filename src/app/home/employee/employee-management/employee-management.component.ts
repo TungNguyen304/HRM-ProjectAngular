@@ -1,10 +1,15 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmployeeService } from 'src/app/core/services/http/employee.service';
-import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
+import {
+  ConfirmationService,
+  MessageService,
+  ConfirmEventType,
+} from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import {
   AbstractControl,
+  FormBuilder,
   FormControl,
   FormGroup,
   Validators,
@@ -15,35 +20,46 @@ import {
   maxLengthWarning,
 } from 'src/app/core/services/helper/warningForm.service';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
+import { ToastService } from 'src/app/core/services/helper/toast.service';
+import { toast } from 'src/app/shared/toastMessage';
+import { ModalService } from 'src/app/core/services/helper/modal.service';
+import { ISex } from 'src/app/shared/interfaces';
+import { UnitService } from 'src/app/core/services/http/unit.service';
+import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
+import { PositionService } from 'src/app/core/services/http/position.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-employee-management',
   templateUrl: './employee-management.component.html',
   styleUrls: ['./employee-management.component.scss'],
-  providers: [ConfirmationService, MessageService]
 })
 export class EmployeeManagementComponent {
-  public status: { value: string }[];
-  public sex: { value: string }[];
+  public sex: ISex[];
   public employeeList: any;
+  public unitList: any[];
+  public positionList: any[];
   public showCreateEmployee: boolean = false;
   public actions: any[];
   public searchForm: FormGroup;
   public warning: { codeNameEmail: any } = {
     codeNameEmail: null,
   };
-  public idEmployee:string;
+  public employeeActive: any;
   public loadDisplay: boolean = false;
   public limit: number = 5;
-  public total: number;
+  public total: number = 0;
+  public page: number = 1;
   constructor(
     private employeeService: EmployeeService,
     private router: Router,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private modalService: ModalService,
+    private toastService: ToastService,
+    private fb: FormBuilder,
+    private unitTreeService: UnitTreeService,
+    private positionService: PositionService
   ) {
-    this.status = [{ value: 'On' }, { value: 'Off' }];
-    this.sex = [{ value: 'Nam' }, { value: 'Nữ' }];
+    this.sex = [{ value: 'Male' }, { value: 'FeMale' }];
     this.actions = [
       {
         label: 'Update',
@@ -63,39 +79,82 @@ export class EmployeeManagementComponent {
         label: 'Detail',
         icon: 'bi bi-card-text',
         command: () => {
-          this.handleNavigateDetailEmployee(this.idEmployee);
+          this.handleNavigateDetailEmployee(this.employeeActive.employee_id);
         },
       },
     ];
   }
 
-  handleActionsClick(event:any) {
-    this.idEmployee = event;
+  handleActionsClick(event: any) {
+    this.employeeActive = event;
   }
 
   getControl(control: string): AbstractControl | null {
     return getControlCommon(this.searchForm, control);
   }
 
-  onPageChange(event: any): void {}
+  onPageChange(event: any): void {
+    this.page = event.page + 1;
+    this.handleSendRequestGetEmployee();
+  }
 
   ngOnInit() {
-    this.searchForm = new FormGroup({
-      codeNameEmail: new FormControl('', [
-        Validators.maxLength(255),
-        emojiValidator,
-      ]),
+    this.getControl('position')?.disable();
+
+    this.searchForm = this.fb.group({
+      codeNameEmail: ['', [Validators.maxLength(255), emojiValidator]],
+      sex: '',
+      unit: '',
+      position: '',
     });
-    this.loadDisplay = true;
-    this.employeeService.getEmployee(1, this.limit).subscribe((data: any) => {
-      this.employeeList = data.response.data;
-      this.loadDisplay = false;  
-      this.total = data.response.total
+    this.unitTreeService.getUnitTreeByUnitId();
+    this.unitTreeService.unitTree$.subscribe((data: any) => {
+      this.unitList = data;
     });
+    this.handleGetEmployee();
     this.warningDetect();
     this.searchForm.valueChanges.subscribe(() => {
       this.warningDetect();
     });
+  }
+
+  handleGetEmployee(): void {
+    this.loadDisplay = true;
+    this.handleSendRequestGetEmployee().subscribe(
+      (data: any) => {
+        if (data.statusCode === 200) {
+          this.employeeList = data?.response?.data;
+          this.loadDisplay = false;
+          this.total = data?.response?.total;
+        }
+      },
+      () => {
+        this.loadDisplay = false;
+        this.employeeList = [];
+      }
+    );
+  }
+
+  handleSendRequestGetEmployee(): Observable<Object> {
+    this.loadDisplay = true;
+    return this.employeeService.getEmployee(
+      this.page,
+      this.limit,
+      this.getControl('codeNameEmail')?.value,
+      this.getControl('sex')?.value?.value?.toUpperCase() || '',
+      this.getControl('unit')?.value.key || '',
+      this.getControl('position')?.value.job_position_id || ''
+    );
+  }
+
+  onSelectedChange(event: any) {
+    event.node.key &&
+      this.positionService
+        .getPositionByUnitId(event.node.key)
+        .subscribe((data: any) => {
+          this.positionList = data.response.data;
+          this.getControl('position')?.enable();
+        });
   }
 
   warningDetect(): void {
@@ -108,69 +167,35 @@ export class EmployeeManagementComponent {
   }
 
   update() {
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Data Updated',
-    });
+    this.router.navigate([
+      'employee/management/update-employee',
+      this.employeeActive.employee_id,
+    ]);
   }
 
   delete() {
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Data Deleted',
+    this.modalService.confirmDetele(this.employeeActive.full_name, () => {
+      this.loadDisplay = true;
+      this.employeeService
+        .deleteEmployeeById(this.employeeActive.employee_id)
+        .subscribe(
+          () => {
+            this.toastService.toastSuccess(toast.deleteEmployeeSuccess);
+          },
+          () => {
+            this.toastService.toastError(toast.deleteEmployeeFail.summary);
+          }
+        );
+      this.handleSendRequestGetEmployee();
     });
   }
 
   handleDisplayCreateEmployee(): void {
     this.showCreateEmployee = !this.showCreateEmployee;
-    this.router.navigate(['employee', 'management', 'create-employee']);
+    this.router.navigate(['employee/management/create-employee']);
   }
 
-  handleNavigateDetailEmployee(id:string): void {
-    this.router.navigate(['employee', 'management', 'detail-employee', id]);
+  handleNavigateDetailEmployee(id: string): void {
+    this.router.navigate(['employee/management/detail-employee', id]);
   }
-
-  confirm1() {
-    this.confirmationService.confirm({
-        message: 'Are you sure that you want to proceed?',
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
-        },
-        reject: (type:any) => {
-            switch (type) {
-                case ConfirmEventType.REJECT:
-                    this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
-                    break;
-                case ConfirmEventType.CANCEL:
-                    this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
-                    break;
-            }
-        }
-    });
-}
-
-confirm2() {
-    this.confirmationService.confirm({
-        message: 'Do you want to delete this record?',
-        header: 'Delete Confirmation',
-        icon: 'pi pi-info-circle',
-        accept: () => {
-            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
-        },
-        reject: (type:any) => {
-            switch (type) {
-                case ConfirmEventType.REJECT:
-                    this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
-                    break;
-                case ConfirmEventType.CANCEL:
-                    this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
-                    break;
-            }
-        }
-    });
-}
 }

@@ -23,19 +23,18 @@
           </span>
         </div>
       </li>
-      <li><i class="bi bi-bell"></i></li>
     </ul>
     <div class="personal">
+      <span>{{ account?.email }}</span>
       <div class="avt">
         <img
           [src]="
-            account?.image_url || '../../../../assets/images/avt-default.png'
+            account?.image_url ||
+            '../../../../assets/images/avatar-icon-png.jpg'
           "
           alt=""
         />
       </div>
-      <span>{{ account?.email }}</span>
-      <i class="bi bi-chevron-down"></i>
     </div>
   </div>
 </header>
