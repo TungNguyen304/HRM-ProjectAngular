@@ -30,7 +30,7 @@ export class WorkplaceComponent implements OnInit {
   public displayMember: boolean = false;
   public positionTemp: string;
   public limit: number = 5;
-  public total: number;
+  public total: number = 0;
   public pageCurrent: number = 1;
   public loadDisplay: boolean = false;
   public infoUpdate: any;
@@ -88,17 +88,18 @@ export class WorkplaceComponent implements OnInit {
     this.loadDisplay = true;
     this.positionService
       .getPosition(1, this.limit, this.searchInput.value)
-      .pipe(
-        finalize(() => {
+      .subscribe(
+        (data: any) => {
+          if (data.statusCode === 200) {
+            this.total = data.response.total;
+            this.positionList = data.response.data;
+            this.loadDisplay = false;
+          }
+        },
+        () => {
           this.loadDisplay = false;
-        })
-      )
-      .subscribe((data: any) => {
-        if (data.response.statusCode === 200) {
-          this.total = data.response.total;
-          this.positionList = data.response.data;
         }
-      });
+      );
   }
 
   ngOnInit(): void {

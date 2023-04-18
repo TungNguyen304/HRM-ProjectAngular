@@ -8,6 +8,7 @@ import {
   startWith,
   switchAll,
   switchMap,
+  tap,
 } from 'rxjs';
 import { handleFormatDataUnitTreeSelect } from '../helper/unit.service';
 
@@ -18,7 +19,7 @@ export class UnitTreeService {
   constructor(private http: HttpClient) {}
   public unitTree$ = new BehaviorSubject<any>(null);
   getUnitTreeByUnitId() {
-    of('')
+    of()
       .pipe(
         startWith('organization-units'),
         switchMap((url) => {
@@ -26,7 +27,11 @@ export class UnitTreeService {
         })
       )
       .subscribe((data: any) => {
-        this.unitTree$.next(handleFormatDataUnitTreeSelect(data.response.data));
+        if (data.statusCode === 200) {
+          this.unitTree$.next(
+            handleFormatDataUnitTreeSelect(data.response.data)
+          );
+        }
       });
 
     // way2 higher order observable

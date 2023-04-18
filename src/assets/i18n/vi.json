@@ -60,6 +60,7 @@
     "cancel": "Hủy",
     "save": "Lưu",
     "update": "Chỉnh sửa",
+    "noData": "Không có dữ liệu",
     "exportExcel": "Xuất excel",
     "back": "Trở lại",
     "noImage": "KHÔNG CÓ ẢNH",
@@ -144,6 +145,7 @@
     "required": "không được để trống",
     "maxLength": "không được dài quá {{length}} ký tự",
     "emoji": "không được chứa emoji",
-    "file": "Dung lượng của tệp không được quá {{mb}}mb"
+    "file": "Dung lượng của tệp không được quá {{mb}}mb",
+    "email": "không đúng định dạng"
   }
 }

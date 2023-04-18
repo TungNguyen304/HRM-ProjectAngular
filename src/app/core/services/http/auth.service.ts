@@ -17,13 +17,7 @@ export class AuthService {
     return this.http.post('auth/login', data).pipe(delay(3000));
   }
   getMyInfo():Observable<Object> {
-    return this.http.get("auth/my-info").pipe(
-      map((data:any) => {
-        if(data.statusCode === 200) {
-          return data.response
-        }
-      })
-    )
+    return this.http.get("auth/my-info")
   }
 
 }

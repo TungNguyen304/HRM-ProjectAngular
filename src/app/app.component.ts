@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private accountService: AccountService,
     private loadingService: LoadingService,
-    private router: Router,
+    private router: Router
   ) {
     translate.setDefaultLang('en');
     translate.use('en');
@@ -48,11 +48,13 @@ export class AppComponent implements OnInit {
     if (localStorage.getItem('token')) {
       this.authService.getMyInfo().subscribe(
         (data: any) => {
-          this.accountService.setAccount(data);
+          if (data.statusCode === 200) {
+            this.accountService.setAccount(data.response);
+          }
         },
-        (err) => {
+        () => {
           localStorage.removeItem('token');
-          this.router.navigate(['auth', 'login']);
+          this.router.navigate(['auth/login']);
         }
       );
     }

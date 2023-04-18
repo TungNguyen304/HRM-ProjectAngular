@@ -28,7 +28,7 @@ export class WorkUnitComponent {
         })
       )
       .subscribe((data: any) => {
-        if (data.response.statusCode === 200) {
+        if (data.statusCode === 200) {
           this.units = handleFormatDataUnit(data.response.data);
         }
       });
