@@ -34,7 +34,8 @@
     "otherInfo": "Thông tin khác",
     "relatedProperty": "Tài sản liên quan",
     "infoRepair": "Thông tin nâng cấp / sửa chữa",
-    "currentUser": "Nhân viện sử dụng hiện tại"
+    "currentUser": "Nhân viện sử dụng hiện tại",
+    "socialNetwork": "Mạng xã hội"
   },
 
   "upload": {
@@ -59,6 +60,7 @@
     "cancel": "Hủy",
     "save": "Lưu",
     "update": "Chỉnh sửa",
+    "noData": "Không có dữ liệu",
     "exportExcel": "Xuất excel",
     "back": "Trở lại",
     "noImage": "KHÔNG CÓ ẢNH",
@@ -99,7 +101,11 @@
     "permanentAddress": "Địa chỉ thường trú",
     "jobDate": "Ngày nhận việc",
     "dateOfHire": "Ngày được thuê",
-    "image": "Ảnh"
+    "image": "Ảnh",
+    "typeSocial": "Loại mạng xã hội",
+    "link": "Địa chỉ tài khoản",
+    "addSocial": "Tạo form mạng xã hội",
+    "addProcess": "Tạo form quá trình công tác"
   },
 
   "createDevice": {
@@ -139,6 +145,7 @@
     "required": "không được để trống",
     "maxLength": "không được dài quá {{length}} ký tự",
     "emoji": "không được chứa emoji",
-    "file": "Dung lượng của tệp không được quá {{mb}}mb"
+    "file": "Dung lượng của tệp không được quá {{mb}}mb",
+    "email": "không đúng định dạng"
   }
 }

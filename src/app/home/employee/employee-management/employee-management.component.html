@@ -1,6 +1,5 @@
 <div class="employee">
   <h2 class="title">{{ "title.employeeManager" | translate }}</h2>
-  <p-toast></p-toast>
   <div class="accordion">
     <p-accordion>
       <p-accordionTab>
@@ -45,6 +44,7 @@
                 }}</label>
                 <p-dropdown
                   id="sex"
+                  formControlName="sex"
                   [options]="sex"
                   [placeholder]="'common.select' | translate"
                   optionLabel="value"
@@ -54,22 +54,24 @@
                 <label for="unit">{{
                   "employeeManagement.unit" | translate
                 }}</label>
-                <p-dropdown
+                <p-treeSelect
+                  class="md:w-20rem w-full"
+                  containerStyleClass="w-full"
+                  formControlName="unit"
+                  [options]="unitList"
+                  (onNodeSelect)="onSelectedChange($event)"
                   [placeholder]="'common.select' | translate"
-                  id="sex"
-                  [options]="sex"
-                  optionLabel="value"
-                ></p-dropdown>
+                ></p-treeSelect>
               </div>
               <div class="form_item">
                 <label for="position">{{
                   "employeeManagement.position" | translate
                 }}</label>
                 <p-dropdown
-                  id="sex"
+                  [options]="positionList"
+                  formControlName="position"
                   [placeholder]="'common.select' | translate"
-                  [options]="sex"
-                  optionLabel="value"
+                  optionLabel="job_position_name"
                 ></p-dropdown>
               </div>
             </div>
@@ -82,6 +84,7 @@
                 [label]="'common.delete' | translate"
               ></button>
               <button
+                (click)="handleSendRequestGetEmployee()"
                 type="button"
                 pButton
                 class="p-button-primary p-button-sm"
@@ -97,8 +100,9 @@
   <div class="employee_table">
     <p-table
       selectionMode="single"
+      responsiveLayout="stack"
+      [breakpoint]="'960px'"
       [value]="employeeList"
-      [tableStyle]="{ 'min-width': '50rem' }"
     >
       <ng-template pTemplate="caption">
         <div
@@ -109,7 +113,7 @@
           "
           class="flex align-items-center justify-content-between"
         >
-          <div>150 {{ "common.record" | translate }}</div>
+          <div>{{ total }} {{ "common.record" | translate }}</div>
           <div>
             <button
               pButton
@@ -141,20 +145,51 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-employee>
-        <tr [pSelectableRow]="employee">
-          <td>{{ employee.employee_code }}</td>
-          <td>{{ employee.full_name }}</td>
-          <td>{{ employee.email }}</td>
-          <td>{{ employee.gender }}</td>
-          <td>{{ employee.organization?.organization_unit_name }}</td>
-          <td>{{ employee.job_position?.job_position_name }}</td>
-          <td>{{ employee.employee_status?.employee_status_name }}</td>
+        <tr *ngIf="!loadDisplay" [pSelectableRow]="employee">
           <td>
+            <span class="p-column-title">{{
+              "employeeManagement.employeeCode" | translate
+            }}</span>
+            {{ employee.employee_code }}
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "employeeManagement.fullName" | translate
+            }}</span
+            >{{ employee.full_name }}
+          </td>
+          <td><span class="p-column-title">email</span>{{ employee.email }}</td>
+          <td>
+            <span class="p-column-title">{{
+              "employeeManagement.sex" | translate
+            }}</span
+            >{{ employee.gender }}
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "employeeManagement.unit" | translate
+            }}</span
+            >{{ employee.organization?.organization_unit_name }}
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "employeeManagement.position" | translate
+            }}</span>
+            {{ employee.job_position?.job_position_name }}
+          </td>
+          <td>
+            <span class="p-column-title">{{ "common.status" | translate }}</span
+            >{{ employee.employee_status?.employee_status_name }}
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "common.action" | translate
+            }}</span>
             <div>
               <p-splitButton
                 styleClass="p-button-sm mr-2 mb-2"
                 [model]="actions"
-                (onDropdownClick)="handleActionsClick(employee.employee_id)"
+                (onDropdownClick)="handleActionsClick(employee)"
               ></p-splitButton>
             </div>
           </td>
@@ -164,6 +199,9 @@
         <app-load-small *ngIf="loadDisplay"></app-load-small>
       </ng-template>
     </p-table>
+    <div class="no_data" *ngIf="!loadDisplay && total === 0">
+      {{ "common.noData" | translate }}
+    </div>
     <p-paginator
       (onPageChange)="onPageChange($event)"
       [first]="0"

@@ -6,6 +6,8 @@ import { CommonService } from 'src/app/core/services/common.service';
 import { labelDeviceVi, labelDeviceEn } from './data';
 import { LanguageService } from 'src/app/core/services/state/language.service';
 import { ILanguage } from 'src/app/shared/interfaces/language';
+import { LoadingService } from 'src/app/core/services/state/loading.service';
+import { map, switchMap } from 'rxjs';
 @Component({
   selector: 'app-detail-device',
   templateUrl: './detail-device.component.html',
@@ -20,31 +22,42 @@ export class DetailDeviceComponent {
     private activateRoute: ActivatedRoute,
     private commonService: CommonService,
     private deviceService: DeviceService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private loadingService: LoadingService
   ) {}
   handleBack(): void {
     this.location.back();
   }
 
   ngOnInit() {
-    this.activateRoute.params.subscribe((data: any) => {
-      this.id = data.id;
-    });
-    this.deviceService.getDeviceById(this.id).subscribe((data2) => {
-      this.device = data2;
-      this.languageService.language$.subscribe((data: ILanguage) => {
-        if (data === 'vi') {
-          this.deviceList = this.commonService.convertDataForTableRowStyle(
-            labelDeviceVi,
-            this.device
-          );
-        } else {
-          this.deviceList = this.commonService.convertDataForTableRowStyle(
-            labelDeviceEn,
-            this.device
-          );
-        }
+    this.loadingService.setloading(true);
+    this.activateRoute.params
+      // .pipe(
+      //   switchMap((params) =>
+      //     this.employeeService.getEmployeeById(params['id'])
+      //   ),
+      //   switchMap((employee: any) =>
+      //     this.languageService.language$.pipe(
+      //       map((language) => {
+      //         switch (language) {
+      //           case 'vi':
+      //             return this.commonService.convertDataForTableRowStyle(
+      //               labelDeviceVi,
+      //               employee.response
+      //             );
+      //           default:
+      //             return this.commonService.convertDataForTableRowStyle(
+      //               labelDeviceEn,
+      //               employee.response
+      //             );
+      //         }
+      //       })
+      //     )
+      //   )
+      // )
+      .subscribe((data) => {
+        this.deviceList = data;
+        this.loadingService.setloading(false);
       });
-    });
   }
 }

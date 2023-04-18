@@ -1,5 +1,5 @@
 export const labelEmployeeVi = [
-  { key: 'employee_id', name: 'Mã nhân viên' },
+  { key: 'employee_code', name: 'Mã nhân viên' },
   { key: 'image_url', name: 'Ảnh' },
   { key: 'cv_url', name: 'CV' },
   { key: 'full_name', name: 'Họ Tên' },
@@ -29,23 +29,44 @@ export const labelEmployeeVi = [
   { key: 'birth_place', name: 'Nơi sinh' },
   { key: 'receive_date', name: 'Ngày nhận việc' },
   { key: 'hire_date', name: 'Ngày thuê' },
-  { key: 'workingProcess', name: 'Quá trình tác' },
   { key: 'contractInformation', name: 'Thông tin hợp đồng' },
   { key: 'relatedProperty', name: 'Tài sản liên quan' },
-  { key: 'workUnit', name: 'Đơn vị công tác' },
-  { key: 'jobPosition', name: 'Vị trí công việc' },
-  { key: 'describe', name: 'Mô tả' },
-  { key: 'status', name: 'Trạng thái' },
+  {
+    key: 'organization',
+    name: 'Đơn vị',
+    children: [{ key: 'organization_unit_name', name: 'Đơn vị công tác' }],
+  },
+  {
+    key: 'job_position',
+    name: 'Vị trí',
+    children: [
+      {
+        key: 'job_position_name',
+        name: 'Vị trí công việc',
+      },
+    ],
+  },
+  {
+    key: 'employee_status',
+    name: 'Trạng thái',
+    children: [
+      {
+        key: 'employee_status_name',
+        name: 'Trạng thái nhân viên',
+      },
+    ],
+  },
+  { key: 'description', name: 'Mô tả' },
 ];
 
 export const labelEmployeeEn = [
-  { key: 'employee_id', name: 'Employee code' },
+  { key: 'employee_code', name: 'Employee code' },
   { key: 'image_url', name: 'Image' },
   { key: 'cv_url', name: 'CV' },
   { key: 'full_name', name: 'Full name' },
   { key: 'identify_number', name: 'ID number' },
   { key: 'dateRange', name: 'Date Range' },
-  { key: 'isuedBy', name: 'Issued by' },
+  { key: 'isuedBy', name: 'Issued by' }, 
   { key: 'expirationDate', name: 'Expiration date' },
   { key: 'nation', name: 'Nation' },
   { key: 'religion', name: 'Religion' },
@@ -64,16 +85,39 @@ export const labelEmployeeEn = [
   { key: 'gender', name: 'Sex' },
   { key: 'currentPlaceOfResidence', name: 'Current place of residence' },
   { key: 'resident', name: 'Resident' },
+  {
+    key: 'organization',
+    name: 'Unit',
+    children: [
+      { key: 'organization_unit_name', name: 'Organization unit name' },
+    ],
+  },
+  {
+    key: 'job_position',
+    name: 'Position',
+    children: [
+      {
+        key: 'job_position_name',
+        name: 'Job position',
+      },
+    ],
+  },
+  {
+    key: 'employee_status',
+    name: 'Status',
+    children: [
+      {
+        key: 'employee_status_name',
+        name: 'Employee status',
+      },
+    ],
+  },
   { key: 'home_land', name: 'Home town' },
   { key: 'birth_date', name: 'Date of birth' },
   { key: 'birth_place', name: 'Place of birth' },
   { key: 'receive_date', name: 'Job date' },
   { key: 'hire_date', name: 'Date of hire' },
-  { key: 'workingProcess', name: 'Working process' },
   { key: 'contractInformation', name: 'Contract information' },
   { key: 'relatedProperty', name: 'Related property' },
-  { key: 'workUnit', name: 'Work unit' },
-  { key: 'jobPosition', name: 'Job position' },
-  { key: 'describe', name: 'Describe' },
-  { key: 'status', name: 'Status' },
+  { key: 'description', name: 'description' },
 ];

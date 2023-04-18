@@ -86,11 +86,15 @@ export class CreateWorkplaceComponent implements OnInit {
         data,
         this.infoUpdate?.job_position_id
       ).subscribe(
-        () => {
-          this.showMessage.emit(true);
+        (data:any) => {
+          if(data.statusCode === 200) {
+            this.showMessage.emit(true);
+          }
         },
         () => {
           this.showMessage.emit(false);
+          this.buttonSave.nativeElement.classList.toggle('button--loading');
+          this.disable = false;
         }
       );
     }
@@ -144,7 +148,11 @@ export class CreateWorkplaceComponent implements OnInit {
     }
 
     this.unitService.getUnit().subscribe((data: any) => {
-      this.unitList = handleFormatDataUnitTreeSelect(data.response.data);
+      if(data.statusCode === 200) {
+        this.unitList = handleFormatDataUnitTreeSelect(data.response.data);
+      }
+    }, (err) => {
+      console.log(err);
     });
   }
 

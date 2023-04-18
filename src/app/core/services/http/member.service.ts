@@ -16,6 +16,4 @@ export class MemberService {
       switchMap((url) => this.http.get(url))
     )
   }
-
-  
 }
