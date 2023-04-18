@@ -110,7 +110,6 @@ export class EmployeeManagementComponent {
     this.unitTreeService.unitTree$.subscribe((data: any) => {
       this.unitList = data;
     });
-
     this.handleGetEmployee();
     this.warningDetect();
     this.searchForm.valueChanges.subscribe(() => {
