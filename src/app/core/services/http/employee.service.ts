@@ -24,15 +24,13 @@ export class EmployeeService {
     job_position_id?: string,
     employee_status_id?: string
   ): Observable<Object> {
-    const url = `users?page=${page}&limit=${limit}${
-      keyword ? `&keyword=${keyword}` : ''
-    }${employee_status_id ? `&employee_status_id=${employee_status_id}` : ''}${
-      gender ? `&gender=${gender}` : ''
-    }${
-      organization_unit_id
-        ? `&organization_unit_id=${organization_unit_id}`
-        : ''
-    }${job_position_id ? `&job_position_id=${job_position_id}` : ''}`;
+    let url = `users?page=${page}&limit=${limit}&keyword=${keyword}&organization_unit_id=${organization_unit_id}&job_position_id=${job_position_id}`;
+    if (gender) {
+      url += `&gender=${gender}`;
+    }
+    if (employee_status_id) {
+      url += `&employee_status_id=${employee_status_id}`;
+    }
     this.employee$.next(url);
     return this.employee$.pipe(
       debounceTime(2000),

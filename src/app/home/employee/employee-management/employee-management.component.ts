@@ -27,6 +27,7 @@ import { ISex } from 'src/app/shared/interfaces';
 import { UnitService } from 'src/app/core/services/http/unit.service';
 import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
 import { PositionService } from 'src/app/core/services/http/position.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-employee-management',
@@ -119,39 +120,30 @@ export class EmployeeManagementComponent {
 
   handleGetEmployee(): void {
     this.loadDisplay = true;
-    this.employeeService
-      .getEmployee(
-        this.page,
-        this.limit,
-        this.getControl('codeNameEmail')?.value,
-        this.getControl('sex')?.value?.value?.toUpperCase(),
-        this.getControl('unit')?.value.key,
-        this.getControl('position')?.value.job_position_id
-      )
-      .subscribe(
-        (data: any) => {
-          if (data.statusCode === 200) {
-            this.employeeList = data?.response?.data;
-            this.loadDisplay = false;
-            this.total = data?.response?.total;
-          }
-        },
-        () => {
+    this.handleSendRequestGetEmployee().subscribe(
+      (data: any) => {
+        if (data.statusCode === 200) {
+          this.employeeList = data?.response?.data;
           this.loadDisplay = false;
-          this.employeeList = [];
+          this.total = data?.response?.total;
         }
-      );
+      },
+      () => {
+        this.loadDisplay = false;
+        this.employeeList = [];
+      }
+    );
   }
 
-  handleSendRequestGetEmployee(): void {
+  handleSendRequestGetEmployee(): Observable<Object> {
     this.loadDisplay = true;
-    this.employeeService.getEmployee(
+    return this.employeeService.getEmployee(
       this.page,
       this.limit,
       this.getControl('codeNameEmail')?.value,
-      this.getControl('sex')?.value?.value?.toUpperCase(),
-      this.getControl('unit')?.value.key,
-      this.getControl('position')?.value.job_position_id
+      this.getControl('sex')?.value?.value?.toUpperCase() || '',
+      this.getControl('unit')?.value.key || '',
+      this.getControl('position')?.value.job_position_id || ''
     );
   }
 
@@ -180,6 +172,7 @@ export class EmployeeManagementComponent {
       this.employeeActive.employee_id,
     ]);
   }
+
   delete() {
     this.modalService.confirmDetele(this.employeeActive.full_name, () => {
       this.loadDisplay = true;
@@ -193,7 +186,7 @@ export class EmployeeManagementComponent {
             this.toastService.toastError(toast.deleteEmployeeFail.summary);
           }
         );
-      this.employeeService.getEmployee(this.page, this.limit);
+      this.handleSendRequestGetEmployee();
     });
   }
 
