@@ -244,8 +244,8 @@ export class CreateEmployeeComponent {
       );
       return {
         unit: {
-          key: item.wk_organization.organization_unit_id,
-          label: item.wk_organization.organization_unit_name,
+          key: item.wk_organization?.organization_unit_id,
+          label: item.wk_organization?.organization_unit_name,
         },
         position: item.wk_job_position,
         workingTime: [new Date(item.from), new Date(item.to)],
@@ -283,8 +283,8 @@ export class CreateEmployeeComponent {
       otherInfo: {
         description: data.description,
         unit: {
-          key: data.organization.organization_unit_id,
-          label: data.organization.organization_unit_name,
+          key: data.organization?.organization_unit_id,
+          label: data.organization?.organization_unit_name,
         },
         position: data.job_position,
         status: data.employee_status,

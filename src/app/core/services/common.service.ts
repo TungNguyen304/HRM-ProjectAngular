@@ -59,6 +59,11 @@ export class CommonService {
     return new Date([month, day, year].join('/')).toLocaleDateString('vi-VN');
   }
 
+  reverseStringDateToVi(date: string): string {
+    if (!date) return '';
+    return date.split('-').reverse().join('-');
+  }
+
   checkTypeCV(file: File | undefined, type: string): boolean {
     if (file?.type === type) {
       return true;

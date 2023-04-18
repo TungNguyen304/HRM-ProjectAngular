@@ -1,12 +1,12 @@
 import { Location } from '@angular/common';
-import {  Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/core/services/common.service';
 import { LanguageService } from 'src/app/core/services/state/language.service';
 import { labelEmployeeVi, labelEmployeeEn } from './data';
 import { EmployeeService } from 'src/app/core/services/http/employee.service';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
-import { map, switchMap } from 'rxjs';
+import { finalize, map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-detail-employee',
@@ -16,7 +16,7 @@ import { map, switchMap } from 'rxjs';
 export class DetailEmployeeComponent implements OnInit {
   constructor(
     private location: Location,
-    private commonService: CommonService,
+    public commonService: CommonService,
     private languageService: LanguageService,
     private employeeService: EmployeeService,
     private activateRoute: ActivatedRoute,
@@ -24,9 +24,11 @@ export class DetailEmployeeComponent implements OnInit {
   ) {}
   public infoEmployee: any = [];
   public dataByLang = {
-    'vi': labelEmployeeVi,
-    'en': labelEmployeeEn
-    }
+    vi: labelEmployeeVi,
+    en: labelEmployeeEn,
+  };
+  public workingProcess: any[] = [];
+  public socialNetwork: any[] = [];
   handleBack(): void {
     this.location.back();
   }
@@ -37,14 +39,19 @@ export class DetailEmployeeComponent implements OnInit {
   ngOnInit() {
     setTimeout(() => {
       this.loadingService.setloading(true);
-    })
+    });
     this.activateRoute.params
       .pipe(
         switchMap((params) =>
           this.employeeService.getEmployeeById(params['id'])
         ),
-        switchMap((employee: any) =>
-          this.languageService.language$.pipe(
+        switchMap((employee: any) => {
+          this.workingProcess = employee.response.user_working_histories || [];
+          this.socialNetwork =
+            employee.response.social_network?.map((item: string) => {
+              return JSON.parse(item);
+            }) || [];
+          return this.languageService.language$.pipe(
             map((language) => {
               switch (language) {
                 case 'vi':
@@ -59,15 +66,18 @@ export class DetailEmployeeComponent implements OnInit {
                   );
               }
             })
-          )
-        )
-      )
-      .subscribe((data) => {
-        this.infoEmployee = data;
-        setTimeout(() => {
-          this.loadingService.setloading(false);
+          );
         })
-      });
+      )
+      .subscribe(
+        (data) => {
+          this.infoEmployee = data;
+          this.loadingService.setloading(false);
+        },
+        () => {
+          this.loadingService.setloading(false);
+        }
+      );
 
     // this.activateRoute.params.subscribe((params: any) => {
     //   this.employeeService.getEmployeeById(params.id).subscribe((data: any) => {
