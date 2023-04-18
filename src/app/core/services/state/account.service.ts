@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { IAccount } from 'src/app/shared/interfaces';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AccountService {
+  constructor() {}
 
-  constructor() { }
+  public account$ = new Subject<IAccount | null>();
 
-  public account$ = new BehaviorSubject<IAccount | null>(null)
-
-  setAccount(account:any) {
-    this.account$.next(account)
+  setAccount(account: any) {
+    this.account$.next(account);
   }
 }

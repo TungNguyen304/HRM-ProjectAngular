@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs';
+import { catchError, finalize, switchMap, throwError } from 'rxjs';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
 import { AuthService } from 'src/app/core/services/http/auth.service';
 import { AccountService } from 'src/app/core/services/state/account.service';
@@ -117,20 +117,16 @@ export class LoginComponent implements OnInit {
           password: this.loginForm.get('password')?.value,
         })
         .pipe(
+          switchMap((data: any) => {
+            localStorage.setItem('token', data.response.access_token);
+            this.toastService.toastSuccess(toast.loginSuccess);
+            this.router.navigate(['/']);
+            return this.authService.getMyInfo();
+          }),
           finalize(() => {
             this.loadingService.setloading(false);
-          })
-        )
-        .subscribe(
-          (data: any) => {
-            if (data.statusCode === 200) {
-              localStorage.setItem('token', data.response.access_token);
-              this.accountService.setAccount(data.response.user);
-              this.toastService.toastSuccess(toast.loginSuccess);
-              this.router.navigate(['/']);
-            }
-          },
-          (err) => {
+          }),
+          catchError((err) => {
             this.toastService.toastError(toast.loginFail);
             this.loginForm.patchValue({
               email: '',
@@ -141,8 +137,14 @@ export class LoginComponent implements OnInit {
                 this.loginForm.get(item)?.markAsPristine();
               }
             });
+            return throwError(err);
+          })
+        )
+        .subscribe((data: any) => {
+          if (data.statusCode === 200) {
+            this.accountService.setAccount(data.response);
           }
-        );
+        });
     }
   }
 }
