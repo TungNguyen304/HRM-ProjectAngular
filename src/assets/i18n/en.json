@@ -16,6 +16,7 @@
     "JobPositionManagement": "WORK POSITION MANAGEMENT",
     "employeeManager": "EMPLOYEE MANAGER",
     "editStaff": "EDIT STAFF",
+    "detailEmployee": "DETAIL EMPLOYEE",
     "editDevice": "EDIT DEVICES",
     "createDevice": "CREATE NEW DEVICES",
     "deviceManagement": "DEVICE MANAGEMENT",
