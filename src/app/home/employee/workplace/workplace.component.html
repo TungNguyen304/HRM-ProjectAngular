@@ -13,6 +13,7 @@
   </div>
   <div class="table">
     <p-table
+      selectionMode="single"
       [value]="positionList"
       responsiveLayout="stack"
       [breakpoint]="'960px'"
@@ -102,7 +103,9 @@
         <app-load-small *ngIf="loadDisplay"></app-load-small>
       </ng-template>
     </p-table>
-
+    <div class="no_data" *ngIf="!loadDisplay && total === 0">
+      {{ "common.noData" | translate }}
+    </div>
     <p-paginator
       #paginator
       (onPageChange)="onPageChange($event)"

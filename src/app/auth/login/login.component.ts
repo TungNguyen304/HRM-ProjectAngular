@@ -123,15 +123,15 @@ export class LoginComponent implements OnInit {
         )
         .subscribe(
           (data: any) => {
-            if (data.response.statusCode === 200) {
-              this.accountService.setAccount(data.response.user);
+            if (data.statusCode === 200) {
               localStorage.setItem('token', data.response.access_token);
+              this.accountService.setAccount(data.response.user);
               this.toastService.toastSuccess(toast.loginSuccess);
               this.router.navigate(['/']);
             }
           },
           (err) => {
-            this.toastService.toastSuccess(toast.loginFail);
+            this.toastService.toastError(toast.loginFail);
             this.loginForm.patchValue({
               email: '',
               password: '',

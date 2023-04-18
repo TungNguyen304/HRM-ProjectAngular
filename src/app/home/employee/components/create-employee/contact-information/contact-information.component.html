@@ -20,7 +20,7 @@
         <span>{{ "createEmployee.phone" | translate }}</span>
         <span style="color: red">*</span>
       </label>
-      <input formControlName="phone" type="text" id="phone" pInputText />
+      <p-inputMask mask="9999-999-999" formControlName="phone" placeholder="0000-000-000"></p-inputMask>
       <p
         *ngIf="getControl('phone')?.dirty && getControl('phone')?.errors"
         class="warning"
@@ -58,14 +58,6 @@
             <span>{{ "createEmployee.addSocial" | translate }}</span>
           </div>
         </label>
-        <button
-          style="margin-right: 10px"
-          (click)="handleAddSocial()"
-          type="button"
-          pButton
-          icon="bi bi-plus-lg"
-          class="p-button-sm p-button-rounded p-button-raised"
-        ></button>
       </div>
       <div
         class="social_network_wrap"
@@ -147,6 +139,16 @@
           </div>
           <div class="page">{{ item + 1 }}</div>
         </div>
+      </div>
+      <div style="text-align: end;">
+        <button
+          style="margin-right: 10px"
+          (click)="handleAddSocial()"
+          type="button"
+          pButton
+          icon="bi bi-plus-lg"
+          class="p-button-sm p-button-rounded p-button-raised"
+        ></button>
       </div>
     </div>
   </div>

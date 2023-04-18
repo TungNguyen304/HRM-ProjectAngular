@@ -87,7 +87,7 @@ export class CreateWorkplaceComponent implements OnInit {
         this.infoUpdate?.job_position_id
       ).subscribe(
         (data:any) => {
-          if(data.response.statusCode === 200) {
+          if(data.statusCode === 200) {
             this.showMessage.emit(true);
           }
         },
@@ -148,7 +148,7 @@ export class CreateWorkplaceComponent implements OnInit {
     }
 
     this.unitService.getUnit().subscribe((data: any) => {
-      if(data.response.statusCode === 200) {
+      if(data.statusCode === 200) {
         this.unitList = handleFormatDataUnitTreeSelect(data.response.data);
       }
     }, (err) => {

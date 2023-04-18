@@ -62,7 +62,7 @@ export class OtherInformationComponent implements OnInit {
     getControlCommon(this.employeeForm, 'otherInfo', 'position')?.disable();
 
     this.employeeService.getStatus().subscribe((data: any) => {
-      if (data.response.statusCode === 200) {
+      if (data.statusCode === 200) {
         this.statusList = data.response.data.map((status: any) => ({
           employee_status_id: status.employee_status_id,
           employee_status_name: status.employee_status_name,
@@ -107,7 +107,7 @@ export class OtherInformationComponent implements OnInit {
       this.unitId = event.node.key;
       this.positionService.getPositionByUnitId(event.node.key).subscribe(
         (data: any) => {
-          if (data.response.statusCode === 200) {
+          if (data.statusCode === 200) {
             this.positionList = data.response.data.map((position: any) => ({
               job_position_id: position.job_position_id,
               job_position_name: position.job_position_name,

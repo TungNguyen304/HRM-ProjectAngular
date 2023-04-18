@@ -113,9 +113,7 @@
           "
           class="flex align-items-center justify-content-between"
         >
-          <div>
-            {{ total ? total : "..." }} {{ "common.record" | translate }}
-          </div>
+          <div>{{ total }} {{ "common.record" | translate }}</div>
           <div>
             <button
               pButton
@@ -201,6 +199,9 @@
         <app-load-small *ngIf="loadDisplay"></app-load-small>
       </ng-template>
     </p-table>
+    <div class="no_data" *ngIf="!loadDisplay && total === 0">
+      {{ "common.noData" | translate }}
+    </div>
     <p-paginator
       (onPageChange)="onPageChange($event)"
       [first]="0"

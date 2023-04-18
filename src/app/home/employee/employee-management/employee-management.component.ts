@@ -106,12 +106,11 @@ export class EmployeeManagementComponent {
       unit: '',
       position: '',
     });
-
+    this.unitTreeService.getUnitTreeByUnitId();
     this.unitTreeService.unitTree$.subscribe((data: any) => {
-      if (!data) {
-        this.unitTreeService.getUnitTreeByUnitId();
-      } else this.unitList = data;
+      this.unitList = data;
     });
+
     this.handleGetEmployee();
     this.warningDetect();
     this.searchForm.valueChanges.subscribe(() => {
@@ -132,9 +131,11 @@ export class EmployeeManagementComponent {
       )
       .subscribe(
         (data: any) => {
-          this.employeeList = data?.response?.data;
-          this.loadDisplay = false;
-          this.total = data?.response?.total;
+          if (data.statusCode === 200) {
+            this.employeeList = data?.response?.data;
+            this.loadDisplay = false;
+            this.total = data?.response?.total;
+          }
         },
         () => {
           this.loadDisplay = false;
@@ -187,14 +188,10 @@ export class EmployeeManagementComponent {
         .deleteEmployeeById(this.employeeActive.employee_id)
         .subscribe(
           () => {
-            this.toastService.toastSuccess(
-              toast.deleteEmployeeSuccess
-            );
+            this.toastService.toastSuccess(toast.deleteEmployeeSuccess);
           },
           () => {
-            this.toastService.toastError(
-              toast.deleteEmployeeFail.summary
-            );
+            this.toastService.toastError(toast.deleteEmployeeFail.summary);
           }
         );
       this.employeeService.getEmployee(this.page, this.limit);

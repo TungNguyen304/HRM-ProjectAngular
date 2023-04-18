@@ -1,14 +1,6 @@
 <div class="working_process_wrap">
   <div class="working_process_label">
     <span>{{ "createEmployee.addProcess" | translate }}</span>
-    <button
-    style="margin-right: 10px;"
-      (click)="handleAddProcess()"
-      type="button"
-      pButton
-      icon="bi bi-plus-lg"
-      class="p-button-sm p-button-rounded p-button-raised"
-    ></button>
   </div>
   <div formArrayName="workingProcess" class="working_process_list">
     <div
@@ -39,7 +31,10 @@
               [placeholder]="'common.select' | translate"
             ></p-treeSelect>
             <p
-              *ngIf="getControl('unit', item)?.dirty && getControl('unit', item)?.errors"
+              *ngIf="
+                getControl('unit', item)?.dirty &&
+                getControl('unit', item)?.errors
+              "
               class="warning"
             >
               <i class="bi bi-cone-striped"></i>
@@ -60,12 +55,19 @@
               optionLabel="job_position_name"
             ></p-dropdown>
             <p
-              *ngIf="getControl('unit', item)?.dirty && getControl('unit', item)?.errors"
+              *ngIf="
+                getControl('unit', item)?.dirty &&
+                getControl('unit', item)?.errors
+              "
               class="warning"
             >
               <i class="bi bi-cone-striped"></i>
               {{ "sidebar.workPlace" | translate }}
-              {{ warning.position?.type | typeError | translate : warning.position }}
+              {{
+                warning.position?.type
+                  | typeError
+                  | translate : warning.position
+              }}
             </p>
           </div>
           <div class="form_item">
@@ -80,12 +82,19 @@
               dateFormat="dd.mm.yy"
             ></p-calendar>
             <p
-              *ngIf="getControl('unit', item)?.dirty && getControl('unit', item)?.errors"
+              *ngIf="
+                getControl('unit', item)?.dirty &&
+                getControl('unit', item)?.errors
+              "
               class="warning"
             >
               <i class="bi bi-cone-striped"></i>
               {{ "createEmployee.time" | translate }}
-              {{ warning.workingTime?.type | typeError | translate : warning.workingTime }}
+              {{
+                warning.workingTime?.type
+                  | typeError
+                  | translate : warning.workingTime
+              }}
             </p>
           </div>
           <div class="form_item">
@@ -100,17 +109,34 @@
               optionLabel="label"
             ></p-dropdown>
             <p
-              *ngIf="getControl('unit', item)?.dirty && getControl('unit', item)?.errors"
+              *ngIf="
+                getControl('unit', item)?.dirty &&
+                getControl('unit', item)?.errors
+              "
               class="warning"
             >
               <i class="bi bi-cone-striped"></i>
               {{ "createEmployee.workingForm" | translate }}
-              {{ warning.workingForm?.type | typeError | translate : warning.workingForm }}
+              {{
+                warning.workingForm?.type
+                  | typeError
+                  | translate : warning.workingForm
+              }}
             </p>
           </div>
         </div>
       </div>
       <div class="page">{{ item + 1 }}</div>
     </div>
+  </div>
+  <div style="text-align: end;">
+    <button
+    class="plus_btn"
+    (click)="handleAddProcess()"
+    type="button"
+    pButton
+    icon="bi bi-plus-lg"
+    class="p-button-sm p-button-rounded p-button-raised"
+  ></button>
   </div>
 </div>

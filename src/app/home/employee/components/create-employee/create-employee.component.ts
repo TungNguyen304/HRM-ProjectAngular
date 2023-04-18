@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonService } from 'src/app/core/services/common.service';
-import { emojiValidator } from 'src/app/core/services/helper/validator.service';
+import { emailValidator, emojiValidator } from 'src/app/core/services/helper/validator.service';
 import { EmployeeService } from 'src/app/core/services/http/employee.service';
 import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
@@ -21,6 +21,7 @@ import { socialNetworks, socials } from './contact-information/data';
 import { workingFormStruct } from './working-process/data';
 import { ESex } from 'src/app/shared/interfaces';
 import { DateService } from 'src/app/core/services/helper/date.service';
+import { regexEmail } from 'src/app/shared/regex';
 
 type typeAction = 'update' | 'add';
 
@@ -97,6 +98,7 @@ export class CreateEmployeeComponent {
         mobile: this.employeeForm.get('contactInfo.phone')?.value,
         social_network: this.getSocialNetwork(),
         working_history: this.getWorkingHistory(),
+        // working_history_id:
         description: this.employeeForm.get('otherInfo.description')?.value,
         organization_unit_id:
           this.employeeForm.get('otherInfo.unit')?.value.key,
@@ -121,23 +123,17 @@ export class CreateEmployeeComponent {
         )
         .subscribe(
           (data: any) => {
-            if (data.response.statusCode === 200) {
+            if (data.statusCode === 200) {
               this.location.back();
-              this.toastService.toastSuccess(
-                toast.createEmployeeSuccess
-              );
+              this.toastService.toastSuccess(toast.createEmployeeSuccess);
             }
           },
           (err) => {
-            this.toastService.toastWarn(
-              toast.createEmployeeFail
-            );
+            this.toastService.toastWarn(toast.createEmployeeFail);
           }
         );
     } else {
-      this.toastService.toastWarn(
-        toast.createEmployeeFail
-      );
+      this.toastService.toastWarn(toast.createEmployeeFail);
     }
   }
 
@@ -147,8 +143,8 @@ export class CreateEmployeeComponent {
 
   getWorkingHistory(): any[] {
     if (this.workingHistory.length > 0) {
-      return this.workingHistory.map((item) => {
-        return {
+      return this.workingHistory.map((item, index) => {
+        const data: any = {
           organization_unit_id: item.get('unit')?.value.key,
           job_position_id: item.get('position')?.value.job_position_id,
           from: this.dateService.handleConvertDateToIOString(
@@ -159,13 +155,20 @@ export class CreateEmployeeComponent {
           ),
           working_type: item.get('workingForm')?.value.value,
         };
+        if (this.typeAction === 'update') {
+          data.working_history_id =
+            this.employeeInfo?.user_working_histories[
+              index
+            ]?.working_history_id;
+        }
+        return data;
       });
     }
     return [];
   }
 
   get socialNetwork(): AbstractControl<any>[] {
-    return (this.employeeForm.get('contactInfo') as FormArray).controls;
+    return (this.employeeForm.get('contactInfo.socials') as FormArray).controls;
   }
 
   getSocialNetwork(): any[] {
@@ -230,7 +233,7 @@ export class CreateEmployeeComponent {
   }
 
   handleTransformDataWorkingHistory(data: any): any[] {
-    const newData = data.user_working_histories.map((item: any) => {
+    const newData = data.user_working_histories?.map((item: any) => {
       (getControlCommon(this.employeeForm, 'workingProcess') as FormArray).push(
         this.fb.group({
           unit: ['', [Validators.required]],
@@ -292,7 +295,7 @@ export class CreateEmployeeComponent {
   }
 
   handleTransformDataSocialNetwork(data: any): any[] {
-    return data.social_network.map((item: any) => {
+    return data.social_network?.map((item: any) => {
       const social = JSON.parse(item);
       (
         getControlCommon(
@@ -338,9 +341,14 @@ export class CreateEmployeeComponent {
       contactInfo: this.fb.group({
         email: [
           '',
-          [Validators.required, Validators.maxLength(50), emojiValidator],
+          [
+            Validators.required,
+            Validators.maxLength(50),
+            emojiValidator,
+            emailValidator,
+          ],
         ],
-        phone: ['', [Validators.required, Validators.maxLength(11)]],
+        phone: ['', [Validators.required]],
         skypeId: [
           '',
           [Validators.required, Validators.maxLength(255), emojiValidator],
@@ -368,9 +376,13 @@ export class CreateEmployeeComponent {
           })
         )
         .subscribe((data: any) => {
-          this.loadingService.setloading(false);
-          this.employeeInfo = data.response;
-          this.patchValueForForm(this.employeeInfo);
+          if (data.statusCode === 200) {
+            setTimeout(() => {
+              this.loadingService.setloading(false);
+            });
+            this.employeeInfo = data.response;
+            this.patchValueForForm(this.employeeInfo);
+          }
         });
     }
 

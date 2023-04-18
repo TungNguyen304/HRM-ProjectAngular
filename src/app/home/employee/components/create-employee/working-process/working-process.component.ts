@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import {
   AbstractControl,
   ControlContainer,
@@ -42,11 +42,11 @@ export class WorkingProcessComponent implements OnInit {
   @Input() employeeForm: FormGroup;
   public positionList: Array<IPosition[]> = [];
   public processControlList: FormArray;
-  public disableSelectPosition: boolean = true;
   constructor(
     private positionService: PositionService,
     private unitTreeService: UnitTreeService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {}
   ngOnInit() {
     this.warningDetect();
@@ -81,24 +81,25 @@ export class WorkingProcessComponent implements OnInit {
   }
 
   onSelectedChange(event: any, index: number) {
-    event.node.key && this.positionService
-      .getPositionByUnitId(event.node.key)
-      .subscribe((data: any) => {
-        this.positionList[index] = data.response.data.map((position: any) => {
-          return {
-            job_position_id: position.job_position_id,
-            job_position_name: position.job_position_name,
-            job_position_code: position.job_position_code,
-            job_position_code_name: position.job_position_code_name,
-          };
+    event.node.key &&
+      this.positionService
+        .getPositionByUnitId(event.node.key)
+        .subscribe((data: any) => {
+          if (data.statusCode === 200) {
+            this.positionList[index] = data.response.data.map(
+              (position: any) => {
+                return {
+                  job_position_id: position.job_position_id,
+                  job_position_name: position.job_position_name,
+                  job_position_code: position.job_position_code,
+                  job_position_code_name: position.job_position_code_name,
+                };
+              }
+            );
+            this.processControlList.controls[index].get('position')?.enable();
+            this.cdr.detectChanges();
+          }
         });
-        getControlCommon(
-          this.employeeForm,
-          'workingProcess',
-          'position'
-        )?.enable();
-      });
-    this.processControlList.controls[index].get('position')?.enable();
   }
 
   get workingProcessList(): AbstractControl<any>[] {

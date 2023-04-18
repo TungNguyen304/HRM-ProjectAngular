@@ -22,6 +22,7 @@ import { IMember } from './team-member.component';
   styles: [
     `
       .team_item {
+        height: 350px;
         border: 1px solid var(--primary-color-main);
         height: 100%;
         &:hover {

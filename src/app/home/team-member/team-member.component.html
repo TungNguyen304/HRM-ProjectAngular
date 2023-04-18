@@ -11,9 +11,12 @@
       *ngFor="let member of memberList"
       [memberInfo]="member"
     ></app-member>
-    <div class="load">
-      <app-load-small *ngIf="loadDisplay"></app-load-small>
+    <div *ngIf="loadDisplay" class="load">
+      <app-load-small></app-load-small>
     </div>
+  </div>
+  <div class="no_data" *ngIf="!loadDisplay && total === 0">
+    {{ "common.noData" | translate }}
   </div>
   <p-paginator  (onPageChange)="onPageChange($event)" [first]="0" [rows]="limit" [totalRecords]="total" [showFirstLastIcon]="false"></p-paginator>
 </div>

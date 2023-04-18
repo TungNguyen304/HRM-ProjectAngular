@@ -49,3 +49,15 @@ export const maxLengthWarning = (
     };
   }
 };
+
+export const emailWarning = (
+  form: AbstractControl | null,
+  component: any,
+  type: string,
+): void => {
+  if (getControlCommon(form, type)?.errors?.['email']) {
+    component.warning[type as keyof typeof component.warning] = {
+      type: 'email',
+    };
+  }
+};

@@ -34,7 +34,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TreeSelectModule } from 'primeng/treeselect';
-
+import { InputMaskModule } from 'primeng/inputmask';
 
 const routes: Routes = [
   {
@@ -102,6 +102,7 @@ const routes: Routes = [
     DropdownModule,
     AccordionModule,
     OverlayModule,
+    InputMaskModule,
     DialogModule,
     CalendarModule,
     DragDropModule,
