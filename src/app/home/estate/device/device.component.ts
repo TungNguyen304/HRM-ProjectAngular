@@ -29,6 +29,10 @@ export class DeviceComponent {
   public deviceList: any;
   public searchDeviceForm: FormGroup;
   public actions: any;
+  public loadDisplay:boolean = false;
+  public total: number = 0;
+  public limit: number = 5;
+  public pageCurrent: number = 1;
   public idDeviceTemp: number;
   public warning: IWarningDeviceSearch = {
     code: null,
@@ -74,6 +78,10 @@ export class DeviceComponent {
 
   handleActionsClick(id: number) {
     this.idDeviceTemp = id;
+  }
+
+  onPageChange(event:any):void {
+
   }
 
   update() {

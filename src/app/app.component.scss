@@ -105,8 +105,7 @@
 ::ng-deep .p-fileupload-choose:not(.p-disabled):hover,
 ::ng-deep .p-button:enabled:hover {
     background: var(--primary-color-main);
-    filter: brightness(0.9);
-    border-color: unset;
+    filter: brightness(0.8);
 }
 
 ::ng-deep .p-progress-spinner {
@@ -135,7 +134,7 @@
         span {
             font-size: 22px !important;
         }
-        color: red !important;
+        color: #EF4444 !important;
     }
     button {
         border: none;

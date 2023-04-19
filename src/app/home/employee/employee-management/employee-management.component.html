@@ -78,6 +78,7 @@
 
             <div class="action">
               <button
+                (click)="handleResetSearchForm()"
                 type="button"
                 pButton
                 class="p-button-danger p-button-sm"
@@ -203,6 +204,7 @@
       {{ "common.noData" | translate }}
     </div>
     <p-paginator
+      *ngIf="total > 0"
       (onPageChange)="onPageChange($event)"
       [first]="0"
       [rows]="limit"

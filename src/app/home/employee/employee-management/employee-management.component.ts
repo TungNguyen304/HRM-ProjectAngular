@@ -157,6 +157,15 @@ export class EmployeeManagementComponent {
         });
   }
 
+  handleResetSearchForm(): void {
+    this.searchForm.setValue({
+      codeNameEmail: '',
+      sex: '',
+      unit: '',
+      position: '',
+    });
+  }
+
   warningDetect(): void {
     this.handleSetWarning('codeNameEmail', 255);
   }
@@ -183,7 +192,7 @@ export class EmployeeManagementComponent {
             this.toastService.toastSuccess(toast.deleteEmployeeSuccess);
           },
           () => {
-            this.toastService.toastError(toast.deleteEmployeeFail.summary);
+            this.toastService.toastError(toast.deleteEmployeeFail);
           }
         );
       this.handleSendRequestGetEmployee();
