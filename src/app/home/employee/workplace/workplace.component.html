@@ -22,7 +22,11 @@
               <button
                 pButton
                 icon="pi pi-download"
+<<<<<<< HEAD
                 class="p-button-sm p-button-danger p-button-raised"
+=======
+                class="p-button-sm p-button-warning p-button-raised"
+>>>>>>> 05db4186fab4d2ac9eac2b7c691d43e5d0383293
               ></button>
               <button
                 style="margin-left: 10px"
@@ -31,7 +35,11 @@
                 icon="pi pi-plus"
                 iconpos="left"
                 [label]="'common.addNew' | translate"
+<<<<<<< HEAD
                 class="p-button-sm p-button-danger p-button-raised"
+=======
+                class="p-button-sm p-button-warning p-button-raised"
+>>>>>>> 05db4186fab4d2ac9eac2b7c691d43e5d0383293
               ></button>
             </div>
           </div>
@@ -145,10 +153,14 @@
   </div>
 </div>
 
+<<<<<<< HEAD
 <p-dialog
   [header]="(typeAction === 'Add' ? 'title.create' : 'title.edit') | translate"
   [(visible)]="displayCreate"
 >
+=======
+<p-dialog [header]="(typeAction === 'Add' ? 'title.create' : 'title.edit') | translate" [(visible)]="displayCreate">
+>>>>>>> 05db4186fab4d2ac9eac2b7c691d43e5d0383293
   <ng-template pTemplate="content">
     <app-create-workplace
       [infoUpdate]="infoUpdate"
