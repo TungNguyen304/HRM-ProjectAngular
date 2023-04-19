@@ -12,7 +12,8 @@
           class="warning"
         >
           <i class="bi bi-cone-striped"></i>
-          {{ 'provider.supplierName' | translate }} {{warning.name?.type | typeError | translate:warning.name}}
+          {{ "provider.supplierName" | translate }}
+          {{ warning.name?.type | typeError | translate : warning.name }}
         </p>
       </div>
       <div class="form_item">
@@ -26,14 +27,31 @@
           class="warning"
         >
           <i class="bi bi-cone-striped"></i>
-          {{ 'provider.contact' | translate }} {{warning.contact?.type | typeError | translate:warning.contact}}
+          {{ "provider.contact" | translate }}
+          {{ warning.contact?.type | typeError | translate : warning.contact }}
         </p>
       </div>
       <div class="form_item">
         <label for="address">
           <span>{{ "common.address" | translate }}</span>
+          <span style="color: red">*</span>
         </label>
-        <input formControlName="address" type="text" id="address" pInputText />
+
+        <textarea
+          rows="5"
+          cols="30"
+          pInputTextarea
+          formControlName="address"
+          id="address"
+        ></textarea>
+        <p
+          *ngIf="getControl('address')?.dirty && getControl('address')?.errors"
+          class="warning"
+        >
+          <i class="bi bi-cone-striped"></i>
+          {{ "provider.address" | translate }}
+          {{ warning.contact?.type | typeError | translate : warning.contact }}
+        </p>
       </div>
       <div class="form_item">
         <label for="contact">
@@ -46,10 +64,11 @@
           class="warning"
         >
           <i class="bi bi-cone-striped"></i>
-          {{ 'provider.supplierName' | translate }} {{warning.name?.type | typeError | translate:warning.name}}
+          {{ "provider.supplierName" | translate }}
+          {{ warning.name?.type | typeError | translate : warning.name }}
         </p>
       </div>
-      <div class="form_item">
+      <!-- <div class="form_item">
         <label for="priority">
           <span>{{ "createProvider.prioritize" | translate }}</span>
         </label>
@@ -59,31 +78,30 @@
           id="priority"
           pInputText
         />
-      </div>
+      </div> -->
       <div class="form_item">
         <label for="note">
           <span>{{ "createProvider.note" | translate }}</span>
         </label>
         <input type="text" formControlName="note" id="note" pInputText />
       </div>
-      <div class="form_item">
-        <label for="conclude">
-          <span>{{ "createProvider.conclude" | translate }}</span>
-        </label>
-        <p-dropdown
-          [options]="sex"
-          formControlName="conclude"
-          [placeholder]="'common.select' | translate"
-          optionLabel="value"
-        ></p-dropdown>
-      </div>
       <div style="text-align: center">
-        <button
+        <!-- <button
           type="submit"
           pButton
           class="p-button-outlined p-button-sm"
-          [label]="'common.save' | translate"
-        ></button>
+          [label]="'common.addNew' | translate"
+        ></button> -->
+        <button
+        [disabled]="disable"
+        #buttonSave
+        style="margin-top: 10px; width: 100%"
+        pButton
+        type="submit"
+        class="p-button-warning button"
+      >
+        <span class="button__text">{{ "common.save" | translate }}</span>
+      </button>
       </div>
     </form>
   </div>

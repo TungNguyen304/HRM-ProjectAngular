@@ -130,7 +130,8 @@
   "provider": {
     "supplierName": "Tên NCC",
     "items": "Mặt hàng",
-    "contact": "Liên hệ"
+    "contact": "Liên hệ",
+    "address": "Địa chỉ"
   },
 
   "createProvider": {

@@ -1,19 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, debounceTime, delay } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProviderService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  getProvider():Observable<Object> {
-    return this.http.get("provider")
+  getProvider(page: number, limit: number): Observable<Object> {
+    return this.http
+      .get(`distributors?page=${page}&limit=${limit}`)
+      .pipe(delay(2000));
   }
 
-  getProviderById(id:number):Observable<Object> {
-    return this.http.get(`provider/${id}`)
+  getProviderById(id: string): Observable<Object> {
+    return this.http.get(`distributors/${id}`);
+  }
+
+  addProvider(data: any): Observable<Object> {
+    return this.http.post('distributors', data);
+  }
+
+  updateProvider(data: any, id: string): Observable<Object> {
+    return this.http.patch(`distributors/${id}`, data);
   }
 }

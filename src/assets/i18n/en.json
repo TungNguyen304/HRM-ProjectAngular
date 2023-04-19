@@ -132,7 +132,8 @@
   "provider": {
     "supplierName": "Supplier Name",
     "items": "Items",
-    "contact": "Contact"
+    "contact": "Contact",
+    "address": "Address"
   },
   
   "createProvider": {

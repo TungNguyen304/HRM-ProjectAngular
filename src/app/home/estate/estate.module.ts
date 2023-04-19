@@ -21,6 +21,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { PaginatorModule } from 'primeng/paginator';
 
 const routes: Routes = [
   {
@@ -76,7 +77,8 @@ const routes: Routes = [
     SplitButtonModule,
     ToastModule,
     TranslateModule,
-    SharedModule
+    SharedModule,
+    PaginatorModule
   ],
 })
 export class EstateModule {}
