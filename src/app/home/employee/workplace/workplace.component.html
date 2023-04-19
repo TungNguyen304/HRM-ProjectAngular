@@ -22,7 +22,7 @@
               <button
                 pButton
                 icon="pi pi-download"
-                class="p-button-sm p-button-danger p-button-raised"
+                class="p-button-sm p-button-warning p-button-raised"
               ></button>
               <button
                 style="margin-left: 10px"
@@ -31,7 +31,7 @@
                 icon="pi pi-plus"
                 iconpos="left"
                 [label]="'common.addNew' | translate"
-                class="p-button-sm p-button-danger p-button-raised"
+                class="p-button-sm p-button-warning p-button-raised"
               ></button>
             </div>
           </div>
@@ -145,10 +145,7 @@
   </div>
 </div>
 
-<p-dialog
-  [header]="(typeAction === 'Add' ? 'title.create' : 'title.edit') | translate"
-  [(visible)]="displayCreate"
->
+<p-dialog [header]="(typeAction === 'Add' ? 'title.create' : 'title.edit') | translate" [(visible)]="displayCreate">
   <ng-template pTemplate="content">
     <app-create-workplace
       [infoUpdate]="infoUpdate"
