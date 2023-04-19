@@ -36,7 +36,6 @@
           <span>{{ "common.address" | translate }}</span>
           <span style="color: red">*</span>
         </label>
-
         <textarea
           rows="5"
           cols="30"
@@ -68,17 +67,6 @@
           {{ warning.name?.type | typeError | translate : warning.name }}
         </p>
       </div>
-      <!-- <div class="form_item">
-        <label for="priority">
-          <span>{{ "createProvider.prioritize" | translate }}</span>
-        </label>
-        <input
-          type="text"
-          formControlName="priority"
-          id="priority"
-          pInputText
-        />
-      </div> -->
       <div class="form_item">
         <label for="note">
           <span>{{ "createProvider.note" | translate }}</span>
@@ -86,19 +74,13 @@
         <input type="text" formControlName="note" id="note" pInputText />
       </div>
       <div style="text-align: center">
-        <!-- <button
-          type="submit"
-          pButton
-          class="p-button-outlined p-button-sm"
-          [label]="'common.addNew' | translate"
-        ></button> -->
         <button
         [disabled]="disable"
         #buttonSave
-        style="margin-top: 10px; width: 100%"
+        style="margin-top: 10px;"
         pButton
         type="submit"
-        class="p-button-warning button"
+        class="p-button-sm button"
       >
         <span class="button__text">{{ "common.save" | translate }}</span>
       </button>

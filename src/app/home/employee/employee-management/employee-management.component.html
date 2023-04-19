@@ -78,6 +78,7 @@
 
             <div class="action">
               <button
+                (click)="handleResetSearchForm()"
                 type="button"
                 pButton
                 class="p-button-danger p-button-sm"
@@ -118,7 +119,7 @@
             <button
               pButton
               icon="pi pi-download"
-              class="p-button-sm p-button-danger p-button-raised"
+              class="p-button-sm p-button-warning p-button-raised"
             ></button>
             <button
               style="margin-left: 10px"
@@ -127,7 +128,7 @@
               icon="pi pi-plus"
               iconpos="left"
               [label]="'common.addNew' | translate"
-              class="p-button-sm p-button-danger p-button-raised"
+              class="p-button-sm p-button-warning p-button-raised"
             ></button>
           </div>
         </div>

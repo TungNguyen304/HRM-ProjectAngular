@@ -61,19 +61,21 @@ export class CreateProviderComponent implements OnInit {
   onSubmit(): void {
     this.commonService.markAsDirty(this.providerForm);
     if (this.providerForm.valid) {
-      console.log('ok');
-      const data = {
+      const data:any = {
         name: this.providerForm.get('name')?.value,
         items: this.providerForm.get('item')?.value,
         address: this.providerForm.get('address')?.value,
         contact: this.providerForm.get('contact')?.value,
-        note: this.providerForm.get('note')?.value,
+        description: this.providerForm.get('note')?.value,
       };
+      // if(this.typeAction === 'Update') {
+      //   data.distributor_id = this.infoUpdate.distributor_id
+      // }
       this.buttonSave.nativeElement.classList.toggle('button--loading');
       this.disable = true;
       this.handleTypeRequestApi(
         data,
-        this.infoUpdate?.job_position_id
+        this.infoUpdate?.distributor_id
       ).subscribe(
         (data: any) => {
           if (data.statusCode === 200) {
@@ -102,6 +104,17 @@ export class CreateProviderComponent implements OnInit {
     this.providerForm.valueChanges.subscribe(() => {
       this.warningDetect();
     });
+
+    if (this.infoUpdate && this.typeAction === 'Update') {
+      const data = {
+        name: this.infoUpdate.name,
+        item: this.infoUpdate.items,
+        address: this.infoUpdate.address,
+        contact: this.infoUpdate.contact,
+        note: this.infoUpdate.description,
+      };
+      this.providerForm.patchValue(data);
+    }
   }
 
   getControl(control: string): AbstractControl | null {

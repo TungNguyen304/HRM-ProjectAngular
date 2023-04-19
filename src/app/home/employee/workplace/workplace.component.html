@@ -1,16 +1,5 @@
 <div class="workplace">
   <h2 class="title">{{ "title.JobPositionManagement" | translate }}</h2>
-  <div style="text-align: end">
-    <button
-      pButton
-      type="button"
-      icon="pi pi-plus"
-      [label]="'common.addNew' | translate"
-      class="p-button-danger p-button-raised p-button-sm"
-      iconPos="left"
-      (click)="handleShowOverlayCreateWorkplace()"
-    ></button>
-  </div>
   <div class="table">
     <p-table
       selectionMode="single"
@@ -18,21 +7,59 @@
       responsiveLayout="stack"
       [breakpoint]="'960px'"
     >
+      <ng-template pTemplate="caption">
+        <div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+            class="flex align-items-center justify-content-between"
+          >
+            <div>{{ total }} {{ "common.record" | translate }}</div>
+            <div>
+              <button
+                pButton
+                icon="pi pi-download"
+                class="p-button-sm p-button-warning p-button-raised"
+              ></button>
+              <button
+                style="margin-left: 10px"
+                (click)="handleShowOverlayCreateWorkplace()"
+                pButton
+                icon="pi pi-plus"
+                iconpos="left"
+                [label]="'common.addNew' | translate"
+                class="p-button-sm p-button-warning p-button-raised"
+              ></button>
+            </div>
+          </div>
+          <div class="search_m">
+            <input
+              type="text"
+              pInputText
+              [formControl]="searchInput"
+              [placeholder]="'workplace.searchByCode' | translate"
+            />
+          </div>
+        </div>
+      </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="code">
+          <th pSortableColumn="job_position_code">
             {{ "workplace.code" | translate }}
             <p-sortIcon field="code"></p-sortIcon>
           </th>
-          <th pSortableColumn="name">
+          <th pSortableColumn="job_position_name">
             {{ "workplace.locationName" | translate }}
             <p-sortIcon field="name"></p-sortIcon>
           </th>
-          <th pSortableColumn="unit">
+          <th pSortableColumn="organization.organization_unit_name">
             {{ "workplace.belongingToTheUnit" | translate }}
             <p-sortIcon field="unit"></p-sortIcon>
           </th>
-          <th pSortableColumn="type">
+          <th pSortableColumn="job_position_category">
             {{ "workplace.positionType" | translate }}
             <p-sortIcon field="type"></p-sortIcon>
           </th>
@@ -69,7 +96,7 @@
           </td>
           <td>
             <span class="p-column-title">{{
-              "workplace.positionType" | translate
+              "workplace.position Type" | translate
             }}</span
             >{{ position.job_position_category }}
           </td>
@@ -83,7 +110,7 @@
               "
               style="margin-right: 10px"
               pButton
-              class="p-button-outlined p-button-raised p-button-sm"
+              class="p-button-raised p-button-sm"
               type="button"
               icon="bi bi-people-fill"
               iconPos="left"
@@ -91,7 +118,7 @@
             <button
               (click)="handleShowOverlayUpdate(position)"
               pButton
-              class="p-button-outlined p-button-raised p-button-sm p-button-success"
+              class="p-button-raised p-button-sm p-button-warning"
               type="button"
               icon="bi bi-pencil-square"
               iconPos="left"
@@ -117,7 +144,7 @@
   </div>
 </div>
 
-<p-dialog [header]="'title.create' | translate" [(visible)]="displayCreate">
+<p-dialog [header]="(typeAction === 'Add' ? 'title.create' : 'title.edit') | translate" [(visible)]="displayCreate">
   <ng-template pTemplate="content">
     <app-create-workplace
       [infoUpdate]="infoUpdate"
