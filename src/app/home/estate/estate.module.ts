@@ -19,6 +19,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
+import { PaginatorModule } from 'primeng/paginator';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -76,7 +77,8 @@ const routes: Routes = [
     SplitButtonModule,
     ToastModule,
     TranslateModule,
-    SharedModule
+    SharedModule,
+    PaginatorModule
   ],
 })
 export class EstateModule {}

@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/core/services/common.service';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import { emojiValidator } from 'src/app/core/services/helper/validator.service';
@@ -15,7 +16,9 @@ import {
   maxLengthWarning,
 } from 'src/app/core/services/helper/warningForm.service';
 import { DeviceService } from 'src/app/core/services/http/device.service';
+import { LanguageService } from 'src/app/core/services/state/language.service';
 import { IWarningDeviceSearch } from 'src/app/shared/interfaces';
+import { deviceStatusEn, deviceStatusVi } from './data';
 
 @Component({
   selector: 'app-device',
@@ -24,12 +27,11 @@ import { IWarningDeviceSearch } from 'src/app/shared/interfaces';
   providers: [MessageService],
 })
 export class DeviceComponent {
-  public status = [{ value: 'On' }, { value: 'Off' }];
-  public sex = [{ value: 'Nam' }, { value: 'Nữ' }];
+  public status: any = [];
   public deviceList: any;
   public searchDeviceForm: FormGroup;
   public actions: any;
-  public loadDisplay:boolean = false;
+  public loadDisplay: boolean = false;
   public total: number = 0;
   public limit: number = 5;
   public pageCurrent: number = 1;
@@ -42,7 +44,7 @@ export class DeviceComponent {
     private deviceService: DeviceService,
     private router: Router,
     private fb: FormBuilder,
-    private commonService: CommonService,
+    private languageService: LanguageService,
     private messageService: MessageService
   ) {
     this.actions = [
@@ -70,8 +72,7 @@ export class DeviceComponent {
       {
         label: 'QR',
         icon: 'bi bi-qr-code-scan',
-        command: () => {
-        },
+        command: () => {},
       },
     ];
   }
@@ -80,9 +81,7 @@ export class DeviceComponent {
     this.idDeviceTemp = id;
   }
 
-  onPageChange(event:any):void {
-
-  }
+  onPageChange(event: any): void {}
 
   update() {
     this.messageService.add({
@@ -112,13 +111,9 @@ export class DeviceComponent {
     this.handleSetWarning('employee', 255);
   }
 
-  handleSetWarning(
-    type: keyof IWarningDeviceSearch,
-    length?: number
-  ): void {
+  handleSetWarning(type: keyof IWarningDeviceSearch, length?: number): void {
     emojiWarning(this.searchDeviceForm, this, type);
-    length &&
-      maxLengthWarning(this.searchDeviceForm, this, type, length);
+    length && maxLengthWarning(this.searchDeviceForm, this, type, length);
   }
 
   getControl(control: string): AbstractControl | null {
@@ -129,16 +124,43 @@ export class DeviceComponent {
     console.log(this.searchDeviceForm);
   }
 
+  handleGetDevice(): Observable<Object> {
+    return this.deviceService.getDevice(this.pageCurrent, this.limit);
+  }
+
   ngOnInit() {
-    this.deviceService.getDevice().subscribe((data) => {
-      this.deviceList = data;
-    });
+    this.loadDisplay = true;
+    this.handleGetDevice().subscribe(
+      (data: any) => {
+        if (data.statusCode === 200) {
+          this.deviceList = data.response.data;
+          this.total = data.response.total;
+          this.loadDisplay = false;
+        }
+      },
+      () => {
+        this.loadDisplay = false;
+      }
+    );
 
     this.searchDeviceForm = this.fb.group({
       code: ['', [Validators.maxLength(255), emojiValidator]],
       employee: ['', [Validators.maxLength(255), emojiValidator]],
       type: [''],
       status: [''],
+    });
+
+    this.languageService.language$.subscribe((data) => {
+      switch (data) {
+        case 'en': {
+          this.status = deviceStatusEn;
+          break;
+        }
+        case 'vi': {
+          this.status = deviceStatusVi;
+          break;
+        }
+      }
     });
 
     this.warningDetect();
