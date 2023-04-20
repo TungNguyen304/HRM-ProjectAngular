@@ -23,6 +23,7 @@
     "createDevice": "TẠO MỚI THIẾT BỊ",
     "addSupplier": "THÊM MỚI NHÀ CUNG CẤP",
     "editSupplier": "CHỈNH SỬA NHÀ CUNG CẤP",
+    "edit": "CHỈNH SỬA",
     "detail": "CHI TIẾT",
     "detailEmployee": "CHI TIẾT NHÂN VIÊN",
     "provider": "NHÀ CUNG CẤP",
@@ -130,7 +131,8 @@
   "provider": {
     "supplierName": "Tên NCC",
     "items": "Mặt hàng",
-    "contact": "Liên hệ"
+    "contact": "Liên hệ",
+    "address": "Địa chỉ"
   },
 
   "createProvider": {

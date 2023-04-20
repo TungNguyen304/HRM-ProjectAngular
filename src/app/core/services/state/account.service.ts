@@ -8,7 +8,7 @@ import { IAccount } from 'src/app/shared/interfaces';
 export class AccountService {
   constructor() {}
 
-  public account$ = new Subject<IAccount | null>();
+  public account$ = new BehaviorSubject<IAccount | null>(null);
 
   setAccount(account: any) {
     this.account$.next(account);

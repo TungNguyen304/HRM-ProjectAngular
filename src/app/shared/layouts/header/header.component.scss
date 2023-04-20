@@ -19,9 +19,9 @@ header {
       background-color: #fff;
       border-radius: 50%;
       border: 2px solid var(--primary-color-main);
+      cursor: pointer;
       i {
         font-size: 20px;
-        cursor: pointer;
         color: var(--primary-color-main);
       }
       &:hover {

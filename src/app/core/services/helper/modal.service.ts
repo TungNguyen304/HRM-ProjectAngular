@@ -51,7 +51,7 @@ export class ModalService {
 
   confirmDetele(value:string, acceptFunc:Function) {
     this.confirmationService.confirm({
-      message: `Do you want to delete ${value}`,
+      message: `Do you want to delete <span class="actor_modal">${value}</span>`,
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {

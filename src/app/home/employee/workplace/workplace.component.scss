@@ -6,8 +6,13 @@
   .table {
     margin-top: 20px;
     box-shadow: 0 0 8px 2px #ccc;
+    border-radius: 6px;
     ::ng-deep .wrap_loader {
       width: 100%;
+    }
+
+    ::ng-deep .p-datatable-header {
+      border-radius: 6px 6px 0 0;
     }
   }
 }

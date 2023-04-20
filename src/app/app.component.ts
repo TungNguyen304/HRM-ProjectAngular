@@ -46,13 +46,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('token')) {
-      this.authService.getMyInfo().subscribe(
-        (data: any) => {
-          if (data.statusCode === 200) {
-            this.accountService.setAccount(data.response);
-          }
+      this.authService.getMyInfo().subscribe((data: any) => {
+        if (data.statusCode === 200) {
+          this.accountService.setAccount(data.response);
         }
-      );
+      });
     }
     this.display$ = this.loadingService.loading$;
   }
