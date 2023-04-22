@@ -318,7 +318,7 @@ body.dark .switch::before {
 
 .home {
   position: absolute;
-  padding: 0 30px;
+  padding: 0 20px 0 23px;
   top: 0;
   top: 0;
   left: 250px;
@@ -329,6 +329,7 @@ body.dark .switch::before {
 }
 
 .sidebar.close ~ .home {
+  padding: 0 20px 0 30px;
   left: 78px;
   min-height: 100vh;
   width: calc(100% - 78px);
@@ -339,11 +340,12 @@ body.dark .switch::before {
     display: none;
     &.close ~ .home {
       left: 0;
-      width: 100vw;
+      padding: 0 20px 0 20px !important;
+      width: 100%;
     }
   }
   .home {
-    width: 100vw;
+    width: 100%;
     left: 0;
   }
 }

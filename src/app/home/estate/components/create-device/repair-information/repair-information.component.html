@@ -1,0 +1,103 @@
+<div>
+  <label class="title" for="">Thông tin nâng cấp sửa chữa</label>
+  <div>
+    <div formArrayName="repairInfo">
+      <div
+        class="wrap_repair"
+        *ngFor="let repair of repairListControl; index as item"
+      >
+        <div class="form_repair" [formGroupName]="item">
+          <h3 class="title">{{ "title.infoRepair" | translate }}</h3>
+          <div class="form_item">
+            <label for="">
+              <span>{{ "createDevice.day" | translate }}</span>
+            </label>
+            <p-calendar
+              formControlName="repairDate"
+              [showButtonBar]="true"
+              dateFormat="dd/mm/yy"
+            ></p-calendar>
+            <p
+              *ngIf="
+                getControl('repairDate', item)?.dirty &&
+                getControl('repairDate', item)?.errors
+              "
+              class="warning"
+            >
+              <i class="bi bi-cone-striped"></i>
+              {{ "createDevice.day" | translate }}
+              {{ warning.repairDate?.type | typeError | translate }}
+            </p>
+          </div>
+          <div class="form_item">
+            <label for="content">
+              <span>{{ "createDevice.content" | translate }}</span>
+            </label>
+            <textarea
+              formControlName="content"
+              id="content"
+              pInputTextarea
+            ></textarea>
+            <p
+              *ngIf="
+                getControl('content', item)?.dirty &&
+                getControl('content', item)?.errors
+              "
+              class="warning"
+            >
+              <i class="bi bi-cone-striped"></i>
+              {{ "createDevice.content" | translate }}
+              {{ warning.content?.type | typeError | translate }}
+            </p>
+          </div>
+          <div class="form_item">
+            <label for="money">
+              <span>{{ "createDevice.AmountOfMoney" | translate }}</span>
+            </label>
+            <div class="p-inputgroup">
+              <p-inputNumber
+                formControlName="money"
+                id="money"
+                mode="currency"
+                [currency]="lang.currency"
+                [locale]="lang.locale"
+                [minFractionDigits]="lang.currency === 'USD' ? 0 : 3"
+              ></p-inputNumber>
+              <span class="p-inputgroup-addon">{{
+                "common.money" | translate
+              }}</span>
+              <p
+                *ngIf="
+                  getControl('money', item)?.dirty &&
+                  getControl('money', item)?.errors
+                "
+                class="warning"
+              >
+                <i class="bi bi-cone-striped"></i>
+                {{ "createDevice.AmountOfMoney" | translate }}
+                {{ warning.money?.type | typeError | translate }}
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            (click)="handleDeleteSocial(item)"
+            class="p-button-danger p-button-rounded p-button-sm remove p-button-raised"
+            icon="bi bi-trash3-fill"
+            pButton
+          ></button>
+          <div class="page">{{ item + 1 }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align: end">
+    <button
+      type="button"
+      (click)="handleAddSocial()"
+      pButton
+      icon="bi bi-plus-lg"
+      class="p-button-sm p-button-rounded p-button-raised"
+    ></button>
+  </div>
+</div>

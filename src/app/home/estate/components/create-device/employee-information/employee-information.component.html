@@ -1,0 +1,24 @@
+<div formGroupName="employeeInfo">
+  <h3 class="title">{{ "title.currentUser" | translate }}</h3>
+  <div class="form_item">
+    <label for="email">
+      <span>Email</span>
+    </label>
+    <p-dropdown
+        [placeholder]="'common.select' | translate"
+        formControlName="email"
+        [options]="employeeList"
+        optionLabel="email"
+      ></p-dropdown>
+  </div>
+  <div class="form_item">
+    <label for="name">
+      <span>{{ "createDevice.date" | translate }}</span>
+    </label>
+    <p-calendar
+      formControlName="useDate"
+      [showButtonBar]="true"
+      dateFormat="dd/mm/yy"
+    ></p-calendar>
+  </div>
+</div>

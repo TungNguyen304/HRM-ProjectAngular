@@ -16,8 +16,10 @@
     "JobPositionManagement": "WORK POSITION MANAGEMENT",
     "employeeManager": "EMPLOYEE MANAGER",
     "editStaff": "EDIT STAFF",
+    "detailEmployee": "DETAIL EMPLOYEE",
     "editDevice": "EDIT DEVICES",
     "createDevice": "CREATE NEW DEVICES",
+    "edit": "EDIT",
     "deviceManagement": "DEVICE MANAGEMENT",
     "addSupplier": "ADD NEW PROVIDER",
     "editSupplier": "EDIT PROVIDER",
@@ -33,7 +35,8 @@
     "otherInfo": "Other information",
     "relatedProperty": "Related property",
     "infoRepair": "Information upgrade and repair",
-    "currentUser": "Current user staff"
+    "currentUser": "Current user staff",
+    "socialNetwork": "Social Network"
   },
 
   "createDevice": {
@@ -42,11 +45,13 @@
     "propertyName": "Estate name",
     "purchaseDate": "Purchase date",
     "someBills": "Some bills",
+    "upgradeContent": "Content upgrade/repair",
     "totalAmount": "Total amount",
     "employeeUse": "Employee use",
     "day": "Day",
     "user": "User",
     "date": "Date",
+    "provider": "Provider",
     "content": "Content",
     "AmountOfMoney": "Amount of money",
     "codeOrName": "Estate code / name",
@@ -77,7 +82,11 @@
     "permanentAddress": "Permanent address",
     "jobDate": "Job date",
     "image": "Image",
-    "dateOfHire": "Date of hire"
+    "dateOfHire": "Date of hire",
+    "typeSocial": "Type social network",
+    "link": "Link your account",
+    "addSocial": "Add social network form",
+    "addProcess": "Add working process form"
   },
 
   "unitManagement": {
@@ -86,6 +95,7 @@
   },
 
   "common": {
+    "money": "$",
     "action": "Action",
     "status": "Status",
     "record": "records",
@@ -95,6 +105,7 @@
     "addNew": "Add new",
     "delete": "Delete",
     "cancel": "Cancel",
+    "noData": "No Data",
     "noImage": "NO IMAGE AVAILABLE",
     "save": "Save",
     "update": "Update",
@@ -125,9 +136,10 @@
   "provider": {
     "supplierName": "Supplier Name",
     "items": "Items",
-    "contact": "Contact"
+    "contact": "Contact",
+    "address": "Address"
   },
-  
+
   "createProvider": {
     "note": "Note",
     "conclude": "Conclude",
@@ -141,6 +153,7 @@
     "required": "can't be empty",
     "maxLength": "cannot be longer than {{length}} characters",
     "emoji": "are not allowed to contain emoji",
-    "file": "The size of the file should not be more than {{mb}}mb"
+    "file": "The size of the file should not be more than {{mb}}mb",
+    "email": "invalidate"
   }
 }

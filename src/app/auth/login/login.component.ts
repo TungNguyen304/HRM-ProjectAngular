@@ -6,10 +6,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { catchError, finalize, switchMap, throwError } from 'rxjs';
+import { ToastService } from 'src/app/core/services/helper/toast.service';
 import { AuthService } from 'src/app/core/services/http/auth.service';
 import { AccountService } from 'src/app/core/services/state/account.service';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
+import { toast } from 'src/app/shared/toastMessage';
 
 type errorEmail = 'errorEmail';
 type errorPassword = 'errorPassword';
@@ -23,13 +25,12 @@ const regex = {
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers: [MessageService],
 })
 export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private messageService: MessageService,
+    private toastService: ToastService,
     private router: Router,
     private loadingService: LoadingService,
     private accountService: AccountService
@@ -115,23 +116,18 @@ export class LoginComponent implements OnInit {
           email: this.loginForm.get('email')?.value,
           password: this.loginForm.get('password')?.value,
         })
-        .subscribe(
-          (data: any) => {
-            this.accountService.setAccount(data.response.user);
+        .pipe(
+          switchMap((data: any) => {
             localStorage.setItem('token', data.response.access_token);
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: 'Login success!',
-            });
+            this.toastService.toastSuccess(toast.loginSuccess);
             this.router.navigate(['/']);
-          },
-          (err) => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Fail',
-              detail: 'Email or password is not correct!',
-            });
+            return this.authService.getMyInfo();
+          }),
+          finalize(() => {
+            this.loadingService.setloading(false);
+          }),
+          catchError((err) => {
+            this.toastService.toastError(toast.loginFail);
             this.loginForm.patchValue({
               email: '',
               password: '',
@@ -141,11 +137,14 @@ export class LoginComponent implements OnInit {
                 this.loginForm.get(item)?.markAsPristine();
               }
             });
-          },
-          () => {
-            this.loadingService.setloading(false);
+            return throwError(err);
+          })
+        )
+        .subscribe((data: any) => {
+          if (data.statusCode === 200) {
+            this.accountService.setAccount(data.response);
           }
-        );
+        });
     }
   }
 }

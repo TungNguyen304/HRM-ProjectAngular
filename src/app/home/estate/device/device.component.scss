@@ -47,6 +47,14 @@ form {
   }
 }
 
+.table {
+  box-shadow: 0 0 8px 2px #ccc;
+  border-radius: 6px;
+  ::ng-deep .p-datatable .p-datatable-header {
+    border-radius: 6px 6px 0 0;
+  }
+}
+
 ::ng-deep .p-accordion-header-link {
   flex-direction: row-reverse;
   justify-content: space-between;

@@ -74,3 +74,9 @@
     }
   }
 }
+
+.detail_table {
+  ::ng-deep .p-datatable .p-datatable-tfoot > tr > td {
+    background-color: #fff;
+  }
+}

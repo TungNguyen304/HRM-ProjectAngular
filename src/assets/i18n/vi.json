@@ -23,7 +23,9 @@
     "createDevice": "TẠO MỚI THIẾT BỊ",
     "addSupplier": "THÊM MỚI NHÀ CUNG CẤP",
     "editSupplier": "CHỈNH SỬA NHÀ CUNG CẤP",
+    "edit": "CHỈNH SỬA",
     "detail": "CHI TIẾT",
+    "detailEmployee": "CHI TIẾT NHÂN VIÊN",
     "provider": "NHÀ CUNG CẤP",
     "basicInformation": "Thông tin cơ bản",
     "propertyStatus": "Trạng thái tài sản",
@@ -34,7 +36,8 @@
     "otherInfo": "Thông tin khác",
     "relatedProperty": "Tài sản liên quan",
     "infoRepair": "Thông tin nâng cấp / sửa chữa",
-    "currentUser": "Nhân viện sử dụng hiện tại"
+    "currentUser": "Nhân viện sử dụng hiện tại",
+    "socialNetwork": "Mạng xã hội"
   },
 
   "upload": {
@@ -48,6 +51,7 @@
   },
 
   "common": {
+    "money": "VND",
     "address": "Địa chỉ",
     "record": "bản ghi",
     "search": "Tìm kiếm",
@@ -59,6 +63,7 @@
     "cancel": "Hủy",
     "save": "Lưu",
     "update": "Chỉnh sửa",
+    "noData": "Không có dữ liệu",
     "exportExcel": "Xuất excel",
     "back": "Trở lại",
     "noImage": "KHÔNG CÓ ẢNH",
@@ -99,7 +104,11 @@
     "permanentAddress": "Địa chỉ thường trú",
     "jobDate": "Ngày nhận việc",
     "dateOfHire": "Ngày được thuê",
-    "image": "Ảnh"
+    "image": "Ảnh",
+    "typeSocial": "Loại mạng xã hội",
+    "link": "Địa chỉ tài khoản",
+    "addSocial": "Tạo form mạng xã hội",
+    "addProcess": "Tạo form quá trình công tác"
   },
 
   "createDevice": {
@@ -112,18 +121,21 @@
     "employeeUse": "Nhân viên đã từng sử dụng",
     "day": "Ngày",
     "date": "Ngày sử dụng",
+    "provider": "Nhà cung cấp",
     "content": "Nội dung",
     "AmountOfMoney": "Số tiền",
     "user": "Người sử dụng",
     "codeOrName": "Mã / tên tài sản",
     "staffUsing": "Nhân viên đang sử dụng",
-    "propertyStatus": "Trạng thái tài sản"
+    "propertyStatus": "Trạng thái tài sản",
+    "upgradeContent": "Nội dung nâng cấp/sửa chữa"
   },
 
   "provider": {
     "supplierName": "Tên NCC",
     "items": "Mặt hàng",
-    "contact": "Liên hệ"
+    "contact": "Liên hệ",
+    "address": "Địa chỉ"
   },
 
   "createProvider": {
@@ -139,6 +151,7 @@
     "required": "không được để trống",
     "maxLength": "không được dài quá {{length}} ký tự",
     "emoji": "không được chứa emoji",
-    "file": "Dung lượng của tệp không được quá {{mb}}mb"
+    "file": "Dung lượng của tệp không được quá {{mb}}mb",
+    "email": "không đúng định dạng"
   }
 }

@@ -1,80 +1,143 @@
 <div class="provider">
-  <h2 class="title">{{'title.provider' | translate}}</h2>
-
-  <p-table
-    selectionMode="single"
-    [value]="providerList"
-    [tableStyle]="{ 'min-width': '50rem' }"
-  >
-    <ng-template pTemplate="caption">
-      <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          "
-          class="flex align-items-center justify-content-between"
-        >
-          <div>150 {{ "common.record" | translate }}</div>
-          <div>
-            <button
-              pButton
-              icon="pi pi-download"
-              class="p-button-sm p-button-danger p-button-raised"
-            ></button>
-            <button
-              style="margin-left: 10px"
-              (click)="handleDisplayCreateProvider()"
-              pButton
-              icon="pi pi-plus"
-              iconpos="left"
-              [label]="'common.addNew' | translate"
-              class="p-button-sm p-button-danger p-button-raised"
-            ></button>
+  <h2 class="title">{{ "title.provider" | translate }}</h2>
+  <div class="table">
+    <p-table
+      responsiveLayout="stack"
+      [breakpoint]="'768px'"
+      selectionMode="single"
+      [value]="providerList"
+    >
+      <ng-template pTemplate="caption">
+        <div>
+          <div class="caption_table">
+            <div style="text-align: center">
+              {{ total }} {{ "common.record" | translate }}
+            </div>
+            <div style="display: flex; gap: 10px">
+              <button
+                pButton
+                icon="pi pi-download"
+                class="p-button-sm p-button-warning p-button-raised"
+              ></button>
+              <button
+                (click)="handleDisplayCreateProvider()"
+                pButton
+                icon="pi pi-plus"
+                iconpos="left"
+                [label]="'common.addNew' | translate"
+                class="p-button-sm p-button-warning p-button-raised"
+              ></button>
+            </div>
+          </div>
+          <div class="search_m">
+            <input
+              (input)="handleGetProvider()"
+              type="text"
+              pInputText
+              [formControl]="searchInput"
+              placeholder="Search ..."
+            />
           </div>
         </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-      <tr>
-        <th>{{'provider.supplierName' | translate}}</th>
-        <th>{{'provider.items' | translate}}</th>
-        <th>{{'common.address' | translate}}</th>
-        <th>{{'provider.contact' | translate}}</th>
-        <th>{{'common.action' | translate}}</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-provider>
-      <tr [pSelectableRow]="provider">
-        <td>{{ provider.name }}</td>
-        <td>{{ provider.item }}</td>
-        <td>{{ provider.address }}</td>
-        <td>{{ provider.contact }}</td>
-        <td>
-          <div class="action">
-            <button
-              pButton
-              icon="bi bi-pen"
-              class="p-button-outlined p-button-sm p-button-primary p-button-raised"
-            ></button>
-            <button
-              pButton
-              icon="bi bi-trash"
-              class="p-button-outlined p-button-sm p-button-danger p-button-raised"
-            ></button>
-          </div>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ "provider.supplierName" | translate }}</th>
+          <th>{{ "provider.items" | translate }}</th>
+          <th>{{ "common.address" | translate }}</th>
+          <th>{{ "provider.contact" | translate }}</th>
+          <th style="text-align: end; width: 200px">
+            <input
+              (input)="handleGetProvider()"
+              type="text"
+              pInputText
+              [formControl]="searchInput"
+              [placeholder]="'common.search' | translate"
+            />
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-provider>
+        <tr *ngIf="!loadDisplay" [pSelectableRow]="provider">
+          <td>
+            <span class="p-column-title">{{
+              "provider.supplierName" | translate
+            }}</span
+            ><span style="text-align: end">{{ provider.name }}</span>
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "provider.items" | translate
+            }}</span
+            ><span style="text-align: end">{{ provider.items }}</span>
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "common.address" | translate
+            }}</span
+            ><span style="text-align: end">{{ provider.address }}</span>
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "provider.contact" | translate
+            }}</span
+            ><span style="text-align: end">{{ provider.contact }}</span>
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "common.action" | translate
+            }}</span>
+            <div class="action" style="text-align: end">
+              <button
+                (click)="handleUpdateProvider(provider)"
+                pButton
+                icon="bi bi-pencil-square"
+                class="p-button-sm p-button-raised"
+              ></button>
+              <button
+                (click)="handleDeleteProvider(provider)"
+                pButton
+                icon="bi bi-trash"
+                class="p-button-sm p-button-danger p-button-raised"
+              ></button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <app-load-small *ngIf="loadDisplay"></app-load-small>
+      </ng-template>
+    </p-table>
+    <div class="no_data" *ngIf="!loadDisplay && total === 0">
+      {{ "common.noData" | translate }}
+    </div>
+    <p-paginator
+      *ngIf="total > 0"
+      (onPageChange)="onPageChange($event)"
+      [first]="0"
+      [rows]="limit"
+      [totalRecords]="total"
+      [showFirstLastIcon]="false"
+    ></p-paginator>
+  </div>
 </div>
 
-<p-dialog [style]="{width: '50vw'}" [modal]="true" [(visible)]="displayCreate">
+<p-dialog
+  [style]="{ width: '50vw' }"
+  [modal]="true"
+  [(visible)]="displayCreate"
+>
   <ng-template pTemplate="header">
-    <h3 class="title">{{'title.create' | translate}}</h3>
+    <h3 class="title">
+      {{ (typeAction === "Add" ? "title.create" : "title.edit") | translate }}
+    </h3>
   </ng-template>
 
   <ng-template pTemplate="body">
-    <app-create-provider></app-create-provider>
+    <app-create-provider
+      [typeAction]="typeAction"
+      [infoUpdate]="infoUpdate"
+      (showMessage)="showMessage($event)"
+    ></app-create-provider>
   </ng-template>
 </p-dialog>
-

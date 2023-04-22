@@ -1,7 +1,7 @@
 <header>
   <div class="follow">
-    <span class="menu">
-      <i (click)="display()" class="bi bi-list"></i>
+    <span class="menu" (click)="display()">
+      <i class="bi bi-list"></i>
     </span>
     <div class="breadcrumb">
       <div class="card flex justify-content-center">
@@ -23,19 +23,18 @@
           </span>
         </div>
       </li>
-      <li><i class="bi bi-bell"></i></li>
     </ul>
     <div class="personal">
+      <span class="email">{{ account?.email }}</span>
       <div class="avt">
         <img
           [src]="
-            account?.image_url || '../../../../assets/images/avt-default.png'
+            account?.image_url ||
+            '../../../../assets/images/avatar-icon-png.jpg'
           "
           alt=""
         />
       </div>
-      <span>{{ account?.email }}</span>
-      <i class="bi bi-chevron-down"></i>
     </div>
   </div>
 </header>

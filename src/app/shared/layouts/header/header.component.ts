@@ -5,12 +5,8 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-  RouterEvent,
-} from '@angular/router';
+import { NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
 import { AccountService } from 'src/app/core/services/state/account.service';
@@ -28,6 +24,7 @@ export class HeaderComponent {
     private translate: TranslateService,
     private languageService: LanguageService,
     private router: Router,
+    private activateRoute: ActivatedRoute,
     private accountService: AccountService
   ) {}
   public items: MenuItem[];
@@ -74,20 +71,27 @@ export class HeaderComponent {
 
   ngOnInit() {
     this.items = [];
-    this.handleBreadCrumb(this.router.url);
+    this.handleBreadCrumb(this.handleRemoveIdFromPath(this.router.url));
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
-        this.handleBreadCrumb(val.url);
+        this.handleBreadCrumb(this.handleRemoveIdFromPath(val.url));
       }
     });
     this.languageService.language$.subscribe((data) => {
       this.language = data;
-      this.handleBreadCrumb(this.router.url);
+      this.handleBreadCrumb(this.handleRemoveIdFromPath(this.router.url));
     });
     this.home = { icon: 'bi bi-house-fill', routerLink: '/team-member' };
     this.accountService.account$.subscribe((data: any) => {
       this.account = data;
     });
+  }
+  handleRemoveIdFromPath(path: string): string {
+    const listUrl = path.split('/');
+    if (path.includes('detail-employee') || path.includes('detail-device')) {
+      listUrl.pop();
+    }
+    return listUrl.join('/');
   }
 
   translateBreadcrumb(val: string): string {

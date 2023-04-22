@@ -41,37 +41,36 @@
   box-shadow: 0 0 8px 2px #ccc;
   display: flex;
   margin: 0 -10px;
+  flex-direction: column;
   .main_form {
     flex: 1;
-    margin: 0 10px;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 8px 2px #ccc;
   }
   .sub_form {
-    margin: 0 10px;
+    margin: 20px 0 0;
     flex: 1;
     display: flex;
-    flex-direction: column;
-    .upgrade_info {
-      margin-bottom: 20px;
-    }
-    .upgrade_info, .current_employee {
+    justify-content: flex-start;
+    .upgrade_info,
+    .current_employee {
       flex: 1;
-        padding: 20px;
-        box-shadow: 0 0 8px 2px #ccc;
-        border-radius: 5px;
-        .title {
-            margin-bottom: 30px;
-        }
+      margin: 0 10px;
+      padding: 20px 20px 40px;
+      box-shadow: 0 0 8px 2px #ccc;
+      border-radius: 5px;
+      .title {
+        margin-bottom: 30px;
+      }
+    }
+    .current_employee {
+      align-self: flex-start;
     }
   }
-  
 }
 
 form {
-  .form_item {
+  :host .form_item {
     display: flex;
+    position: relative;
     margin-bottom: 30px;
     flex-direction: column;
     label {
@@ -88,6 +87,19 @@ form {
         pointer-events: none;
       }
     }
+    p {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: calc(100% + 10px);
+      font-style: italic;
+      font-size: 12px;
+      right: 0;
+      color: red;
+      i {
+        margin-right: 5px;
+      }
+    }
     .avt {
       width: 200px;
       height: 200px;
@@ -96,19 +108,21 @@ form {
       display: flex;
       justify-content: center;
       align-items: center;
+      border-radius: 10px;
+      overflow: hidden;
       img {
         width: 15%;
         height: 15%;
+        object-fit: cover;
         &.image {
           height: 100%;
           width: 100%;
         }
       }
     }
-    .option_account {
-      span {
-        margin-right: 20px;
-      }
+
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 }
@@ -121,7 +135,7 @@ form {
 h3.title {
   font-size: 20px;
   font-family: "Times New Roman", Times, serif;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   text-align: center;
 }
 
