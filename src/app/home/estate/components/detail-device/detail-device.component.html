@@ -1,9 +1,7 @@
 <div class="detail_employee">
   <div class="header">
     <h2 class="title">CHI TIẾT THIẾT BỊ</h2>
-    <span (click)="handleBack()"
-      ><i class="bi bi-arrow-left-short"></i></span
-    >
+    <span (click)="handleBack()"><i class="bi bi-arrow-left-short"></i></span>
   </div>
   <div class="detail_info">
     <div class="export">
@@ -16,17 +14,36 @@
     </div>
 
     <div class="detail_table">
-      <p-table
-        [value]="deviceList"
-        styleClass="p-datatable-gridlines"
-        [tableStyle]="{ 'min-width': '50rem' }"
-      >
+      <p-table [value]="deviceList" styleClass="p-datatable-gridlines">
         <ng-template pTemplate="header"></ng-template>
         <ng-template pTemplate="body" let-info>
           <tr>
             <td style="text-align: start; font-weight: 500">{{ info.name }}</td>
             <td style="width: 80%; text-align: start">
               {{ info.value }}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <tr>
+            <td>{{ "createDevice.upgradeContent" | translate }}</td>
+            <td>
+              <p-table [value]="repairInfoList">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>{{ "createDevice.content" | translate }}</th>
+                    <th>{{ "createDevice.day" | translate }}</th>
+                    <th>{{ "createDevice.AmountOfMoney" | translate }}</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-repair>
+                  <tr>
+                    <td>{{ repair.content_updated }}</td>
+                    <td>{{ repair.date_updated }}</td>
+                    <td>{{ repair.total_amount }}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
             </td>
           </tr>
         </ng-template>

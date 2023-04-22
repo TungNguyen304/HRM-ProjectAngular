@@ -1,22 +1,32 @@
 .auth {
-    background-color: #eff3f4;
-    height: 100vh;
-    header {
-        background-color: var(--primary-color-main);
-        color: #fff;
-        height: var(--height-header);
-        .logo {
-            margin: 0 auto;
-            display: flex;
-            height: 100%;
-            font-family: "Climate Crisis", cursive;
-            font-size: 24px;
-            justify-content: center;
-            align-items: center;
-            img {
-                margin-right: 10px;
-                width: 50px;
-            }
-        }
+  background-color: #eff3f4;
+  height: 100vh;
+  header {
+    background-color: var(--primary-color-main);
+    color: #fff;
+    height: var(--height-header);
+    .logo {
+      margin: 0 auto;
+      display: flex;
+      height: 100%;
+      font-family: "Climate Crisis", cursive;
+      font-size: 24px;
+      justify-content: center;
+      align-items: center;
+      img {
+        margin-right: 10px;
+        width: 50px;
+        border-radius: 50%;
+      }
     }
+  }
+}
+
+@media (max-width: 340px) {
+  .auth header .logo {
+    font-size: 20px;
+    img {
+      width: 40px;
+    }
+  }
 }

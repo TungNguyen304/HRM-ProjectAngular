@@ -4,8 +4,35 @@
   }
 }
 
+.table {
+  border-radius: 5px;
+  box-shadow: 0 0 8px 2px #ccc;
+  ::ng-deep .p-datatable {
+    border-radius: 5px;
+    .p-datatable-header {
+      border-radius: 5px 5px 0 0;
+    }
+    .p-inputtext {
+      max-width: 200px;
+    }
+  }
+}
+
+.search_m {
+  ::ng-deep .p-inputtext {
+    max-width: unset !important;
+  }
+}
+
 .action {
   button {
     margin: 0 5px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .search_m {
+    display: block;
+    margin-top: 10px;
   }
 }

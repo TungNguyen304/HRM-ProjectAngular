@@ -1,0 +1,77 @@
+.form_item_small {
+  gap: 20px;
+  position: relative;
+  input,
+  .drop_down {
+    width: 100%;
+  }
+}
+
+.border {
+  padding: 20px 0px;
+}
+
+.social_network_wrap {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  .social_network {
+    box-shadow: 0 0 8px 2px #ccc;
+    padding: 20px 30px 40px;
+    border-radius: 5px;
+    position: relative;
+    .remove {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  }
+  .social_network_list {
+    gap: 20px;
+    .social_network_form {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      flex: 1;
+      ::ng-deep .p-overlay {
+        width: 100%;
+      }
+      ::ng-deep .p-dropdown-label {
+        width: 100%;
+      }
+      ::ng-deep .p-dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        span {
+          i {
+            &::before {
+              color: var(--primary-color-main);
+              border-radius: 50%;
+              font-size: 20px;
+              // box-shadow: 0 0 4px 1px #7b7575;
+            }
+          }
+        }
+      }
+    }
+    display: flex;
+    align-items: center;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color-main);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ccc;
+  border-radius: 5px;
+}

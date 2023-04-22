@@ -1,0 +1,38 @@
+.working_process_label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 20px;
+  span {
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bold;
+    font-size: 16px;
+  }
+}
+
+.working_process_item {
+  position: relative;
+  margin: 10px 0;
+  position: relative;
+  .remove {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color-main);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ccc;
+  border-radius: 5px;
+}

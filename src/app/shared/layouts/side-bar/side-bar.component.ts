@@ -1,7 +1,13 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-
+type typeScreen = 'small' | 'medium' | 'large';
 @Component({
   selector: 'app-side-bar',
   templateUrl: './side-bar.component.html',
@@ -10,21 +16,62 @@ import { TranslateService } from '@ngx-translate/core';
 export class SideBarComponent {
   public checked: boolean = false;
   @ViewChild('sidebar') sidebar: ElementRef;
-  constructor(private translate: TranslateService, private router: Router) {}
+  @ViewChild('layer') layer: ElementRef;
+  @ViewChildren('link') link: QueryList<any>;
+  public typeScreen: typeScreen = 'large';
+  constructor(private router: Router, private cdr: ChangeDetectorRef) {}
   displaySidebar(): void {
-    this.sidebar.nativeElement.classList.toggle('close');
+    this.handleDisplay();
+  }
+
+  handleDisplay(): void {
+    if (this.typeScreen === 'small') {
+      (this.sidebar?.nativeElement as HTMLDivElement).style.left = '0%';
+      (this.layer?.nativeElement as HTMLDivElement).style.opacity = '1';
+      (this.layer?.nativeElement as HTMLDivElement).style.zIndex = '50';
+    } else {
+      this.sidebar?.nativeElement.classList.toggle('close');
+    }
+  }
+
+  hidenSidebar(): void {
+    (this.sidebar?.nativeElement as HTMLDivElement).style.left = '-100%';
+    (this.layer?.nativeElement as HTMLDivElement).style.opacity = '0';
+    (this.layer?.nativeElement as HTMLDivElement).style.zIndex = '-1';
+  }
+
+  sidebarMobile(): void {
+    this.typeScreen = 'small';
+    this.sidebar?.nativeElement.classList.remove('close');
+    (this.sidebar?.nativeElement as HTMLDivElement).style.left = '-100%';
+    (this.layer?.nativeElement as HTMLDivElement).style.opacity = '0';
+    (this.layer?.nativeElement as HTMLDivElement).style.zIndex = '-1';
+    this.cdr.detectChanges();
   }
 
   handleResponsiveSidebar(): void {
+    if (window.innerWidth <= 768) {
+      this.sidebarMobile();
+    }
     window.onresize = (e) => {
-      if (window.innerWidth <= 1024) {
-        this.sidebar.nativeElement.classList.add('close');
+      if (window.innerWidth <= 1024 && window.innerWidth > 768) {
+        this.typeScreen = 'medium';
+        this.sidebar?.nativeElement.classList.add('close');
+        (this.sidebar?.nativeElement as HTMLDivElement).style.left = '0%';
+        (this.layer?.nativeElement as HTMLDivElement).style.opacity = '0';
+        (this.layer?.nativeElement as HTMLDivElement).style.zIndex = '-1';
+        this.displaySidebar = () => {
+          this.handleDisplay();
+        };
+        this.cdr.detectChanges();
+      }
+      if (window.innerWidth <= 768) {
+        this.sidebarMobile();
       }
     };
   }
 
   ngOnInit() {
-    this.handleResponsiveSidebar();
     const body = document.querySelector('body'),
       sidebar = body?.querySelector('nav'),
       toggle = body?.querySelector('.toggle'),
@@ -35,6 +82,7 @@ export class SideBarComponent {
     toggle?.addEventListener('click', () => {
       sidebar?.classList.toggle('close');
     });
+
     searchBtn?.addEventListener('click', () => {
       sidebar?.classList.remove('close');
     });
@@ -49,6 +97,17 @@ export class SideBarComponent {
         (circle as HTMLSpanElement).style.right = 'unset';
         (modeText as HTMLSpanElement).innerText = 'Dark mode';
       }
+    });
+  }
+
+  ngAfterViewInit() {
+    this.handleResponsiveSidebar();
+    this.link.forEach((item) => {
+      item.nativeElement.onclick = () => {
+        if (this.typeScreen === 'small') {
+          this.hidenSidebar();
+        }
+      };
     });
   }
 

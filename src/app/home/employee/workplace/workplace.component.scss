@@ -6,8 +6,13 @@
   .table {
     margin-top: 20px;
     box-shadow: 0 0 8px 2px #ccc;
+    border-radius: 6px;
     ::ng-deep .wrap_loader {
       width: 100%;
+    }
+
+    ::ng-deep .p-datatable-header {
+      border-radius: 6px 6px 0 0;
     }
   }
 }
@@ -15,7 +20,7 @@
 ::ng-deep .p-dialog-mask {
   background-color: rgba($color: #000000, $alpha: 0.4);
   .p-dialog {
-    width: 60%;
+    min-width: 60%;
     height: auto;
     max-height: 90%;
     .p-dialog-header {
@@ -35,5 +40,12 @@
       overflow-y: auto;
       overflow-x: hidden;
     }
+  }
+}
+
+@media (max-width: 1024px) {
+  .search_m {
+    display: block;
+    margin-top: 10px;
   }
 }

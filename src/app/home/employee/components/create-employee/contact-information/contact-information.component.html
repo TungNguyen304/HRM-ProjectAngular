@@ -1,49 +1,154 @@
 <div formGroupName="contactInfo" class="contact_information">
-    <h3 class="title">{{ 'title.contactInfo' | translate }}</h3>
-    <div>
-      <div class="form_item">
-        <label for="email">
-          <span>Email</span>
-          <span style="color: red;">*</span>
+  <h3 class="title">{{ "title.contactInfo" | translate }}</h3>
+  <div>
+    <div class="form_item">
+      <label for="email">
+        <span>Email</span>
+        <span style="color: red">*</span>
+      </label>
+      <input formControlName="email" type="text" id="email" pInputText />
+      <p
+        *ngIf="getControl('email')?.dirty && getControl('email')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        Email {{ warning.email?.type | typeError | translate : warning.email }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="phone">
+        <span>{{ "createEmployee.phone" | translate }}</span>
+        <span style="color: red">*</span>
+      </label>
+      <p-inputMask mask="9999-999-999" formControlName="phone" placeholder="0000-000-000"></p-inputMask>
+      <p
+        *ngIf="getControl('phone')?.dirty && getControl('phone')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ "createEmployee.phone" | translate }}
+        {{ warning.phone?.type | typeError | translate : warning.phone }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="skype">
+        <span>SkypeID</span>
+      </label>
+      <input formControlName="skypeId" type="text" id="skype" pInputText />
+      <p
+        *ngIf="getControl('skypeId')?.dirty && getControl('skypeId')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        SkypeID
+        {{ warning.skypeId?.type | typeError | translate : warning.skypeId }}
+      </p>
+    </div>
+    <div class="form_item">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 5px;
+        "
+      >
+        <label style="margin-bottom: 0" for="social">
+          <div>
+            <span>{{ "createEmployee.addSocial" | translate }}</span>
+          </div>
         </label>
-        <input formControlName="email" type="text" id="email" pInputText />
-        <p
-          *ngIf="getControl('email')?.dirty && getControl('email')?.errors"
-          class="warning"
-        >
-          <i class="bi bi-cone-striped"></i>
-          Email {{warning.email?.type | typeError | translate:warning.email}}
-        </p>
       </div>
-      <div class="form_item">
-        <label for="phone">
-          <span>{{ 'createEmployee.phone' | translate }}</span>
-          <span style="color: red;">*</span>
-        </label>
-        <input formControlName="phone" type="text" id="phone" pInputText />
-        <p
-          *ngIf="getControl('phone')?.dirty && getControl('phone')?.errors"
-          class="warning"
+      <div
+        class="social_network_wrap"
+        [ngClass]="{ border: socialControlList.length > 0 }"
+      >
+        <div
+          formArrayName="socials"
+          *ngFor="let social of socialControlList; index as item"
+          class="social_network"
         >
-          <i class="bi bi-cone-striped"></i>
-          {{ 'createEmployee.phone' | translate }} {{warning.phone?.type | typeError | translate:warning.phone}}
-        </p>
+          <h3 class="title">{{ "title.socialNetwork" | translate }}</h3>
+          <button
+            (click)="handleDeleteSocial(item)"
+            type="button"
+            pButton
+            icon="bi bi-trash"
+            class="p-button-danger p-button-sm p-button-raised p-button-rounded remove"
+          ></button>
+          <div class="social_network_list">
+            <div [formGroupName]="item" class="social_network_form">
+              <div class="form_item_small">
+                <label for="phone">
+                  <span>{{ "createEmployee.typeSocial" | translate }}</span>
+                  <span style="color: red">*</span>
+                </label>
+                <div class="drop_down">
+                  <p-dropdown
+                    formControlName="name"
+                    [placeholder]="'common.select' | translate"
+                    [options]="socialNetworks"
+                    optionLabel="value"
+                  >
+                    <ng-template let-item pTemplate="item">
+                      <span><i [class]="item.label"></i></span>
+                      <span>{{ item.value }}</span>
+                    </ng-template>
+                  </p-dropdown>
+                  <p
+                    *ngIf="
+                      getSocialControl('name', item)?.dirty &&
+                      getSocialControl('name', item)?.errors
+                    "
+                    class="warning"
+                  >
+                    <i class="bi bi-cone-striped"></i>
+                    {{ "createEmployee.typeSocial" | translate }}
+                    {{
+                      warning.name?.type | typeError | translate : warning.name
+                    }}
+                  </p>
+                </div>
+              </div>
+              <div class="form_item_small">
+                <label for="link">
+                  <span>{{ "createEmployee.link" | translate }}</span>
+                  <span style="color: red">*</span>
+                </label>
+                <input
+                  formControlName="value"
+                  type="text"
+                  id="link"
+                  pInputText
+                />
+                <p
+                  *ngIf="
+                    getSocialControl('value', item)?.dirty &&
+                    getSocialControl('value', item)?.errors
+                  "
+                  class="warning"
+                >
+                  <i class="bi bi-cone-striped"></i>
+                  {{ "createEmployee.link" | translate }}
+                  {{
+                    warning.value?.type | typeError | translate : warning.value
+                  }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="page">{{ item + 1 }}</div>
+        </div>
       </div>
-      <div class="form_item">
-        <label for="skype">
-          <span>SkypeID</span>
-          <span style="color: red;">*</span>
-        </label>
-        <input formControlName="skypeId" type="text" id="skype" pInputText />
-        <p
-          *ngIf="
-            getControl('skypeId')?.dirty && getControl('skypeId')?.errors
-          "
-          class="warning"
-        >
-          <i class="bi bi-cone-striped"></i>
-          SkypeID {{warning.skypeId?.type | typeError | translate:warning.skypeId}}
-        </p>
+      <div style="text-align: end;">
+        <button
+          style="margin-right: 10px"
+          (click)="handleAddSocial()"
+          type="button"
+          pButton
+          icon="bi bi-plus-lg"
+          class="p-button-sm p-button-rounded p-button-raised"
+        ></button>
       </div>
     </div>
   </div>
+</div>

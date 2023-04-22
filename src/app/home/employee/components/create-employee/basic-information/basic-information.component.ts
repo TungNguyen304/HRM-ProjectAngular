@@ -13,7 +13,6 @@ import {
   FormGroup,
   FormGroupDirective,
 } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { FileUpload } from 'primeng/fileupload';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import {
@@ -21,8 +20,11 @@ import {
   maxLengthWarning,
   requireWarning,
 } from 'src/app/core/services/helper/warningForm.service';
-import { IData, IHandle } from 'src/app/shared/directives/drag-drop-avt.directive';
-import { IWarningBasicInfo } from 'src/app/shared/interfaces';
+import {
+  IData,
+  IHandle,
+} from 'src/app/shared/directives/drag-drop-avt.directive';
+import { ISex, IWarningBasicInfo } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-basic-information',
@@ -33,8 +35,8 @@ import { IWarningBasicInfo } from 'src/app/shared/interfaces';
   ],
 })
 export class BasicInformationComponent implements OnInit {
-  public sex = [{ value: 'Male' }, { value: 'FeMale' }];
-  public url: any = '';
+  public sex: ISex[];
+  public url: string = '';
   public avtSize: number = 0.1;
   public warning: IWarningBasicInfo = {
     code: null,
@@ -48,25 +50,22 @@ export class BasicInformationComponent implements OnInit {
     avt: null,
   };
 
-  public dataForDirective:IData = {
-    url: this.url,
-    size: this.avtSize,
-  };
+  public dataForDirective: IData;
 
-  public handleInDirective:IHandle;
+  public handleInDirective: IHandle;
 
   @ViewChild('avt') drag: ElementRef;
-  @ViewChild('file', {static: true}) file: FileUpload;
+  @ViewChild('file', { static: true }) file: FileUpload;
   @Input() employeeForm: FormGroup;
-  @Output() showAlert = new EventEmitter<any>();
-
-  constructor(private sanitizer: DomSanitizer) {}
+  @Input() urlUpdate: string;
+  constructor() {}
 
   ngOnInit() {
+    this.sex = [{ value: 'Male' }, { value: 'FeMale' }];
     this.handleInDirective = {
       form: this.employeeForm,
       controls: ['basicInfo', 'avt'],
-      inputFileElement: this.file
+      inputFileElement: this.file,
     };
     this.warningDetect();
     getControlCommon(this.employeeForm, 'basicInfo')?.valueChanges.subscribe(
@@ -76,8 +75,12 @@ export class BasicInformationComponent implements OnInit {
     );
   }
 
-  showAlertFromBasicInfo(alert: any) {
-    this.showAlert.emit(alert);
+  ngOnChanges() {
+    if (this.urlUpdate) this.url = this.urlUpdate;
+    this.dataForDirective = {
+      url: this.url,
+      size: this.avtSize,
+    };
   }
 
   handleSetUrl(url: any) {

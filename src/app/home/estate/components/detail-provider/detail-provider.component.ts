@@ -23,7 +23,7 @@ const labelProvider = [
 })
 export class DetailProviderComponent {
   public infoProvider: any;
-  @Input() idProvider: number;
+  @Input() idProvider: string;
   constructor(
     private location: Location,
     private commonService: CommonService,

@@ -54,12 +54,11 @@
     <div class="form_item">
       <label for="birthday">
         <span>{{ "createEmployee.birthday" | translate }}</span>
-        <span style="color: red">*</span>
       </label>
       <p-calendar
         formControlName="birthDay"
         [showButtonBar]="true"
-        dateFormat="dd.mm.yy"
+        dateFormat="dd/mm/yy"
       ></p-calendar>
       <p
         *ngIf="getControl('birthDay')?.dirty && getControl('birthDay')?.errors"
@@ -112,7 +111,7 @@
       <p-calendar
         formControlName="joinDate"
         [showButtonBar]="true"
-        dateFormat="dd.mm.yy"
+        dateFormat="dd/mm/yy"
       ></p-calendar>
       <p
         *ngIf="getControl('joinDate')?.dirty && getControl('joinDate')?.errors"
@@ -130,7 +129,7 @@
       <p-calendar
         formControlName="hireDate"
         [showButtonBar]="true"
-        dateFormat="dd.mm.yy"
+        dateFormat="dd/mm/yy"
       ></p-calendar>
       <p
         *ngIf="getControl('hireDate')?.dirty && getControl('hireDate')?.errors"
@@ -150,7 +149,6 @@
         class="avt"
         [appDragDropAvt]="dataForDirective"
         [handleInDirective]="handleInDirective"
-        (showAlert)="showAlertFromBasicInfo($event)"
         (handleSetUrl)="handleSetUrl($event)"
         (click)="handleClickInputFile()"
       >

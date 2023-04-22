@@ -1,6 +1,5 @@
 <div class="device">
   <h2 class="title">{{ "title.deviceManagement" | translate }}</h2>
-  <p-toast></p-toast>
   <div class="search_form">
     <p-accordion>
       <p-accordionTab>
@@ -11,21 +10,34 @@
           </div>
         </ng-template>
         <div class="form_search">
-          <form [formGroup]="searchDeviceForm" (ngSubmit)="onSubmit()" action="">
+          <form
+            [formGroup]="searchDeviceForm"
+            (ngSubmit)="onSubmit()"
+            action=""
+          >
             <div class="form_list">
               <div class="form_item">
                 <label for="code">{{
                   "createDevice.codeOrName" | translate
                 }}</label>
-                <input formControlName="code" type="text" id="code" pInputText />
+                <input
+                  formControlName="code"
+                  type="text"
+                  id="code"
+                  pInputText
+                />
                 <p
-                  *ngIf="getControl('code')?.dirty && getControl('code')?.errors"
+                  *ngIf="
+                    getControl('code')?.dirty && getControl('code')?.errors
+                  "
                   class="warning"
                 >
                   <i class="bi bi-cone-striped"></i>
                   {{ "createDevice.propertyCode" | translate }} /
                   {{ "createDevice.propertyName" | translate }}
-                  {{ warning.code?.type | typeError | translate : warning.code }}
+                  {{
+                    warning.code?.type | typeError | translate : warning.code
+                  }}
                 </p>
               </div>
               <div class="form_item">
@@ -59,8 +71,8 @@
                 <p-dropdown
                   formControlName="type"
                   id="type"
-                  [options]="status"
-                  optionLabel="value"
+                  [options]="typeDevice"
+                  optionLabel="asset_type_name"
                   [placeholder]="'common.select' | translate"
                 ></p-dropdown>
               </div>
@@ -72,12 +84,12 @@
                   formControlName="status"
                   id="status"
                   [placeholder]="'common.select' | translate"
-                  [options]="sex"
+                  [options]="status"
                   optionLabel="value"
                 ></p-dropdown>
               </div>
             </div>
-  
+
             <div class="action">
               <button
                 type="button"
@@ -97,72 +109,123 @@
       </p-accordionTab>
     </p-accordion>
   </div>
-  <p-table
-    selectionMode="single"
-    [value]="deviceList"
-    [tableStyle]="{ 'min-width': '50rem' }"
-  >
-    <ng-template pTemplate="caption">
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        "
-        class="flex align-items-center justify-content-between"
-      >
-        <div>150 {{ "common.record" | translate }}</div>
-        <div style="display: flex; gap: 10px;">
-          <button
-            pButton
-            icon="pi pi-download"
-            class="p-button-sm p-button-danger p-button-raised"
-          ></button>
-          <button
-            pButton
-            icon="bi bi-qr-code-scan"
-            class="p-button-sm p-button-danger p-button-raised"
-          ></button>
-          <button
-            (click)="handleDisplayCreateDevice()"
-            pButton
-            icon="pi pi-plus"
-            iconpos="left"
-            [label]="'common.addNew' | translate"
-            class="p-button-sm p-button-danger p-button-raised"
-          ></button>
-        </div>
-      </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-      <tr>
-        <th>{{ "createDevice.propertyCode" | translate }}</th>
-        <th>{{ "createDevice.type" | translate }}</th>
-        <th>{{ "createDevice.propertyName" | translate }}</th>
-        <th>{{ "sidebar.provider" | translate }}</th>
-        <th>{{ "createDevice.user" | translate }}</th>
-        <th>{{ "common.status" | translate }}</th>
-        <th>{{ "common.action" | translate }}</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-device>
-      <tr [pSelectableRow]="device">
-        <td>{{ device.codeDevice }}</td>
-        <td>{{ device.type }}</td>
-        <td>{{ device.nameDevice }}</td>
-        <td>{{ device.provider }}</td>
-        <td>{{ device.name }}</td>
-        <td>{{ device.state }}</td>
-        <td>
-          <div>
-            <p-splitButton
-              (onDropdownClick)="handleActionsClick(device.id)"
-              styleClass="p-button-sm mr-2 mb-2 p-button-outlined"
-              [model]="actions"
-            ></p-splitButton>
+  <div class="table">
+    <p-table
+      responsiveLayout="stack"
+      [breakpoint]="'1200px'"
+      selectionMode="single"
+      [value]="deviceList"
+    >
+      <ng-template pTemplate="caption">
+        <div
+          class="caption_table"
+        >
+          <div style="text-align: center">
+            {{ total }} {{ "common.record" | translate }}
           </div>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+          <div style="display: flex; gap: 10px">
+            <button
+              pButton
+              icon="pi pi-download"
+              class="p-button-sm p-button-warning p-button-raised"
+            ></button>
+            <button
+              pButton
+              icon="bi bi-qr-code-scan"
+              class="p-button-sm p-button-warning p-button-raised"
+            ></button>
+            <button
+              (click)="handleDisplayCreateDevice()"
+              pButton
+              icon="pi pi-plus"
+              iconpos="left"
+              [label]="'common.addNew' | translate"
+              class="p-button-sm p-button-warning p-button-raised"
+            ></button>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ "createDevice.propertyCode" | translate }}</th>
+          <th>{{ "createDevice.type" | translate }}</th>
+          <th>{{ "createDevice.propertyName" | translate }}</th>
+          <th>{{ "sidebar.provider" | translate }}</th>
+          <th>{{ "createDevice.user" | translate }}</th>
+          <th>{{ "common.status" | translate }}</th>
+          <th>{{ "common.action" | translate }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-device>
+        <tr *ngIf="!loadDisplay" [pSelectableRow]="device">
+          <td>
+            <span class="p-column-title">{{
+              "createDevice.propertyCode" | translate
+            }}</span
+            ><span style="text-align: end">{{ device.asset_code }}</span>
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "createDevice.type" | translate
+            }}</span
+            ><span style="text-align: end">{{
+              device.asset_type_collection.asset_type_name
+            }}</span>
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "createDevice.propertyName" | translate
+            }}</span
+            ><span style="text-align: end">{{ device.asset_name }}</span>
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "sidebar.provider" | translate
+            }}</span
+            ><span style="text-align: end">{{ device.distributor_id }}</span>
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "createDevice.user" | translate
+            }}</span
+            ><span style="text-align: end">{{
+              device.user_using_collection?.email
+            }}</span>
+          </td>
+          <td>
+            <span class="p-column-title">{{ "common.status" | translate }}</span
+            ><span style="text-align: end">{{
+              handleGetStatusFormId(device.status)
+            }}</span>
+          </td>
+          <td>
+            <span class="p-column-title">{{
+              "common.action" | translate
+            }}</span>
+            <div style="text-align: end;">
+              <p-splitButton
+                (onDropdownClick)="handleActionsClick(device)"
+                styleClass="p-button-sm mr-2 mb-2"
+                [model]="actions"
+              ></p-splitButton>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <app-load-small *ngIf="loadDisplay"></app-load-small>
+      </ng-template>
+    </p-table>
+    <div class="no_data" *ngIf="!loadDisplay && total === 0">
+      {{ "common.noData" | translate }}
+    </div>
+    <p-paginator
+      *ngIf="total > 0"
+      (onPageChange)="onPageChange($event)"
+      [first]="0"
+      [rows]="limit"
+      [totalRecords]="total"
+      [showFirstLastIcon]="false"
+    ></p-paginator>
+  </div>
 </div>
