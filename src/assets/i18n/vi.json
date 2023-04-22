@@ -51,6 +51,7 @@
   },
 
   "common": {
+    "money": "VND",
     "address": "Địa chỉ",
     "record": "bản ghi",
     "search": "Tìm kiếm",
@@ -120,12 +121,14 @@
     "employeeUse": "Nhân viên đã từng sử dụng",
     "day": "Ngày",
     "date": "Ngày sử dụng",
+    "provider": "Nhà cung cấp",
     "content": "Nội dung",
     "AmountOfMoney": "Số tiền",
     "user": "Người sử dụng",
     "codeOrName": "Mã / tên tài sản",
     "staffUsing": "Nhân viên đang sử dụng",
-    "propertyStatus": "Trạng thái tài sản"
+    "propertyStatus": "Trạng thái tài sản",
+    "upgradeContent": "Nội dung nâng cấp/sửa chữa"
   },
 
   "provider": {

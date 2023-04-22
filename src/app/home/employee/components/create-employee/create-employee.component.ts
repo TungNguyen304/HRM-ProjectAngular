@@ -8,7 +8,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonService } from 'src/app/core/services/common.service';
-import { emailValidator, emojiValidator } from 'src/app/core/services/helper/validator.service';
+import {
+  emailValidator,
+  emojiValidator,
+} from 'src/app/core/services/helper/validator.service';
 import { EmployeeService } from 'src/app/core/services/http/employee.service';
 import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
@@ -19,11 +22,9 @@ import { Observable, finalize, switchMap } from 'rxjs';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import { socialNetworks, socials } from './contact-information/data';
 import { workingFormStruct } from './working-process/data';
-import { ESex } from 'src/app/shared/interfaces';
+import { ESex, typeAction } from 'src/app/shared/interfaces';
 import { DateService } from 'src/app/core/services/helper/date.service';
 import { regexEmail } from 'src/app/shared/regex';
-
-type typeAction = 'update' | 'add';
 
 @Component({
   selector: 'app-create-employee',
@@ -377,9 +378,7 @@ export class CreateEmployeeComponent {
         )
         .subscribe((data: any) => {
           if (data.statusCode === 200) {
-            setTimeout(() => {
-              this.loadingService.setloading(false);
-            });
+            this.loadingService.setloading(false);
             this.employeeInfo = data.response;
             this.patchValueForForm(this.employeeInfo);
           }

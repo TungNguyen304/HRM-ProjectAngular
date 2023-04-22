@@ -16,9 +16,9 @@ export class ProviderService {
   constructor(private http: HttpClient) {}
   public provider$ = new BehaviorSubject<any>('');
   getProvider(
-    page: number,
-    limit: number,
-    keyword: string
+    page: number = 1,
+    limit: number = 0,
+    keyword: string = ''
   ): Observable<Object> {
     this.provider$.next(
       `distributors?page=${page}&limit=${limit}${

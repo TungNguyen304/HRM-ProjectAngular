@@ -1,0 +1,146 @@
+<div class="basic_info" formGroupName="basicInfo">
+  <div class="basic_info_item">
+    <h3 class="title">{{ "title.basicInformation" | translate }} - 1</h3>
+    <div class="form_item">
+      <label for="code">
+        <span>{{ "createDevice.propertyCode" | translate }}</span>
+        <span style="color: red">*</span>
+      </label>
+      <input formControlName="code" type="text" id="code" pInputText />
+      <p
+        *ngIf="getControl('code')?.dirty && getControl('code')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ "createDevice.propertyCode" | translate }}
+        {{ warning.code?.type | typeError | translate : warning.code }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="name">
+        <span>{{ "createDevice.propertyName" | translate }}</span>
+        <span style="color: red">*</span>
+      </label>
+      <input formControlName="name" type="text" id="name" pInputText />
+      <p
+        *ngIf="getControl('name')?.dirty && getControl('name')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ "createDevice.propertyName" | translate }}
+        {{ warning.name?.type | typeError | translate : warning.name }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="provider">
+        <span>{{ "createDevice.provider" | translate }}</span>
+        <span style="color: red">*</span>
+      </label>
+      <p-dropdown
+        [placeholder]="'common.select' | translate"
+        formControlName="provider"
+        [options]="providerList"
+        optionLabel="name"
+      ></p-dropdown>
+      <p
+        *ngIf="getControl('provider')?.dirty && getControl('provider')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ "createDevice.provider" | translate }}
+        {{ warning.provider?.type | typeError | translate : warning.provider }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="type">
+        <span>{{ "createDevice.type" | translate }}</span>
+        <span style="color: red">*</span>
+      </label>
+      <p-dropdown
+        [placeholder]="'common.select' | translate"
+        formControlName="type"
+        [options]="deviceTypeList"
+        optionLabel="asset_type_name"
+      ></p-dropdown>
+      <p
+        *ngIf="getControl('type')?.dirty && getControl('type')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ "createDevice.type" | translate }}
+        {{ warning.type?.type | typeError | translate : warning.type }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="">
+        <span>{{ "createDevice.purchaseDate" | translate }}</span>
+      </label>
+      <p-calendar
+        formControlName="buyDate"
+        [showButtonBar]="true"
+        dateFormat="dd/mm/yy"
+      ></p-calendar>
+    </div>
+  </div>
+  <div class="basic_info_item">
+    <h3 class="title">{{ "title.basicInformation" | translate }} - 2</h3>
+    <div class="form_item">
+      <label for="number">
+        <span>{{ "createDevice.someBills" | translate }}</span>
+        <span style="color: red">*</span>
+      </label>
+      <input id="number" formControlName="billNumber" type="text" pInputText />
+      <p
+        *ngIf="
+          getControl('billNumber')?.dirty && getControl('billNumber')?.errors
+        "
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ "createDevice.someBills" | translate }}
+        {{
+          warning.billNumber?.type | typeError | translate : warning.billNumber
+        }}
+      </p>
+    </div>
+    <div class="form_item">
+      <label for="sum">
+        <span>{{ "createDevice.totalAmount" | translate }}</span>
+      </label>
+
+      <div class="p-inputgroup">
+        <p-inputNumber
+          formControlName="money"
+          id="sum"
+          mode="currency"
+          [currency]="lang.currency"
+          [locale]="lang.locale"
+          [minFractionDigits]="lang.currency === 'USD' ? 0 : 3"
+        ></p-inputNumber>
+        <span class="p-inputgroup-addon">{{ "common.money" | translate }}</span>
+      </div>
+    </div>
+    <div class="form_item">
+      <label for="employee">
+        <span>{{ "createDevice.employeeUse" | translate }}</span>
+      </label>
+      <p-dropdown
+        [placeholder]="'common.select' | translate"
+        formControlName="employee"
+        [options]="employeeList"
+        optionLabel="email"
+      ></p-dropdown>
+    </div>
+    <div class="form_item">
+      <label for="status">
+        <span>{{ "common.status" | translate }}</span>
+      </label>
+      <p-dropdown
+        [placeholder]="'common.select' | translate"
+        formControlName="status"
+        [options]="statusList"
+        optionLabel="value"
+      ></p-dropdown>
+    </div>
+  </div>
+</div>

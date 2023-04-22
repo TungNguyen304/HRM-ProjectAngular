@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { CommonService } from 'src/app/core/services/common.service';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import { emojiValidator } from 'src/app/core/services/helper/validator.service';
@@ -19,6 +19,11 @@ import { DeviceService } from 'src/app/core/services/http/device.service';
 import { LanguageService } from 'src/app/core/services/state/language.service';
 import { IWarningDeviceSearch } from 'src/app/shared/interfaces';
 import { deviceStatusEn, deviceStatusVi } from './data';
+import { EstateService } from 'src/app/core/services/helper/estate.service';
+import { StatusAsset } from './data';
+import { ModalService } from 'src/app/core/services/helper/modal.service';
+import { ToastService } from 'src/app/core/services/helper/toast.service';
+import { toast } from 'src/app/shared/toastMessage';
 
 @Component({
   selector: 'app-device',
@@ -28,6 +33,7 @@ import { deviceStatusEn, deviceStatusVi } from './data';
 })
 export class DeviceComponent {
   public status: any = [];
+  public typeDevice: any = [];
   public deviceList: any;
   public searchDeviceForm: FormGroup;
   public actions: any;
@@ -35,7 +41,7 @@ export class DeviceComponent {
   public total: number = 0;
   public limit: number = 5;
   public pageCurrent: number = 1;
-  public idDeviceTemp: number;
+  public deviceTemp: any;
   public warning: IWarningDeviceSearch = {
     code: null,
     employee: null,
@@ -45,7 +51,9 @@ export class DeviceComponent {
     private router: Router,
     private fb: FormBuilder,
     private languageService: LanguageService,
-    private messageService: MessageService
+    private modalService: ModalService,
+    private estateService: EstateService,
+    private toastService: ToastService
   ) {
     this.actions = [
       {
@@ -66,7 +74,7 @@ export class DeviceComponent {
         label: 'Detail',
         icon: 'bi bi-card-text',
         command: () => {
-          this.handleNavigateDetailDevice(this.idDeviceTemp);
+          this.handleNavigateDetailDevice(this.deviceTemp.asset_id);
         },
       },
       {
@@ -77,33 +85,44 @@ export class DeviceComponent {
     ];
   }
 
-  handleActionsClick(id: number) {
-    this.idDeviceTemp = id;
+  handleActionsClick(device: any) {
+    this.deviceTemp = device;
+  }
+
+  handleGetStatusFormId(id: number) {
+    return this.status[id - 1].value;
   }
 
   onPageChange(event: any): void {}
 
   update() {
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Data Updated',
-    });
+    this.router.navigate([
+      'estate/device/update-device',
+      this.deviceTemp.asset_id,
+    ]);
   }
 
   delete() {
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Data Deleted',
+    this.modalService.confirmDetele(this.deviceTemp.asset_name, () => {
+      this.loadDisplay = true;
+      this.deviceService.deleteDevice(this.deviceTemp.asset_id).subscribe(
+        () => {
+          this.toastService.toastSuccess(toast.deleteEmployeeSuccess);
+        },
+        () => {
+          this.toastService.toastError(toast.deleteEmployeeFail);
+        }
+      );
+      this.handleGetDevice();
     });
   }
+
   handleDisplayCreateDevice(): void {
-    this.router.navigate(['estate', 'device', 'create-device']);
+    this.router.navigate(['estate/device/create-device']);
   }
 
-  handleNavigateDetailDevice(id: number): void {
-    this.router.navigate(['estate', 'device', 'detail-device', id]);
+  handleNavigateDetailDevice(id: string): void {
+    this.router.navigate(['estate/device/detail-device', id]);
   }
 
   warningDetect(): void {
@@ -133,6 +152,8 @@ export class DeviceComponent {
     this.handleGetDevice().subscribe(
       (data: any) => {
         if (data.statusCode === 200) {
+          console.log(data.response.data);
+
           this.deviceList = data.response.data;
           this.total = data.response.total;
           this.loadDisplay = false;
@@ -142,6 +163,12 @@ export class DeviceComponent {
         this.loadDisplay = false;
       }
     );
+
+    this.deviceService.getDeviceType().subscribe((data: any) => {
+      if (data.statusCode === 200) {
+        this.typeDevice = data.response;
+      }
+    });
 
     this.searchDeviceForm = this.fb.group({
       code: ['', [Validators.maxLength(255), emojiValidator]],
@@ -161,6 +188,7 @@ export class DeviceComponent {
           break;
         }
       }
+      this.estateService.handleSetValueForDeviceStore('status', this.status);
     });
 
     this.warningDetect();

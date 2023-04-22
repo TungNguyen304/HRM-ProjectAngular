@@ -22,6 +22,9 @@ import { ToastModule } from 'primeng/toast';
 import { PaginatorModule } from 'primeng/paginator';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { BasicInformationComponent } from './components/create-device/basic-information/basic-information.component';
+import { RepairInformationComponent } from './components/create-device/repair-information/repair-information.component';
+import { EmployeeInformationComponent } from './components/create-device/employee-information/employee-information.component';
 
 const routes: Routes = [
   {
@@ -37,11 +40,15 @@ const routes: Routes = [
       },
       {
         path: 'device/create-device',
-        component: CreateDeviceComponent
+        component: CreateDeviceComponent,
+      },
+      {
+        path: 'device/update-device/:id',
+        component: CreateDeviceComponent,
       },
       {
         path: 'device/detail-device/:id',
-        component: DetailDeviceComponent
+        component: DetailDeviceComponent,
       },
       {
         path: '',
@@ -59,7 +66,10 @@ const routes: Routes = [
     DetailProviderComponent,
     CreateProviderComponent,
     CreateDeviceComponent,
-    DetailDeviceComponent
+    DetailDeviceComponent,
+    BasicInformationComponent,
+    RepairInformationComponent,
+    EmployeeInformationComponent
   ],
   imports: [
     CommonModule,
@@ -78,7 +88,7 @@ const routes: Routes = [
     ToastModule,
     TranslateModule,
     SharedModule,
-    PaginatorModule
+    PaginatorModule,
   ],
 })
 export class EstateModule {}

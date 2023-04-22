@@ -75,6 +75,10 @@ h2 {
   }
 }
 
+.accordion {
+  box-shadow: unset;
+}
+
 @media (max-width: 1200px) {
   .form_search {
     form {

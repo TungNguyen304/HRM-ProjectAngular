@@ -88,7 +88,7 @@ export class HeaderComponent {
   }
   handleRemoveIdFromPath(path: string): string {
     const listUrl = path.split('/');
-    if (path.includes('detail-employee')) {
+    if (path.includes('detail-employee') || path.includes('detail-device')) {
       listUrl.pop();
     }
     return listUrl.join('/');

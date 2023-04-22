@@ -1,15 +1,15 @@
 export const deviceStatusEn = [
-  { value: 'AVAILABLE' },
-  { value: 'REQUESTING' },
-  { value: 'HAVE_BEEN_BORROWING' },
-  { value: 'NO_AVAILABLE' },
+  { value: 'AVAILABLE', key: 1 },
+  { value: 'REQUESTING', key: 2 },
+  { value: 'HAVE_BEEN_BORROWING', key:3 },
+  { value: 'NO_AVAILABLE', key: 4 },
 ];
 
 export const deviceStatusVi = [
-  { value: 'CÓ SẴN' },
-  { value: 'ĐANG YÊU CẦU' },
-  { value: 'ĐANG CHO MƯỢN' },
-  { value: 'KHÔNG CÓ SẴN' },
+  { value: 'CÓ SẴN', key: 1 },
+  { value: 'ĐANG YÊU CẦU', key: 2 },
+  { value: 'ĐANG CHO MƯỢN', key: 3 },
+  { value: 'KHÔNG CÓ SẴN', key: 4 },
 ];
 
 export enum StatusAsset {
@@ -18,3 +18,4 @@ export enum StatusAsset {
   HAVE_BEEN_BORROWING = 3,
   NO_AVAILABLE = 4,
 }
+

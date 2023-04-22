@@ -1,6 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, debounceTime, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  debounceTime,
+  delay,
+  switchMap,
+} from 'rxjs';
+
+interface IDeviceStore {
+  type: any[];
+  employee: any[];
+  provider: any[];
+  status: any[];
+}
 
 @Injectable({
   providedIn: 'root',
@@ -8,6 +21,13 @@ import { BehaviorSubject, Observable, debounceTime, switchMap } from 'rxjs';
 export class DeviceService {
   constructor(private http: HttpClient) {}
   public device$ = new BehaviorSubject<any>(null);
+  public deviceStore$ = new BehaviorSubject<IDeviceStore>({
+    type: [],
+    employee: [],
+    provider: [],
+    status: [],
+  });
+
   getDevice(
     page: number,
     limit: number,
@@ -37,6 +57,26 @@ export class DeviceService {
   }
 
   getDeviceById(id: number): Observable<Object> {
-    return this.http.get(`device/${id}`);
+    return this.http.get(`assets/${id}`).pipe(delay(2000));
+  }
+
+  getDeviceType(): Observable<Object> {
+    return this.http.get('assets/types');
+  }
+
+  addDevice(data: any): Observable<Object> {
+    return this.http.post('assets', data);
+  }
+
+  updateDevice(data: any, id: string): Observable<Object> {
+    return this.http.patch(`assets/${id}`, data).pipe(delay(2000));
+  }
+
+  deleteDevice(id: string): Observable<Object> {
+    return this.http
+      .post('assets/delete', {
+        ids: [id],
+      })
+      .pipe(delay(2000));
   }
 }
