@@ -19,10 +19,19 @@ import { IPosition } from 'src/app/shared/interfaces';
 })
 export class PositionService {
   public position$ = new BehaviorSubject<any>(null);
+  public member$ = new BehaviorSubject<any>(null);
   constructor(private http: HttpClient) {}
 
-  getPosition(page: number, limit: number, keyword?:string): Observable<Object> {
-    this.position$.next(`job-positions?page=${page}&limit=${limit}${keyword ? `&keyword=${keyword}` : ''}`);
+  getPosition(
+    page: number,
+    limit: number,
+    keyword?: string
+  ): Observable<Object> {
+    this.position$.next(
+      `job-positions?page=${page}&limit=${limit}${
+        keyword ? `&keyword=${keyword}` : ''
+      }`
+    );
     return this.position$.pipe(
       debounceTime(1000),
       switchMap((url) => {
@@ -31,12 +40,26 @@ export class PositionService {
     );
   }
 
-  getMemberByPositionId(id:string, page?:number, limit?:number):Observable<Object> {
-    return this.http.get(`users?${page ? `page=${page}&` : ''}${limit ? `limit=${limit}&` : ''}job_position_id=${id}`);
+  getMemberByPositionId(
+    id: string = '',
+    page: number = 1,
+    limit: number = 0
+  ): Observable<Object> {
+    this.member$.next(
+      `users?page=${page}&limit=${limit}&job_position_id=${id}`
+    );
+    return this.member$.pipe(
+      debounceTime(2000),
+      switchMap((url) => {
+        return this.http.get(url);
+      })
+    );
   }
 
-  getPositionByUnitId(id:string):Observable<Object> {
-    return this.http.get(`job-positions?page=1&limit=0&organization_unit_id=${id}`)
+  getPositionByUnitId(id: string): Observable<Object> {
+    return this.http.get(
+      `job-positions?page=1&limit=0&organization_unit_id=${id}`
+    );
   }
 
   addPosition(data: IPosition): Observable<Object> {

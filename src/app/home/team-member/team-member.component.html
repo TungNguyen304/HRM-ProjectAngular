@@ -2,7 +2,7 @@
   <h2 class="title">DA NANG - OUTSOURCES (UIT DEPT)</h2>
   <div class="search">
     <div class="search_left">
-      <input type="text" [placeholder]="'common.search' | translate" />
+      <input (input)="handleSearch()" [(ngModel)]="searchInput" type="text" [placeholder]="'common.search' | translate" />
     </div>
     <span><i class="bi bi-search"></i></span>
   </div>

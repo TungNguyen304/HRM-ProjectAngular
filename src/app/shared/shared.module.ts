@@ -13,10 +13,12 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { LoadingComponent } from './layouts/loading/loading.component';
 import { LoadSmallComponent } from './layouts/load-small/load-small.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { AvtComponent } from './layouts/common/avt.component';
 
 @NgModule({
-  declarations: [PageNotFoundComponent, HeaderComponent, SideBarComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent, LoadSmallComponent],
+  declarations: [PageNotFoundComponent, HeaderComponent, SideBarComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent, LoadSmallComponent, AvtComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -25,7 +27,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     TranslateModule,
     BreadcrumbModule,
     DropdownModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    DialogModule
   ],
   exports: [PageNotFoundComponent, SideBarComponent, HeaderComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent, LoadSmallComponent]
 })

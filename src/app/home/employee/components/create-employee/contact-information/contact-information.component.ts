@@ -60,13 +60,11 @@ export class ContactInformationComponent implements OnInit {
   ngOnInit() {
     this.warningDetect();
     this.employeeForm.get('contactInfo')?.valueChanges.subscribe(() => {
-      console.log(this.employeeForm.get('contactInfo'));
       this.warningDetect();
     });
   }
 
   myUploader(event: any): void {
-    console.log(event.files[0]);
   }
 
   getControl(control: string): AbstractControl | null {
@@ -134,7 +132,6 @@ export class ContactInformationComponent implements OnInit {
     } else {
       this.toastService.toastWarn(toast.maxLengthSocial);
     }
-    console.log(this.employeeForm.get('contactInfo'));
   }
 
   handleDeleteSocial(index: number) {

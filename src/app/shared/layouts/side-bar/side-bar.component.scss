@@ -31,7 +31,7 @@
   padding: 0 14px 10px 14px;
   background: var(--sidebar-color);
   transition: var(--tran-05);
-  z-index: 7;
+  z-index: 100;
   .close_icon {
     display: none;
     position: absolute;
@@ -340,7 +340,7 @@ body.dark .switch::before {
 
 .home {
   position: absolute;
-  padding: 0 20px 0 23px;
+  padding: 0 20px 0 20px;
   top: 0;
   top: 0;
   left: 300px;
@@ -348,7 +348,6 @@ body.dark .switch::before {
   width: calc(100% - 300px);
   background-color: #f4f6f9;
   transition: var(--tran-05);
-  z-index: 9;
 }
 
 .sidebar.close ~ .home {
@@ -370,6 +369,25 @@ body.dark .switch::before {
   z-index: -1;
 }
 
+.sidebar {
+  li.language {
+    display: none;
+  }
+}
+
+.sidebar_avt {
+  display: none;
+  margin-top: 10px;
+  :host .personal {
+    justify-content: space-between;
+    padding: 5px 5px 5px 18px;
+    border-radius: 6px;
+    .avt {
+      border-radius: 6px;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .sidebar {
     .close_icon {
@@ -382,9 +400,27 @@ body.dark .switch::before {
       padding: 0 20px 0 20px !important;
       width: 100%;
     }
+    li.language {
+      display: flex;
+      cursor: pointer;
+    }
   }
   .home {
     width: 100%;
     left: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .sidebar_avt {
+    display: block;
+    :host .personal .email {
+      width: 70%;
+      overflow: hidden;
+    }
+  }
+  .sidebar {
+    width: 100vw;
+    box-shadow: none;
   }
 }

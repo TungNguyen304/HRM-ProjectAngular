@@ -68,6 +68,12 @@
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 30px;
   }
+  ::ng-deep .p-progress-spinner {
+    position: absolute !important;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 @media (max-width: 1200px) {
@@ -87,3 +93,15 @@
     }
   }
 }
+
+@media (max-width: 340) {
+  .team {
+    .team_list {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    .search {
+      max-width: 100%;
+    }
+  }
+}
+

@@ -11,7 +11,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-member>
-      <tr>
+      <tr *ngIf="!loadDisplay">
         <td>
           <span class="p-column-title">{{
             "employeeManagement.employeeCode" | translate
@@ -50,11 +50,13 @@
           <span class="p-column-title">{{ "common.action" | translate }}</span>
           <div class="action">
             <button
+              (click)="handleNavigateUpdateEmployee(member?.employee_id)"
               pButton
               icon="bi bi-pen"
               class="p-button-raised p-button-sm p-button-primary"
             ></button>
             <button
+              (click)="handleNavigateDetailEmployee(member?.employee_id)"
               pButton
               icon="bi bi-file-text"
               class="p-button-raised p-button-sm p-button-warning"
@@ -67,21 +69,11 @@
       <app-load-small *ngIf="loadDisplay"></app-load-small>
     </ng-template>
   </p-table>
-  <!-- <div
-    style="
-      text-align: center;
-      padding: 20px 0;
-      border-bottom: 1px solid #dee2e6;
-    "
-    *ngIf="total === 0 ? true : false"
-  >
-    <p>No Member</p>
-  </div> -->
   <div class="no_data" *ngIf="!loadDisplay && total === 0">
     {{ "common.noData" | translate }}
   </div>
   <p-paginator
-    *ngIf="!loadDisplay && total > 0"
+    *ngIf="total > 0"
     (onPageChange)="onPageChange($event)"
     [first]="0"
     [rows]="limit"

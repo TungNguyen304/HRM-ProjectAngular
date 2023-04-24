@@ -6,6 +6,9 @@
     </div>
     <span>HRM - LOGO</span>
   </div>
+  <div class="sidebar_avt">
+    <app-avt></app-avt>
+  </div>
   <div class="menu-bar">
     <div class="menu">
       <ul class="menu-links">
@@ -71,6 +74,15 @@
             }}</span>
           </a>
         </li>
+
+        <li class="language">
+          <a (click)="handleChoseLanguage()" #link>
+            <i class="bi bi-translate icon"></i>
+            <span class="text nav-text">{{
+              "sidebar.language" | translate
+            }}</span>
+          </a>
+        </li>
       </ul>
     </div>
 
@@ -105,3 +117,23 @@
   <app-header (displaySidebar)="displaySidebar()"></app-header>
   <ng-content></ng-content>
 </section>
+
+<p-dialog [modal]="true" [(visible)]="visible">
+  <ng-template pTemplate="header">
+    <h3 class="title">
+      {{ "sidebar.language" | translate }}
+    </h3>
+  </ng-template>
+  <ng-template pTemplate="body">
+    <div class="flex py-2 justify-content-center">
+      <p-dropdown
+        [(ngModel)]="lang"
+        (onChange)="onChange($event)"
+        appendTo="body"
+        [options]="languages"
+        placeholder="Select a City"
+        optionLabel="name"
+      ></p-dropdown>
+    </div>
+  </ng-template>
+</p-dialog>

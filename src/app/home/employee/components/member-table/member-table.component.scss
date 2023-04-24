@@ -3,7 +3,7 @@
   .p-dialog .p-dialog-header {
     font-size: 20px;
     font-weight: bold;
-    font-family: "Times New Roman", Times, serif;
+    color: var(--primary-color-main);
   }
   table {
     tbody {
@@ -24,5 +24,3 @@ td {
 .action {
   display: flex;
 }
-
-

@@ -80,17 +80,15 @@ export class OtherInformationComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    getControlCommon(this.employeeForm, 'otherInfo')?.valueChanges.subscribe(
-      () => {
-        const unitIdTemp = getControlCommon(
-          this.employeeForm,
-          'otherInfo',
-          'unit'
-        )?.value?.key;
-        this.onSelectedChange({ node: { key: unitIdTemp } });
-        this.warningDetect();
-      }
-    );
+    this.employeeForm.get('otherInfo.unit')?.valueChanges.subscribe(() => {
+      const unitIdTemp = getControlCommon(
+        this.employeeForm,
+        'otherInfo',
+        'unit'
+      )?.value?.key;
+      this.onSelectedChange({ node: { key: unitIdTemp } });
+      this.warningDetect();
+    });
   }
 
   handleResetCV(): void {
@@ -105,26 +103,30 @@ export class OtherInformationComponent implements OnInit {
   onSelectedChange(event: any): void {
     if (event.node.key !== this.unitId) {
       this.unitId = event.node.key;
-      this.positionService.getPositionByUnitId(event.node.key).subscribe(
-        (data: any) => {
-          if (data.statusCode === 200) {
-            this.positionList = data.response.data.map((position: any) => ({
-              job_position_id: position.job_position_id,
-              job_position_name: position.job_position_name,
-              job_position_code: position.job_position_code,
-              job_position_code_name: position.job_position_code_name,
-            }));
-            getControlCommon(
-              this.employeeForm,
-              'otherInfo',
-              'position'
-            )?.enable();
+      const subcribtion = this.positionService
+        .getPositionByUnitId(event.node.key)
+        .subscribe(
+          (data: any) => {
+            if (data.statusCode === 200) {
+              this.positionList = data.response.data.map((position: any) => ({
+                job_position_id: position.job_position_id,
+                job_position_name: position.job_position_name,
+                job_position_code: position.job_position_code,
+                job_position_code_name: position.job_position_code_name,
+              }));
+              getControlCommon(
+                this.employeeForm,
+                'otherInfo',
+                'position'
+              )?.enable();
+            }
+            subcribtion.unsubscribe();
+          },
+          (err) => {
+            console.log(err);
+            subcribtion.unsubscribe();
           }
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+        );
     }
   }
 
@@ -136,20 +138,14 @@ export class OtherInformationComponent implements OnInit {
     if (this.commonService.checkTypeCV(event.files[0], 'application/pdf')) {
       if (this.commonService.checkSizeCV(event.files[0], this.cvSize)) {
         this.employeeForm.get('otherInfo')?.get('cv')?.setValue(event.files[0]);
-        this.toastService.toastSuccess(
-          toast.uploadCvSuccess
-        );
+        this.toastService.toastSuccess(toast.uploadCvSuccess);
       } else {
         this.cv.clear();
-        this.toastService.toastError(
-          toast.uploadCvSizeFail, this.cvSize
-        );
+        this.toastService.toastError(toast.uploadCvSizeFail, this.cvSize);
       }
     } else {
       this.cv.clear();
-      this.toastService.toastError(
-        toast.uploadCvTypeFail
-      );
+      this.toastService.toastError(toast.uploadCvTypeFail);
     }
   }
   warningDetect(): void {

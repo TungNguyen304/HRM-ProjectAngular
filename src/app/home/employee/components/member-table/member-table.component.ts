@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable, finalize } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, Subscription, finalize } from 'rxjs';
 import { PositionService } from 'src/app/core/services/http/position.service';
 import { UnitService } from 'src/app/core/services/http/unit.service';
 
@@ -17,24 +18,34 @@ export interface IPropsMember {
 export class MemberTableComponent implements OnInit {
   constructor(
     private unitService: UnitService,
-    private positionService: PositionService
+    private positionService: PositionService,
+    private router: Router
   ) {}
+  public employeeActive: any;
   public limit: number = 5;
   public total: number = 0;
+  public subscription: Subscription;
   public page: number = 1;
   public loadDisplay: boolean = false;
   public memberList: any[];
   @Input() props: IPropsMember;
   onPageChange(event: any) {
-    this.unitService.getMemberByUnitId(
-      this.props.id,
-      event.page + 1,
-      this.limit
-    );
+    if (event.page + 1 !== this.page) {
+      this.page = event.page + 1;
+      this.loadDisplay = true;
+      this.handleGetObservableByType(this.page);
+    }
   }
 
   ngOnInit() {
-    this.handleGetMember(1);
+    this.handleGetMember(this.page);
+  }
+
+  handleNavigateUpdateEmployee(id: string) {
+    this.router.navigate(['employee/management/update-employee', id]);
+  }
+  handleNavigateDetailEmployee(id: string): void {
+    this.router.navigate(['employee/management/detail-employee', id]);
   }
 
   handleGetObservableByType(page: number): Observable<Object> {
@@ -58,27 +69,21 @@ export class MemberTableComponent implements OnInit {
 
   handleGetMember(page: number) {
     this.loadDisplay = true;
-    console.log(this.loadDisplay);
-
-    this.handleGetObservableByType(page)
-      .pipe
-      // finalize(() => {
-      //
-      // })
-      ()
-      .subscribe(
-        (data: any) => {
-          if (data.statusCode === 200) {
-            this.memberList = data.response.data;
-            this.total = data.response.total;
-            console.log(data);
-            this.loadDisplay = false;
-          }
-        },
-        () => {
+    this.subscription = this.handleGetObservableByType(page).subscribe(
+      (data: any) => {
+        if (data.statusCode === 200) {
+          this.memberList = data.response.data;
+          this.total = data.response.total;
           this.loadDisplay = false;
-          console.log(this.loadDisplay);
         }
-      );
+      },
+      () => {
+        this.loadDisplay = false;
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

@@ -23,14 +23,13 @@ export class UnitService {
     page: number = 1,
     limit: number = 0
   ): Observable<Object> {
-    this.member$.next('users');
+    this.member$.next(`users?page=${page}`);
     return this.member$.pipe(
-      debounceTime(1000),
+      debounceTime(2000),
       switchMap((url) => {
         return this.http.get(url, {
           params: {
             organization_unit_id: id,
-            page: page,
             limit: limit,
           },
         });

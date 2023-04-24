@@ -29,29 +29,34 @@ export class DeviceService {
   });
 
   getDevice(
-    page: number,
-    limit: number,
+    page: number = 1,
+    limit: number = 0,
     keyword: string = '',
-    distributor_id: string = '',
-    asset_type_id: string = '',
     user_using_id: string = '',
-    status: number = 1
+    asset_type_id: string = '',
+    status: number = 1,
+    distributor_id: string = ''
   ): Observable<Object> {
-    this.device$.next('assets');
+    this.device$.next(
+      `assets?page=${page}&limit=${limit}&keyword=${keyword}&user_using_id=${user_using_id}&asset_type_id=${asset_type_id}&status=${status}&distributor_id=${distributor_id}`
+    );
     return this.device$.pipe(
       debounceTime(2000),
       switchMap((url) =>
-        this.http.get(url, {
-          params: {
-            page: page,
-            limit: limit,
-            keyword: keyword,
-            distributor_id: distributor_id,
-            asset_type_id: asset_type_id,
-            user_using_id: user_using_id,
-            status: status,
-          },
-        })
+        this.http.get(
+          url
+          //    {
+          //   params: {
+          //     page: page,
+          //     limit: limit,
+          //     keyword: keyword,
+          //     distributor_id: distributor_id,
+          //     asset_type_id: asset_type_id,
+          //     user_using_id: user_using_id,
+          //     status: status,
+          //   },
+          // }
+        )
       )
     );
   }

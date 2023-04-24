@@ -24,7 +24,7 @@ export class TeamMemberComponent {
   public page: number = 1;
   public limit: number = 4;
   public total: number = 0;
-  public searchInput: FormControl = new FormControl('');
+  public searchInput = '';
   public loadDisplay: boolean = false;
   constructor(private memberService: MemberService) {}
   ngOnInit(): void {
@@ -43,9 +43,14 @@ export class TeamMemberComponent {
     );
   }
 
+  handleSearch(): void {
+    this.loadDisplay = true;
+    this.memberService.getMember(this.page, this.limit, this.searchInput);
+  }
+
   onPageChange(event: any): void {
     this.page = event.page + 1;
     this.loadDisplay = true;
-    this.memberService.getMember(this.page, this.limit);
+    this.memberService.getMember(this.page, this.limit, this.searchInput);
   }
 }

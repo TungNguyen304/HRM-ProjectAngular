@@ -97,8 +97,6 @@ form {
       align-items: center;
       span {
         font-size: 16px;
-        font-weight: bold;
-        font-family: "Times New Roman", Times, serif;
         margin-right: 10px;
       }
       button {
@@ -151,8 +149,6 @@ form {
 }
 
 h3.title {
-  font-size: 20px;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   margin-bottom: 10px;
   text-align: center;
 }
@@ -160,4 +156,35 @@ h3.title {
 .create_new {
   margin-top: 20px;
   text-align: center;
+}
+
+@media (max-width: 768px) {
+  h3.title {
+    margin-bottom: 20px;
+  }
+  .create_employee {
+    padding: 20px 10px;
+    .create_left {
+      margin: 0;
+      :host .main_info {
+        padding: 0;
+        box-shadow: none;
+      }
+    }
+    .create_right {
+      margin: 0;
+      :host .contact_information,
+      :host .otherInfo {
+        padding: 0;
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 350px) {
+  h3.title {
+    width: 70%;
+    margin: 0 auto 10px;
+  }
 }

@@ -192,6 +192,10 @@
   }
 }
 
+::ng-deep .p-dropdown {
+  width: 100%;
+}
+
 @media (max-width: 1200px) {
   ::ng-deep .p-splitbutton.p-button-sm {
     padding-left: 0;
@@ -205,11 +209,26 @@
   }
 }
 
-@media (max-width: 300px) {
-  ::ng-deep #pr_id_5-table > .p-datatable-tbody > tr > td {
-    flex-direction: column;
+@media (max-width: 400px) {
+  ::ng-deep .p-breadcrumb ul {
+    flex-wrap: wrap !important;
+    justify-content: center;
   }
-  ::ng-deep #pr_id_5-table > .p-datatable-tbody > tr > td > span {
+
+  ::ng-deep .p-toast {
+    width: 90% !important;
+    // padding: 0 20px;
+    right: unset !important;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  ::ng-deep .p-datatable-table > .p-datatable-tbody > tr > td {
+    flex-direction: column;
+    &.action_col {
+      flex-direction: row;
+    }
+  }
+  ::ng-deep .p-datatable-table > .p-datatable-tbody > tr > td > span {
     text-align: center !important;
   }
 }

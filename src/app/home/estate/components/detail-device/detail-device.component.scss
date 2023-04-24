@@ -87,3 +87,26 @@
     }
   }
 }
+
+@media (max-width: 550px) {
+  .sub_table {
+    td:first-child {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .detail_employee .detail_info {
+    overflow: hidden;
+    padding: 5px;
+  }
+  ::ng-deep .p-datatable .p-datatable-tbody > tr > td,
+  ::ng-deep .p-datatable .p-datatable-tfoot > tr > td {
+    padding: 5px !important;
+  }
+  .export {
+    padding: 5px !important;
+    margin-bottom: 0 !important;
+  }
+}

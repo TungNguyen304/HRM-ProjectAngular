@@ -19,17 +19,8 @@
         </div>
       </li>
     </ul>
-    <div class="personal">
-      <span class="email">{{ account?.email }}</span>
-      <div class="avt">
-        <img
-          [src]="
-            account?.image_url ||
-            '../../../../assets/images/avatar-icon-png.jpg'
-          "
-          alt=""
-        />
-      </div>
+    <div class="header_avt">
+      <app-avt></app-avt>
     </div>
   </div>
 </header>

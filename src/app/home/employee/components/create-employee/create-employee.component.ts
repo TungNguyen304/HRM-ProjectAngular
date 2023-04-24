@@ -271,11 +271,11 @@ export class CreateEmployeeComponent {
         sex: {
           value: data.gender === 'MALE' ? ESex.MALE : ESex.FEMALE,
         },
-        birthDay: this.commonService.convertDateVi(data.birth_date),
-        hireDate: this.commonService.convertDateVi(data.hire_date),
-        joinDate: this.commonService.convertDateVi(data.receive_date),
-        currentResidence: data.home_land,
-        address: data.temporary_address,
+        birthDay: this.commonService.convertDateVi(data.birth_date) || "",
+        hireDate: this.commonService.convertDateVi(data.hire_date) || "",
+        joinDate: this.commonService.convertDateVi(data.receive_date) || "",
+        currentResidence: data.home_land || "",
+        address: data.temporary_address || "",
       },
       contactInfo: {
         email: data.email,
@@ -293,6 +293,10 @@ export class CreateEmployeeComponent {
       },
       workingProcess: this.handleTransformDataWorkingHistory(data),
     };
+    console.log(data);
+    
+    console.log(data.home_land || "");
+
     this.employeeForm.patchValue(newData);
   }
 

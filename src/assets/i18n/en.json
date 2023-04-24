@@ -9,7 +9,8 @@
     "estate": "Estate",
     "logout": "Logout",
     "createDevice": "Create device",
-    "createEmployee": "Create employee"
+    "createEmployee": "Create employee",
+    "language": "Language"
   },
   "title": {
     "unitManagement": "UNIT MANAGEMENT",
