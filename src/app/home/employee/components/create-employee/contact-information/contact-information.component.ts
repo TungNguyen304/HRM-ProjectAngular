@@ -77,9 +77,7 @@ export class ContactInformationComponent implements OnInit {
     this.handleSetWarning('email', 255);
     this.handleSetWarning('phone', 11);
     this.handleSetWarning('skypeId', 255);
-    (
-      getControlCommon(this.employeeForm, 'contactInfo', 'socials') as FormArray
-    ).controls.forEach((control) => {
+    this.socialControlList.forEach((control) => {
       if (control.get('name')?.errors?.['required']) {
         this.warning.name = {
           type: 'required',
@@ -107,13 +105,8 @@ export class ContactInformationComponent implements OnInit {
   }
 
   handleAddSocial(): void {
-    const socialList = getControlCommon(
-      this.employeeForm,
-      'contactInfo',
-      'socials'
-    ) as FormArray;
-    if (socialList.length < 5) {
-      socialList.push(
+    if (this.socialControlList.length < 5) {
+      this.socialControlList.push(
         this.fb.group({
           name: ['', [Validators.required]],
           value: ['', [Validators.required]],
@@ -125,9 +118,6 @@ export class ContactInformationComponent implements OnInit {
   }
 
   handleDeleteSocial(index: number) {
-    const socialList = (
-      getControlCommon(this.employeeForm, 'contactInfo', 'socials') as FormArray
-    ).controls;
-    socialList.splice(index, 1);
+    this.socialControlList.splice(index, 1);
   }
 }

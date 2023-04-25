@@ -1,8 +1,8 @@
 header {
   background-color: var(--primary-color-main);
-  margin: 0 -30px 30px;
+  margin: 0 -20px 30px -32px;
   display: flex;
-  padding: 0 10px 0 30px;
+  padding: 0 20px 0 29px;
   justify-content: space-between;
   color: var(--text-color);
   height: var(--height-header);
@@ -15,6 +15,7 @@ header {
       align-items: center;
       width: 44px;
       height: 43px;
+      flex-shrink: 0;
       justify-content: center;
       background-color: #fff;
       border-radius: 50%;
@@ -138,15 +139,13 @@ header {
   }
   .personal {
     cursor: pointer;
-    padding: 5px 10px;
     border-radius: 10px;
     display: flex;
     align-items: center;
     background-color: var(--primary-color-main);
     color: #fff;
+    gap: 20px;
     .avt {
-      margin-left: 20px;
-      margin-right: 10px;
       background-color: #fff;
       overflow: hidden;
       border-radius: 100%;
@@ -194,4 +193,23 @@ header {
 
 ::ng-deep.p-inputswitch {
   display: block !important;
+}
+
+@media (max-width: 768px) {
+  header {
+    .personal {
+      span {
+        // display: none;
+      }
+    }
+    .nav ul {
+      display: none;
+      li:first-child {
+        
+      }
+    }
+    .follow .breadcrumb {
+      display: none;
+    }
+  }
 }

@@ -30,6 +30,7 @@
           padding-top: 2px;
           top: 2px;
           font-style: italic;
+          font-family: "Poppins", sans-serif;
         }
         &:focus {
           border-bottom: 2px solid var(--primary-color-main);
@@ -51,11 +52,28 @@
       color: #fff;
     }
   }
+  .wrap_team_list {
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 20px;
+    background-color: #fff;
+    margin-top: 20px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  }
   .team_list {
     display: grid;
-    margin-top: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    grid-gap: 20px;
+    border-radius: 10px 10px 0 0;
     margin-bottom: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .team {
+    width: 100%;
+    .search {
+      max-width: 100%;
+    }
   }
 }

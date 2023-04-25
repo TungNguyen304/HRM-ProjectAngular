@@ -7,6 +7,7 @@ import { EmployeeService } from 'src/app/core/services/http/employee.service';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
 import { finalize, map, switchMap } from 'rxjs';
+import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
 
 @Component({
   selector: 'app-detail-employee',
@@ -20,13 +21,15 @@ export class DetailEmployeeComponent implements OnInit {
     private languageService: LanguageService,
     private employeeService: EmployeeService,
     private activateRoute: ActivatedRoute,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private exportFileService: ExportFileService
   ) {}
   public infoEmployee: any = [];
   public dataByLang = {
     vi: labelEmployeeVi,
     en: labelEmployeeEn,
   };
+  public employeeExcel: any = null;
   public workingProcess: any[] = [];
   public socialNetwork: any[] = [];
   handleBack(): void {
@@ -36,6 +39,16 @@ export class DetailEmployeeComponent implements OnInit {
     if (url) return true;
     return false;
   }
+
+  exportFile() {
+    if (this.employeeExcel) {
+      this.exportFileService.exportAsExcelFile(
+        this.employeeExcel,
+        this.employeeExcel[0]?.full_name
+      );
+    }
+  }
+
   ngOnInit() {
     setTimeout(() => {
       this.loadingService.setloading(true);
@@ -46,6 +59,9 @@ export class DetailEmployeeComponent implements OnInit {
           this.employeeService.getEmployeeById(params['id'])
         ),
         switchMap((employee: any) => {
+          console.log(employee.response);
+          
+          this.employeeExcel = [employee.response];
           this.workingProcess = employee.response.user_working_histories || [];
           this.socialNetwork =
             employee.response.social_network?.map((item: string) => {

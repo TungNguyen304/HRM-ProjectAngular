@@ -16,9 +16,9 @@ export class ProviderService {
   constructor(private http: HttpClient) {}
   public provider$ = new BehaviorSubject<any>('');
   getProvider(
-    page: number,
-    limit: number,
-    keyword: string
+    page: number = 1,
+    limit: number = 0,
+    keyword: string = ''
   ): Observable<Object> {
     this.provider$.next(
       `distributors?page=${page}&limit=${limit}${
@@ -33,6 +33,10 @@ export class ProviderService {
     );
     // .get(`distributors?page=${page}&limit=${limit}&keyword=${keyword}`)
     // .pipe(delay(2000));
+  }
+
+  getAllProvider(): Observable<Object> {
+    return this.http.get('distributors?page=1&limit=0').pipe(delay(2000));
   }
 
   getProviderById(id: string): Observable<Object> {

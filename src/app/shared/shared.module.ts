@@ -14,9 +14,11 @@ import { LoadingComponent } from './layouts/loading/loading.component';
 import { LoadSmallComponent } from './layouts/load-small/load-small.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ForbiddenComponent } from './layouts/forbidden/forbidden.component';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
-  declarations: [PageNotFoundComponent, HeaderComponent, SideBarComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent, LoadSmallComponent],
+  declarations: [PageNotFoundComponent, HeaderComponent, SideBarComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent, LoadSmallComponent, ForbiddenComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -25,7 +27,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     TranslateModule,
     BreadcrumbModule,
     DropdownModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    ButtonModule
   ],
   exports: [PageNotFoundComponent, SideBarComponent, HeaderComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent, LoadSmallComponent]
 })

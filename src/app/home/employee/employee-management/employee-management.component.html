@@ -10,7 +10,11 @@
           </div>
         </ng-template>
         <div class="form_search">
-          <form [formGroup]="searchForm" action="">
+          <form
+            [formGroup]="searchForm"
+            (ngSubmit)="handleSearchEmployee()"
+            action=""
+          >
             <div class="form_list">
               <div class="form_item">
                 <label for="name">{{
@@ -85,8 +89,7 @@
                 [label]="'common.delete' | translate"
               ></button>
               <button
-                (click)="handleSendRequestGetEmployee()"
-                type="button"
+                type="submit"
                 pButton
                 class="p-button-primary p-button-sm"
                 [label]="'common.search' | translate"
@@ -102,27 +105,23 @@
     <p-table
       selectionMode="single"
       responsiveLayout="stack"
-      [breakpoint]="'960px'"
+      [breakpoint]="'1024px'"
       [value]="employeeList"
+      [tableStyle]="{ 'min-width': '200px' }"
     >
       <ng-template pTemplate="caption">
-        <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          "
-          class="flex align-items-center justify-content-between"
-        >
-          <div>{{ total }} {{ "common.record" | translate }}</div>
-          <div>
+        <div class="caption_table">
+          <div style="text-align: center">
+            {{ total }} {{ "common.record" | translate }}
+          </div>
+          <div style="display: flex; gap: 10px">
             <button
+              (click)="exportFile()"
               pButton
               icon="pi pi-download"
               class="p-button-sm p-button-warning p-button-raised"
             ></button>
             <button
-              style="margin-left: 10px"
               (click)="handleDisplayCreateEmployee()"
               pButton
               icon="pi pi-plus"
@@ -151,36 +150,40 @@
             <span class="p-column-title">{{
               "employeeManagement.employeeCode" | translate
             }}</span>
-            {{ employee.employee_code }}
+            <span>{{ employee.employee_code }}</span>
           </td>
           <td>
             <span class="p-column-title">{{
               "employeeManagement.fullName" | translate
             }}</span
-            >{{ employee.full_name }}
+            ><span style="text-align: end">{{ employee.full_name }}</span>
           </td>
           <td><span class="p-column-title">email</span>{{ employee.email }}</td>
           <td>
             <span class="p-column-title">{{
               "employeeManagement.sex" | translate
             }}</span
-            >{{ employee.gender }}
+            ><span style="text-align: end">{{ employee.gender }}</span>
           </td>
           <td>
             <span class="p-column-title">{{
               "employeeManagement.unit" | translate
             }}</span
-            >{{ employee.organization?.organization_unit_name }}
+            ><span style="text-align: end">{{
+              employee.organization?.organization_unit_name
+            }}</span>
           </td>
           <td>
             <span class="p-column-title">{{
               "employeeManagement.position" | translate
             }}</span>
-            {{ employee.job_position?.job_position_name }}
+            <span>{{ employee.job_position?.job_position_name }}</span>
           </td>
           <td>
             <span class="p-column-title">{{ "common.status" | translate }}</span
-            >{{ employee.employee_status?.employee_status_name }}
+            ><span style="text-align: end">{{
+              employee.employee_status?.employee_status_name
+            }}</span>
           </td>
           <td>
             <span class="p-column-title">{{

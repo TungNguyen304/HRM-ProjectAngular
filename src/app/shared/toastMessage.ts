@@ -106,4 +106,16 @@ export const toast: IToast = {
       return `${value} Provider Fail`;
     },
   },
+  deviceSuccess: {
+    summary: 'Success',
+    detail: (value: string) => {
+      return `${value} Device Success`;
+    },
+  },
+  deviceFail: {
+    summary: 'Fail',
+    detail: (value: string) => {
+      return `${value} Device Fail`;
+    },
+  },
 };

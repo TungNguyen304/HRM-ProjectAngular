@@ -27,7 +27,10 @@ import { ISex } from 'src/app/shared/interfaces';
 import { UnitService } from 'src/app/core/services/http/unit.service';
 import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
 import { PositionService } from 'src/app/core/services/http/position.service';
-import { Observable } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
+import { LoadingService } from 'src/app/core/services/state/loading.service';
+import { FileSaverService } from 'ngx-filesaver';
+import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
 
 @Component({
   selector: 'app-employee-management',
@@ -57,7 +60,10 @@ export class EmployeeManagementComponent {
     private toastService: ToastService,
     private fb: FormBuilder,
     private unitTreeService: UnitTreeService,
-    private positionService: PositionService
+    private positionService: PositionService,
+    private loadingService: LoadingService,
+    private _FileSaverService: FileSaverService,
+    private exportFileService: ExportFileService
   ) {
     this.sex = [{ value: 'Male' }, { value: 'FeMale' }];
     this.actions = [
@@ -147,6 +153,12 @@ export class EmployeeManagementComponent {
     );
   }
 
+  handleSearchEmployee(): void {
+    if (this.searchForm.valid) {
+      this.handleSendRequestGetEmployee();
+    }
+  }
+
   onSelectedChange(event: any) {
     event.node.key &&
       this.positionService
@@ -197,6 +209,22 @@ export class EmployeeManagementComponent {
         );
       this.handleSendRequestGetEmployee();
     });
+  }
+
+  exportFile() {
+    this.loadingService.setloading(true);
+    this.employeeService
+      .getAllStaff()
+      .pipe(
+        finalize(() => {
+          this.loadingService.setloading(false);
+        })
+      )
+      .subscribe((data: any) => {
+        if (data.statusCode === 200) {
+          this.exportFileService.exportAsExcelFile(data.response.data, 'Employee List');
+        }
+      });
   }
 
   handleDisplayCreateEmployee(): void {

@@ -8,7 +8,10 @@ export const translateBreadcrumbEn = {
     device: 'Estate',
     createEmployee: 'Create Employee',
     createDevice: 'Create Device',
-    detailEmployee: 'Detail Employee'
+    detailEmployee: 'Detail Employee',
+    updateEmployee: 'Update Employee',
+    detailDevice: 'Detail Device',
+    updateDevice: 'Update Device',
   }
 
   export const translateBreadcrumbVi = {
@@ -21,5 +24,7 @@ export const translateBreadcrumbEn = {
     device: 'Tài sản',
     createEmployee: 'Thêm nhân viên',
     createDevice: 'Thêm thiết bị',
-    detailEmployee: 'Chi tiết nhân viên'
+    detailEmployee: 'Chi tiết nhân viên',
+    updateDevice: 'Cập nhật thiết bị',
+    updateEmployee: 'Cập nhật nhân viên',
   }

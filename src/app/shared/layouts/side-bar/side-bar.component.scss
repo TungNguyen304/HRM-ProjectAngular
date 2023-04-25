@@ -56,15 +56,10 @@
     display: flex;
     text-align: center;
     margin-right: 20px;
-    cursor: pointer;
     img {
       width: 45px;
       margin: 0 auto;
       height: 45px;
-      object-fit: cover;
-      border-radius: 50%;
-      box-shadow: 0 0 6px 1px var(--primary-color-main);
-      transition: all 0.4s ease-in;
     }
   }
 }
@@ -323,18 +318,34 @@ body.dark .switch::before {
 
 .home {
   position: absolute;
-  padding: 0 30px;
+  padding: 0 20px 0 23px;
   top: 0;
   top: 0;
   left: 250px;
   min-height: 100vh;
   width: calc(100% - 250px);
-  background-color: #fff;
+  background-color: #f4f6f9;
   transition: var(--tran-05);
 }
 
 .sidebar.close ~ .home {
-  left: 88px;
+  padding: 0 20px 0 30px;
+  left: 78px;
   min-height: 100vh;
-  width: calc(100% - 88px);
+  width: calc(100% - 78px);
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+    &.close ~ .home {
+      left: 0;
+      padding: 0 20px 0 20px !important;
+      width: 100%;
+    }
+  }
+  .home {
+    width: 100%;
+    left: 0;
+  }
 }

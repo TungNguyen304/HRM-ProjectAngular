@@ -3,29 +3,24 @@
   <div class="table">
     <p-table
       responsiveLayout="stack"
-      [breakpoint]="'960px'"
+      [breakpoint]="'768px'"
       selectionMode="single"
       [value]="providerList"
     >
       <ng-template pTemplate="caption">
         <div>
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            "
-            class="flex align-items-center justify-content-between"
-          >
-            <div>{{ total }} {{ "common.record" | translate }}</div>
-            <div>
+          <div class="caption_table">
+            <div style="text-align: center">
+              {{ total }} {{ "common.record" | translate }}
+            </div>
+            <div style="display: flex; gap: 10px">
               <button
+                (click)="exportFile()"
                 pButton
                 icon="pi pi-download"
                 class="p-button-sm p-button-warning p-button-raised"
               ></button>
               <button
-                style="margin-left: 10px"
                 (click)="handleDisplayCreateProvider()"
                 pButton
                 icon="pi pi-plus"
@@ -52,7 +47,7 @@
           <th>{{ "provider.items" | translate }}</th>
           <th>{{ "common.address" | translate }}</th>
           <th>{{ "provider.contact" | translate }}</th>
-          <th style="text-align: end; width: 200px;">
+          <th style="text-align: end; width: 200px">
             <input
               (input)="handleGetProvider()"
               type="text"
@@ -69,25 +64,25 @@
             <span class="p-column-title">{{
               "provider.supplierName" | translate
             }}</span
-            >{{ provider.name }}
+            ><span style="text-align: end">{{ provider.name }}</span>
           </td>
           <td>
             <span class="p-column-title">{{
               "provider.items" | translate
             }}</span
-            >{{ provider.items }}
+            ><span style="text-align: end">{{ provider.items }}</span>
           </td>
           <td>
             <span class="p-column-title">{{
               "common.address" | translate
             }}</span
-            >{{ provider.address }}
+            ><span style="text-align: end">{{ provider.address }}</span>
           </td>
           <td>
             <span class="p-column-title">{{
               "provider.contact" | translate
             }}</span
-            >{{ provider.contact }}
+            ><span style="text-align: end">{{ provider.contact }}</span>
           </td>
           <td>
             <span class="p-column-title">{{

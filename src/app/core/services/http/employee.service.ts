@@ -16,13 +16,13 @@ export class EmployeeService {
   constructor(private http: HttpClient) {}
 
   getEmployee(
-    page: number,
-    limit: number,
-    keyword?: string,
-    gender?: string,
-    organization_unit_id?: string,
-    job_position_id?: string,
-    employee_status_id?: string
+    page: number = 1,
+    limit: number = 0,
+    keyword: string = '',
+    gender: string = '',
+    organization_unit_id: string = '',
+    job_position_id: string = '',
+    employee_status_id: string = ''
   ): Observable<Object> {
     let url = `users?page=${page}&limit=${limit}&keyword=${keyword}&organization_unit_id=${organization_unit_id}&job_position_id=${job_position_id}`;
     if (gender) {
@@ -36,6 +36,10 @@ export class EmployeeService {
       debounceTime(2000),
       switchMap((url) => this.http.get(url))
     );
+  }
+
+  getAllStaff(): Observable<Object> {
+    return this.http.get('users?page=1&limit=0').pipe(delay(2000));
   }
 
   getEmployeeById(id: string): Observable<Object> {

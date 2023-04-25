@@ -30,9 +30,16 @@ export class InterceptorRequest {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         console.log(error);
-        if (error.status === 401) {
-          localStorage.removeItem('token');
-          this.router.navigate(['auth/login']);
+        switch(error.status) {
+          case 401: {
+            localStorage.removeItem('token');
+            this.router.navigate(['auth/login']);
+            break;
+          }
+          case 403: {
+            this.router.navigate(['forbidden']);
+            break;
+          }
         }
         let errorMessage = '';
         if (error.error instanceof ErrorEvent) {

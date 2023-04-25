@@ -38,10 +38,12 @@ export class DetailProviderComponent {
     this.providerService
       .getProviderById(this.idProvider)
       .subscribe((data: any) => {
-        this.infoProvider = this.commonService.convertDataForTableRowStyle(
-          labelProvider,
-          data
-        );
+        if(data.statusCode === 200) {
+          this.infoProvider = this.commonService.convertDataForTableRowStyle(
+            labelProvider,
+            data
+          );
+        }
       });
   }
 }

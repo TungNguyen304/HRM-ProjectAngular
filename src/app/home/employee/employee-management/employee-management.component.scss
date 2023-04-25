@@ -75,12 +75,6 @@ h2 {
   }
 }
 
-@media (max-width: 1200px) {
-  .form_search {
-    form {
-      .form_list {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-  }
+.accordion {
+  box-shadow: unset;
 }

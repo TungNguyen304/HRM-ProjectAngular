@@ -2,119 +2,28 @@
   <span (click)="handleBack()"><i class="bi bi-arrow-left-short"></i></span>
   <h2 class="title">{{ "title.createDevice" | translate }}</h2>
 </div>
-<div class="create_device">
-  <div class="main_form">
-    <h3 class="title">{{ "title.basicInformation" | translate }}</h3>
-    <form class="form">
-      <div class="form_item">
-        <label for="code">
-          <span>{{ "createDevice.propertyCode" | translate }}</span>
-          <span style="color: red">*</span>
-        </label>
-        <input type="text" id="code" pInputText />
+<form [formGroup]="deviceForm" (ngSubmit)="onSubmit()" action="">
+  <div class="create_device">
+    <div class="main_form">
+      <div class="wrap_main_form">
+        <app-basic-information [deviceInfo]="deviceInfo" [deviceForm]="deviceForm"/>
       </div>
-      <div class="form_item">
-        <label for="name">
-          <span>{{ "createDevice.propertyName" | translate }}</span>
-          <span style="color: red">*</span>
-        </label>
-        <input type="text" id="name" pInputText />
-      </div>
-      <div class="form_item">
-        <label for="type">
-          <span>{{ "createDevice.type" | translate }}</span>
-        </label>
-        <p-dropdown [options]="sex" optionLabel="value"></p-dropdown>
-      </div>
-      <div class="form_item">
-        <label for="">
-          <span>{{ "createDevice.purchaseDate" | translate }}</span>
-          <span style="color: red">*</span>
-        </label>
-        <p-calendar [showButtonBar]="true" dateFormat="dd.mm.yy"></p-calendar>
-      </div>
-      <div class="form_item">
-        <label for="number">
-          <span>{{ "createDevice.someBills" | translate }}</span>
-          <span style="color: red">*</span>
-        </label>
-        <input id="number" type="text" pInputText />
-      </div>
-      <div class="form_item">
-        <label for="sum">
-          <span>{{ "createDevice.totalAmount" | translate }}</span>
-        </label>
-
-        <div class="p-inputgroup">
-          <input type="number" id="sum" pInputText />
-          <span class="p-inputgroup-addon">$</span>
-        </div>
-      </div>
-      <div class="form_item">
-        <label for="employee">
-          <span>{{ "createDevice.employeeUse" | translate }}</span>
-        </label>
-        <p-dropdown [options]="sex" optionLabel="value"></p-dropdown>
-      </div>
-      <div class="form_item">
-        <label for="status">
-          <span>{{ "common.status" | translate }}</span>
-        </label>
-        <p-dropdown [options]="sex" optionLabel="value"></p-dropdown>
-      </div>
-    </form>
-  </div>
-  <div class="sub_form">
-    <div class="upgrade_info">
-      <h3 class="title">{{ "title.infoRepair" | translate }}</h3>
-      <form class="form">
-        <div class="form_item">
-          <label for="">
-            <span>{{ "createDevice.day" | translate }}</span>
-          </label>
-          <p-calendar [showButtonBar]="true" dateFormat="dd.mm.yy"></p-calendar>
-        </div>
-        <div class="form_item">
-          <label for="content">
-            <span>{{ "createDevice.content" | translate }}</span>
-          </label>
-          <textarea id="content" pInputTextarea></textarea>
-        </div>
-        <div class="form_item">
-          <label for="money">
-            <span>{{ "createDevice.AmountOfMoney" | translate }}</span>
-          </label>
-          <div class="p-inputgroup">
-            <input style="flex: 1" id="money" type="number" pInputText />
-            <span class="p-inputgroup-addon">$</span>
-          </div>
-        </div>
-      </form>
     </div>
-    <div class="current_employee">
-      <h3 class="title">{{ "title.currentUser" | translate }}</h3>
-      <form class="form">
-        <div class="form_item">
-          <label for="email">
-            <span>Email</span>
-          </label>
-          <input type="text" id="email" pInputText />
-        </div>
-        <div class="form_item">
-          <label for="name">
-            <span>{{ "createDevice.date" | translate }}</span>
-          </label>
-          <p-calendar [showButtonBar]="true" dateFormat="dd.mm.yy"></p-calendar>
-        </div>
-      </form>
+    <div class="sub_form">
+      <div class="upgrade_info">
+      <app-repair-information [deviceInfo]="deviceInfo" [deviceForm]="deviceForm"/>
+      </div>
+      <div class="current_employee">
+      <app-employee-information/>
+      </div>
     </div>
   </div>
-</div>
-
-<div class="create_new">
-  <button
-    pButton
-    class="p-button-outlined p-button-success"
-    [label]="'title.create' | translate"
-  ></button>
-</div>
+  <div class="create_new">
+    <button
+      pButton
+      type="submit"
+      class="p-button.p-button-raised"
+      [label]="'title.create' | translate"
+    ></button>
+  </div>
+</form>

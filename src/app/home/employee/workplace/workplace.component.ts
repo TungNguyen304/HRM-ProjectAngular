@@ -6,6 +6,8 @@ import { IPropsMember } from '../components/member-table/member-table.component'
 import { ToastService } from 'src/app/core/services/helper/toast.service';
 import { toast } from 'src/app/shared/toastMessage';
 import { finalize } from 'rxjs';
+import { LoadingService } from 'src/app/core/services/state/loading.service';
+import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
 
 export interface IPositionForm {
   name: string;
@@ -23,7 +25,9 @@ export class WorkplaceComponent implements OnInit {
   public positionList: IPosition[];
   constructor(
     private positionService: PositionService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private loadingService: LoadingService,
+    private exportFileService: ExportFileService
   ) {}
   @ViewChild('paginator') paginator: ElementRef;
   public displayCreate: boolean = false;
@@ -64,6 +68,22 @@ export class WorkplaceComponent implements OnInit {
     } else {
       this.toastService.toastError(toast.workplaceFail, this.typeAction);
     }
+  }
+
+  exportFile() {
+    this.loadingService.setloading(true);
+    this.positionService
+      .getAllPosition()
+      .pipe(
+        finalize(() => {
+          this.loadingService.setloading(false);
+        })
+      )
+      .subscribe((data: any) => {
+        if (data.statusCode === 200) {
+          this.exportFileService.exportAsExcelFile(data.response.data, 'Position List');
+        }
+      });
   }
 
   onPageChange(event: any): void {

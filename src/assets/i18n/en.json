@@ -45,11 +45,13 @@
     "propertyName": "Estate name",
     "purchaseDate": "Purchase date",
     "someBills": "Some bills",
+    "upgradeContent": "Content upgrade/repair",
     "totalAmount": "Total amount",
     "employeeUse": "Employee use",
     "day": "Day",
     "user": "User",
     "date": "Date",
+    "provider": "Provider",
     "content": "Content",
     "AmountOfMoney": "Amount of money",
     "codeOrName": "Estate code / name",
@@ -93,6 +95,7 @@
   },
 
   "common": {
+    "money": "$",
     "action": "Action",
     "status": "Status",
     "record": "records",
@@ -136,7 +139,7 @@
     "contact": "Contact",
     "address": "Address"
   },
-  
+
   "createProvider": {
     "note": "Note",
     "conclude": "Conclude",

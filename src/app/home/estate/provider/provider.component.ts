@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, finalize } from 'rxjs';
+import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
 import { ModalService } from 'src/app/core/services/helper/modal.service';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
 import { ProviderService } from 'src/app/core/services/http/provider.service';
+import { LoadingService } from 'src/app/core/services/state/loading.service';
 import { toast } from 'src/app/shared/toastMessage';
 
 @Component({
@@ -25,12 +27,33 @@ export class ProviderComponent {
   constructor(
     private providerService: ProviderService,
     private toastService: ToastService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private loadingService: LoadingService,
+    private exportFileService: ExportFileService
   ) {}
 
   handleDisplayCreateProvider(): void {
     this.typeAction = 'Add';
     this.displayCreate = !this.displayCreate;
+  }
+
+  exportFile() {
+    this.loadingService.setloading(true);
+    this.providerService
+      .getAllProvider()
+      .pipe(
+        finalize(() => {
+          this.loadingService.setloading(false);
+        })
+      )
+      .subscribe((data: any) => {
+        if (data.statusCode === 200) {
+          this.exportFileService.exportAsExcelFile(
+            data.response.data,
+            'Distributor List'
+          );
+        }
+      });
   }
 
   showMessage(type: boolean): void {
