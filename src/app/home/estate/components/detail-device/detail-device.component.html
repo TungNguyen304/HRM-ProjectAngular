@@ -6,9 +6,16 @@
   <div class="detail_info">
     <div class="export">
       <button
+        (click)="displayBorrow()"
+        pButton
+        [label]="'common.requestToBorrow' | translate"
+        class="p-button-warning p-button-sm"
+        icon="bi bi-airplane"
+      ></button>
+      <button
         (click)="exportFile()"
         pButton
-        label="Xuất Excel"
+        [label]="'common.exportExcel' | translate"
         class="p-button-warning p-button-sm"
         icon="bi bi-download"
       ></button>
@@ -61,15 +68,103 @@
   </div>
 </div>
 
-<!-- <ng-template #avt let-info="info">
-    <div class="avt_template">
-      <img *ngIf="info" [src]="info" alt="">
-      <div *ngIf="!info" class="avt_empty">
-        <div>NO IMAGE AVAILABLE</div>
-      </div>
+<p-dialog [modal]="true" [(visible)]="displayHistoryBorrow">
+  <ng-template pTemplate="header"
+    ><h3 class="title">
+      {{ "common.historyBorrow" | translate }}
+    </h3></ng-template
+  >
+  <ng-template pTemplate="content">
+    <p-table [value]="historyBorrow" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Quantity</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-history>
+        <tr>
+          <td>{{ history.code }}</td>
+          <td>{{ history.name }}</td>
+          <td>{{ history.category }}</td>
+          <td>{{ history.quantity }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <app-load-small *ngIf="loadDisplay"></app-load-small>
+      </ng-template>
+    </p-table>
+    <div class="no_data" *ngIf="!loadDisplay && total === 0">
+      {{ "common.noData" | translate }}
+    </div>
+    <p-paginator
+      *ngIf="total > 0"
+      (onPageChange)="onPageChange($event)"
+      [first]="0"
+      [rows]="limit"
+      [totalRecords]="total"
+      [showFirstLastIcon]="false"
+    ></p-paginator>
+    <div style="text-align: end">
+      <button
+        (click)="displayCreateRequest = true"
+        pButton
+        [label]="'common.createRequest' | translate"
+        class="p-button-sm p-button-raise"
+      ></button>
     </div>
   </ng-template>
-  
-  <ng-template #normal let-info="info">
-    {{info}}
-  </ng-template> -->
+</p-dialog>
+
+<p-dialog
+  [style]="{ width: '50vw' }"
+  [modal]="true"
+  [(visible)]="displayCreateRequest"
+>
+  <ng-template pTemplate="header"
+    ><h3 class="title">
+      {{ "common.createRequest" | translate }}
+    </h3></ng-template
+  >
+  <ng-template pTemplate="content">
+    <div class="request">
+      <form (ngSubmit)="onSubmit()" [formGroup]="requestForm" action="">
+        <div class="form_item">
+          <label
+            ><span>{{ "createEmployee.time" | translate }}</span></label
+          >
+          <p-calendar
+            formControlName="time"
+            selectionMode="range"
+            [showButtonBar]="true"
+            dateFormat="dd.mm.yy"
+          ></p-calendar>
+        </div>
+        <div class="form_item">
+          <label
+            ><span>{{ "createDevice.content" | translate }}</span></label
+          >
+          <textarea
+            formControlName="description"
+            id="float-input"
+            rows="5"
+            cols="30"
+            pInputTextarea
+            [autoResize]="true"
+          ></textarea>
+        </div>
+
+        <div style="text-align: center; margin-top: 10px">
+          <button
+            type="submit"
+            pButton
+            [label]="'common.createRequest' | translate"
+            class="p-button-sm p-button-raise"
+          ></button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</p-dialog>

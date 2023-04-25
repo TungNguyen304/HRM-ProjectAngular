@@ -83,4 +83,8 @@ export class DeviceService {
       })
       .pipe(delay(2000));
   }
+
+  addRequestBorrow(data: any): Observable<Object> {
+    return this.http.post('assets/request/create', data).pipe(delay(2000));
+  }
 }

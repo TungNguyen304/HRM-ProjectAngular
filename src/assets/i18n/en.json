@@ -112,7 +112,10 @@
     "logout": "Logout",
     "exportExcel": "Export excel",
     "back": "Back",
-    "reviewLink": "Link đánh giá"
+    "reviewLink": "Link đánh giá",
+    "requestToBorrow": "Request to borrow",
+    "createRequest": "Create request",
+    "historyBorrow": "History borrow"
   },
 
   "workplace": {

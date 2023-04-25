@@ -13,7 +13,7 @@ export const labelDeviceVi = [
     ],
   },
   { key: 'asset_name', name: 'Tên' },
-  { key: 'distributor_id', name: 'Nhà cung cấp' },
+  { key: 'distributor_name', name: 'Nhà cung cấp' },
   {
     key: 'user_using_collection',
     name: 'NV sử dụng hiện tại',
@@ -59,7 +59,7 @@ export const labelDeviceEn = [
     ],
   },
   { key: 'asset_name', name: 'Name' },
-  { key: 'distributor_id', name: 'supplier' },
+  { key: 'distributor_name', name: 'supplier' },
   {
     key: 'user_using_collection',
     name: 'current user staff',
