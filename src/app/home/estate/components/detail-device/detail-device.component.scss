@@ -31,7 +31,9 @@
     padding: 20px;
     border-radius: 5px;
     .export {
-      text-align: end;
+      justify-content: flex-end;
+      display: flex;
+      gap: 10px;
       margin-bottom: 20px;
     }
   }
@@ -85,5 +87,75 @@
       font-size: 12px;
       font-weight: 500;
     }
+  }
+}
+
+.request {
+  ::ng-deep .p-float-label {
+    margin-top: 25px;
+  }
+}
+
+form {
+  .form_item {
+    display: flex;
+    position: relative;
+    margin-bottom: 30px;
+    flex-direction: column;
+    label {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      span {
+        font-size: 16px;
+        font-weight: bold;
+        font-family: "Times New Roman", Times, serif;
+        margin-right: 10px;
+      }
+      button {
+        pointer-events: none;
+      }
+    }
+    p {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: calc(100% + 10px);
+      font-style: italic;
+      font-size: 12px;
+      right: 0;
+      color: red;
+      i {
+        margin-right: 5px;
+      }
+    }
+    .avt {
+      width: 200px;
+      height: 200px;
+      border: 2px dashed black;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      overflow: hidden;
+      img {
+        width: 15%;
+        height: 15%;
+        object-fit: cover;
+        &.image {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  ::ng-deep .p-calendar {
+    width: 100%;
   }
 }

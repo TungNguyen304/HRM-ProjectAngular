@@ -67,7 +67,10 @@
     "exportExcel": "Xuất excel",
     "back": "Trở lại",
     "noImage": "KHÔNG CÓ ẢNH",
-    "reviewLink": "Link đánh giá"
+    "reviewLink": "Link đánh giá",
+    "requestToBorrow": "Yêu cầu mượn",
+    "createRequest": "Tạo yêu cầu",
+    "historyBorrow": "Lịch sử mượn"
   },
 
   "workplace": {
