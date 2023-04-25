@@ -26,6 +26,7 @@ import { ToastService } from 'src/app/core/services/helper/toast.service';
 import { toast } from 'src/app/shared/toastMessage';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
 import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
+import { ProviderService } from 'src/app/core/services/http/provider.service';
 
 @Component({
   selector: 'app-device',
@@ -57,7 +58,8 @@ export class DeviceComponent {
     private estateService: EstateService,
     private toastService: ToastService,
     private loadingService: LoadingService,
-    private exportFileService: ExportFileService
+    private exportFileService: ExportFileService,
+    private providerService: ProviderService
   ) {
     this.actions = [
       {
@@ -170,23 +172,38 @@ export class DeviceComponent {
       });
   }
 
+  handleGetProviderByDevice(deviceList: any[], providerList: any[]) {
+    return deviceList.map((device) => {
+      const provider = providerList.find((provider: any) => {
+        return provider.distributor_id === device.distributor_id;
+      });
+      return { ...device, distributor_name: provider.name };
+    });
+  }
+
   ngOnInit() {
     this.loadDisplay = true;
     combineLatest({
       device: this.handleGetDevice(),
-      type: this.deviceService.getDeviceType()
-    }).subscribe((res: any) => {
-      if(res.device.statusCode === 200) {
-        this.deviceList = res.device.response.data;
-        this.total = res.device.response.total;
+      type: this.deviceService.getDeviceType(),
+      provider: this.providerService.getAllProvider(),
+    }).subscribe(
+      (res: any) => {
+        if (res.type.statusCode === 200) {
+          this.typeDevice = res.type.response;
+        }
+        if (res.provider.statusCode === 200 && res.device.statusCode === 200) {
+          this.deviceList = this.handleGetProviderByDevice(
+            res.device.response.data,
+            res.provider.response.data
+          );
+        }
+        this.loadDisplay = false;
+      },
+      () => {
+        this.loadDisplay = false;
       }
-      if(res.type.statusCode === 200) {
-        this.typeDevice = res.type.response;
-      }
-      this.loadDisplay = false;
-    }, () => {
-      this.loadDisplay = false;
-    })
+    );
 
     this.searchDeviceForm = this.fb.group({
       code: ['', [Validators.maxLength(255), emojiValidator]],

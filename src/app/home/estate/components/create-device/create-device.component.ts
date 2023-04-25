@@ -43,6 +43,7 @@ import { toast } from 'src/app/shared/toastMessage';
 export class CreateDeviceComponent {
   public deviceForm: FormGroup;
   public deviceInfo: any;
+  public providerList: any;
   public typeAction: typeAction = this.router.url.includes('update-device')
     ? 'update'
     : 'add';
@@ -138,7 +139,10 @@ export class CreateDeviceComponent {
       basicInfo: {
         code: deviceInfo.asset_code,
         name: deviceInfo.asset_name,
-        provider: deviceInfo.distributor_id,
+        provider: this.estateService.handleGetValueProvider(
+          this.providerList,
+          deviceInfo.distributor_id
+        ),
         type: deviceInfo.asset_type_collection,
         buyDate: this.commonService.convertDateVi(deviceInfo.date_bought),
         billNumber: deviceInfo.bill_number,
@@ -221,6 +225,7 @@ export class CreateDeviceComponent {
                   break;
                 }
                 case 'provider': {
+                  this.providerList = data[item].response.data;
                   this.estateService.handleSetValueForDeviceStore(
                     item,
                     data[item].response.data
@@ -272,6 +277,8 @@ export class CreateDeviceComponent {
         if (this.typeAction === 'update') {
           this.patchValueForForm(this.deviceInfo);
         }
+        console.log(this.providerList);
+
         subcription.unsubscribe();
       });
   }
