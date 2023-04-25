@@ -38,6 +38,10 @@ export class EmployeeService {
     );
   }
 
+  getAllStaff(): Observable<Object> {
+    return this.http.get('users?page=1&limit=0').pipe(delay(2000));
+  }
+
   getEmployeeById(id: string): Observable<Object> {
     return this.http.get(`users/${id}`).pipe(delay(2000));
   }

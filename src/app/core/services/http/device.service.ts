@@ -56,6 +56,10 @@ export class DeviceService {
     );
   }
 
+  getAllDevice(): Observable<Object> {
+    return this.http.get('assets?page=1&limit=0').pipe(delay(2000));
+  }
+
   getDeviceById(id: number): Observable<Object> {
     return this.http.get(`assets/${id}`).pipe(delay(2000));
   }

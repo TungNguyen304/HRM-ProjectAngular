@@ -1,11 +1,12 @@
 <div class="detail_employee">
   <div class="header">
-    <h2 class="title">{{"title.detailEmployee" | translate}}</h2>
+    <h2 class="title">{{ "title.detailEmployee" | translate }}</h2>
     <span (click)="handleBack()"><i class="bi bi-arrow-left-short"></i></span>
   </div>
   <div class="detail_info">
     <div class="export">
       <button
+        (click)="exportFile()"
         pButton
         label="Xuất Excel"
         class="p-button-warning p-button-sm"

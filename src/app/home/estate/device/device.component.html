@@ -117,14 +117,13 @@
       [value]="deviceList"
     >
       <ng-template pTemplate="caption">
-        <div
-          class="caption_table"
-        >
+        <div class="caption_table">
           <div style="text-align: center">
             {{ total }} {{ "common.record" | translate }}
           </div>
           <div style="display: flex; gap: 10px">
             <button
+              (click)="exportFile()"
               pButton
               icon="pi pi-download"
               class="p-button-sm p-button-warning p-button-raised"

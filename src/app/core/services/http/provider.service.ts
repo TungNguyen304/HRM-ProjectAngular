@@ -35,6 +35,10 @@ export class ProviderService {
     // .pipe(delay(2000));
   }
 
+  getAllProvider(): Observable<Object> {
+    return this.http.get('distributors?page=1&limit=0').pipe(delay(2000));
+  }
+
   getProviderById(id: string): Observable<Object> {
     return this.http.get(`distributors/${id}`);
   }

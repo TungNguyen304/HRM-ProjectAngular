@@ -13,6 +13,7 @@
             <div>{{ total }} {{ "common.record" | translate }}</div>
             <div style="display: flex; gap: 10px">
               <button
+                (click)="exportFile()"
                 pButton
                 icon="pi pi-download"
                 class="p-button-sm p-button-warning p-button-raised"

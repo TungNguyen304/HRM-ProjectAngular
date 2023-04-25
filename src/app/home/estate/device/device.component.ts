@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, combineLatest, finalize, switchMap } from 'rxjs';
 import { CommonService } from 'src/app/core/services/common.service';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import { emojiValidator } from 'src/app/core/services/helper/validator.service';
@@ -24,6 +24,8 @@ import { StatusAsset } from './data';
 import { ModalService } from 'src/app/core/services/helper/modal.service';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
 import { toast } from 'src/app/shared/toastMessage';
+import { LoadingService } from 'src/app/core/services/state/loading.service';
+import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
 
 @Component({
   selector: 'app-device',
@@ -53,7 +55,9 @@ export class DeviceComponent {
     private languageService: LanguageService,
     private modalService: ModalService,
     private estateService: EstateService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private loadingService: LoadingService,
+    private exportFileService: ExportFileService
   ) {
     this.actions = [
       {
@@ -147,28 +151,42 @@ export class DeviceComponent {
     return this.deviceService.getDevice(this.pageCurrent, this.limit);
   }
 
+  exportFile() {
+    this.loadingService.setloading(true);
+    this.deviceService
+      .getAllDevice()
+      .pipe(
+        finalize(() => {
+          this.loadingService.setloading(false);
+        })
+      )
+      .subscribe((data: any) => {
+        if (data.statusCode === 200) {
+          this.exportFileService.exportAsExcelFile(
+            data.response.data,
+            'Device List'
+          );
+        }
+      });
+  }
+
   ngOnInit() {
     this.loadDisplay = true;
-    this.handleGetDevice().subscribe(
-      (data: any) => {
-        if (data.statusCode === 200) {
-          console.log(data.response.data);
-
-          this.deviceList = data.response.data;
-          this.total = data.response.total;
-          this.loadDisplay = false;
-        }
-      },
-      () => {
-        this.loadDisplay = false;
+    combineLatest({
+      device: this.handleGetDevice(),
+      type: this.deviceService.getDeviceType()
+    }).subscribe((res: any) => {
+      if(res.device.statusCode === 200) {
+        this.deviceList = res.device.response.data;
+        this.total = res.device.response.total;
       }
-    );
-
-    this.deviceService.getDeviceType().subscribe((data: any) => {
-      if (data.statusCode === 200) {
-        this.typeDevice = data.response;
+      if(res.type.statusCode === 200) {
+        this.typeDevice = res.type.response;
       }
-    });
+      this.loadDisplay = false;
+    }, () => {
+      this.loadDisplay = false;
+    })
 
     this.searchDeviceForm = this.fb.group({
       code: ['', [Validators.maxLength(255), emojiValidator]],
