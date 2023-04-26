@@ -27,11 +27,32 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 250px;
+  width: 300px;
   padding: 0 14px 10px 14px;
   background: var(--sidebar-color);
   transition: var(--tran-05);
   z-index: 100;
+  .close_icon {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--primary-color-main);
+    padding: 7px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    transition: var(--tran-03);
+    &:hover {
+      background-color: var(--primary-color-main);
+      color: #fff;
+    }
+    i {
+      display: flex;
+    }
+  }
 }
 .sidebar.close {
   width: 88px;
@@ -118,6 +139,7 @@
   display: flex;
   flex-direction: column;
 }
+
 header .image-text .name {
   margin-top: 2px;
   font-size: 18px;
@@ -318,12 +340,12 @@ body.dark .switch::before {
 
 .home {
   position: absolute;
-  padding: 0 20px 0 23px;
+  padding: 0 20px 0 20px;
   top: 0;
   top: 0;
-  left: 250px;
+  left: 300px;
   min-height: 100vh;
-  width: calc(100% - 250px);
+  width: calc(100% - 300px);
   background-color: #f4f6f9;
   transition: var(--tran-05);
 }
@@ -335,17 +357,70 @@ body.dark .switch::before {
   width: calc(100% - 78px);
 }
 
+.layer {
+  position: fixed;
+  opacity: 0;
+  transition: var(--tran-05);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba($color: #000000, $alpha: 0.7);
+  z-index: -1;
+}
+
+.sidebar {
+  li.language {
+    display: none;
+  }
+}
+
+.sidebar_avt {
+  display: none;
+  margin-top: 10px;
+  :host .personal {
+    justify-content: space-between;
+    padding: 5px 5px 5px 18px;
+    border-radius: 6px;
+    .avt {
+      border-radius: 6px;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .sidebar {
-    display: none;
+    .close_icon {
+      display: block;
+    }
+    left: -100%;
     &.close ~ .home {
+      position: relative;
       left: 0;
       padding: 0 20px 0 20px !important;
       width: 100%;
+    }
+    li.language {
+      display: flex;
+      cursor: pointer;
     }
   }
   .home {
     width: 100%;
     left: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .sidebar_avt {
+    display: block;
+    :host .personal .email {
+      width: 70%;
+      overflow: hidden;
+    }
+  }
+  .sidebar {
+    width: 100vw;
+    box-shadow: none;
   }
 }

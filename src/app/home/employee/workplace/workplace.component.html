@@ -5,7 +5,7 @@
       selectionMode="single"
       [value]="positionList"
       responsiveLayout="stack"
-      [breakpoint]="'768px'"
+      [breakpoint]="'1024px'"
     >
       <ng-template pTemplate="caption">
         <div>
@@ -101,7 +101,7 @@
               position.job_position_category
             }}</span>
           </td>
-          <td style="text-align: end">
+          <td class="action_col" style="text-align: end">
             <button
               (click)="
                 handleShowOverlayMember(

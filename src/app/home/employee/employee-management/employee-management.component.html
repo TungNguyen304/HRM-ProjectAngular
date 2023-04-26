@@ -105,7 +105,7 @@
     <p-table
       selectionMode="single"
       responsiveLayout="stack"
-      [breakpoint]="'1024px'"
+      [breakpoint]="'1200px'"
       [value]="employeeList"
       [tableStyle]="{ 'min-width': '200px' }"
     >
@@ -189,9 +189,9 @@
             <span class="p-column-title">{{
               "common.action" | translate
             }}</span>
-            <div>
+            <div style="text-align: end;">
               <p-splitButton
-                styleClass="p-button-sm mr-2 mb-2"
+                styleClass="p-button-sm"
                 [model]="actions"
                 (onDropdownClick)="handleActionsClick(employee)"
               ></p-splitButton>

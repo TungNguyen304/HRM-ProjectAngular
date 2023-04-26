@@ -12,7 +12,7 @@ export class MemberService {
   getMember(page:number, limit:number, keyword?:string):Observable<Object> {
     this.member$.next(`users/my-colleagues?page=${page}&limit=${limit}${keyword ? `&keyword=${keyword}` : ''}`)
     return this.member$.pipe(
-      debounceTime(1500),
+      debounceTime(2000),
       switchMap((url) => this.http.get(url))
     )
   }

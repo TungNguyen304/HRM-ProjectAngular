@@ -2,6 +2,11 @@
   <div class="home_container">
       <app-side-bar>
         <div style="padding-bottom: 30px;">
+          <div class="breadcrumb">
+            <div class="card flex justify-content-center">
+              <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+            </div>
+          </div>
           <router-outlet></router-outlet>
         </div>
       </app-side-bar>

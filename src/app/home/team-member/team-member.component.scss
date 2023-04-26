@@ -58,22 +58,44 @@
     padding: 20px;
     background-color: #fff;
     margin-top: 20px;
-    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+      rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
   }
   .team_list {
     display: grid;
     border-radius: 10px 10px 0 0;
     margin-bottom: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 30px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .team .team_list {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
   .team {
     width: 100%;
+    .team_list {
+      grid-template-columns: repeat(1, 1fr);
+    }
     .search {
       max-width: 100%;
     }
   }
 }
+
+@media (max-width: 340) {
+  .team {
+    .team_list {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    .search {
+      max-width: 100%;
+    }
+  }
+}
+

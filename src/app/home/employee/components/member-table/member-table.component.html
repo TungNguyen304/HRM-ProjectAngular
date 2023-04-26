@@ -1,5 +1,5 @@
 <div class="member_table">
-  <p-table [value]="memberList" [tableStyle]="{ 'min-width': '50rem' }">
+  <p-table responsiveLayout="stack" [breakpoint]="'768px'" [value]="memberList">
     <ng-template pTemplate="header">
       <tr style="text-align: center">
         <th>{{ "employeeManagement.employeeCode" | translate }}</th>
@@ -11,40 +11,69 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-member>
-      <tr>
-        <td>{{ member?.employee_code }}</td>
-        <td>{{ member?.full_name }}</td>
-        <td>{{ member?.gender }}</td>
-        <td>{{ member?.job_position?.job_position_name }}</td>
-        <td>{{ member?.organization?.organization_unit_name }}</td>
+      <tr *ngIf="!loadDisplay">
         <td>
+          <span class="p-column-title">{{
+            "employeeManagement.employeeCode" | translate
+          }}</span
+          ><span style="text-align: end">{{ member?.employee_code }}</span>
+        </td>
+        <td>
+          <span class="p-column-title">{{
+            "employeeManagement.fullName" | translate
+          }}</span
+          ><span style="text-align: end">{{ member?.full_name }}</span>
+        </td>
+        <td>
+          <span class="p-column-title">{{
+            "employeeManagement.sex" | translate
+          }}</span
+          ><span style="text-align: end">{{ member?.gender }}</span>
+        </td>
+        <td>
+          <span class="p-column-title">{{
+            "employeeManagement.position" | translate
+          }}</span
+          ><span style="text-align: end">{{
+            member?.job_position?.job_position_name
+          }}</span>
+        </td>
+        <td>
+          <span class="p-column-title">{{
+            "employeeManagement.unit" | translate
+          }}</span
+          ><span style="text-align: end">{{
+            member?.organization?.organization_unit_name
+          }}</span>
+        </td>
+        <td>
+          <span class="p-column-title">{{ "common.action" | translate }}</span>
           <div class="action">
             <button
+              (click)="handleNavigateUpdateEmployee(member?.employee_id)"
               pButton
               icon="bi bi-pen"
-              class="p-button-rounded p-button-sm p-button-primary"
+              class="p-button-raised p-button-sm p-button-primary"
             ></button>
             <button
+              (click)="handleNavigateDetailEmployee(member?.employee_id)"
               pButton
               icon="bi bi-file-text"
-              class="p-button-rounded p-button-sm p-button-success"
+              class="p-button-raised p-button-sm p-button-warning"
             ></button>
           </div>
         </td>
       </tr>
     </ng-template>
+    <ng-template pTemplate="footer">
+      <app-load-small *ngIf="loadDisplay"></app-load-small>
+    </ng-template>
   </p-table>
-  <div
-    style="
-      text-align: center;
-      padding: 20px 0;
-      border-bottom: 1px solid #dee2e6;
-    "
-    *ngIf="total === 0 ? true : false"
-  >
-    <p>No Member</p>
+  <div class="no_data" *ngIf="!loadDisplay && total === 0">
+    {{ "common.noData" | translate }}
   </div>
   <p-paginator
+    *ngIf="total > 0"
     (onPageChange)="onPageChange($event)"
     [first]="0"
     [rows]="limit"

@@ -5,14 +5,8 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { NavigationEnd, Router, RouterEvent } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { MenuItem } from 'primeng/api';
-import { AccountService } from 'src/app/core/services/state/account.service';
+import { ChooseLanguageService } from 'src/app/core/services/helper/chooseLanguage.service';
 import { LanguageService } from 'src/app/core/services/state/language.service';
-import { IAccount, ILanguage } from '../../interfaces';
-import { translateBreadcrumbEn, translateBreadcrumbVi } from './data';
 
 @Component({
   selector: 'app-header',
@@ -21,18 +15,13 @@ import { translateBreadcrumbEn, translateBreadcrumbVi } from './data';
 })
 export class HeaderComponent {
   constructor(
-    private translate: TranslateService,
-    private languageService: LanguageService,
-    private router: Router,
-    private activateRoute: ActivatedRoute,
-    private accountService: AccountService
+    private chooseLanguageService: ChooseLanguageService,
+    private languageService: LanguageService
   ) {}
-  public items: MenuItem[];
-  public home: MenuItem;
+
   public account: any;
   @Output() displaySidebar: EventEmitter<void> = new EventEmitter<void>();
   public checked: boolean = false;
-  public language: ILanguage;
   public languages = [
     {
       name: 'en',
@@ -67,72 +56,24 @@ export class HeaderComponent {
     JSON.parse(localStorage.getItem('language') as string)?.image ||
     'england_flag.gif';
   @ViewChild('popupLanguage') popupLanguage: ElementRef;
-  @ViewChild('country') country: ElementRef;
+  @ViewChild('country', { static: true }) country: ElementRef;
 
   ngOnInit() {
-    this.items = [];
-    this.handleBreadCrumb(this.handleRemoveIdFromPath(this.router.url));
-    this.router.events.subscribe((val) => {
-      if (val instanceof NavigationEnd) {
-        this.handleBreadCrumb(this.handleRemoveIdFromPath(val.url));
-      }
-    });
-    this.languageService.language$.subscribe((data) => {
-      this.language = data;
-      this.handleBreadCrumb(this.handleRemoveIdFromPath(this.router.url));
-    });
-    this.home = { icon: 'bi bi-house-fill', routerLink: '/team-member' };
-    this.accountService.account$.subscribe((data: any) => {
-      this.account = data;
-    });
-  }
-  handleRemoveIdFromPath(path: string): string {
-    const listUrl = path.split('/');
-    if (path.includes('detail-employee') || path.includes('detail-device')) {
-      listUrl.pop();
-    }
-    return listUrl.join('/');
-  }
-
-  translateBreadcrumb(val: string): string {
-    const newVal = val.split('-').map((item, index) => {
-      if (index === 0) {
-        return item;
-      }
-      return item[0].toUpperCase() + item.slice(1);
-    });
-    return newVal.join('');
-  }
-
-  handleBreadCrumb(val: string) {
-    const [a, ...url] = val.split('/');
-    let urlTemp = '';
-    this.items = url
-      .map((item) => {
-        urlTemp += `/${item}`;
-        if (item === 'employee' || item === 'estate') {
-          return {};
+    this.languageService.language$.subscribe((lang) => {
+      this.languages.forEach((item) => {
+        if (item.name === lang) {
+          this.country.nativeElement.src =
+            '../../../../assets/images/' + item.image;
         }
-        return {
-          label:
-            this.language === 'en'
-              ? translateBreadcrumbEn[
-                  this.translateBreadcrumb(
-                    item
-                  ) as keyof typeof translateBreadcrumbEn
-                ]
-              : translateBreadcrumbVi[
-                  this.translateBreadcrumb(
-                    item
-                  ) as keyof typeof translateBreadcrumbVi
-                ],
-          routerLink: urlTemp,
-        };
-      })
-      .filter((item) => {
-        return Object.keys(item).length > 0;
       });
+    });
+    
   }
+
+  display(): void {
+    this.displaySidebar.emit();
+  }
+
   displayPopupLanguage(): void {
     if (this.popupLanguage.nativeElement.style.display === 'grid') {
       this.popupLanguage.nativeElement.style.display = 'none';
@@ -140,33 +81,9 @@ export class HeaderComponent {
       this.popupLanguage.nativeElement.style.display = 'grid';
     }
   }
-  display(): void {
-    this.displaySidebar.emit();
-  }
 
   handleChoseLanguage(language: any) {
-    if (language.name === 'vi') {
-      this.translate.use(language.name);
-      localStorage.setItem(
-        'language',
-        JSON.stringify({
-          name: language.name,
-          image: 'vietnam_flag.gif',
-        })
-      );
-      this.languageService.setLanguage(language.name);
-    } else if (language.name === 'en') {
-      this.translate.use(language.name);
-      localStorage.setItem(
-        'language',
-        JSON.stringify({
-          name: language.name,
-          image: 'england_flag.gif',
-        })
-      );
-      this.languageService.setLanguage(language.name);
-    }
     this.country.nativeElement.src =
-      '../../../../assets/images/' + language.image;
+      this.chooseLanguageService.handleChoseLanguage(language);
   }
 }

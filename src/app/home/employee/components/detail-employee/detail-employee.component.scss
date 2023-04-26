@@ -79,4 +79,42 @@
   ::ng-deep .p-datatable .p-datatable-tfoot > tr > td {
     background-color: #fff;
   }
+
+  ::ng-deep .main_table {
+    overflow: hidden;
+    border-right: 1px solid #ccc;
+  }
+}
+
+@media (max-width: 550px) {
+  .detail_table {
+    ::ng-deep {
+      .p-datatable .p-datatable-tbody > tr > td {
+        padding: 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: 350px) {
+  .detail_table {
+    ::ng-deep {
+      .p-datatable .p-datatable-tbody > tr > td {
+        padding: 5px;
+      }
+    }
+    ::ng-deep {
+      .p-datatable .p-datatable-tfoot > tr > td {
+        padding: 5px;
+      }
+    }
+  }
+  .avt_template {
+    width: 70px;
+    height: 70px;
+  }
+
+  .detail_employee .detail_info {
+    padding: 5px;
+  }
 }

@@ -1,0 +1,21 @@
+.breadcrumb {
+    margin-bottom: 18px;
+    ::ng-deep .p-breadcrumb {
+      border: none;
+      padding: 0;
+      background-color: #f4f6f9;
+      ul {
+        li {
+          a {
+            color: var(--primary-color-main);
+            span {
+              color: var(--primary-color-main);
+            }
+          }
+          &::before {
+            color: var(--primary-color-main);
+          }
+        }
+      }
+    }
+  }

@@ -50,7 +50,6 @@ export class WorkUnitComponent {
     this.cols = [
       { field: 'firstname', header: 'First Name' },
       { field: 'lastname', header: 'Last Name' },
-
       { field: 'age', header: 'Age' },
     ];
     this.loadDisplay = true;
@@ -69,7 +68,6 @@ export class WorkUnitComponent {
   }
 
   handleShowMember(unitCode: string, unitName: string) {
-    console.log(unitCode, unitName);
     this.props = {
       type: 'unit',
       id: unitCode,

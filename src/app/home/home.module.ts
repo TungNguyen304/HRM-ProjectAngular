@@ -8,6 +8,7 @@ import { MemberComponent } from './team-member/member.component';
 import { ButtonModule } from 'primeng/button';
 import { TranslateModule } from '@ngx-translate/core';
 import { PaginatorModule } from 'primeng/paginator';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 const routes:Routes = [
   {
@@ -47,7 +48,8 @@ const routes:Routes = [
     RouterModule.forChild(routes),
     ButtonModule,
     TranslateModule,
-    PaginatorModule
+    PaginatorModule,
+    BreadcrumbModule
   ]
 })
 export class HomeModule { }

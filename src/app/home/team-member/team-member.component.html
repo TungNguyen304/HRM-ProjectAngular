@@ -2,19 +2,19 @@
   <h2 class="title">DA NANG - OUTSOURCES (UIT DEPT)</h2>
   <div class="search">
     <div class="search_left">
-      <input type="text" [placeholder]="'common.search' | translate" />
+      <input (input)="handleSearch()" [(ngModel)]="searchInput" type="text" [placeholder]="'common.search' | translate" />
     </div>
     <span><i class="bi bi-search"></i></span>
   </div>
   <div class="wrap_team_list">
-    <div class="team_list">
+    <div *ngIf="!loadDisplay" class="team_list">
       <app-member
         *ngFor="let member of memberList"
         [memberInfo]="member"
       ></app-member>
-      <div *ngIf="loadDisplay" class="load">
-        <app-load-small></app-load-small>
-      </div>
+    </div>
+    <div *ngIf="loadDisplay" class="load">
+      <app-load-small></app-load-small>
     </div>
     <div class="no_data" *ngIf="!loadDisplay && total === 0">
       {{ "common.noData" | translate }}

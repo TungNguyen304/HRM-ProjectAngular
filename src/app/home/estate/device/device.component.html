@@ -112,7 +112,7 @@
   <div class="table">
     <p-table
       responsiveLayout="stack"
-      [breakpoint]="'1024px'"
+      [breakpoint]="'1200px'"
       selectionMode="single"
       [value]="deviceList"
     >
@@ -201,7 +201,7 @@
             <span class="p-column-title">{{
               "common.action" | translate
             }}</span>
-            <div>
+            <div style="text-align: end">
               <p-splitButton
                 (onDropdownClick)="handleActionsClick(device)"
                 styleClass="p-button-sm mr-2 mb-2"

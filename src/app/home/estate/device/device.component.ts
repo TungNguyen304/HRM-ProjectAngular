@@ -42,7 +42,7 @@ export class DeviceComponent {
   public actions: any;
   public loadDisplay: boolean = false;
   public total: number = 0;
-  public limit: number = 5;
+  public limit: number = 4;
   public pageCurrent: number = 1;
   public deviceTemp: any;
   public warning: IWarningDeviceSearch = {
@@ -99,7 +99,21 @@ export class DeviceComponent {
     return this.status[id - 1].value;
   }
 
-  onPageChange(event: any): void {}
+  onPageChange(event: any): void {
+    if (event.page + 1 !== this.pageCurrent) {
+      this.pageCurrent = event.page + 1;
+      this.loadDisplay = true;
+      this.handleSendRuest(this.pageCurrent);
+    }
+  }
+
+  handleSendRuest(page: number) {
+    this.deviceService.getDevice(page, this.limit);
+  }
+
+  getValueSearch(): Array<string> {
+    return Object.values(this.searchDeviceForm.value);
+  }
 
   update() {
     this.router.navigate([
@@ -146,7 +160,7 @@ export class DeviceComponent {
   }
 
   onSubmit(): void {
-    console.log(this.searchDeviceForm);
+    console.log(...Object.values(this.searchDeviceForm.value));
   }
 
   handleGetDevice(): Observable<Object> {
@@ -197,6 +211,7 @@ export class DeviceComponent {
             res.device.response.data,
             res.provider.response.data
           );
+          this.total = res.device.response.total;
         }
         this.loadDisplay = false;
       },

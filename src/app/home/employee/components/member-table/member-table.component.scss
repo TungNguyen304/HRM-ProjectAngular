@@ -1,25 +1,26 @@
 ::ng-deep .p-dialog-mask {
-    background-color: rgba($color: #000000, $alpha: 0.4);
-    .p-dialog .p-dialog-header {
-        font-size: 20px;
-        font-weight: bold;
-        font-family: 'Times New Roman', Times, serif;
-    }
-    table {
-        tbody {
-            tr td {
-                .action button {
-                    margin: 0 10px;
-                }
-            }
+  background-color: rgba($color: #000000, $alpha: 0.4);
+  .p-dialog .p-dialog-header {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--primary-color-main);
+  }
+  table {
+    tbody {
+      tr td {
+        .action button {
+          margin: 0 10px;
         }
+      }
     }
+  }
 }
 
-th, td {
-    text-align: center !important;
+th,
+td {
+  text-align: center !important;
 }
 
 .action {
-    display: flex;
+  display: flex;
 }

@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   AbstractControl,
   ControlContainer,
@@ -35,7 +42,11 @@ type Tsocial = 'type' | 'name';
   ],
 })
 export class ContactInformationComponent implements OnInit {
-  constructor(private fb: FormBuilder, private toastService: ToastService) {}
+  constructor(
+    private fb: FormBuilder,
+    private toastService: ToastService,
+    private cdr: ChangeDetectorRef
+  ) {}
   public socialNetworks = socialNetworks;
   @Input() employeeForm: FormGroup;
   public warning: IWarningContactInfo = {
@@ -54,7 +65,6 @@ export class ContactInformationComponent implements OnInit {
   }
 
   myUploader(event: any): void {
-    console.log(event.files[0]);
   }
 
   getControl(control: string): AbstractControl | null {
@@ -106,12 +116,19 @@ export class ContactInformationComponent implements OnInit {
 
   handleAddSocial(): void {
     if (this.socialControlList.length < 5) {
-      this.socialControlList.push(
+      (
+        getControlCommon(
+          this.employeeForm,
+          'contactInfo',
+          'socials'
+        ) as FormArray
+      ).push(
         this.fb.group({
           name: ['', [Validators.required]],
           value: ['', [Validators.required]],
         })
       );
+      this.cdr.detectChanges();
     } else {
       this.toastService.toastWarn(toast.maxLengthSocial);
     }

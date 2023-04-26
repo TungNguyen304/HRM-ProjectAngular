@@ -19,6 +19,7 @@ import { IPosition } from 'src/app/shared/interfaces';
 })
 export class PositionService {
   public position$ = new BehaviorSubject<any>(null);
+  public member$ = new BehaviorSubject<any>(null);
   constructor(private http: HttpClient) {}
 
   getPosition(
@@ -44,14 +45,18 @@ export class PositionService {
   }
 
   getMemberByPositionId(
-    id: string,
-    page?: number,
-    limit?: number
+    id: string = '',
+    page: number = 1,
+    limit: number = 0
   ): Observable<Object> {
-    return this.http.get(
-      `users?${page ? `page=${page}&` : ''}${
-        limit ? `limit=${limit}&` : ''
-      }job_position_id=${id}`
+    this.member$.next(
+      `users?page=${page}&limit=${limit}&job_position_id=${id}`
+    );
+    return this.member$.pipe(
+      debounceTime(2000),
+      switchMap((url) => {
+        return this.http.get(url);
+      })
     );
   }
 

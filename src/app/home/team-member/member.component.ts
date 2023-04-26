@@ -7,8 +7,13 @@ import { CommonService } from 'src/app/core/services/common.service';
   template: `
     <div class="team_item">
       <div class="avt">
-        <img *ngIf="memberInfo.image_url" [src]="memberInfo.image_url" alt="" />
-        <i *ngIf="!memberInfo.image_url" class="bi bi-person-circle"></i>
+        <img
+          [src]="
+            memberInfo.image_url ||
+            '../../../assets/images/Avatar-mac-dinh-ngau-cho-nam-nen-cam.jpg'
+          "
+          alt=""
+        />
       </div>
       <div class="info">
         <p class="name">{{ memberInfo.full_name }}</p>

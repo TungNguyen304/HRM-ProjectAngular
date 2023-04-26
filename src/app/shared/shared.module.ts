@@ -13,12 +13,14 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { LoadingComponent } from './layouts/loading/loading.component';
 import { LoadSmallComponent } from './layouts/load-small/load-small.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { ForbiddenComponent } from './layouts/forbidden/forbidden.component';
+import { AvtComponent } from './layouts/common/avt.component';
 import { ButtonModule } from 'primeng/button';
+import { ForbiddenComponent } from './layouts/forbidden/forbidden.component';
 
 @NgModule({
-  declarations: [PageNotFoundComponent, HeaderComponent, SideBarComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent, LoadSmallComponent, ForbiddenComponent],
+  declarations: [PageNotFoundComponent, HeaderComponent, SideBarComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent, LoadSmallComponent, AvtComponent, ForbiddenComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -28,7 +30,8 @@ import { ButtonModule } from 'primeng/button';
     BreadcrumbModule,
     DropdownModule,
     ProgressSpinnerModule,
-    ButtonModule
+    ButtonModule,
+    DialogModule
   ],
   exports: [PageNotFoundComponent, SideBarComponent, HeaderComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent, LoadSmallComponent]
 })

@@ -15,11 +15,7 @@
     </div>
 
     <div class="detail_table">
-      <p-table
-        [value]="infoEmployee"
-        styleClass="p-datatable-gridlines"
-        [tableStyle]="{ 'min-width': '50rem' }"
-      >
+      <p-table [value]="infoEmployee" styleClass="p-datatable-gridlines main_table">
         <ng-template pTemplate="body" let-info>
           <tr>
             <td style="text-align: start; font-weight: 500">{{ info.name }}</td>
@@ -34,16 +30,17 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="footer">
-          <tr>
+          <tr class="sub_table">
             <td style="text-align: start; font-weight: 500">
               {{ "title.workingProcess" | translate }}
             </td>
-            <td style="width: 80%; text-align: start">
+            <td colspan="2" style="width: 80%; text-align: start">
               <div *ngIf="workingProcess.length > 0">
                 <p-table
+                  responsiveLayout="stack"
+                  [breakpoint]="'1024px'"
                   [value]="workingProcess"
                   styleClass="p-datatable-gridlines"
-                  [tableStyle]="{ 'min-width': '50rem' }"
                 >
                   <ng-template pTemplate="header">
                     <tr>
@@ -56,31 +53,60 @@
                   <ng-template pTemplate="body" let-process>
                     <tr>
                       <td>
-                        {{ process.wk_organization.organization_unit_name }}
+                        <span class="p-column-title">{{
+                          "employeeManagement.unit" | translate
+                        }}</span>
+                        <span style="text-align: end">{{
+                          process.wk_organization.organization_unit_name
+                        }}</span>
                       </td>
-                      <td>{{ process.wk_job_position.job_position_name }}</td>
                       <td>
-                        {{ commonService.reverseStringDateToVi(process.from) }}
-                        -
-                        {{ commonService.reverseStringDateToVi(process.to) }}
+                        <span class="p-column-title">{{
+                          "employeeManagement.position" | translate
+                        }}</span
+                        ><span style="text-align: end">{{
+                          process.wk_job_position.job_position_name
+                        }}</span>
                       </td>
-                      <td>{{ process.working_type }}</td>
+                      <td>
+                        <span class="p-column-title">{{
+                          "createEmployee.time" | translate
+                        }}</span>
+                        <span style="text-align: end"
+                          >{{
+                            commonService.reverseStringDateToVi(process.from)
+                          }}
+                          -
+                          {{
+                            commonService.reverseStringDateToVi(process.to)
+                          }}</span
+                        >
+                      </td>
+                      <td>
+                        <span class="p-column-title">{{
+                          "createEmployee.workingForm" | translate
+                        }}</span
+                        ><span style="text-align: end">{{
+                          process.working_type
+                        }}</span>
+                      </td>
                     </tr>
                   </ng-template>
                 </p-table>
               </div>
             </td>
           </tr>
-          <tr>
+          <tr class="sub_table">
             <td style="text-align: start; font-weight: 500">
               {{ "title.socialNetwork" | translate }}
             </td>
-            <td style="width: 80%; text-align: start">
+            <td colspan="2" style="width: 80%; text-align: start">
               <div *ngIf="socialNetwork.length > 0">
                 <p-table
+                  responsiveLayout="stack"
+                  [breakpoint]="'1024px'"
                   [value]="socialNetwork"
                   styleClass="p-datatable-gridlines"
-                  [tableStyle]="{ 'min-width': '50rem' }"
                 >
                   <ng-template pTemplate="header">
                     <tr>
@@ -90,8 +116,20 @@
                   </ng-template>
                   <ng-template pTemplate="body" let-network>
                     <tr>
-                      <td>{{ network.name }}</td>
-                      <td>{{ network.value }}</td>
+                      <td>
+                        <span class="p-column-title">{{
+                          "createEmployee.typeSocial" | translate
+                        }}</span
+                        ><span style="text-align: end">{{ network.name }}</span>
+                      </td>
+                      <td>
+                        <span class="p-column-title">{{
+                          "createEmployee.link" | translate
+                        }}</span
+                        ><span style="text-align: end">{{
+                          network.value
+                        }}</span>
+                      </td>
                     </tr>
                   </ng-template>
                 </p-table>
@@ -122,5 +160,5 @@
 </ng-template>
 
 <ng-template #normal let-info="info">
-  {{ info }}
+  <span>{{ info }}</span>
 </ng-template>

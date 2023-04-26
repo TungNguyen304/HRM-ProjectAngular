@@ -75,7 +75,6 @@ export class CreateEmployeeComponent {
   onSubmit(): void {
     this.commonService.markAsDirty(this.employeeForm);
     console.log(this.employeeForm);
-    
     if (this.employeeForm.valid) {
       setTimeout(() => {
         this.loadingService.setloading(true);
@@ -158,11 +157,10 @@ export class CreateEmployeeComponent {
           ),
           working_type: item.get('workingForm')?.value.value,
         };
-        if (this.typeAction === 'update') {
-          data.working_history_id =
-            this.employeeInfo?.user_working_histories[
-              index
-            ]?.working_history_id;
+        const working_history_id =
+          this.employeeInfo?.user_working_histories[index]?.working_history_id;
+        if (this.typeAction === 'update' && working_history_id) {
+          data.working_history_id = working_history_id;
         }
         return data;
       });
@@ -200,7 +198,7 @@ export class CreateEmployeeComponent {
         }
       } else {
         if (item === 'image_url') {
-          this.formData.append(item, employeeItem, employeeItem.name);
+          this.formData.append(item, employeeItem);
         } else this.formData.append(item, employeeItem);
       }
     });
@@ -272,11 +270,11 @@ export class CreateEmployeeComponent {
         sex: {
           value: data.gender === 'MALE' ? ESex.MALE : ESex.FEMALE,
         },
-        birthDay: this.commonService.convertDateVi(data.birth_date),
-        hireDate: this.commonService.convertDateVi(data.hire_date),
-        joinDate: this.commonService.convertDateVi(data.receive_date),
-        currentResidence: data.home_land,
-        address: data.temporary_address,
+        birthDay: this.commonService.convertDateVi(data.birth_date) || "",
+        hireDate: this.commonService.convertDateVi(data.hire_date) || "",
+        joinDate: this.commonService.convertDateVi(data.receive_date) || "",
+        currentResidence: data.home_land || "",
+        address: data.temporary_address || "",
       },
       contactInfo: {
         email: data.email,
@@ -294,6 +292,10 @@ export class CreateEmployeeComponent {
       },
       workingProcess: this.handleTransformDataWorkingHistory(data),
     };
+    console.log(data);
+    
+    console.log(data.home_land || "");
+
     this.employeeForm.patchValue(newData);
   }
 
@@ -334,7 +336,7 @@ export class CreateEmployeeComponent {
           [Validators.required, Validators.maxLength(255), emojiValidator],
         ],
         sex: ['', [Validators.required]],
-        birthDay: ['', [Validators.required]],
+        birthDay: [''],
         currentResidence: ['', [Validators.maxLength(255), emojiValidator]],
         address: ['', [Validators.maxLength(255), emojiValidator]],
         joinDate: [''],
@@ -352,10 +354,7 @@ export class CreateEmployeeComponent {
           ],
         ],
         phone: ['', [Validators.required]],
-        skypeId: [
-          '',
-          [Validators.required, Validators.maxLength(255), emojiValidator],
-        ],
+        skypeId: ['', [Validators.maxLength(255), emojiValidator]],
         socials: this.fb.array([]),
       }),
       workingProcess: this.fb.array([]),
@@ -382,7 +381,9 @@ export class CreateEmployeeComponent {
           if (data.statusCode === 200) {
             this.loadingService.setloading(false);
             this.employeeInfo = data.response;
-            this.patchValueForForm(this.employeeInfo);
+            if (this.typeAction === 'update') {
+              this.patchValueForForm(this.employeeInfo);
+            }
           }
         });
     }

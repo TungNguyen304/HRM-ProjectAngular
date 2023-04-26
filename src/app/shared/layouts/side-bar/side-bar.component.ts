@@ -1,7 +1,16 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
+import { ChooseLanguageService } from 'src/app/core/services/helper/chooseLanguage.service';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-
+import { LanguageService } from 'src/app/core/services/state/language.service';
+import { ILanguage } from '../../interfaces';
+type typeScreen = 'small' | 'medium' | 'large';
 @Component({
   selector: 'app-side-bar',
   templateUrl: './side-bar.component.html',
@@ -10,45 +19,119 @@ import { TranslateService } from '@ngx-translate/core';
 export class SideBarComponent {
   public checked: boolean = false;
   @ViewChild('sidebar') sidebar: ElementRef;
-  constructor(private translate: TranslateService, private router: Router) {}
+  @ViewChild('layer') layer: ElementRef;
+  @ViewChildren('link') link: QueryList<any>;
+  public lang: any;
+  public typeScreen: typeScreen = 'large';
+  public visible: boolean = false;
+  public languages = [
+    {
+      name: 'English',
+      value: 'en',
+      image: 'england_flag.gif',
+    },
+    {
+      name: 'Viet Nam',
+      value: 'vi',
+      image: 'vietnam_flag.gif',
+    },
+  ];
+  constructor(
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private ChooseLanguageService: ChooseLanguageService,
+    private languageService: LanguageService
+  ) {}
+
+  ngOnInit() {
+    this.languageService.language$.subscribe((lang: ILanguage) => {
+      this.languages.forEach((item) => {
+        if (item.value === lang) {
+          this.lang = item;
+        }
+      });
+    });
+  }
+
   displaySidebar(): void {
-    this.sidebar.nativeElement.classList.toggle('close');
+    this.handleDisplay();
+  }
+
+  handleChoseLanguage() {
+    this.visible = true;
+  }
+
+  onChange(event: any) {
+    this.ChooseLanguageService.handleChoseLanguage({
+      name: event.value.value,
+      image: event.value.image,
+    });
+    this.visible = false;
+  }
+
+  handleDisplay(): void {
+    if (this.sidebar.nativeElement && this.layer.nativeElement) {
+      if (this.typeScreen === 'small') {
+        (this.sidebar.nativeElement as HTMLDivElement).style.left = '0%';
+        (this.layer.nativeElement as HTMLDivElement).style.opacity = '1';
+        (this.layer.nativeElement as HTMLDivElement).style.zIndex = '50';
+      } else {
+        this.sidebar.nativeElement.classList.toggle('close');
+      }
+    }
+  }
+
+  hidenSidebar(): void {
+    if (this.sidebar.nativeElement && this.layer.nativeElement) {
+      (this.sidebar.nativeElement as HTMLDivElement).style.left = '-100%';
+      (this.layer.nativeElement as HTMLDivElement).style.opacity = '0';
+      (this.layer.nativeElement as HTMLDivElement).style.zIndex = '-1';
+    }
+  }
+
+  sidebarMobile(): void {
+    if (this.sidebar.nativeElement && this.layer.nativeElement) {
+      this.typeScreen = 'small';
+      this.sidebar.nativeElement.classList.remove('close');
+      (this.sidebar.nativeElement as HTMLDivElement).style.left = '-100%';
+      (this.layer.nativeElement as HTMLDivElement).style.opacity = '0';
+      (this.layer.nativeElement as HTMLDivElement).style.zIndex = '-1';
+      this.cdr.detectChanges();
+    }
   }
 
   handleResponsiveSidebar(): void {
+    if (window.innerWidth <= 768) {
+      this.sidebarMobile();
+    }
     window.onresize = (e) => {
-      if (window.innerWidth <= 1024) {
-        this.sidebar.nativeElement.classList.add('close');
+      if (window.innerWidth <= 1024 && window.innerWidth > 768) {
+        if (this.sidebar.nativeElement && this.layer.nativeElement) {
+          this.typeScreen = 'medium';
+          this.sidebar.nativeElement.classList.add('close');
+          (this.sidebar.nativeElement as HTMLDivElement).style.left = '0%';
+          (this.layer.nativeElement as HTMLDivElement).style.opacity = '0';
+          (this.layer.nativeElement as HTMLDivElement).style.zIndex = '-1';
+          this.displaySidebar = () => {
+            this.handleDisplay();
+          };
+          this.cdr.detectChanges();
+        }
+      }
+      if (window.innerWidth <= 768) {
+        this.sidebarMobile();
       }
     };
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.handleResponsiveSidebar();
-    const body = document.querySelector('body'),
-      sidebar = body?.querySelector('nav'),
-      toggle = body?.querySelector('.toggle'),
-      searchBtn = body?.querySelector('.search-box'),
-      modeSwitch = body?.querySelector('.toggle-switch'),
-      modeText = body?.querySelector('.mode-text'),
-      circle = body?.querySelector('.switch .circle');
-    toggle?.addEventListener('click', () => {
-      sidebar?.classList.toggle('close');
-    });
-    searchBtn?.addEventListener('click', () => {
-      sidebar?.classList.remove('close');
-    });
-    modeSwitch?.addEventListener('click', () => {
-      body?.classList.toggle('dark');
-      if (body?.classList.contains('dark')) {
-        (circle as HTMLSpanElement).style.left = 'unset';
-        (circle as HTMLSpanElement).style.right = '5px';
-        (modeText as HTMLSpanElement).innerText = 'Light mode';
-      } else {
-        (circle as HTMLSpanElement).style.left = '5px';
-        (circle as HTMLSpanElement).style.right = 'unset';
-        (modeText as HTMLSpanElement).innerText = 'Dark mode';
-      }
+    this.link.forEach((item) => {
+      item.nativeElement.onclick = () => {
+        if (this.typeScreen === 'small') {
+          this.hidenSidebar();
+        }
+      };
     });
   }
 

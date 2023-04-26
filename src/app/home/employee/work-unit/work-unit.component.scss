@@ -1,11 +1,26 @@
 h2 {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .table {
-    box-shadow: 0 0 4px 2px #ccc;
+  box-shadow: 0 0 4px 2px #ccc;
+}
+
+@media (max-width: 1000px) {
+  ::ng-deep .p-treetable .p-treetable-tbody > tr {
+    td:first-child {
+      min-width: unset !important;
+      display: flex;
+    }
+  }
+}
+
+@media (max-width: 639px) {
+  ::ng-deep .p-treetable .p-treetable-tbody > tr td:first-child {
+    flex-direction: column;
+  }
 }
 
 .no_data {
-    padding: 20px 0;
+  padding: 20px 0;
 }

@@ -50,7 +50,7 @@ export class EmployeeManagementComponent {
   };
   public employeeActive: any;
   public loadDisplay: boolean = false;
-  public limit: number = 5;
+  public limit: number = 4;
   public total: number = 0;
   public page: number = 1;
   constructor(

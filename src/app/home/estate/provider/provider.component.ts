@@ -19,7 +19,7 @@ export class ProviderComponent {
   public idProvider: number;
   public pageCurrent: number = 1;
   public total: number = 0;
-  public limit: number = 5;
+  public limit: number = 4;
   public infoUpdate: any;
   public loadDisplay: boolean = false;
   public searchInput: FormControl = new FormControl('');

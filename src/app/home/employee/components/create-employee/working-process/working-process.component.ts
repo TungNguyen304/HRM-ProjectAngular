@@ -96,7 +96,7 @@ export class WorkingProcessComponent implements OnInit {
                 };
               }
             );
-            this.processControlList.controls[index].get('position')?.enable();
+            this.processControlList.controls[index]?.get('position')?.enable();
             this.cdr.detectChanges();
           }
         });
@@ -107,7 +107,7 @@ export class WorkingProcessComponent implements OnInit {
   }
 
   handleAddProcess(): void {
-    this.processControlList.push(
+    (this.employeeForm.get('workingProcess') as FormArray).push(
       this.fb.group({
         unit: ['', [Validators.required]],
         position: ['', [Validators.required]],
@@ -116,8 +116,8 @@ export class WorkingProcessComponent implements OnInit {
       })
     );
     this.processControlList.controls.forEach((control) => {
-      if (!control.get('unit')?.valid) {
-        control.get('position')?.disable();
+      if (!control?.get('unit')?.valid) {
+        control?.get('position')?.disable();
       }
     });
   }

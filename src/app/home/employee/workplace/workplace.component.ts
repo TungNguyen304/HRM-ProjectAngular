@@ -33,7 +33,7 @@ export class WorkplaceComponent implements OnInit {
   public displayCreate: boolean = false;
   public displayMember: boolean = false;
   public positionTemp: string;
-  public limit: number = 5;
+  public limit: number = 4;
   public total: number = 0;
   public pageCurrent: number = 1;
   public loadDisplay: boolean = false;
