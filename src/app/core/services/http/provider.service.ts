@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
@@ -35,7 +35,14 @@ export class ProviderService {
     // .pipe(delay(2000));
   }
 
-  getAllProvider(): Observable<Object> {
+  getAllProvider(token?:string): Observable<Object> {
+    if (token) {
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+     return this.http.get('distributors?page=1&limit=0', {headers}).pipe(delay(2000));
+    }
     return this.http.get('distributors?page=1&limit=0').pipe(delay(2000));
   }
 

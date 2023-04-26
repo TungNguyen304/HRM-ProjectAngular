@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
@@ -65,7 +65,14 @@ export class DeviceService {
     return this.http.get('assets?page=1&limit=0').pipe(delay(2000));
   }
 
-  getDeviceById(id: number): Observable<Object> {
+  getDeviceById(id: number, token?: string): Observable<Object> {
+    if (token) {
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+     return this.http.get(`assets/${id}`, { headers:headers }).pipe(delay(2000));
+    }
     return this.http.get(`assets/${id}`).pipe(delay(2000));
   }
 

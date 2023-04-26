@@ -7,7 +7,7 @@ import { labelDeviceVi, labelDeviceEn } from './data';
 import { LanguageService } from 'src/app/core/services/state/language.service';
 import { ILanguage } from 'src/app/shared/interfaces/language';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
-import { finalize, map, switchMap } from 'rxjs';
+import { catchError, finalize, map, switchMap, throwError } from 'rxjs';
 import { StatusAsset } from '../../device/data';
 import { EstateService } from 'src/app/core/services/helper/estate.service';
 import { ProviderService } from 'src/app/core/services/http/provider.service';
@@ -29,6 +29,7 @@ export class DetailDeviceComponent {
   public displayCreateRequest: boolean = false;
   public total: number = 0;
   public limit: number = 4;
+  public token: string;
   public historyBorrow: any[];
   public requestForm: FormGroup;
   constructor(
@@ -119,9 +120,18 @@ export class DetailDeviceComponent {
     });
     this.activateRoute.params
       .pipe(
-        switchMap((params) => this.deviceService.getDeviceById(params['id'])),
+        switchMap((params) => {
+          this.token = params['token']
+          if (this.token) {
+            return this.deviceService.getDeviceById(
+              params['id'],
+              this.token
+            );
+          }
+          return this.deviceService.getDeviceById(params['id']);
+        }),
         switchMap((device: any) => {
-          return this.providerService.getAllProvider().pipe(
+          return this.providerService.getAllProvider(this.token).pipe(
             map((provider: any) => {
               return {
                 ...device.response,
@@ -151,6 +161,10 @@ export class DetailDeviceComponent {
               }
             })
           );
+        }),
+        catchError((err) => {
+          this.loadingService.setloading(false);
+          return throwError(err);
         })
       )
       .subscribe((data) => {

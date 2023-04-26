@@ -25,6 +25,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { BasicInformationComponent } from './components/create-device/basic-information/basic-information.component';
 import { RepairInformationComponent } from './components/create-device/repair-information/repair-information.component';
 import { EmployeeInformationComponent } from './components/create-device/employee-information/employee-information.component';
+import { DeviceQrcodeComponent } from './device-qrcode/device-qrcode.component';
 
 const routes: Routes = [
   {
@@ -69,7 +70,8 @@ const routes: Routes = [
     DetailDeviceComponent,
     BasicInformationComponent,
     RepairInformationComponent,
-    EmployeeInformationComponent
+    EmployeeInformationComponent,
+    DeviceQrcodeComponent
   ],
   imports: [
     CommonModule,
