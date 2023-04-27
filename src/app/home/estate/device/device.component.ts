@@ -40,10 +40,10 @@ export class DeviceComponent {
   public deviceList: any;
   public searchDeviceForm: FormGroup;
   public actions: any;
-  public loadDisplay: boolean = false;
-  public total: number = 0;
-  public limit: number = 4;
-  public pageCurrent: number = 1;
+  public loadDisplay = false;
+  public total = 0;
+  public limit = 4;
+  public pageCurrent = 1;
   public deviceTemp: any;
   public toast: any;
   public warning: IWarningDeviceSearch = {
@@ -88,7 +88,7 @@ export class DeviceComponent {
       {
         label: 'QR',
         icon: 'bi bi-qr-code-scan',
-        command: () => {},
+        // command: () => {},
       },
     ];
   }
@@ -129,14 +129,10 @@ export class DeviceComponent {
       this.loadDisplay = true;
       this.deviceService.deleteDevice(this.deviceTemp.asset_id).subscribe(
         () => {
-          this.toastService.toastSuccess(
-            this.toast.deleteEmployeeSuccess
-          );
+          this.toastService.toastSuccess(this.toast.deleteEmployeeSuccess);
         },
         () => {
-          this.toastService.toastError(
-            this.toast.deleteEmployeeFail
-          );
+          this.toastService.toastError(this.toast.deleteEmployeeFail);
         }
       );
       this.handleGetDevice();
@@ -169,7 +165,7 @@ export class DeviceComponent {
     console.log(...Object.values(this.searchDeviceForm.value));
   }
 
-  handleGetDevice(): Observable<Object> {
+  handleGetDevice(): Observable<object> {
     return this.deviceService.getDevice(this.pageCurrent, this.limit);
   }
 

@@ -38,10 +38,10 @@ export class LoginComponent implements OnInit {
   ) {}
   public loginForm: FormGroup;
   public toast: any;
-  public errorEmail: string = 'Email is empty!';
-  public errorPassword: string = 'Password is empty!';
+  public errorEmail = 'Email is empty!';
+  public errorPassword = 'Password is empty!';
   @ViewChild('pass') pass: ElementRef;
-  public display: boolean = false;
+  public display = false;
   ngOnInit() {
     this.toasMsgService.toast$.subscribe((toast) => {
       this.toast = toast;

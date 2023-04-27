@@ -92,7 +92,7 @@ export interface IEmployeeRequest {
   email: string;
   cv_url?: string;
   full_name: string;
-  gender: {};
+  gender: string;
   home_land: string;
   temporary_address: string;
   hire_date: string;
