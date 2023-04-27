@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
 import { finalize, map, switchMap } from 'rxjs';
 import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
+import { IEmployeeResponse } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-detail-employee',
@@ -29,7 +30,7 @@ export class DetailEmployeeComponent implements OnInit {
     vi: labelEmployeeVi,
     en: labelEmployeeEn,
   };
-  public employeeExcel: any = null;
+  public employeeExcel: IEmployeeResponse | null = null;
   public workingProcess: any[] = [];
   public socialNetwork: any[] = [];
   handleBack(): void {
@@ -43,8 +44,8 @@ export class DetailEmployeeComponent implements OnInit {
   exportFile() {
     if (this.employeeExcel) {
       this.exportFileService.exportAsExcelFile(
-        this.employeeExcel,
-        this.employeeExcel[0]?.full_name
+        [this.employeeExcel],
+        this.employeeExcel?.full_name
       );
     }
   }
@@ -61,7 +62,7 @@ export class DetailEmployeeComponent implements OnInit {
         switchMap((employee: any) => {
           console.log(employee.response);
           
-          this.employeeExcel = [employee.response];
+          this.employeeExcel = employee.response;
           this.workingProcess = employee.response.user_working_histories || [];
           this.socialNetwork =
             employee.response.social_network?.map((item: string) => {

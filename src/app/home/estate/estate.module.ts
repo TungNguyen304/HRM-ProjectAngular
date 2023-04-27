@@ -26,6 +26,7 @@ import { BasicInformationComponent } from './components/create-device/basic-info
 import { RepairInformationComponent } from './components/create-device/repair-information/repair-information.component';
 import { EmployeeInformationComponent } from './components/create-device/employee-information/employee-information.component';
 import { DeviceQrcodeComponent } from './device-qrcode/device-qrcode.component';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 
 const routes: Routes = [
   {
@@ -91,6 +92,7 @@ const routes: Routes = [
     TranslateModule,
     SharedModule,
     PaginatorModule,
+    NgxQRCodeModule
   ],
 })
 export class EstateModule {}

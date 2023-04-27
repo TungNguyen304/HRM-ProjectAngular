@@ -7,14 +7,17 @@
   <div class="create_employee">
     <div class="create_left">
       <app-basic-information
-        [urlUpdate]="employeeInfo?.image_url"
+        [errorFromApi]="errorFromApi"
+        [urlUpdate]="employeeInfo && employeeInfo.image_url"
         [employeeForm]="employeeForm"
+        (getAvt)="getAvt($event)"
       ></app-basic-information>
       <app-working-process [employeeForm]="employeeForm"></app-working-process>
     </div>
 
     <div class="create_right">
       <app-contact-information
+        [errorFromApi]="errorFromApi"
         [employeeForm]="employeeForm"
       ></app-contact-information>
       <app-other-information

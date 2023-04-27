@@ -17,11 +17,9 @@ import {
 import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/core/services/common.service';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
-import { ToastService } from 'src/app/core/services/helper/toast.service';
 import { requireWarning } from 'src/app/core/services/helper/warningForm.service';
 import { ProviderService } from 'src/app/core/services/http/provider.service';
-import { IWarningProvider } from 'src/app/shared/interfaces';
-import { toast } from 'src/app/shared/toastMessage';
+import { IProviderRequest, IWarningProvider } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-create-provider',
@@ -41,7 +39,6 @@ export class CreateProviderComponent implements OnInit {
     private fb: FormBuilder,
     private commonService: CommonService,
     private providerService: ProviderService,
-    private toastService: ToastService
   ) {}
   public warning: IWarningProvider = {
     name: null,
@@ -52,7 +49,7 @@ export class CreateProviderComponent implements OnInit {
   handleBack(): void {
     this.location.back();
   }
-  handleTypeRequestApi(data: any, id?: string): Observable<Object> {
+  handleTypeRequestApi(data: IProviderRequest, id?: string): Observable<Object> {
     if (id && this.typeAction === 'Update') {
       return this.providerService.updateProvider(data, id);
     }
@@ -61,7 +58,7 @@ export class CreateProviderComponent implements OnInit {
   onSubmit(): void {
     this.commonService.markAsDirty(this.providerForm);
     if (this.providerForm.valid) {
-      const data:any = {
+      const data:IProviderRequest = {
         name: this.providerForm.get('name')?.value,
         items: this.providerForm.get('item')?.value,
         address: this.providerForm.get('address')?.value,

@@ -90,11 +90,78 @@
   }
 }
 
+form {
+  .form_item {
+    display: flex;
+    position: relative;
+    margin-bottom: 30px;
+    flex-direction: column;
+    label {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      span {
+        font-size: 16px;
+        margin-right: 10px;
+      }
+      button {
+        pointer-events: none;
+      }
+    }
+    p {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: calc(100% + 10px);
+      font-style: italic;
+      font-size: 12px;
+      right: 0;
+      color: red;
+      i {
+        margin-right: 5px;
+      }
+    }
+    .avt {
+      width: 200px;
+      height: 200px;
+      border: 2px dashed black;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      overflow: hidden;
+      img {
+        width: 15%;
+        height: 15%;
+        object-fit: cover;
+        &.image {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
 @media (max-width: 550px) {
   .sub_table {
     td:first-child {
       display: none;
     }
+  }
+}
+
+@media (max-width: 500px) {
+  .detail_employee .detail_info .export {
+    flex-direction: column;
+    padding: 0 !important;
+    margin-bottom: 5px !important;
+    gap: 5px !important;
   }
 }
 

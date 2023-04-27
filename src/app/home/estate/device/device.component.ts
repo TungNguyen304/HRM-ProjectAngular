@@ -23,10 +23,10 @@ import { EstateService } from 'src/app/core/services/helper/estate.service';
 import { StatusAsset } from './data';
 import { ModalService } from 'src/app/core/services/helper/modal.service';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
-import { toast } from 'src/app/shared/toastMessage';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
 import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
 import { ProviderService } from 'src/app/core/services/http/provider.service';
+import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
 
 @Component({
   selector: 'app-device',
@@ -45,6 +45,7 @@ export class DeviceComponent {
   public limit: number = 4;
   public pageCurrent: number = 1;
   public deviceTemp: any;
+  public toast: any;
   public warning: IWarningDeviceSearch = {
     code: null,
     employee: null,
@@ -59,7 +60,8 @@ export class DeviceComponent {
     private toastService: ToastService,
     private loadingService: LoadingService,
     private exportFileService: ExportFileService,
-    private providerService: ProviderService
+    private providerService: ProviderService,
+    private toasMsgService: ToastMsgService
   ) {
     this.actions = [
       {
@@ -127,10 +129,14 @@ export class DeviceComponent {
       this.loadDisplay = true;
       this.deviceService.deleteDevice(this.deviceTemp.asset_id).subscribe(
         () => {
-          this.toastService.toastSuccess(toast.deleteEmployeeSuccess);
+          this.toastService.toastSuccess(
+            this.toast.deleteEmployeeSuccess
+          );
         },
         () => {
-          this.toastService.toastError(toast.deleteEmployeeFail);
+          this.toastService.toastError(
+            this.toast.deleteEmployeeFail
+          );
         }
       );
       this.handleGetDevice();
@@ -196,6 +202,9 @@ export class DeviceComponent {
   }
 
   ngOnInit() {
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
     this.loadDisplay = true;
     combineLatest({
       device: this.handleGetDevice(),

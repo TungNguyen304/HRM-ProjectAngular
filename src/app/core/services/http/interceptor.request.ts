@@ -30,7 +30,7 @@ export class InterceptorRequest {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         console.log(error);
-        switch(error.status) {
+        switch (error.status) {
           case 401: {
             localStorage.removeItem('token');
             this.router.navigate(['auth/login']);
@@ -40,16 +40,10 @@ export class InterceptorRequest {
             this.router.navigate(['forbidden']);
             break;
           }
+          default:
+            break;
         }
-        let errorMessage = '';
-        if (error.error instanceof ErrorEvent) {
-          // client-side error
-          errorMessage = `Error: ${error.error.message}`;
-        } else {
-          // server-side error
-          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-        }
-        return throwError(errorMessage);
+        return throwError(error);
       })
     );
   }

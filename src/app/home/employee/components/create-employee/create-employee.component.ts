@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -16,15 +16,23 @@ import { EmployeeService } from 'src/app/core/services/http/employee.service';
 import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
-import { toast } from 'src/app/shared/toastMessage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, finalize, switchMap } from 'rxjs';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import { socialNetworks, socials } from './contact-information/data';
 import { workingFormStruct } from './working-process/data';
-import { ESex, typeAction } from 'src/app/shared/interfaces';
+import {
+  ESex,
+  IEmployeeRequest,
+  IEmployeeResponse,
+  ISocialNetwork,
+  IWorkingHistory,
+  typeAction,
+} from 'src/app/shared/interfaces';
 import { DateService } from 'src/app/core/services/helper/date.service';
 import { regexEmail } from 'src/app/shared/regex';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
 
 @Component({
   selector: 'app-create-employee',
@@ -34,7 +42,10 @@ import { regexEmail } from 'src/app/shared/regex';
 export class CreateEmployeeComponent {
   public assetList = [];
   public formData: FormData = new FormData();
-  public employeeInfo: any;
+  public employeeInfo: IEmployeeResponse;
+  public errorFromApi: HttpErrorResponse;
+  public toast: any;
+  public avt: ElementRef;
   constructor(
     private location: Location,
     private fb: FormBuilder,
@@ -45,7 +56,8 @@ export class CreateEmployeeComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private toastService: ToastService,
-    private dateService: DateService
+    private dateService: DateService,
+    private toasMsgService: ToastMsgService
   ) {}
   public employeeForm: FormGroup;
   public typeAction: typeAction = this.router.url.includes('update-employee')
@@ -74,12 +86,11 @@ export class CreateEmployeeComponent {
 
   onSubmit(): void {
     this.commonService.markAsDirty(this.employeeForm);
-    console.log(this.employeeForm);
     if (this.employeeForm.valid) {
       setTimeout(() => {
         this.loadingService.setloading(true);
       });
-      const data: any = {
+      const data: IEmployeeRequest = {
         employee_code: this.employeeForm.get('basicInfo.code')?.value,
         full_name: this.employeeForm.get('basicInfo.name')?.value,
         gender: this.employeeForm
@@ -127,23 +138,31 @@ export class CreateEmployeeComponent {
           (data: any) => {
             if (data.statusCode === 200) {
               this.location.back();
-              this.toastService.toastSuccess(toast.createEmployeeSuccess);
+              this.toastService.toastSuccess(this.toast.createEmployeeSuccess);
             }
           },
-          (err) => {
-            this.toastService.toastWarn(toast.createEmployeeFail);
+          (err: HttpErrorResponse) => {
+            this.errorFromApi = err;
+            this.toastService.toastError(this.toast.createEmployeeFail);
           }
         );
     } else {
-      this.toastService.toastWarn(toast.createEmployeeFail);
+      this.toastService.toastWarn(this.toast.createEmployeeWarn);
+      if (this.employeeForm.get('basicInfo.avt')?.errors) {
+        this.avt.nativeElement.style.border = '1px dashed red';
+      }
     }
+  }
+
+  getAvt(avt: ElementRef): void {
+    this.avt = avt;
   }
 
   get workingHistory(): AbstractControl<any>[] {
     return (this.employeeForm.get('workingProcess') as FormArray).controls;
   }
 
-  getWorkingHistory(): any[] {
+  getWorkingHistory(): IWorkingHistory[] {
     if (this.workingHistory.length > 0) {
       return this.workingHistory.map((item, index) => {
         const data: any = {
@@ -172,7 +191,7 @@ export class CreateEmployeeComponent {
     return (this.employeeForm.get('contactInfo.socials') as FormArray).controls;
   }
 
-  getSocialNetwork(): any[] {
+  getSocialNetwork(): ISocialNetwork[] {
     if (this.socialNetwork.length > 0) {
       return this.socialNetwork.map((item) => {
         return {
@@ -184,7 +203,7 @@ export class CreateEmployeeComponent {
     return [];
   }
 
-  handleTransformDataEmployee(data: any): void {
+  handleTransformDataEmployee(data: IEmployeeRequest): void {
     Object.keys(data).forEach((item) => {
       const employeeItem = data[item as keyof typeof data];
       if (
@@ -198,8 +217,8 @@ export class CreateEmployeeComponent {
         }
       } else {
         if (item === 'image_url') {
-          this.formData.append(item, employeeItem);
-        } else this.formData.append(item, employeeItem);
+          this.formData.append(item, employeeItem as string | Blob);
+        } else this.formData.append(item, employeeItem as string | Blob);
       }
     });
   }
@@ -233,7 +252,7 @@ export class CreateEmployeeComponent {
     }
   }
 
-  handleTransformDataWorkingHistory(data: any): any[] {
+  handleTransformDataWorkingHistory(data: IEmployeeResponse): any[] {
     const newData = data.user_working_histories?.map((item: any) => {
       (getControlCommon(this.employeeForm, 'workingProcess') as FormArray).push(
         this.fb.group({
@@ -262,7 +281,7 @@ export class CreateEmployeeComponent {
     return newData;
   }
 
-  patchValueForForm(data: any) {
+  patchValueForForm(data: IEmployeeResponse) {
     const newData = {
       basicInfo: {
         code: data.employee_code,
@@ -270,11 +289,11 @@ export class CreateEmployeeComponent {
         sex: {
           value: data.gender === 'MALE' ? ESex.MALE : ESex.FEMALE,
         },
-        birthDay: this.commonService.convertDateVi(data.birth_date) || "",
-        hireDate: this.commonService.convertDateVi(data.hire_date) || "",
-        joinDate: this.commonService.convertDateVi(data.receive_date) || "",
-        currentResidence: data.home_land || "",
-        address: data.temporary_address || "",
+        birthDay: this.commonService.convertDateVi(data.birth_date) || '',
+        hireDate: this.commonService.convertDateVi(data.hire_date) || '',
+        joinDate: this.commonService.convertDateVi(data.receive_date) || '',
+        currentResidence: data.home_land || '',
+        address: data.temporary_address || '',
       },
       contactInfo: {
         email: data.email,
@@ -293,13 +312,13 @@ export class CreateEmployeeComponent {
       workingProcess: this.handleTransformDataWorkingHistory(data),
     };
     console.log(data);
-    
-    console.log(data.home_land || "");
+
+    console.log(data.home_land || '');
 
     this.employeeForm.patchValue(newData);
   }
 
-  handleTransformDataSocialNetwork(data: any): any[] {
+  handleTransformDataSocialNetwork(data: IEmployeeResponse): any[] {
     return data.social_network?.map((item: any) => {
       const social = JSON.parse(item);
       (
@@ -325,6 +344,9 @@ export class CreateEmployeeComponent {
   }
 
   ngOnInit() {
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
     this.employeeForm = this.fb.group({
       basicInfo: this.fb.group({
         code: [
@@ -341,7 +363,7 @@ export class CreateEmployeeComponent {
         address: ['', [Validators.maxLength(255), emojiValidator]],
         joinDate: [''],
         hireDate: '',
-        avt: [''],
+        avt: ['', [Validators.required]],
       }),
       contactInfo: this.fb.group({
         email: [

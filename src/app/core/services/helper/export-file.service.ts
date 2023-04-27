@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
+import { IEmployeeResponse } from 'src/app/shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -10,13 +11,13 @@ export class ExportFileService {
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
   private EXCEL_EXTENSION = '.xlsx';
 
-  public exportAsExcelFile(dataList: any[], fileName: string) {
+  public exportAsExcelFile(dataList: IEmployeeResponse[], fileName: string) {
     const subTable: any = {};
-    dataList.forEach((data) => {
+    dataList.forEach((data: IEmployeeResponse) => {
       Object.keys(data).forEach((keyOfData) => {
         if (
-          data[keyOfData] instanceof Array ||
-          data[keyOfData] instanceof Object
+          data[keyOfData as keyof typeof data] instanceof Array ||
+          data[keyOfData as keyof typeof data] instanceof Object
         ) {
           if (keyOfData === 'social_network') {
             data[keyOfData] = data[keyOfData].map((item: any) => {
@@ -26,18 +27,21 @@ export class ExportFileService {
           if (Object.keys(subTable).length > 0) {
             Object.keys(subTable).every((keyOfSubTable: any) => {
               if (keyOfSubTable === keyOfData) {
-                subTable[keyOfData] = [...subTable[keyOfData], data[keyOfData]];
+                subTable[keyOfData] = [
+                  ...subTable[keyOfData],
+                  data[keyOfData as keyof typeof data],
+                ];
                 return false;
               } else {
-                subTable[keyOfData] = [data[keyOfData]];
+                subTable[keyOfData] = [data[keyOfData as keyof typeof data]];
               }
               return true;
             });
           } else {
-            subTable[keyOfData] = [data[keyOfData]];
+            subTable[keyOfData] = [data[keyOfData as keyof typeof data]];
           }
 
-          delete data[keyOfData];
+          delete data[keyOfData as keyof typeof data];
         }
       });
     });

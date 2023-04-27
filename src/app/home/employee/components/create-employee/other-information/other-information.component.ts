@@ -15,6 +15,7 @@ import {
 } from 'src/app/core/services/helper/warningForm.service';
 import { EmployeeService } from 'src/app/core/services/http/employee.service';
 import { PositionService } from 'src/app/core/services/http/position.service';
+import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
 import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
 import {
   IPosition,
@@ -22,7 +23,6 @@ import {
   IUnit,
   IWarningOtherInfo,
 } from 'src/app/shared/interfaces';
-import { toast } from 'src/app/shared/toastMessage';
 
 @Component({
   selector: 'app-other-information',
@@ -38,7 +38,8 @@ export class OtherInformationComponent implements OnInit {
     private employeeService: EmployeeService,
     private positionService: PositionService,
     private toastService: ToastService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private toasMsgService: ToastMsgService
   ) {}
   public statusList: IStatus[];
   public cvSize = 2;
@@ -46,6 +47,7 @@ export class OtherInformationComponent implements OnInit {
   public unitId: string;
   @Input() employeeForm: FormGroup;
   public positionList: IPosition[];
+  public toast: any;
   @ViewChild('cv', { static: true }) cv: any;
   public warning: IWarningOtherInfo = {
     unit: null,
@@ -56,6 +58,9 @@ export class OtherInformationComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
     this.unitTreeService.unitTree$.subscribe((data: any) => {
       this.unitList = data;
     });
@@ -138,14 +143,14 @@ export class OtherInformationComponent implements OnInit {
     if (this.commonService.checkTypeCV(event.files[0], 'application/pdf')) {
       if (this.commonService.checkSizeCV(event.files[0], this.cvSize)) {
         this.employeeForm.get('otherInfo')?.get('cv')?.setValue(event.files[0]);
-        this.toastService.toastSuccess(toast.uploadCvSuccess);
+        this.toastService.toastSuccess(this.toast.uploadCvSuccess);
       } else {
         this.cv.clear();
-        this.toastService.toastError(toast.uploadCvSizeFail, this.cvSize);
+        this.toastService.toastError(this.toast.uploadCvSizeFail, this.cvSize);
       }
     } else {
       this.cv.clear();
-      this.toastService.toastError(toast.uploadCvTypeFail);
+      this.toastService.toastError(this.toast.uploadCvTypeFail);
     }
   }
   warningDetect(): void {

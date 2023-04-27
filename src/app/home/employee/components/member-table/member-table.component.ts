@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable, Subscription, finalize } from 'rxjs';
 import { PositionService } from 'src/app/core/services/http/position.service';
 import { UnitService } from 'src/app/core/services/http/unit.service';
+import { IEmployeeResponse } from 'src/app/shared/interfaces';
 
 type TType = 'unit' | 'position';
 export interface IPropsMember {
@@ -21,13 +22,13 @@ export class MemberTableComponent implements OnInit {
     private positionService: PositionService,
     private router: Router
   ) {}
-  public employeeActive: any;
+  public employeeActive: IEmployeeResponse;
   public limit: number = 5;
   public total: number = 0;
   public subscription: Subscription;
   public page: number = 1;
   public loadDisplay: boolean = false;
-  public memberList: any[];
+  public memberList: IEmployeeResponse[];
   @Input() props: IPropsMember;
   onPageChange(event: any) {
     if (event.page + 1 !== this.page) {

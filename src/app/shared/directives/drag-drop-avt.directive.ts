@@ -12,7 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FileUpload } from 'primeng/fileupload';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
-import { toast } from '../toastMessage';
+import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
 
 export interface IData {
   url: string;
@@ -32,13 +32,18 @@ export class DragDropAvtDirective implements OnInit {
   constructor(
     private elementRef: ElementRef,
     private sanitizer: DomSanitizer,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private toasMsgService: ToastMsgService
   ) {}
   @Input('appDragDropAvt') dataForDirective: IData;
   @Input('handleInDirective') handleInDirective: IHandle;
   @Output() handleSetUrl = new EventEmitter<any>();
+  public toast: any;
 
   ngOnInit() {
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
     this.handleInDirective.inputFileElement.onSelect.emit = (event: any) => {
       this.handleDropFile(event);
     };
@@ -103,13 +108,15 @@ export class DragDropAvtDirective implements OnInit {
             );
           }
         }
-        this.toastService.toastSuccess(toast.UploadImageSuccess);
+        this.toastService.toastSuccess(
+          this.toast.UploadImageSuccess
+        );
       } else {
         if (event instanceof DragEvent) {
           event.preventDefault();
         }
         this.toastService.toastError(
-          toast.UploadImageSizeFail,
+          this.toast.UploadImageSizeFail,
           this.dataForDirective.size
         );
         this.handleOnDragEnd();
@@ -119,7 +126,9 @@ export class DragDropAvtDirective implements OnInit {
       if (event instanceof DragEvent) {
         event.preventDefault();
       }
-      this.toastService.toastError(toast.UploadImageTypeFail);
+      this.toastService.toastError(
+        this.toast.UploadImageTypeFail
+      );
       this.handleOnDragEnd();
     }
     this.handleInDirective.inputFileElement.clear();

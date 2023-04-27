@@ -177,7 +177,7 @@
 }
 
 ::ng-deep .p-inputtext {
-  width: 100%;
+  width: 100% !important;
 }
 
 ::ng-deep .p-component {
@@ -199,8 +199,21 @@
   transform: translate(-50%, -50%);
 }
 
-::ng-deep .p-dropdown {
-  width: 100%;
+::ng-deep .p-dropdown, ::ng-deep .p-calendar {
+  width: 100% !important;
+}
+
+::ng-deep .aclass img {
+  width: 300px;
+  height: 300px;
+  margin: auto;
+  display: block;
+}
+
+::ng-deep .p-dialog-mask .p-dialog {
+  min-width: 60%;
+  height: auto;
+  max-height: 90%;
 }
 
 @media (max-width: 1200px) {
@@ -222,6 +235,15 @@
     justify-content: center;
   }
 
+  ::ng-deep .aclass img {
+    width: 80vw !important;
+    height: auto !important;
+  }
+
+  ::ng-deep .p-dialog .p-dialog-content {
+    padding: 0 !important;
+  }
+
   ::ng-deep .p-toast {
     width: 90% !important;
     // padding: 0 20px;
@@ -237,5 +259,14 @@
   }
   ::ng-deep .p-datatable-table > .p-datatable-tbody > tr > td > span {
     text-align: center !important;
+  }
+}
+
+@media (max-width: 600px) {
+  ::ng-deep .aclass img {
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    display: block;
   }
 }

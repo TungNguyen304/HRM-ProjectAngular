@@ -19,14 +19,19 @@ import {
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
 import {
+  apiWarning,
   emailWarning,
   emojiWarning,
   maxLengthWarning,
   requireWarning,
 } from 'src/app/core/services/helper/warningForm.service';
-import { IWarningContactInfo } from 'src/app/shared/interfaces';
-import { toast } from 'src/app/shared/toastMessage';
+import {
+  IWarningContactInfo,
+  fieldFEEmployee,
+} from 'src/app/shared/interfaces';
 import { socialNetworks } from './data';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
 
 type Tsocial = 'type' | 'name';
 
@@ -45,10 +50,13 @@ export class ContactInformationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private toastService: ToastService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private toasMsgService: ToastMsgService
   ) {}
   public socialNetworks = socialNetworks;
   @Input() employeeForm: FormGroup;
+  @Input() errorFromApi: HttpErrorResponse;
+  public toast: any;
   public warning: IWarningContactInfo = {
     email: null,
     phone: null,
@@ -58,14 +66,36 @@ export class ContactInformationComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
     this.warningDetect();
     this.employeeForm.get('contactInfo')?.valueChanges.subscribe(() => {
       this.warningDetect();
     });
   }
 
-  myUploader(event: any): void {
+  ngOnChanges() {
+    this.errorFromApi &&
+      this.errorFromApi.error.errors?.forEach((item: any) => {
+        apiWarning(
+          Object.values(item.constraints).join(', '),
+          this,
+          fieldFEEmployee[item.property as keyof typeof fieldFEEmployee]
+        );
+        this.employeeForm
+          .get(
+            `contactInfo.${
+              fieldFEEmployee[item.property as keyof typeof fieldFEEmployee]
+            }`
+          )
+          ?.setErrors({
+            api: true,
+          });
+      });
   }
+
+  myUploader(event: any): void {}
 
   getControl(control: string): AbstractControl | null {
     return getControlCommon(this.employeeForm, 'contactInfo', control);
@@ -130,7 +160,7 @@ export class ContactInformationComponent implements OnInit {
       );
       this.cdr.detectChanges();
     } else {
-      this.toastService.toastWarn(toast.maxLengthSocial);
+      this.toastService.toastWarn(this.toast.maxLengthSocial);
     }
   }
 

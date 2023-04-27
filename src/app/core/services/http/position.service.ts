@@ -12,7 +12,8 @@ import {
   tap,
   timer,
 } from 'rxjs';
-import { IPosition } from 'src/app/shared/interfaces';
+import { ILanguage, IPosition } from 'src/app/shared/interfaces';
+import { LanguageService } from '../state/language.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,15 @@ import { IPosition } from 'src/app/shared/interfaces';
 export class PositionService {
   public position$ = new BehaviorSubject<any>(null);
   public member$ = new BehaviorSubject<any>(null);
-  constructor(private http: HttpClient) {}
+  public lang: ILanguage;
+  constructor(
+    private http: HttpClient,
+    private languageService: LanguageService
+  ) {
+    this.languageService.language$.subscribe((lang: ILanguage) => {
+      this.lang = lang;
+    });
+  }
 
   getPosition(
     page: number,
@@ -67,7 +76,9 @@ export class PositionService {
   }
 
   addPosition(data: IPosition): Observable<Object> {
-    return this.http.post(`job-positions`, data).pipe(delay(1000));
+    return this.http
+      .post(`job-positions?lang=${this.lang}`, data)
+      .pipe(delay(1000));
   }
 
   updatePosition(data: IPosition, id: string): Observable<Object> {

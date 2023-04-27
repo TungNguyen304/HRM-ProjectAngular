@@ -11,7 +11,7 @@ import { ToastService } from 'src/app/core/services/helper/toast.service';
 import { AuthService } from 'src/app/core/services/http/auth.service';
 import { AccountService } from 'src/app/core/services/state/account.service';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
-import { toast } from 'src/app/shared/toastMessage';
+import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
 
 type errorEmail = 'errorEmail';
 type errorPassword = 'errorPassword';
@@ -33,14 +33,19 @@ export class LoginComponent implements OnInit {
     private toastService: ToastService,
     private router: Router,
     private loadingService: LoadingService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private toasMsgService: ToastMsgService
   ) {}
   public loginForm: FormGroup;
+  public toast: any;
   public errorEmail: string = 'Email is empty!';
   public errorPassword: string = 'Password is empty!';
   @ViewChild('pass') pass: ElementRef;
   public display: boolean = false;
   ngOnInit() {
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
     this.loginForm = this.fb.group({
       email: [
         '',
@@ -119,7 +124,7 @@ export class LoginComponent implements OnInit {
         .pipe(
           switchMap((data: any) => {
             localStorage.setItem('token', data.response.access_token);
-            this.toastService.toastSuccess(toast.loginSuccess);
+            this.toastService.toastSuccess(this.toast.loginSuccess);
             this.router.navigate(['/']);
             return this.authService.getMyInfo();
           }),
@@ -127,7 +132,7 @@ export class LoginComponent implements OnInit {
             this.loadingService.setloading(false);
           }),
           catchError((err) => {
-            this.toastService.toastError(toast.loginFail);
+            this.toastService.toastError(this.toast.loginFail);
             this.loginForm.patchValue({
               email: '',
               password: '',

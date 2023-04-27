@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceService } from 'src/app/core/services/http/device.service';
 import { CommonService } from 'src/app/core/services/common.service';
 import { labelDeviceVi, labelDeviceEn } from './data';
@@ -11,9 +11,14 @@ import { catchError, finalize, map, switchMap, throwError } from 'rxjs';
 import { StatusAsset } from '../../device/data';
 import { EstateService } from 'src/app/core/services/helper/estate.service';
 import { ProviderService } from 'src/app/core/services/http/provider.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
-import { toast } from 'src/app/shared/toastMessage';
+import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
+import {
+  NgxQrcodeElementTypes,
+  NgxQrcodeErrorCorrectionLevels,
+} from '@techiediaries/ngx-qrcode';
+import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
 @Component({
   selector: 'app-detail-device',
   templateUrl: './detail-device.component.html',
@@ -32,6 +37,13 @@ export class DetailDeviceComponent {
   public token: string;
   public historyBorrow: any[];
   public requestForm: FormGroup;
+  public displayQr: boolean = false;
+  public elementType = NgxQrcodeElementTypes.URL;
+  public correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
+  public deviceExcel: any;
+  public estate: boolean = true;
+  public url: string;
+  public toast: any;
   constructor(
     private location: Location,
     private activateRoute: ActivatedRoute,
@@ -42,7 +54,10 @@ export class DetailDeviceComponent {
     private estateService: EstateService,
     private providerService: ProviderService,
     private fb: FormBuilder,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private exportFileService: ExportFileService,
+    private router: Router,
+    private toasMsgService: ToastMsgService
   ) {}
   handleBack(): void {
     this.location.back();
@@ -74,7 +89,7 @@ export class DetailDeviceComponent {
         )
         .subscribe((data: any) => {
           if (data.statusCode === 200) {
-            this.toastService.toastSuccess(toast.RequestSuccess);
+            this.toastService.toastSuccess(this.toast.RequestSuccess);
           }
         });
     }
@@ -114,23 +129,35 @@ export class DetailDeviceComponent {
 
   onPageChange(event: any): void {}
 
+  exportFile() {
+    this.exportFileService.exportAsExcelFile(
+      [this.deviceExcel],
+      `Device ${this.deviceExcel?.asset_name}`
+    );
+  }
+
   ngOnInit() {
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
+    this.estate = this.router.url.includes('estate');
     setTimeout(() => {
       this.loadingService.setloading(true);
     });
     this.activateRoute.params
       .pipe(
         switchMap((params) => {
-          this.token = params['token']
+          this.token = params['token'];
           if (this.token) {
-            return this.deviceService.getDeviceById(
-              params['id'],
-              this.token
-            );
+            return this.deviceService.getDeviceById(params['id'], this.token);
           }
           return this.deviceService.getDeviceById(params['id']);
         }),
         switchMap((device: any) => {
+          this.deviceExcel = device.response;
+          this.url = `${window.location.host}/detail-device/${
+            this.deviceExcel.asset_id
+          }/${localStorage.getItem('token')}`;
           return this.providerService.getAllProvider(this.token).pipe(
             map((provider: any) => {
               return {
@@ -173,8 +200,8 @@ export class DetailDeviceComponent {
       });
 
     this.requestForm = this.fb.group({
-      time: '',
-      description: '',
+      time: ['', [Validators.required]],
+      description: ['', [Validators.required]],
     });
   }
 }

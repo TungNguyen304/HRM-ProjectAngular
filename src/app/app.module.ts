@@ -10,16 +10,20 @@ import { SharedModule } from './shared/shared.module';
 import { ButtonModule } from 'primeng/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InterceptorRequest } from './core/services/http/interceptor.request';
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FileSaverModule } from 'ngx-filesaver';
-import {HttpClient, HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-} 
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,14 +43,14 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     FileSaverModule,
     TranslateModule.forRoot({
       loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-  })
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: InterceptorRequest, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorRequest, multi: true },
   ],
   bootstrap: [AppComponent],
 })

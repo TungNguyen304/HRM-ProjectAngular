@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   Component,
   ElementRef,
@@ -16,6 +17,7 @@ import {
 import { FileUpload } from 'primeng/fileupload';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import {
+  apiWarning,
   emojiWarning,
   maxLengthWarning,
   requireWarning,
@@ -24,7 +26,11 @@ import {
   IData,
   IHandle,
 } from 'src/app/shared/directives/drag-drop-avt.directive';
-import { ISex, IWarningBasicInfo } from 'src/app/shared/interfaces';
+import {
+  ISex,
+  IWarningBasicInfo,
+  fieldFEEmployee,
+} from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-basic-information',
@@ -54,13 +60,16 @@ export class BasicInformationComponent implements OnInit {
 
   public handleInDirective: IHandle;
 
-  @ViewChild('avt') drag: ElementRef;
+  @ViewChild('avt', { static: true }) drag: ElementRef;
   @ViewChild('file', { static: true }) file: FileUpload;
   @Input() employeeForm: FormGroup;
-  @Input() urlUpdate: string;
+  @Input() urlUpdate: string | undefined;
+  @Input() errorFromApi: HttpErrorResponse;
+  @Output() getAvt = new EventEmitter<ElementRef>();
   constructor() {}
 
   ngOnInit() {
+    this.getAvt.emit(this.drag);
     this.sex = [{ value: 'Male' }, { value: 'FeMale' }];
     this.handleInDirective = {
       form: this.employeeForm,
@@ -76,6 +85,23 @@ export class BasicInformationComponent implements OnInit {
   }
 
   ngOnChanges() {
+    this.errorFromApi &&
+      this.errorFromApi.error.errors.forEach((item: any) => {
+        apiWarning(
+          Object.values(item.constraints).join(', '),
+          this,
+          fieldFEEmployee[item.property as keyof typeof fieldFEEmployee]
+        );
+        this.employeeForm
+          .get(
+            `basicInfo.${
+              fieldFEEmployee[item.property as keyof typeof fieldFEEmployee]
+            }`
+          )
+          ?.setErrors({
+            api: true,
+          });
+      });
     if (this.urlUpdate) this.url = this.urlUpdate;
     this.dataForDirective = {
       url: this.url,
@@ -104,6 +130,7 @@ export class BasicInformationComponent implements OnInit {
     this.handleSetWarning('address', 255);
     this.handleSetWarning('joinDate');
     this.handleSetWarning('hireDate');
+    this.handleSetWarning('avt');
   }
 
   handleSetWarning(type: keyof IWarningBasicInfo, length?: number): void {

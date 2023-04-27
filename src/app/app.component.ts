@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastService } from './core/services/helper/toast.service';
 import { ModalService } from './core/services/helper/modal.service';
+import { ToastMsgService } from './core/services/state/toastMsg.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -25,7 +26,8 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private accountService: AccountService,
     private loadingService: LoadingService,
-    private router: Router
+    private router: Router,
+    private toasMsgService:ToastMsgService
   ) {
     translate.setDefaultLang('en');
     translate.use('en');
@@ -45,6 +47,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.languageService.language$.subscribe(lang => {
+      this.toasMsgService.setToast(lang)
+    })
     if (localStorage.getItem('token')) {
       this.authService.getMyInfo().subscribe((data: any) => {
         if (data.statusCode === 200) {

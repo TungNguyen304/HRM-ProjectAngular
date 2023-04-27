@@ -5,7 +5,7 @@ export interface IToast {
   };
 }
 
-export const toast: IToast = {
+export const toastEn: IToast = {
   loginSuccess: {
     summary: 'Success',
     detail: 'Login success',
@@ -15,12 +15,16 @@ export const toast: IToast = {
     detail: 'Email or password is not correct',
   },
   createEmployeeSuccess: {
-    summary: 'Create Employee Success',
+    summary: 'Success',
     detail: 'One new employee has been added',
   },
   createEmployeeFail: {
-    summary: 'Create Employee Fail',
-    detail: 'You have not completed all required fields',
+    summary: 'Fail',
+    detail: 'Create Employee Fail',
+  },
+  createEmployeeWarn: {
+    summary: 'Fail',
+    detail: 'You must properly complete all required fields',
   },
   maxLengthSocial: {
     summary: 'Add social network fail',
@@ -68,11 +72,11 @@ export const toast: IToast = {
   },
   uploadFileSuccess: {
     summary: 'Upload Success',
-    detail: 'Tải file lên thành công',
+    detail: 'Upload File Success',
   },
   uploadFileFail: {
     summary: 'Upload Fail',
-    detail: 'Loại File phải là ảnh xlsx hoặc xls',
+    detail: 'File type must be xlsx or xls image',
   },
   workplaceSuccess: {
     summary: 'Success',
@@ -121,5 +125,128 @@ export const toast: IToast = {
   RequestSuccess: {
     summary: 'Success',
     detail: 'Request Success',
+  },
+};
+
+export const toastVi: IToast = {
+  loginSuccess: {
+    summary: 'Thành công',
+    detail: 'Đăng nhập thành công',
+  },
+  loginFail: {
+    summary: 'Thất bại',
+    detail: 'Email / password Không đúng',
+  },
+  createEmployeeSuccess: {
+    summary: 'Thành công',
+    detail: 'Một nhân viên mới đã được thêm',
+  },
+  createEmployeeFail: {
+    summary: 'Thất bại',
+    detail: 'Tạo mới nhân viên thất bại',
+  },
+  createEmployeeWarn: {
+    summary: 'Thất bại',
+    detail: 'Bạn phải hoàn thành hợp lệ tất cả các trường yêu cầu',
+  },
+  maxLengthSocial: {
+    summary: 'Thêm mạng xã hội thất bại',
+    detail: 'Mạng xã hội chỉ được tối đa 5 tài khoản',
+  },
+  UploadImageSuccess: {
+    summary: 'Tải lên thành công',
+    detail: 'Image Tải lên thành công',
+  },
+  UploadImageTypeFail: {
+    summary: 'Tải lên thất bại',
+    detail: 'Avt phải là tệp png/jpg',
+  },
+  UploadImageSizeFail: {
+    summary: 'Tải lên thất bại',
+    detail: (value: number) => {
+      return `Kích thước của Avt không được nhiều hơn ${value}mb`;
+    },
+  },
+  uploadCvSuccess: {
+    summary: 'Tải lên thành công',
+    detail: 'CV Tải lên thành công',
+  },
+  uploadCvTypeFail: {
+    summary: 'Tải lên thất bại',
+    detail: 'CV phải là file pdf',
+  },
+  uploadCvSizeFail: {
+    summary: 'Tải lên thất bại',
+    detail: (value: number) => {
+      return `Kích thước của CV không được nhiều hơn ${value}mb`;
+    },
+  },
+  updateEmployeeSuccess: {
+    summary: 'Thảy đổi thành công',
+    detail: 'Nhân viên đã được thay đổi',
+  },
+  deleteEmployeeSuccess: {
+    summary: 'Xoá thành công',
+    detail: 'Nhân viên đã được xoá',
+  },
+  deleteEmployeeFail: {
+    summary: 'Xoá thất bại',
+    detail: 'Nhân viên không được xoá',
+  },
+  uploadFileSuccess: {
+    summary: 'Tải lên thành công',
+    detail: 'Tải file lên thành công',
+  },
+  uploadFileFail: {
+    summary: 'Tải lên thất bại',
+    detail: 'Loại File phải là ảnh xlsx hoặc xls',
+  },
+  workplaceSuccess: {
+    summary: 'Thành công',
+    detail: (value: string) => {
+      return `${value} Vị trí thành công`;
+    },
+  },
+  workplaceFail: {
+    summary: 'Thất bại',
+    detail: (value: string) => {
+      return `${value} Vị trí thất bại`;
+    },
+  },
+  rejected: {
+    summary: 'Từ chối',
+    detail: 'Bạn đã từ chối',
+  },
+  cancelled: {
+    summary: 'Huỷ',
+    detail: 'Bạn đã huỷ',
+  },
+  providerSuccess: {
+    summary: 'Thành công',
+    detail: (value: string) => {
+      return `${value} Nhà cung cấp thành công`;
+    },
+  },
+  providerFail: {
+    summary: 'Thất bại',
+    detail: (value: string) => {
+      return `${value} Nhà cung cấp thất bại`;
+    },
+  },
+  deviceSuccess: {
+    summary: 'Thành công',
+    detail: (value: string) => {
+      return `${value} Thiết bị thành công`;
+    },
+  },
+  deviceFail: {
+    summary: 'Thất bại',
+    detail: (value: string) => {
+      return `${value} Thiết bị thất bại`;
+    },
+  },
+  RequestSuccess: {
+    summary: 'Thành công',
+    detail: 'Yêu cầu thành công',
   },
 };

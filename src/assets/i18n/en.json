@@ -134,7 +134,8 @@
     "sex": "Sex",
     "unit": "Unit",
     "position": "Position",
-    "codeNameEmail": "Code/Name/Email"
+    "codeNameEmail": "Code/Name/Email",
+    "employeeAvt": "Avatar"
   },
 
   "provider": {
@@ -158,6 +159,7 @@
     "maxLength": "cannot be longer than {{length}} characters",
     "emoji": "are not allowed to contain emoji",
     "file": "The size of the file should not be more than {{mb}}mb",
-    "email": "invalidate"
+    "email": "invalidate",
+    "api": "{{error}}"
   }
 }

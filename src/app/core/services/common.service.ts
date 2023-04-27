@@ -104,6 +104,9 @@ export class CommonService {
   }
 
   convertVNDtoUSD(money: number): number {
+    if(!money) {
+      return 0
+    }
     let lang = '';
     this.languageService.language$.subscribe((data) => {
       lang = data;

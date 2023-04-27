@@ -4,10 +4,10 @@ import { PositionService } from 'src/app/core/services/http/position.service';
 import { IPosition } from 'src/app/shared/interfaces';
 import { IPropsMember } from '../components/member-table/member-table.component';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
-import { toast } from 'src/app/shared/toastMessage';
 import { finalize } from 'rxjs';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
 import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
+import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
 
 export interface IPositionForm {
   name: string;
@@ -27,17 +27,19 @@ export class WorkplaceComponent implements OnInit {
     private positionService: PositionService,
     private toastService: ToastService,
     private loadingService: LoadingService,
-    private exportFileService: ExportFileService
+    private exportFileService: ExportFileService,
+    private toasMsgService: ToastMsgService
   ) {}
   @ViewChild('paginator') paginator: ElementRef;
   public displayCreate: boolean = false;
   public displayMember: boolean = false;
+  public toast: any;
   public positionTemp: string;
   public limit: number = 4;
   public total: number = 0;
   public pageCurrent: number = 1;
   public loadDisplay: boolean = false;
-  public infoUpdate: any;
+  public infoUpdate: IPosition;
   public typeAction: 'Add' | 'Update';
   public props: IPropsMember;
   public searchInput: FormControl = new FormControl('');
@@ -63,10 +65,13 @@ export class WorkplaceComponent implements OnInit {
   showMessage(type: boolean): void {
     if (type === true) {
       this.displayCreate = false;
-      this.toastService.toastSuccess(toast.workplaceSuccess, this.typeAction);
+      this.toastService.toastSuccess(
+        this.toast.workplaceSuccess,
+        this.typeAction
+      );
       this.handleGetPosition();
     } else {
-      this.toastService.toastError(toast.workplaceFail, this.typeAction);
+      this.toastService.toastError(this.toast.workplaceFail, this.typeAction);
     }
   }
 
@@ -81,7 +86,10 @@ export class WorkplaceComponent implements OnInit {
       )
       .subscribe((data: any) => {
         if (data.statusCode === 200) {
-          this.exportFileService.exportAsExcelFile(data.response.data, 'Position List');
+          this.exportFileService.exportAsExcelFile(
+            data.response.data,
+            'Position List'
+          );
         }
       });
   }
@@ -123,6 +131,9 @@ export class WorkplaceComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
     this.handleGetPosition();
     this.searchInput.valueChanges.subscribe(() => {
       this.loadDisplay = true;

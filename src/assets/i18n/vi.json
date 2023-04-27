@@ -89,7 +89,8 @@
     "sex": "Giới tính",
     "unit": "Đơn vị",
     "position": "Vị trí",
-    "codeNameEmail": "Mã/ Tên/ Email"
+    "codeNameEmail": "Mã/ Tên/ Email",
+    "employeeAvt": "Ảnh đại diện"
   },
 
   "createEmployee": {
@@ -156,6 +157,7 @@
     "maxLength": "không được dài quá {{length}} ký tự",
     "emoji": "không được chứa emoji",
     "file": "Dung lượng của tệp không được quá {{mb}}mb",
-    "email": "không đúng định dạng"
+    "email": "không đúng định dạng",
+    "api": "{{error}}"
   }
 }
