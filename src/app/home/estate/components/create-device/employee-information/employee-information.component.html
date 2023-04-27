@@ -5,11 +5,19 @@
       <span>Email</span>
     </label>
     <p-dropdown
-        [placeholder]="'common.select' | translate"
-        formControlName="email"
-        [options]="employeeList"
-        optionLabel="email"
-      ></p-dropdown>
+      [placeholder]="'common.select' | translate"
+      formControlName="email"
+      [options]="employeeList"
+      optionLabel="email"
+    ></p-dropdown>
+    <p
+      *ngIf="getControl('email')?.dirty && getControl('email')?.errors"
+      class="warning"
+    >
+      <i class="bi bi-cone-striped"></i>
+      Email
+      {{ warning.email?.type | typeError | translate }}
+    </p>
   </div>
   <div class="form_item">
     <label for="name">

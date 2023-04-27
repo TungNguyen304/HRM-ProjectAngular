@@ -6,7 +6,8 @@ import { ModalService } from 'src/app/core/services/helper/modal.service';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
 import { ProviderService } from 'src/app/core/services/http/provider.service';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
-import { toast } from 'src/app/shared/toastMessage';
+import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
+import { IProviderResponse } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-provider',
@@ -14,22 +15,24 @@ import { toast } from 'src/app/shared/toastMessage';
   styleUrls: ['./provider.component.scss'],
 })
 export class ProviderComponent {
-  public providerList: any;
+  public providerList: IProviderResponse[];
   public displayCreate: boolean = false;
   public idProvider: number;
   public pageCurrent: number = 1;
   public total: number = 0;
   public limit: number = 4;
-  public infoUpdate: any;
+  public infoUpdate: IProviderResponse;
   public loadDisplay: boolean = false;
   public searchInput: FormControl = new FormControl('');
   public typeAction: 'Add' | 'Update';
+  public toast: any;
   constructor(
     private providerService: ProviderService,
     private toastService: ToastService,
     private modalService: ModalService,
     private loadingService: LoadingService,
-    private exportFileService: ExportFileService
+    private exportFileService: ExportFileService,
+    private toasMsgService: ToastMsgService
   ) {}
 
   handleDisplayCreateProvider(): void {
@@ -59,10 +62,16 @@ export class ProviderComponent {
   showMessage(type: boolean): void {
     if (type === true) {
       this.displayCreate = false;
-      this.toastService.toastSuccess(toast.providerSuccess, this.typeAction);
+      this.toastService.toastSuccess(
+        this.toast.providerSuccess,
+        this.typeAction
+      );
       this.handleGetProvider();
     } else {
-      this.toastService.toastError(toast.providerFail, this.typeAction);
+      this.toastService.toastError(
+        this.toast.providerFail,
+        this.typeAction
+      );
     }
   }
 
@@ -75,24 +84,28 @@ export class ProviderComponent {
     );
   }
 
-  handleDeleteProvider(provider: any): void {
+  handleDeleteProvider(provider: IProviderResponse): void {
     this.modalService.confirmDetele(provider.name, () => {
       this.loadDisplay = true;
       this.providerService
         .deleteProviderById(provider.distributor_id)
         .subscribe(
           () => {
-            this.toastService.toastSuccess(toast.deleteEmployeeSuccess);
+            this.toastService.toastSuccess(
+              this.toast.deleteEmployeeSuccess
+            );
           },
           () => {
-            this.toastService.toastError(toast.deleteEmployeeFail);
+            this.toastService.toastError(
+              this.toast.deleteEmployeeFail
+            );
           }
         );
       this.handleGetProvider();
     });
   }
 
-  handleUpdateProvider(provider: any): void {
+  handleUpdateProvider(provider: IProviderResponse): void {
     this.typeAction = 'Update';
     this.displayCreate = true;
     this.infoUpdate = provider;
@@ -107,10 +120,12 @@ export class ProviderComponent {
   }
 
   ngOnInit() {
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
     this.handleGetProvider().subscribe(
       (data: any) => {
         if (data.statusCode === 200) {
-          console.log(data);
           this.total = data.response.total;
           this.providerList = data.response.data;
         }

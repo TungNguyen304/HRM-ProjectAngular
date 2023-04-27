@@ -167,6 +167,14 @@
           alt=""
         />
       </div>
+      <p
+        *ngIf="getControl('avt')?.dirty && getControl('avt')?.errors"
+        class="warning"
+      >
+        <i class="bi bi-cone-striped"></i>
+        {{ "employeeManagement.employeeAvt" | translate }}
+        {{ warning.avt?.type | typeError | translate : warning.avt }}
+      </p>
     </div>
   </div>
 </div>

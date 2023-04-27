@@ -7,13 +7,23 @@ import {
   delay,
   switchMap,
 } from 'rxjs';
+import { LanguageService } from '../state/language.service';
+import { ILanguage } from 'src/app/shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
   public employee$ = new BehaviorSubject<any>(null);
-  constructor(private http: HttpClient) {}
+  public lang: ILanguage;
+  constructor(
+    private http: HttpClient,
+    private languageService: LanguageService
+  ) {
+    this.languageService.language$.subscribe((lang: ILanguage) => {
+      this.lang = lang;
+    });
+  }
 
   getEmployee(
     page: number = 1,
@@ -55,7 +65,7 @@ export class EmployeeService {
   }
 
   addEmployee(data: FormData): Observable<Object> {
-    return this.http.post('users', data).pipe(delay(2000));
+    return this.http.post(`users?lang=${this.lang}`, data).pipe(delay(2000));
   }
 
   updateEmployee(id: string, data: FormData): Observable<Object> {

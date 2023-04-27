@@ -29,11 +29,16 @@ import { LanguageService } from 'src/app/core/services/state/language.service';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
 import { StatusAsset, deviceStatusEn, deviceStatusVi } from '../../device/data';
 import { CommonService } from 'src/app/core/services/common.service';
-import { IAssetHistory, typeAction } from 'src/app/shared/interfaces';
+import {
+  IAssetHistory,
+  IDeviceResponse,
+  IProviderResponse,
+  typeAction,
+} from 'src/app/shared/interfaces';
 import { DateService } from 'src/app/core/services/helper/date.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
-import { toast } from 'src/app/shared/toastMessage';
+import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
 
 @Component({
   selector: 'app-create-device',
@@ -42,8 +47,9 @@ import { toast } from 'src/app/shared/toastMessage';
 })
 export class CreateDeviceComponent {
   public deviceForm: FormGroup;
-  public deviceInfo: any;
-  public providerList: any;
+  public deviceInfo: IDeviceResponse;
+  public providerList: IProviderResponse[];
+  public toast:any;
   public typeAction: typeAction = this.router.url.includes('update-device')
     ? 'update'
     : 'add';
@@ -62,7 +68,8 @@ export class CreateDeviceComponent {
     private dateService: DateService,
     private router: Router,
     private toastService: ToastService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private toasMsgService: ToastMsgService
   ) {}
 
   onSubmit(): void {
@@ -78,14 +85,15 @@ export class CreateDeviceComponent {
           this.deviceForm.value?.basicInfo?.buyDate
         ),
         bill_number: this.deviceForm.value?.basicInfo?.billNumber,
-        total_amount: String(
-          this.commonService.convertVNDtoUSD(
-            this.deviceForm.value?.basicInfo?.money
-          )
-        ),
+        total_amount:
+          String(
+            this.commonService.convertVNDtoUSD(
+              this.deviceForm.value?.basicInfo?.money
+            )
+          ) || 0,
         user_used_id:
           this.deviceForm.value?.basicInfo?.employee?.employee_id || '',
-        status: String(this.deviceForm.value?.basicInfo?.status?.key),
+        status: String(this.deviceForm.value?.basicInfo?.status?.key || 1),
         user_using_id:
           this.deviceForm.value?.employeeInfo?.email?.employee_id || '',
         date_use: this.dateService.handleConvertDateToIOString(
@@ -106,13 +114,16 @@ export class CreateDeviceComponent {
             if (data.statusCode === 200) {
               this.router.navigate(['estate/device']);
               this.toastService.toastSuccess(
-                toast.deviceSuccess,
+                this.toast.deviceSuccess,
                 this.typeAction
               );
             }
           },
           () => {
-            this.toastService.toastError(toast.deviceFail, this.typeAction);
+            this.toastService.toastError(
+              this.toast.deviceFail,
+              this.typeAction
+            );
           }
         );
     }
@@ -134,7 +145,7 @@ export class CreateDeviceComponent {
     });
   }
 
-  patchValueForForm(deviceInfo: any) {
+  patchValueForForm(deviceInfo: IDeviceResponse) {
     const newData = {
       basicInfo: {
         code: deviceInfo.asset_code,
@@ -157,9 +168,10 @@ export class CreateDeviceComponent {
     this.deviceForm.patchValue(newData);
   }
 
-  handleTransformDataRepair(data: any) {}
-
   ngOnInit() {
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
     this.deviceForm = this.fb.group({
       basicInfo: this.fb.group({
         code: [
@@ -183,7 +195,7 @@ export class CreateDeviceComponent {
       }),
       repairInfo: this.fb.array([]),
       employeeInfo: this.fb.group({
-        email: [''],
+        email: ['', [Validators.required]],
         useDate: [''],
       }),
     });
@@ -277,8 +289,6 @@ export class CreateDeviceComponent {
         if (this.typeAction === 'update') {
           this.patchValueForForm(this.deviceInfo);
         }
-        console.log(this.providerList);
-
         subcription.unsubscribe();
       });
   }

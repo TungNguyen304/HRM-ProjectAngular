@@ -98,6 +98,15 @@
   }
 }
 
+@media (max-width: 500px) {
+  .detail_employee .detail_info .export {
+    flex-direction: column;
+    padding: 0 !important;
+    margin-bottom: 5px !important;
+    gap: 5px !important;
+  }
+}
+
 @media (max-width: 400px) {
   .detail_employee .detail_info {
     overflow: hidden;

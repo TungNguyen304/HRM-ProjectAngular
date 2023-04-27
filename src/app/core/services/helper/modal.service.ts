@@ -5,7 +5,7 @@ import {
   MessageService,
 } from 'primeng/api';
 import { ToastService } from './toast.service';
-import { toast } from 'src/app/shared/toastMessage';
+import { ToastMsgService } from '../state/toastMsg.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +14,15 @@ export class ModalService {
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private toastService:ToastService
+    private toastService: ToastService,
+    private toasMsgService: ToastMsgService
   ) {}
+  public toast: any;
+  start() {
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
+  }
   confirm1() {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
@@ -49,21 +56,21 @@ export class ModalService {
     });
   }
 
-  confirmDetele(value:string, acceptFunc:Function) {
+  confirmDetele(value: string, acceptFunc: Function) {
     this.confirmationService.confirm({
       message: `Do you want to delete <span class="actor_modal">${value}</span>`,
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        acceptFunc()
+        acceptFunc();
       },
       reject: (type: any) => {
         switch (type) {
           case ConfirmEventType.REJECT:
-            this.toastService.toastError(toast.rejected);
+            this.toastService.toastError(this.toast.rejected);
             break;
           case ConfirmEventType.CANCEL:
-            this.toastService.toastWarn(toast.cancelled);
+            this.toastService.toastWarn(this.toast.cancelled);
             break;
         }
       },

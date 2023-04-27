@@ -15,7 +15,6 @@ export const requireWarning = (
       };
     }
   } else {
-    
     if (getControlCommon(form, type)?.errors?.['required']) {
       component.warning[type as keyof typeof component.warning] = {
         type: 'required',
@@ -27,7 +26,7 @@ export const requireWarning = (
 export const emojiWarning = (
   form: AbstractControl | null,
   component: any,
-  type: string,
+  type: string
 ): void => {
   if (getControlCommon(form, type)?.errors?.['emoji']) {
     component.warning[type as keyof typeof component.warning] = {
@@ -53,11 +52,24 @@ export const maxLengthWarning = (
 export const emailWarning = (
   form: AbstractControl | null,
   component: any,
-  type: string,
+  type: string
 ): void => {
   if (getControlCommon(form, type)?.errors?.['email']) {
     component.warning[type as keyof typeof component.warning] = {
       type: 'email',
     };
   }
+};
+
+export const apiWarning = (
+  error: string,
+  component: any,
+  type: string
+): void => {
+  component.warning[type as keyof typeof component.warning] = {
+    type: 'api',
+    error: error,
+  };
+  console.log(component.warning);
+  
 };

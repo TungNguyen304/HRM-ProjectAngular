@@ -21,9 +21,13 @@ import {
 } from 'src/app/core/services/helper/warningForm.service';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
-import { toast } from 'src/app/shared/toastMessage';
 import { ModalService } from 'src/app/core/services/helper/modal.service';
-import { ISex } from 'src/app/shared/interfaces';
+import {
+  IEmployeeResponse,
+  IPosition,
+  ISex,
+  IUnit,
+} from 'src/app/shared/interfaces';
 import { UnitService } from 'src/app/core/services/http/unit.service';
 import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
 import { PositionService } from 'src/app/core/services/http/position.service';
@@ -31,6 +35,7 @@ import { Observable, finalize } from 'rxjs';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
 import { FileSaverService } from 'ngx-filesaver';
 import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
+import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
 
 @Component({
   selector: 'app-employee-management',
@@ -39,16 +44,17 @@ import { ExportFileService } from 'src/app/core/services/helper/export-file.serv
 })
 export class EmployeeManagementComponent {
   public sex: ISex[];
-  public employeeList: any;
-  public unitList: any[];
-  public positionList: any[];
+  public employeeList: IEmployeeResponse[];
+  public unitList: IUnit[];
+  public toast: any;
+  public positionList: IPosition[];
   public showCreateEmployee: boolean = false;
   public actions: any[];
   public searchForm: FormGroup;
   public warning: { codeNameEmail: any } = {
     codeNameEmail: null,
   };
-  public employeeActive: any;
+  public employeeActive: IEmployeeResponse;
   public loadDisplay: boolean = false;
   public limit: number = 4;
   public total: number = 0;
@@ -63,7 +69,8 @@ export class EmployeeManagementComponent {
     private positionService: PositionService,
     private loadingService: LoadingService,
     private _FileSaverService: FileSaverService,
-    private exportFileService: ExportFileService
+    private exportFileService: ExportFileService,
+    private toasMsgService: ToastMsgService
   ) {
     this.sex = [{ value: 'Male' }, { value: 'FeMale' }];
     this.actions = [
@@ -91,8 +98,8 @@ export class EmployeeManagementComponent {
     ];
   }
 
-  handleActionsClick(event: any) {
-    this.employeeActive = event;
+  handleActionsClick(employee: IEmployeeResponse) {
+    this.employeeActive = employee;
   }
 
   getControl(control: string): AbstractControl | null {
@@ -105,6 +112,9 @@ export class EmployeeManagementComponent {
   }
 
   ngOnInit() {
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
     this.getControl('position')?.disable();
 
     this.searchForm = this.fb.group({
@@ -201,10 +211,10 @@ export class EmployeeManagementComponent {
         .deleteEmployeeById(this.employeeActive.employee_id)
         .subscribe(
           () => {
-            this.toastService.toastSuccess(toast.deleteEmployeeSuccess);
+            this.toastService.toastSuccess(this.toast.deleteEmployeeSuccess);
           },
           () => {
-            this.toastService.toastError(toast.deleteEmployeeFail);
+            this.toastService.toastError(this.toast.deleteEmployeeFail);
           }
         );
       this.handleSendRequestGetEmployee();
@@ -222,7 +232,10 @@ export class EmployeeManagementComponent {
       )
       .subscribe((data: any) => {
         if (data.statusCode === 200) {
-          this.exportFileService.exportAsExcelFile(data.response.data, 'Employee List');
+          this.exportFileService.exportAsExcelFile(
+            data.response.data,
+            'Employee List'
+          );
         }
       });
   }

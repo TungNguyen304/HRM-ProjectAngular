@@ -8,6 +8,7 @@ import {
   delay,
   switchMap,
 } from 'rxjs';
+import { IProviderRequest } from 'src/app/shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -50,11 +51,11 @@ export class ProviderService {
     return this.http.get(`distributors/${id}`);
   }
 
-  addProvider(data: any): Observable<Object> {
+  addProvider(data: IProviderRequest): Observable<Object> {
     return this.http.post('distributors', data).pipe(delay(2000));
   }
 
-  updateProvider(data: any, id: string): Observable<Object> {
+  updateProvider(data: IProviderRequest, id: string): Observable<Object> {
     return this.http.patch(`distributors/${id}`, data);
   }
 

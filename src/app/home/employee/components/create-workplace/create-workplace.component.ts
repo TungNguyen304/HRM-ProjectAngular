@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   Component,
   ElementRef,
@@ -24,13 +25,22 @@ import {
 import { emojiValidator } from 'src/app/core/services/helper/validator.service';
 
 import {
+  apiWarning,
   emojiWarning,
   maxLengthWarning,
   requireWarning,
 } from 'src/app/core/services/helper/warningForm.service';
 import { PositionService } from 'src/app/core/services/http/position.service';
 import { UnitService } from 'src/app/core/services/http/unit.service';
-import { IPosition, IWarningCreateWorkplace } from 'src/app/shared/interfaces';
+import {
+  IPosition,
+  IUnit,
+  IWarningCreateWorkplace,
+} from 'src/app/shared/interfaces';
+import {
+  IPositionRequest,
+  fieldFEPosition,
+} from 'src/app/shared/interfaces/position';
 
 @Component({
   selector: 'app-create-workplace',
@@ -40,7 +50,7 @@ import { IPosition, IWarningCreateWorkplace } from 'src/app/shared/interfaces';
 })
 export class CreateWorkplaceComponent implements OnInit {
   public workplaceForm: FormGroup;
-  public unitList: any[];
+  public unitList: IUnit[];
   public disable: boolean = false;
   public warning: IWarningCreateWorkplace = {
     code: null,
@@ -62,7 +72,7 @@ export class CreateWorkplaceComponent implements OnInit {
     private positionService: PositionService
   ) {}
 
-  handleTypeRequestApi(data: any, id?: string): Observable<Object> {
+  handleTypeRequestApi(data: IPosition, id?: string): Observable<Object> {
     if (id && this.typeAction === 'Update') {
       return this.positionService.updatePosition(data, id);
     }
@@ -72,7 +82,7 @@ export class CreateWorkplaceComponent implements OnInit {
   onSubmit(): void {
     this.commonService.markAsDirty(this.workplaceForm);
     if (this.workplaceForm.valid) {
-      const data = {
+      const data: IPosition = {
         ...this.infoUpdate,
         job_position_code: this.getControl('code')?.value,
         job_position_name: this.getControl('name')?.value,
@@ -86,12 +96,26 @@ export class CreateWorkplaceComponent implements OnInit {
         data,
         this.infoUpdate?.job_position_id
       ).subscribe(
-        (data:any) => {
-          if(data.statusCode === 200) {
+        (data: any) => {
+          if (data.statusCode === 200) {
             this.showMessage.emit(true);
           }
         },
-        () => {
+        (err: HttpErrorResponse) => {
+          err.error.errors.forEach((item: any) => {
+            apiWarning(
+              Object.values(item.constraints).join(', '),
+              this,
+              fieldFEPosition[item.property as keyof typeof fieldFEPosition]
+            );
+            this.workplaceForm
+              .get(
+                fieldFEPosition[item.property as keyof typeof fieldFEPosition]
+              )
+              ?.setErrors({
+                api: true,
+              });
+          });
           this.showMessage.emit(false);
           this.buttonSave.nativeElement.classList.toggle('button--loading');
           this.disable = false;
@@ -127,6 +151,10 @@ export class CreateWorkplaceComponent implements OnInit {
       }),
     });
 
+    this.workplaceForm.get('code')?.valueChanges.subscribe(() => {
+      this.warning.code = null;
+    });
+
     this.workplaceForm.valueChanges.subscribe(() => {
       this.warningDetect();
     });
@@ -147,13 +175,16 @@ export class CreateWorkplaceComponent implements OnInit {
       this.workplaceForm.patchValue(data);
     }
 
-    this.unitService.getUnit().subscribe((data: any) => {
-      if(data.statusCode === 200) {
-        this.unitList = handleFormatDataUnitTreeSelect(data.response.data);
+    this.unitService.getUnit().subscribe(
+      (data: any) => {
+        if (data.statusCode === 200) {
+          this.unitList = handleFormatDataUnitTreeSelect(data.response.data);
+        }
+      },
+      (err) => {
+        console.log(err);
       }
-    }, (err) => {
-      console.log(err);
-    });
+    );
   }
 
   warningDetect(): void {
