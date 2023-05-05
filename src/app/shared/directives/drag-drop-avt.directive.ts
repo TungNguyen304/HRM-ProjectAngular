@@ -4,6 +4,7 @@ import {
   EventEmitter,
   HostListener,
   Input,
+  OnChanges,
   OnInit,
   Output,
 } from '@angular/core';
@@ -28,7 +29,7 @@ export interface IHandle {
 @Directive({
   selector: '[appDragDropAvt]',
 })
-export class DragDropAvtDirective implements OnInit {
+export class DragDropAvtDirective implements OnInit, OnChanges {
   constructor(
     private elementRef: ElementRef,
     private sanitizer: DomSanitizer,
@@ -108,9 +109,7 @@ export class DragDropAvtDirective implements OnInit {
             );
           }
         }
-        this.toastService.toastSuccess(
-          this.toast.UploadImageSuccess
-        );
+        this.toastService.toastSuccess(this.toast.UploadImageSuccess);
       } else {
         if (event instanceof DragEvent) {
           event.preventDefault();
@@ -126,9 +125,7 @@ export class DragDropAvtDirective implements OnInit {
       if (event instanceof DragEvent) {
         event.preventDefault();
       }
-      this.toastService.toastError(
-        this.toast.UploadImageTypeFail
-      );
+      this.toastService.toastError(this.toast.UploadImageTypeFail);
       this.handleOnDragEnd();
     }
     this.handleInDirective.inputFileElement.clear();

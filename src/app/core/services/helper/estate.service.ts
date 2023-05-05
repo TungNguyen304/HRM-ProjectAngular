@@ -17,7 +17,7 @@ export class EstateService {
     });
   }
 
-  handleGetValueProvider(providerList:any[], id: string) {
+  handleGetValueProvider(providerList: any[], id: string) {
     return Object.values(providerList).find((item: any) => {
       return item.distributor_id === id;
     });

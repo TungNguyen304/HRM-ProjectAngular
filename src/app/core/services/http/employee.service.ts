@@ -33,7 +33,7 @@ export class EmployeeService {
     organization_unit_id: string = '',
     job_position_id: string = '',
     employee_status_id: string = ''
-  ): Observable<Object> {
+  ): Observable<object> {
     let url = `users?page=${page}&limit=${limit}&keyword=${keyword}&organization_unit_id=${organization_unit_id}&job_position_id=${job_position_id}`;
     if (gender) {
       url += `&gender=${gender}`;
@@ -48,27 +48,27 @@ export class EmployeeService {
     );
   }
 
-  getAllStaff(): Observable<Object> {
+  getAllStaff(): Observable<object> {
     return this.http.get('users?page=1&limit=0').pipe(delay(2000));
   }
 
-  getEmployeeById(id: string): Observable<Object> {
+  getEmployeeById(id: string): Observable<object> {
     return this.http.get(`users/${id}`).pipe(delay(2000));
   }
 
-  deleteEmployeeById(id: string): Observable<Object> {
+  deleteEmployeeById(id: string): Observable<object> {
     return this.http.delete(`users/${id}`).pipe(delay(2000));
   }
 
-  getStatus(): Observable<Object> {
+  getStatus(): Observable<object> {
     return this.http.get('users/status/list');
   }
 
-  addEmployee(data: FormData): Observable<Object> {
+  addEmployee(data: FormData): Observable<object> {
     return this.http.post(`users?lang=${this.lang}`, data).pipe(delay(2000));
   }
 
-  updateEmployee(id: string, data: FormData): Observable<Object> {
+  updateEmployee(id: string, data: FormData): Observable<object> {
     return this.http.patch(`users/${id}`, data);
   }
 }

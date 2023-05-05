@@ -6,6 +6,6 @@ export interface IUnit {
   updated_at: string;
 }
 export interface IUnitList {
-  data: IUnit,
-  children?: IUnit[]
+  data: IUnit;
+  children?: IUnit[];
 }

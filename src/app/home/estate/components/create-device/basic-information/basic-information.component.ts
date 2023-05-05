@@ -1,11 +1,16 @@
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+} from '@angular/core';
 import {
   AbstractControl,
   ControlContainer,
   FormGroup,
   FormGroupDirective,
 } from '@angular/forms';
-import { CommonService } from 'src/app/core/services/common.service';
 import {
   emojiWarning,
   maxLengthWarning,
@@ -14,11 +19,7 @@ import {
 import { DeviceService } from 'src/app/core/services/http/device.service';
 import { LanguageService } from 'src/app/core/services/state/language.service';
 import { IWarningBasicInfoDevice } from 'src/app/shared/interfaces';
-import {
-  StatusAsset,
-  deviceStatusEn,
-  deviceStatusVi,
-} from '../../../device/data';
+import { deviceStatusEn, deviceStatusVi } from '../../../device/data';
 
 @Component({
   selector: 'app-basic-information',
@@ -31,7 +32,7 @@ import {
     { provide: ControlContainer, useExisting: FormGroupDirective },
   ],
 })
-export class BasicInformationComponent {
+export class BasicInformationComponent implements OnInit, OnChanges {
   constructor(
     private deviceService: DeviceService,
     private languageService: LanguageService,

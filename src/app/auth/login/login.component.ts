@@ -16,7 +16,7 @@ import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
 type errorEmail = 'errorEmail';
 type errorPassword = 'errorPassword';
 const regex = {
-  email: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+  email: /^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/,
   password:
     /^[a-zA-Z](?=.*[a-z])(?=.[A-Z]*)(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,100}$/,
 };

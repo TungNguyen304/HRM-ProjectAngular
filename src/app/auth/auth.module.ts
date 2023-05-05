@@ -7,35 +7,33 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ToastModule } from 'primeng/toast';
 
-const routes:Routes = [
+const routes: Routes = [
   {
     path: '',
     component: AuthComponent,
     children: [
       {
-        path: 'login', component: LoginComponent
+        path: 'login',
+        component: LoginComponent,
       },
       {
         path: '',
         redirectTo: 'login',
-        pathMatch: 'full'
-      }
-    ]
-  }
-]
+        pathMatch: 'full',
+      },
+    ],
+  },
+];
 
 @NgModule({
-  declarations: [
-    AuthComponent,
-    LoginComponent
-  ],
+  declarations: [AuthComponent, LoginComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
-    ToastModule 
-  ]
+    ToastModule,
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}

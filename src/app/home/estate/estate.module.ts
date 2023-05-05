@@ -72,7 +72,7 @@ const routes: Routes = [
     BasicInformationComponent,
     RepairInformationComponent,
     EmployeeInformationComponent,
-    DeviceQrcodeComponent
+    DeviceQrcodeComponent,
   ],
   imports: [
     CommonModule,
@@ -92,7 +92,7 @@ const routes: Routes = [
     TranslateModule,
     SharedModule,
     PaginatorModule,
-    NgxQRCodeModule
+    NgxQRCodeModule,
   ],
 })
 export class EstateModule {}

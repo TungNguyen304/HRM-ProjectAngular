@@ -14,7 +14,7 @@ import {
 export class UnitService {
   constructor(private http: HttpClient) {}
   public member$ = new BehaviorSubject<any>(null);
-  getUnit(): Observable<Object> {
+  getUnit(): Observable<object> {
     return this.http.get('organization-units').pipe(delay(2000));
   }
 
@@ -22,7 +22,7 @@ export class UnitService {
     id: string = '',
     page: number = 1,
     limit: number = 0
-  ): Observable<Object> {
+  ): Observable<object> {
     this.member$.next(`users?page=${page}`);
     return this.member$.pipe(
       debounceTime(2000),

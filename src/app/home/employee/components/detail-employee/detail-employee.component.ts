@@ -6,7 +6,7 @@ import { labelEmployeeVi, labelEmployeeEn } from './data';
 import { EmployeeService } from 'src/app/core/services/http/employee.service';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
-import { finalize, map, switchMap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
 import { IEmployeeResponse } from 'src/app/shared/interfaces';
 
@@ -61,7 +61,7 @@ export class DetailEmployeeComponent implements OnInit {
         ),
         switchMap((employee: any) => {
           console.log(employee.response);
-          
+
           this.employeeExcel = employee.response;
           this.workingProcess = employee.response.user_working_histories || [];
           this.socialNetwork =

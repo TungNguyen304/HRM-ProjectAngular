@@ -7,11 +7,15 @@ import {
   delay,
   switchMap,
 } from 'rxjs';
+import {
+  IEmployeeResponse,
+  IProviderResponse,
+} from 'src/app/shared/interfaces';
 
 interface IDeviceStore {
   type: any[];
-  employee: any[];
-  provider: any[];
+  employee: IEmployeeResponse[];
+  provider: IProviderResponse[];
   status: any[];
 }
 
@@ -36,7 +40,7 @@ export class DeviceService {
     asset_type_id: string = '',
     status: number = 1,
     distributor_id: string = ''
-  ): Observable<Object> {
+  ): Observable<object> {
     this.device$.next(
       `assets?page=${page}&limit=${limit}&keyword=${keyword}&user_using_id=${user_using_id}&asset_type_id=${asset_type_id}&status=${status}&distributor_id=${distributor_id}`
     );
@@ -61,34 +65,36 @@ export class DeviceService {
     );
   }
 
-  getAllDevice(): Observable<Object> {
+  getAllDevice(): Observable<object> {
     return this.http.get('assets?page=1&limit=0').pipe(delay(2000));
   }
 
-  getDeviceById(id: number, token?: string): Observable<Object> {
+  getDeviceById(id: number, token?: string): Observable<object> {
     if (token) {
       const headers = new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      })
-     return this.http.get(`assets/${id}`, { headers:headers }).pipe(delay(2000));
+        Authorization: `Bearer ${token}`,
+      });
+      return this.http
+        .get(`assets/${id}`, { headers: headers })
+        .pipe(delay(2000));
     }
     return this.http.get(`assets/${id}`).pipe(delay(2000));
   }
 
-  getDeviceType(): Observable<Object> {
+  getDeviceType(): Observable<object> {
     return this.http.get('assets/types');
   }
 
-  addDevice(data: any): Observable<Object> {
+  addDevice(data: any): Observable<object> {
     return this.http.post('assets', data);
   }
 
-  updateDevice(data: any, id: string): Observable<Object> {
+  updateDevice(data: any, id: string): Observable<object> {
     return this.http.patch(`assets/${id}`, data).pipe(delay(2000));
   }
 
-  deleteDevice(id: string): Observable<Object> {
+  deleteDevice(id: string): Observable<object> {
     return this.http
       .post('assets/delete', {
         ids: [id],
@@ -96,7 +102,7 @@ export class DeviceService {
       .pipe(delay(2000));
   }
 
-  addRequestBorrow(data: any): Observable<Object> {
+  addRequestBorrow(data: any): Observable<object> {
     return this.http.post('assets/request/create', data).pipe(delay(2000));
   }
 }

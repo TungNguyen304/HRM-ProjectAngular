@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, finalize } from 'rxjs';
 import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
@@ -14,7 +14,7 @@ import { IProviderResponse } from 'src/app/shared/interfaces';
   templateUrl: './provider.component.html',
   styleUrls: ['./provider.component.scss'],
 })
-export class ProviderComponent {
+export class ProviderComponent implements OnInit {
   public providerList: IProviderResponse[];
   public displayCreate: boolean = false;
   public idProvider: number;
@@ -68,14 +68,11 @@ export class ProviderComponent {
       );
       this.handleGetProvider();
     } else {
-      this.toastService.toastError(
-        this.toast.providerFail,
-        this.typeAction
-      );
+      this.toastService.toastError(this.toast.providerFail, this.typeAction);
     }
   }
 
-  handleGetProvider(): Observable<Object> {
+  handleGetProvider(): Observable<object> {
     this.loadDisplay = true;
     return this.providerService.getProvider(
       this.pageCurrent,
@@ -91,14 +88,10 @@ export class ProviderComponent {
         .deleteProviderById(provider.distributor_id)
         .subscribe(
           () => {
-            this.toastService.toastSuccess(
-              this.toast.deleteEmployeeSuccess
-            );
+            this.toastService.toastSuccess(this.toast.deleteEmployeeSuccess);
           },
           () => {
-            this.toastService.toastError(
-              this.toast.deleteEmployeeFail
-            );
+            this.toastService.toastError(this.toast.deleteEmployeeFail);
           }
         );
       this.handleGetProvider();

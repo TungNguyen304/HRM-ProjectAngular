@@ -1,5 +1,10 @@
-import { Component, Input } from '@angular/core';
-import { AbstractControl, ControlContainer, FormGroup, FormGroupDirective } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  ControlContainer,
+  FormGroup,
+  FormGroupDirective,
+} from '@angular/forms';
 import { requireWarning } from 'src/app/core/services/helper/warningForm.service';
 import { DeviceService } from 'src/app/core/services/http/device.service';
 
@@ -14,12 +19,12 @@ import { DeviceService } from 'src/app/core/services/http/device.service';
     { provide: ControlContainer, useExisting: FormGroupDirective },
   ],
 })
-export class EmployeeInformationComponent {
+export class EmployeeInformationComponent implements OnInit {
   constructor(private deviceService: DeviceService) {}
   public employeeList: any = [];
-  public warning:any = {
-    email: null
-  }
+  public warning: any = {
+    email: null,
+  };
   @Input() deviceForm: FormGroup;
   getControl(control: string): AbstractControl | null | undefined {
     return this.deviceForm.get('employeeInfo')?.get(control);
@@ -27,7 +32,7 @@ export class EmployeeInformationComponent {
   ngOnInit() {
     this.deviceForm.valueChanges.subscribe(() => {
       requireWarning(this.deviceForm.get('employeeInfo'), this, 'email');
-    })
+    });
     this.deviceService.deviceStore$.subscribe((data) => {
       this.employeeList = data.employee;
     });

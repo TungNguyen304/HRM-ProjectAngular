@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -13,7 +14,7 @@ import { LanguageService } from 'src/app/core/services/state/language.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   constructor(
     private chooseLanguageService: ChooseLanguageService,
     private languageService: LanguageService
@@ -67,7 +68,6 @@ export class HeaderComponent {
         }
       });
     });
-    
   }
 
   display(): void {

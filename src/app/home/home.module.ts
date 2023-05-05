@@ -10,7 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PaginatorModule } from 'primeng/paginator';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 
-const routes:Routes = [
+const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
@@ -18,30 +18,28 @@ const routes:Routes = [
       {
         path: '',
         redirectTo: 'team-member',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'team-member',
-        component: TeamMemberComponent
+        component: TeamMemberComponent,
       },
       {
         path: 'employee',
-        loadChildren: () => import('./employee/employee.module').then(m => m.EmployeeModule)
+        loadChildren: () =>
+          import('./employee/employee.module').then((m) => m.EmployeeModule),
       },
       {
         path: 'estate',
-        loadChildren: () => import('./estate/estate.module').then(m => m.EstateModule)
-      }
-    ]
-  }
-]
+        loadChildren: () =>
+          import('./estate/estate.module').then((m) => m.EstateModule),
+      },
+    ],
+  },
+];
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-    TeamMemberComponent,
-    MemberComponent
-  ],
+  declarations: [HomeComponent, TeamMemberComponent, MemberComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -49,7 +47,7 @@ const routes:Routes = [
     ButtonModule,
     TranslateModule,
     PaginatorModule,
-    BreadcrumbModule
-  ]
+    BreadcrumbModule,
+  ],
 })
-export class HomeModule { }
+export class HomeModule {}

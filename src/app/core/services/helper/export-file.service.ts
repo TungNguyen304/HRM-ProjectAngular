@@ -57,10 +57,10 @@ export class ExportFileService {
         key === 'user_working_histories' ||
         key === 'asset_using_collection'
       ) {
-        let ws = XLSX.utils.json_to_sheet(subTable[key].flat());
+        const ws = XLSX.utils.json_to_sheet(subTable[key].flat());
         XLSX.utils.book_append_sheet(workbook, ws, key);
       } else {
-        let ws = XLSX.utils.json_to_sheet(subTable[key]);
+        const ws = XLSX.utils.json_to_sheet(subTable[key]);
         XLSX.utils.book_append_sheet(workbook, ws, key);
       }
     });

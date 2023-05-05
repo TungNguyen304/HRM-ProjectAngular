@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
 import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
 
@@ -7,7 +7,7 @@ import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
   templateUrl: './employee-upload.component.html',
   styleUrls: ['./employee-upload.component.scss'],
 })
-export class EmployeeUploadComponent {
+export class EmployeeUploadComponent implements OnInit {
   @ViewChild('drop') drop: ElementRef;
   @ViewChild('upload') upload: ElementRef;
   public file: File | undefined;

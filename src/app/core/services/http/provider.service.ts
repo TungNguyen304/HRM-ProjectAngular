@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   Observable,
-  Subject,
   debounceTime,
   delay,
   switchMap,
@@ -20,7 +19,7 @@ export class ProviderService {
     page: number = 1,
     limit: number = 0,
     keyword: string = ''
-  ): Observable<Object> {
+  ): Observable<object> {
     this.provider$.next(
       `distributors?page=${page}&limit=${limit}${
         keyword ? `&keyword=${keyword}` : ''
@@ -36,30 +35,32 @@ export class ProviderService {
     // .pipe(delay(2000));
   }
 
-  getAllProvider(token?:string): Observable<Object> {
+  getAllProvider(token?: string): Observable<object> {
     if (token) {
       const headers = new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      })
-     return this.http.get('distributors?page=1&limit=0', {headers}).pipe(delay(2000));
+        Authorization: `Bearer ${token}`,
+      });
+      return this.http
+        .get('distributors?page=1&limit=0', { headers })
+        .pipe(delay(2000));
     }
     return this.http.get('distributors?page=1&limit=0').pipe(delay(2000));
   }
 
-  getProviderById(id: string): Observable<Object> {
+  getProviderById(id: string): Observable<object> {
     return this.http.get(`distributors/${id}`);
   }
 
-  addProvider(data: IProviderRequest): Observable<Object> {
+  addProvider(data: IProviderRequest): Observable<object> {
     return this.http.post('distributors', data).pipe(delay(2000));
   }
 
-  updateProvider(data: IProviderRequest, id: string): Observable<Object> {
+  updateProvider(data: IProviderRequest, id: string): Observable<object> {
     return this.http.patch(`distributors/${id}`, data);
   }
 
-  deleteProviderById(id: string): Observable<Object> {
+  deleteProviderById(id: string): Observable<object> {
     return this.http.post('distributors/delete', {
       ids: [id],
     });
