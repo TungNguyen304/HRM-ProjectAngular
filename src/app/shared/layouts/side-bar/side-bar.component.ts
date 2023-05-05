@@ -1,7 +1,9 @@
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   ElementRef,
+  OnInit,
   QueryList,
   ViewChild,
   ViewChildren,
@@ -16,7 +18,7 @@ type typeScreen = 'small' | 'medium' | 'large';
   templateUrl: './side-bar.component.html',
   styleUrls: ['./side-bar.component.scss'],
 })
-export class SideBarComponent {
+export class SideBarComponent implements OnInit, AfterViewInit {
   public checked: boolean = false;
   @ViewChild('sidebar') sidebar: ElementRef;
   @ViewChild('layer') layer: ElementRef;
@@ -104,7 +106,7 @@ export class SideBarComponent {
     if (window.innerWidth <= 768) {
       this.sidebarMobile();
     }
-    window.onresize = (e) => {
+    window.onresize = () => {
       if (window.innerWidth <= 1024 && window.innerWidth > 768) {
         if (this.sidebar.nativeElement && this.layer.nativeElement) {
           this.typeScreen = 'medium';

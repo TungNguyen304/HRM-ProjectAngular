@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subscription, finalize } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { PositionService } from 'src/app/core/services/http/position.service';
 import { UnitService } from 'src/app/core/services/http/unit.service';
 import { IEmployeeResponse } from 'src/app/shared/interfaces';
@@ -16,7 +16,7 @@ export interface IPropsMember {
   templateUrl: './member-table.component.html',
   styleUrls: ['./member-table.component.scss'],
 })
-export class MemberTableComponent implements OnInit {
+export class MemberTableComponent implements OnInit, OnDestroy {
   constructor(
     private unitService: UnitService,
     private positionService: PositionService,
@@ -49,7 +49,7 @@ export class MemberTableComponent implements OnInit {
     this.router.navigate(['employee/management/detail-employee', id]);
   }
 
-  handleGetObservableByType(page: number): Observable<Object> {
+  handleGetObservableByType(page: number): Observable<object> {
     switch (this.props.type) {
       case 'unit': {
         return this.unitService.getMemberByUnitId(

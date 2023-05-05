@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { finalize } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { MemberService } from 'src/app/core/services/http/member.service';
 
 export interface IMember {
@@ -19,7 +17,7 @@ export interface IMember {
   templateUrl: './team-member.component.html',
   styleUrls: ['./team-member.component.scss'],
 })
-export class TeamMemberComponent {
+export class TeamMemberComponent implements OnInit {
   public memberList: IMember[] = [];
   public page: number = 1;
   public limit: number = 4;

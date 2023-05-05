@@ -25,7 +25,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DetailEmployeeComponent } from './components/detail-employee/detail-employee.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { WorkingProcessComponent } from './components/create-employee/working-process/working-process.component';
-import { ContactInformationComponent } from './components/create-employee/contact-information/contact-information.component'
+import { ContactInformationComponent } from './components/create-employee/contact-information/contact-information.component';
 import { OtherInformationComponent } from './components/create-employee/other-information/other-information.component';
 import { BasicInformationComponent } from './components/create-employee/basic-information/basic-information.component';
 import { SplitButtonModule } from 'primeng/splitbutton';
@@ -58,15 +58,15 @@ const routes: Routes = [
       },
       {
         path: 'management/create-employee',
-        component: CreateEmployeeComponent
+        component: CreateEmployeeComponent,
       },
       {
         path: 'management/detail-employee/:id',
-        component: DetailEmployeeComponent
+        component: DetailEmployeeComponent,
       },
       {
         path: 'management/update-employee/:id',
-        component: CreateEmployeeComponent
+        component: CreateEmployeeComponent,
       },
       {
         path: '',
@@ -116,7 +116,7 @@ const routes: Routes = [
     PaginatorModule,
     TranslateModule,
     SharedModule,
-    TreeSelectModule
+    TreeSelectModule,
   ],
 })
 export class EmployeeModule {}

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { handleFormatDataUnit } from 'src/app/core/services/helper/unit.service';
 import { UnitService } from 'src/app/core/services/http/unit.service';
-import { IUnit, IUnitList } from 'src/app/shared/interfaces';
+import { IUnitList } from 'src/app/shared/interfaces';
 import { IPropsMember } from '../components/member-table/member-table.component';
 import { finalize } from 'rxjs';
 
@@ -37,7 +37,7 @@ import { finalize } from 'rxjs';
     `,
   ],
 })
-export class WorkUnitComponent {
+export class WorkUnitComponent implements OnInit {
   public props: IPropsMember;
   public unitTemp: string;
   public display: boolean = false;

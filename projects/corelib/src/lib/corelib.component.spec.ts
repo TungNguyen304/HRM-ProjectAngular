@@ -8,9 +8,8 @@ describe('CorelibComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CorelibComponent ]
-    })
-    .compileComponents();
+      declarations: [CorelibComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CorelibComponent);
     component = fixture.componentInstance;

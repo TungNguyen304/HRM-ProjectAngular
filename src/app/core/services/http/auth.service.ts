@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, delay, Observable } from 'rxjs';
+import { delay, Observable } from 'rxjs';
 
 interface ILogin {
   email: string;
@@ -13,11 +13,10 @@ interface ILogin {
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  login(data: ILogin): Observable<Object> {
+  login(data: ILogin): Observable<object> {
     return this.http.post('auth/login', data).pipe(delay(3000));
   }
-  getMyInfo():Observable<Object> {
-    return this.http.get("auth/my-info")
+  getMyInfo(): Observable<object> {
+    return this.http.get('auth/my-info');
   }
-
 }

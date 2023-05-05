@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -19,7 +19,7 @@ import { ToastService } from 'src/app/core/services/helper/toast.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, finalize, switchMap } from 'rxjs';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
-import { socialNetworks, socials } from './contact-information/data';
+import { socials } from './contact-information/data';
 import { workingFormStruct } from './working-process/data';
 import {
   ESex,
@@ -30,7 +30,6 @@ import {
   typeAction,
 } from 'src/app/shared/interfaces';
 import { DateService } from 'src/app/core/services/helper/date.service';
-import { regexEmail } from 'src/app/shared/regex';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
 
@@ -39,7 +38,7 @@ import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
   templateUrl: './create-employee.component.html',
   styleUrls: ['./create-employee.component.scss'],
 })
-export class CreateEmployeeComponent {
+export class CreateEmployeeComponent implements OnInit {
   public assetList = [];
   public formData: FormData = new FormData();
   public employeeInfo: IEmployeeResponse;
@@ -74,7 +73,7 @@ export class CreateEmployeeComponent {
     return this.employeeForm.get(type)?.get(control);
   }
 
-  handleTypeApi(formData: FormData): Observable<Object> {
+  handleTypeApi(formData: FormData): Observable<object> {
     if (this.typeAction === 'add') {
       return this.employeeService.addEmployee(formData);
     }

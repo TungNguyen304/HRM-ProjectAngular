@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { IToast } from 'src/app/shared/toastMessage';
 
 const type = {
   success: 'success',

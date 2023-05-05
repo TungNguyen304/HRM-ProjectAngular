@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/core/services/state/account.service';
 
 @Component({
@@ -8,7 +8,8 @@ import { AccountService } from 'src/app/core/services/state/account.service';
     <div class="avt">
       <img
         [src]="
-          account?.image_url || '../../../../assets/images/Avatar-mac-dinh-ngau-cho-nam-nen-cam.jpg'
+          account?.image_url ||
+          '../../../../assets/images/Avatar-mac-dinh-ngau-cho-nam-nen-cam.jpg'
         "
         alt=""
       />
@@ -57,9 +58,9 @@ import { AccountService } from 'src/app/core/services/state/account.service';
       }
     `,
   ],
-  styleUrls: ['../side-bar/side-bar.component.scss']
+  styleUrls: ['../side-bar/side-bar.component.scss'],
 })
-export class AvtComponent {
+export class AvtComponent implements OnInit {
   public account: any;
   constructor(private accountService: AccountService) {}
   ngOnInit() {

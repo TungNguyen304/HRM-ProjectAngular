@@ -1,15 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  map,
-  of,
-  startWith,
-  switchAll,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, of, startWith, switchMap } from 'rxjs';
 import { handleFormatDataUnitTreeSelect } from '../helper/unit.service';
 
 @Injectable({

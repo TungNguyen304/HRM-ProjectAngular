@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'typeError',
 })
 export class TypeErrorPipe implements PipeTransform {
-  transform(value: string | undefined, ...args: unknown[]): string {
+  transform(value: string | undefined): string {
     switch (value) {
       case 'required':
         return 'warning.required';

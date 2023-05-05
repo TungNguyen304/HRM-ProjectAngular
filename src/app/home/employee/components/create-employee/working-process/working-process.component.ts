@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import {
   AbstractControl,
   ControlContainer,
@@ -30,7 +36,7 @@ import { workingForm } from './data';
     { provide: ControlContainer, useExisting: FormGroupDirective },
   ],
 })
-export class WorkingProcessComponent implements OnInit {
+export class WorkingProcessComponent implements OnInit, AfterViewInit {
   public workingForm = workingForm;
   public unitList: IUnit[];
   public warning: IWarningWorkingProcess = {

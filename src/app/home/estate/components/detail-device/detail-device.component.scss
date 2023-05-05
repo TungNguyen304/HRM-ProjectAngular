@@ -61,6 +61,11 @@
   }
 }
 
+::ng-deep .qr .p-dialog-mask .p-dialog {
+  min-width: unset !important;
+  width: unset !important;
+}
+
 .avt_template {
   background-color: #ccc;
   width: 100px;

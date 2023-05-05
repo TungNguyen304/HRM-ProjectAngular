@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   AbstractControl,
   ControlContainer,
@@ -32,7 +38,7 @@ import {
     { provide: ControlContainer, useExisting: FormGroupDirective },
   ],
 })
-export class OtherInformationComponent implements OnInit {
+export class OtherInformationComponent implements OnInit, AfterViewInit {
   constructor(
     private unitTreeService: UnitTreeService,
     private employeeService: EmployeeService,

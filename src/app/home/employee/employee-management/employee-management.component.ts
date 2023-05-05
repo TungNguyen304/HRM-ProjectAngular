@@ -1,16 +1,9 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmployeeService } from 'src/app/core/services/http/employee.service';
 import {
-  ConfirmationService,
-  MessageService,
-  ConfirmEventType,
-} from 'primeng/api';
-import { TranslateService } from '@ngx-translate/core';
-import {
   AbstractControl,
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
@@ -28,7 +21,6 @@ import {
   ISex,
   IUnit,
 } from 'src/app/shared/interfaces';
-import { UnitService } from 'src/app/core/services/http/unit.service';
 import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
 import { PositionService } from 'src/app/core/services/http/position.service';
 import { Observable, finalize } from 'rxjs';
@@ -42,23 +34,23 @@ import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
   templateUrl: './employee-management.component.html',
   styleUrls: ['./employee-management.component.scss'],
 })
-export class EmployeeManagementComponent {
+export class EmployeeManagementComponent implements OnInit {
   public sex: ISex[];
   public employeeList: IEmployeeResponse[];
   public unitList: IUnit[];
   public toast: any;
   public positionList: IPosition[];
-  public showCreateEmployee: boolean = false;
+  public showCreateEmployee = false;
   public actions: any[];
   public searchForm: FormGroup;
   public warning: { codeNameEmail: any } = {
     codeNameEmail: null,
   };
   public employeeActive: IEmployeeResponse;
-  public loadDisplay: boolean = false;
-  public limit: number = 4;
-  public total: number = 0;
-  public page: number = 1;
+  public loadDisplay = false;
+  public limit = 4;
+  public total = 0;
+  public page = 1;
   constructor(
     private employeeService: EmployeeService,
     private router: Router,
@@ -151,7 +143,7 @@ export class EmployeeManagementComponent {
     );
   }
 
-  handleSendRequestGetEmployee(): Observable<Object> {
+  handleSendRequestGetEmployee(): Observable<object> {
     this.loadDisplay = true;
     return this.employeeService.getEmployee(
       this.page,

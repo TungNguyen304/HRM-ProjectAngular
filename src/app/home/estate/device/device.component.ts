@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -7,8 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Observable, combineLatest, finalize, switchMap } from 'rxjs';
-import { CommonService } from 'src/app/core/services/common.service';
+import { Observable, combineLatest, finalize } from 'rxjs';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import { emojiValidator } from 'src/app/core/services/helper/validator.service';
 import {
@@ -20,13 +19,17 @@ import { LanguageService } from 'src/app/core/services/state/language.service';
 import { IWarningDeviceSearch } from 'src/app/shared/interfaces';
 import { deviceStatusEn, deviceStatusVi } from './data';
 import { EstateService } from 'src/app/core/services/helper/estate.service';
-import { StatusAsset } from './data';
 import { ModalService } from 'src/app/core/services/helper/modal.service';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
 import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
 import { ProviderService } from 'src/app/core/services/http/provider.service';
 import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
+import {
+  NgxQrcodeElementTypes,
+  NgxQrcodeErrorCorrectionLevels,
+} from '@techiediaries/ngx-qrcode';
+import { handleDownQrCode } from 'src/app/core/services/helper/qrcode.service';
 
 @Component({
   selector: 'app-device',
@@ -34,7 +37,7 @@ import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
   styleUrls: ['./device.component.scss'],
   providers: [MessageService],
 })
-export class DeviceComponent {
+export class DeviceComponent implements OnInit {
   public status: any = [];
   public typeDevice: any = [];
   public deviceList: any;
@@ -50,6 +53,10 @@ export class DeviceComponent {
     code: null,
     employee: null,
   };
+  public displayQr: boolean = false;
+  public elementType = NgxQrcodeElementTypes.URL;
+  public correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
+  public url: string;
   constructor(
     private deviceService: DeviceService,
     private router: Router,
@@ -88,17 +95,26 @@ export class DeviceComponent {
       {
         label: 'QR',
         icon: 'bi bi-qr-code-scan',
-        // command: () => {},
+        command: () => {
+          this.displayQr = !this.displayQr;
+        },
       },
     ];
   }
 
   handleActionsClick(device: any) {
     this.deviceTemp = device;
+    this.url = `${window.location.origin}/detail-device/${
+      device.asset_id
+    }/${localStorage.getItem('token')}`;
   }
 
   handleGetStatusFormId(id: number) {
     return this.status[id - 1].value;
+  }
+
+  setQrCode(val: boolean) {
+    this.displayQr = val;
   }
 
   onPageChange(event: any): void {
@@ -111,6 +127,10 @@ export class DeviceComponent {
 
   handleSendRuest(page: number) {
     this.deviceService.getDevice(page, this.limit);
+  }
+
+  downQrCode() {
+    handleDownQrCode();
   }
 
   getValueSearch(): Array<string> {

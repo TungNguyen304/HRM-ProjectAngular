@@ -1,9 +1,9 @@
 export enum socials {
-    FaceBook = 'bi bi-facebook',
-    Twitter = 'bi bi-twitter',
-    Instagram = 'bi bi-instagram',
-    WhatsApp = 'bi bi-whatsapp',
-    WeChat = 'bi bi-wechat'
+  FaceBook = 'bi bi-facebook',
+  Twitter = 'bi bi-twitter',
+  Instagram = 'bi bi-instagram',
+  WhatsApp = 'bi bi-whatsapp',
+  WeChat = 'bi bi-wechat',
 }
 
 export const socialNetworks = [
@@ -13,4 +13,3 @@ export const socialNetworks = [
   { value: 'WhatsApp', label: socials.WhatsApp },
   { value: 'WeChat', label: socials.WeChat },
 ];
-

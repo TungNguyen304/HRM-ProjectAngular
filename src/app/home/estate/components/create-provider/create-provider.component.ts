@@ -38,7 +38,7 @@ export class CreateProviderComponent implements OnInit {
     private location: Location,
     private fb: FormBuilder,
     private commonService: CommonService,
-    private providerService: ProviderService,
+    private providerService: ProviderService
   ) {}
   public warning: IWarningProvider = {
     name: null,
@@ -49,7 +49,10 @@ export class CreateProviderComponent implements OnInit {
   handleBack(): void {
     this.location.back();
   }
-  handleTypeRequestApi(data: IProviderRequest, id?: string): Observable<Object> {
+  handleTypeRequestApi(
+    data: IProviderRequest,
+    id?: string
+  ): Observable<object> {
     if (id && this.typeAction === 'Update') {
       return this.providerService.updateProvider(data, id);
     }
@@ -58,7 +61,7 @@ export class CreateProviderComponent implements OnInit {
   onSubmit(): void {
     this.commonService.markAsDirty(this.providerForm);
     if (this.providerForm.valid) {
-      const data:IProviderRequest = {
+      const data: IProviderRequest = {
         name: this.providerForm.get('name')?.value,
         items: this.providerForm.get('item')?.value,
         address: this.providerForm.get('address')?.value,

@@ -71,5 +71,4 @@ export const apiWarning = (
     error: error,
   };
   console.log(component.warning);
-  
 };

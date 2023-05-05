@@ -1,11 +1,10 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceService } from 'src/app/core/services/http/device.service';
 import { CommonService } from 'src/app/core/services/common.service';
 import { labelDeviceVi, labelDeviceEn } from './data';
 import { LanguageService } from 'src/app/core/services/state/language.service';
-import { ILanguage } from 'src/app/shared/interfaces/language';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
 import { catchError, finalize, map, switchMap, throwError } from 'rxjs';
 import { StatusAsset } from '../../device/data';
@@ -19,12 +18,13 @@ import {
   NgxQrcodeErrorCorrectionLevels,
 } from '@techiediaries/ngx-qrcode';
 import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
+import { handleDownQrCode } from 'src/app/core/services/helper/qrcode.service';
 @Component({
   selector: 'app-detail-device',
   templateUrl: './detail-device.component.html',
   styleUrls: ['./detail-device.component.scss'],
 })
-export class DetailDeviceComponent {
+export class DetailDeviceComponent implements OnInit {
   public deviceList: any;
   public id: number;
   public device: any;
@@ -95,12 +95,20 @@ export class DetailDeviceComponent {
     }
   }
 
+  onPageChange(event: any) {
+    console.log(event);
+  }
+
   displayBorrow(): void {
     this.displayHistoryBorrow = true;
     this.loadDisplay = true;
     setTimeout(() => {
       this.loadDisplay = false;
     }, 2000);
+  }
+
+  downQrCode() {
+    handleDownQrCode();
   }
 
   transformDataForDetail(data: any) {
@@ -126,8 +134,6 @@ export class DetailDeviceComponent {
       date_use: this.commonService.reverseStringDateToVi(data.date_use),
     };
   }
-
-  onPageChange(event: any): void {}
 
   exportFile() {
     this.exportFileService.exportAsExcelFile(

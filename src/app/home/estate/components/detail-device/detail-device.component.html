@@ -146,10 +146,7 @@
   </ng-template>
 </p-dialog>
 
-<p-dialog
-  [modal]="true"
-  [(visible)]="displayCreateRequest"
->
+<p-dialog [modal]="true" [(visible)]="displayCreateRequest">
   <ng-template pTemplate="header"
     ><h3 class="title">
       {{ "common.createRequest" | translate }}
@@ -196,7 +193,7 @@
   </ng-template>
 </p-dialog>
 
-<p-dialog [modal]="true" [(visible)]="displayQr">
+<p-dialog [modal]="true" class="qr" [(visible)]="displayQr">
   <ng-template pTemplate="header"><h3 class="title">QR Code</h3></ng-template>
   <ng-template pTemplate="content">
     <ngx-qrcode
@@ -206,5 +203,12 @@
       [errorCorrectionLevel]="correctionLevel"
     >
     </ngx-qrcode>
+    <div style="text-align: center; margin-top: 10px">
+      <button
+        (click)="downQrCode()"
+        pButton
+        [label]="'common.save' | translate"
+      ></button>
+    </div>
   </ng-template>
 </p-dialog>

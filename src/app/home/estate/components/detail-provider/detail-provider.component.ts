@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ProviderService } from 'src/app/core/services/http/provider.service';
 import { CommonService } from 'src/app/core/services/common.service';
 
@@ -21,7 +21,7 @@ const labelProvider = [
   templateUrl: './detail-provider.component.html',
   styleUrls: ['./detail-provider.component.scss'],
 })
-export class DetailProviderComponent {
+export class DetailProviderComponent implements OnInit {
   public infoProvider: any;
   @Input() idProvider: string;
   constructor(
@@ -38,7 +38,7 @@ export class DetailProviderComponent {
     this.providerService
       .getProviderById(this.idProvider)
       .subscribe((data: any) => {
-        if(data.statusCode === 200) {
+        if (data.statusCode === 200) {
           this.infoProvider = this.commonService.convertDataForTableRowStyle(
             labelProvider,
             data

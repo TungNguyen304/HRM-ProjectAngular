@@ -1,17 +1,15 @@
 import {
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   Input,
+  OnChanges,
   OnInit,
-  Output,
 } from '@angular/core';
 import {
   AbstractControl,
   ControlContainer,
   FormArray,
   FormBuilder,
-  FormControl,
   FormGroup,
   FormGroupDirective,
   Validators,
@@ -33,8 +31,6 @@ import { socialNetworks } from './data';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
 
-type Tsocial = 'type' | 'name';
-
 @Component({
   selector: 'app-contact-information',
   templateUrl: `./contact-information.component.html`,
@@ -46,7 +42,7 @@ type Tsocial = 'type' | 'name';
     { provide: ControlContainer, useExisting: FormGroupDirective },
   ],
 })
-export class ContactInformationComponent implements OnInit {
+export class ContactInformationComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private toastService: ToastService,
@@ -94,8 +90,6 @@ export class ContactInformationComponent implements OnInit {
           });
       });
   }
-
-  myUploader(event: any): void {}
 
   getControl(control: string): AbstractControl | null {
     return getControlCommon(this.employeeForm, 'contactInfo', control);

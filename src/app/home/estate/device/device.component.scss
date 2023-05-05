@@ -85,6 +85,11 @@ form {
   }
 }
 
+::ng-deep .qr .p-dialog-mask .p-dialog {
+  min-width: unset !important;
+  width: unset !important;
+}
+
 @media (max-width: 1200px) {
   form {
     .form_list {

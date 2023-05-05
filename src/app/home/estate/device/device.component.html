@@ -147,7 +147,7 @@
           <th>{{ "sidebar.provider" | translate }}</th>
           <th>{{ "createDevice.user" | translate }}</th>
           <th>{{ "common.status" | translate }}</th>
-          <th>{{ "common.action" | translate }}</th>
+          <th style="text-align: center;">{{ "common.action" | translate }}</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-device>
@@ -223,3 +223,19 @@
     ></p-paginator>
   </div>
 </div>
+
+<p-dialog class="qr" [modal]="true" [(visible)]="displayQr">
+  <ng-template pTemplate="header"><h3 class="title">QR Code</h3></ng-template>
+  <ng-template pTemplate="content">
+    <ngx-qrcode
+      [elementType]="elementType"
+      [value]="url"
+      cssClass="aclass"
+      [errorCorrectionLevel]="correctionLevel"
+    >
+    </ngx-qrcode>
+    <div style="text-align: center; margin-top: 10px;">
+      <button (click)="downQrCode()" pButton [label]="'common.save' | translate"></button>
+    </div>
+  </ng-template>
+</p-dialog>

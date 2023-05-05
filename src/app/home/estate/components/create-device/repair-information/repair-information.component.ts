@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import {
   AbstractControl,
   ControlContainer,
@@ -9,10 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonService } from 'src/app/core/services/common.service';
-import {
-  emojiWarning,
-  requireWarning,
-} from 'src/app/core/services/helper/warningForm.service';
+import { requireWarning } from 'src/app/core/services/helper/warningForm.service';
 import { LanguageService } from 'src/app/core/services/state/language.service';
 import { IWarningRepairForm } from 'src/app/shared/interfaces';
 
@@ -27,7 +24,7 @@ import { IWarningRepairForm } from 'src/app/shared/interfaces';
     { provide: ControlContainer, useExisting: FormGroupDirective },
   ],
 })
-export class RepairInformationComponent {
+export class RepairInformationComponent implements OnInit, OnChanges {
   constructor(
     private languageService: LanguageService,
     private fb: FormBuilder,
@@ -105,14 +102,18 @@ export class RepairInformationComponent {
   }
 
   ngOnChanges() {
-    this.deviceInfo?.update_asset_history_collection?.map((item:any, index:number) => {
-      this.handleAddSocial();
-      (this.deviceForm.get('repairInfo') as FormArray).controls[index].patchValue({
-        repairDate: this.commonService.convertDateVi(item.date_updated),
-        content: item.content_updated,
-        money: this.commonService.convertUSDtoVND(item.total_amount),
-      })
-    })
+    this.deviceInfo?.update_asset_history_collection?.map(
+      (item: any, index: number) => {
+        this.handleAddSocial();
+        (this.deviceForm.get('repairInfo') as FormArray).controls[
+          index
+        ].patchValue({
+          repairDate: this.commonService.convertDateVi(item.date_updated),
+          content: item.content_updated,
+          money: this.commonService.convertUSDtoVND(item.total_amount),
+        });
+      }
+    );
   }
 
   warningDetect(): void {

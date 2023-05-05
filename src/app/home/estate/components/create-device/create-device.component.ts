@@ -1,21 +1,10 @@
 import { Location } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
-  AbstractControl,
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import {
-  Observable,
   catchError,
   combineLatest,
-  concatMap,
   finalize,
-  forkJoin,
-  map,
-  mergeMap,
   of,
   switchMap,
   throwError,
@@ -27,7 +16,7 @@ import { EmployeeService } from 'src/app/core/services/http/employee.service';
 import { ProviderService } from 'src/app/core/services/http/provider.service';
 import { LanguageService } from 'src/app/core/services/state/language.service';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
-import { StatusAsset, deviceStatusEn, deviceStatusVi } from '../../device/data';
+import { deviceStatusEn, deviceStatusVi } from '../../device/data';
 import { CommonService } from 'src/app/core/services/common.service';
 import {
   IAssetHistory,
@@ -45,11 +34,11 @@ import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
   templateUrl: './create-device.component.html',
   styleUrls: ['./create-device.component.scss'],
 })
-export class CreateDeviceComponent {
+export class CreateDeviceComponent implements OnInit {
   public deviceForm: FormGroup;
   public deviceInfo: IDeviceResponse;
   public providerList: IProviderResponse[];
-  public toast:any;
+  public toast: any;
   public typeAction: typeAction = this.router.url.includes('update-device')
     ? 'update'
     : 'add';

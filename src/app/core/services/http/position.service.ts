@@ -4,13 +4,8 @@ import {
   BehaviorSubject,
   debounceTime,
   delay,
-  mergeMap,
   Observable,
-  of,
-  Subject,
   switchMap,
-  tap,
-  timer,
 } from 'rxjs';
 import { ILanguage, IPosition } from 'src/app/shared/interfaces';
 import { LanguageService } from '../state/language.service';
@@ -35,7 +30,7 @@ export class PositionService {
     page: number,
     limit: number,
     keyword?: string
-  ): Observable<Object> {
+  ): Observable<object> {
     this.position$.next(
       `job-positions?page=${page}&limit=${limit}${
         keyword ? `&keyword=${keyword}` : ''
@@ -49,7 +44,7 @@ export class PositionService {
     );
   }
 
-  getAllPosition(): Observable<Object> {
+  getAllPosition(): Observable<object> {
     return this.http.get('job-positions?page=1&limit=0').pipe(delay(2000));
   }
 
@@ -57,7 +52,7 @@ export class PositionService {
     id: string = '',
     page: number = 1,
     limit: number = 0
-  ): Observable<Object> {
+  ): Observable<object> {
     this.member$.next(
       `users?page=${page}&limit=${limit}&job_position_id=${id}`
     );
@@ -69,23 +64,23 @@ export class PositionService {
     );
   }
 
-  getPositionByUnitId(id: string): Observable<Object> {
+  getPositionByUnitId(id: string): Observable<object> {
     return this.http.get(
       `job-positions?page=1&limit=0&organization_unit_id=${id}`
     );
   }
 
-  addPosition(data: IPosition): Observable<Object> {
+  addPosition(data: IPosition): Observable<object> {
     return this.http
       .post(`job-positions?lang=${this.lang}`, data)
       .pipe(delay(1000));
   }
 
-  updatePosition(data: IPosition, id: string): Observable<Object> {
+  updatePosition(data: IPosition, id: string): Observable<object> {
     return this.http.patch(`job-positions/${id}`, data).pipe(delay(1000));
   }
 
-  deletePosition(id: string[]): Observable<Object> {
+  deletePosition(id: string[]): Observable<object> {
     return this.http.post('job-positions/delete', {
       ids: id,
     });

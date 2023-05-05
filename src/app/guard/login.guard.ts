@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
-  ActivatedRoute,
   ActivatedRouteSnapshot,
   CanActivate,
-  createUrlTreeFromSnapshot,
   Router,
-  RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -16,8 +13,7 @@ import { Observable } from 'rxjs';
 export class LoginGuard implements CanActivate {
   constructor(private router: Router) {}
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    route: ActivatedRouteSnapshot
   ):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
@@ -27,9 +23,8 @@ export class LoginGuard implements CanActivate {
     // this.activatedRoute.queryParams.code
     if (localStorage.getItem('token')) {
       return true;
-    }
-    else if(route.routeConfig?.path === 'detail-device/:id/:token'){
-      return true
+    } else if (route.routeConfig?.path === 'detail-device/:id/:token') {
+      return true;
     }
     return this.router.createUrlTree(['auth', 'login']);
   }

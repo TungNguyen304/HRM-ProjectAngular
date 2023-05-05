@@ -1,7 +1,7 @@
 export interface IToast {
   [key: string]: {
     summary: string;
-    detail: string | Function;
+    detail: string | ((par: any) => void);
   };
 }
 

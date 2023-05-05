@@ -66,7 +66,7 @@ export const labelEmployeeEn = [
   { key: 'full_name', name: 'Full name' },
   { key: 'identify_number', name: 'ID number' },
   { key: 'dateRange', name: 'Date Range' },
-  { key: 'isuedBy', name: 'Issued by' }, 
+  { key: 'isuedBy', name: 'Issued by' },
   { key: 'expirationDate', name: 'Expiration date' },
   { key: 'nation', name: 'Nation' },
   { key: 'religion', name: 'Religion' },

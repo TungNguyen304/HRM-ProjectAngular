@@ -17,11 +17,7 @@ import {
 import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/core/services/common.service';
-import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
-import {
-  handleFormatDataUnit,
-  handleFormatDataUnitTreeSelect,
-} from 'src/app/core/services/helper/unit.service';
+import { handleFormatDataUnitTreeSelect } from 'src/app/core/services/helper/unit.service';
 import { emojiValidator } from 'src/app/core/services/helper/validator.service';
 
 import {
@@ -37,10 +33,7 @@ import {
   IUnit,
   IWarningCreateWorkplace,
 } from 'src/app/shared/interfaces';
-import {
-  IPositionRequest,
-  fieldFEPosition,
-} from 'src/app/shared/interfaces/position';
+import { fieldFEPosition } from 'src/app/shared/interfaces/position';
 
 @Component({
   selector: 'app-create-workplace',
@@ -72,7 +65,7 @@ export class CreateWorkplaceComponent implements OnInit {
     private positionService: PositionService
   ) {}
 
-  handleTypeRequestApi(data: IPosition, id?: string): Observable<Object> {
+  handleTypeRequestApi(data: IPosition, id?: string): Observable<object> {
     if (id && this.typeAction === 'Update') {
       return this.positionService.updatePosition(data, id);
     }

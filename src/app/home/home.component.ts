@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import {
   translateBreadcrumbEn,
@@ -13,7 +13,7 @@ import { NavigationEnd, Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   public items: MenuItem[];
   public home: MenuItem;
   public language: ILanguage;
@@ -55,14 +55,12 @@ export class HomeComponent {
   }
 
   handleBreadCrumb(val: string) {
-    const [a, ...url] = val.split('/');
+    const url = val.split('/');
+    url.shift();
     let urlTemp = '';
     this.items = url
-      .map((item) => {
+      ?.map((item) => {
         urlTemp += `/${item}`;
-        if (item === 'employee' || item === 'estate') {
-          return {};
-        }
         return {
           label:
             this.language === 'en'

@@ -36,6 +36,10 @@
     }
   }
 
+  ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    font-weight: 400;
+  }
+
   .edit {
     margin-top: 20px;
     text-align: center;
@@ -44,6 +48,10 @@
 
 ::ng-deep .p-datatable-table {
   border-top: 1px solid #dee2e6;
+}
+
+.sub_table ::ng-deep .p-datatable {
+  border-bottom: 1px solid #dee2e6;
 }
 
 .avt_template {

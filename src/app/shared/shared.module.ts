@@ -20,7 +20,17 @@ import { ButtonModule } from 'primeng/button';
 import { ForbiddenComponent } from './layouts/forbidden/forbidden.component';
 
 @NgModule({
-  declarations: [PageNotFoundComponent, HeaderComponent, SideBarComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent, LoadSmallComponent, AvtComponent, ForbiddenComponent],
+  declarations: [
+    PageNotFoundComponent,
+    HeaderComponent,
+    SideBarComponent,
+    TypeErrorPipe,
+    DragDropAvtDirective,
+    LoadingComponent,
+    LoadSmallComponent,
+    AvtComponent,
+    ForbiddenComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -31,8 +41,16 @@ import { ForbiddenComponent } from './layouts/forbidden/forbidden.component';
     DropdownModule,
     ProgressSpinnerModule,
     ButtonModule,
-    DialogModule
+    DialogModule,
   ],
-  exports: [PageNotFoundComponent, SideBarComponent, HeaderComponent, TypeErrorPipe, DragDropAvtDirective, LoadingComponent, LoadSmallComponent]
+  exports: [
+    PageNotFoundComponent,
+    SideBarComponent,
+    HeaderComponent,
+    TypeErrorPipe,
+    DragDropAvtDirective,
+    LoadingComponent,
+    LoadSmallComponent,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

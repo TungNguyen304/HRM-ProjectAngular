@@ -4,6 +4,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
   ViewChild,
@@ -40,7 +41,7 @@ import {
     { provide: ControlContainer, useExisting: FormGroupDirective },
   ],
 })
-export class BasicInformationComponent implements OnInit {
+export class BasicInformationComponent implements OnInit, OnChanges {
   public sex: ISex[];
   public url: string = '';
   public avtSize: number = 0.1;
@@ -66,7 +67,6 @@ export class BasicInformationComponent implements OnInit {
   @Input() urlUpdate: string | undefined;
   @Input() errorFromApi: HttpErrorResponse;
   @Output() getAvt = new EventEmitter<ElementRef>();
-  constructor() {}
 
   ngOnInit() {
     this.getAvt.emit(this.drag);

@@ -56,7 +56,7 @@ export class ModalService {
     });
   }
 
-  confirmDetele(value: string, acceptFunc: Function) {
+  confirmDetele(value: string, acceptFunc: any) {
     this.confirmationService.confirm({
       message: `Do you want to delete <span class="actor_modal">${value}</span>`,
       header: 'Delete Confirmation',
