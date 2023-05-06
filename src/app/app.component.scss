@@ -1,3 +1,4 @@
+
 .confirm_modal {
   position: fixed;
   top: 0;
@@ -70,12 +71,34 @@
 }
 
 ::ng-deep .p-button-sm {
-  font-size: 0.775rem;
+  font-size: 1.4rem;
   padding: 0.55625rem 0.9375rem;
+  .p-button-icon {
+    font-size: 1.2rem !important;
+  }
+}
+
+::ng-deep .p-button.p-button-icon-only {
+  font-size: 1.4rem;
+  width: 45px;
+  height: 40px;
+  .p-button-icon {
+    font-size: 1.2rem;
+  }
 }
 
 ::ng-deep .p-treeselect {
   width: 100%;
+}
+
+::ng-deep .p-paginator button {
+  width: 4rem !important;
+  height: 4rem !important;
+  font-size: 1.2rem !important;
+}
+
+::ng-deep .p-tieredmenu .p-menuitem-link {
+  padding: 15px 30px !important;
 }
 
 ::ng-deep .p-tree .p-tree-container .p-treenode .p-treenode-content {
@@ -181,8 +204,10 @@
   width: 100% !important;
 }
 
-::ng-deep .p-component {
+::ng-deep .p-component,
+::ng-deep .p-inputtext {
   font-family: "Poppins", sans-serif;
+  font-size: 1.4rem;
 }
 
 ::ng-deep .p-paginator {

@@ -65,6 +65,10 @@
       align-self: flex-start;
     }
   }
+
+  ::ng-deep .p-button.p-button-icon-only {
+    width: 3rem !important;
+  }
 }
 
 form {
@@ -131,7 +135,7 @@ form {
 }
 
 h3.title {
-  font-size: 2.0rem;
+  font-size: 2rem;
   margin-bottom: 30px;
   text-align: center;
 }

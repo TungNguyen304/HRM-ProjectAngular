@@ -83,6 +83,10 @@
       padding: 20px 20px 40px 20px;
     }
   }
+
+  ::ng-deep .p-button.p-button-icon-only {
+    width: 3rem !important;
+  }
 }
 
 form {
