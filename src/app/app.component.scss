@@ -114,7 +114,7 @@
 
 ::ng-deep .p-datatable .p-datatable-thead > tr > th,
 ::ng-deep .p-treetable .p-treetable-thead > tr > th {
-  font-size: 15px;
+  font-size: 1.5rem;
   font-weight: 600;
 }
 
@@ -153,7 +153,7 @@
 ::ng-deep .p-confirm-dialog {
   .p-dialog-header {
     span {
-      font-size: 22px !important;
+      font-size: 2.2rem !important;
     }
     color: #ef4444 !important;
   }
@@ -235,12 +235,37 @@
   .p-datatable-thead > tr > th {
     background-color: var(--primary-color-main);
     color: #fff;
-    font-size: 12px !important;
+    font-size: 1.2rem !important;
   }
 
   .p-datatable-tbody > tr > td {
-    font-size: 12px !important;
+    font-size: 1.2rem !important;
   }
+}
+
+::ng-deep
+  .p-datatable.p-datatable-hoverable-rows
+  .p-datatable-tbody
+  > tr:not(.p-highlight):hover,
+::ng-deep
+  .p-treetable.p-treetable-hoverable-rows
+  .p-treetable-tbody
+  > tr:not(.p-highlight):hover {
+  background-color: #c3d6cf !important;
+}
+
+::ng-deep
+  .p-treetable
+  .p-treetable-tbody
+  > tr
+  > td
+  .p-treetable-toggler:enabled:hover {
+  background-color: var(--primary-color-main) !important;
+  color: #fff !important;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr.p-highlight {
+  color: var(--primary-color-main);
 }
 
 @media (max-width: 1200px) {
