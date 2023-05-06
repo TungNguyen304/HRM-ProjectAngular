@@ -85,6 +85,7 @@ export class CreateEmployeeComponent implements OnInit {
 
   onSubmit(): void {
     this.commonService.markAsDirty(this.employeeForm);
+    console.log(this.employeeForm);
     if (this.employeeForm.valid) {
       setTimeout(() => {
         this.loadingService.setloading(true);
@@ -310,11 +311,11 @@ export class CreateEmployeeComponent implements OnInit {
       },
       workingProcess: this.handleTransformDataWorkingHistory(data),
     };
-    console.log(data);
-
-    console.log(data.home_land || '');
-
     this.employeeForm.patchValue(newData);
+    this.employeeForm
+      .get('basicInfo.avt')
+      ?.removeValidators(Validators.required);
+    this.employeeForm.get('basicInfo.avt')?.updateValueAndValidity();
   }
 
   handleTransformDataSocialNetwork(data: IEmployeeResponse): any[] {

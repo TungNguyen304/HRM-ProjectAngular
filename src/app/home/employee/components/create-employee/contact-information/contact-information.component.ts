@@ -141,11 +141,7 @@ export class ContactInformationComponent implements OnInit, OnChanges {
   handleAddSocial(): void {
     if (this.socialControlList.length < 5) {
       (
-        getControlCommon(
-          this.employeeForm,
-          'contactInfo',
-          'socials'
-        ) as FormArray
+        getControlCommon(this.employeeForm, 'contactInfo.socials') as FormArray
       ).push(
         this.fb.group({
           name: ['', [Validators.required]],
@@ -159,6 +155,8 @@ export class ContactInformationComponent implements OnInit, OnChanges {
   }
 
   handleDeleteSocial(index: number) {
-    this.socialControlList.splice(index, 1);
+    (
+      getControlCommon(this.employeeForm, 'contactInfo.socials') as FormArray
+    ).removeAt(index);
   }
 }

@@ -31,6 +31,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-size: 1.4rem;
 }
 
 .small_container {
@@ -53,14 +54,14 @@ h2.title {
   color: var(--primary-color-main);
   font-weight: 700;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  font-size: 28px;
+  font-size: 2.8rem;
 }
 
 h3.title {
   color: var(--primary-color-main);
   font-weight: 700;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  font-size: 22px;
+  font-size: 2.2rem;
 }
 
 ul {
@@ -72,7 +73,7 @@ p {
 }
 
 html {
-  font-size: 14px;
+  font-size: 62.5%;
   font-family: "Roboto", sans-serif;
 }
 
@@ -244,7 +245,8 @@ html {
       .working_process_wrap {
         margin-bottom: 20px;
       }
-      .sub_form, .basic_info {
+      .sub_form,
+      .basic_info {
         flex-direction: column;
         grid-gap: 20px;
         .current_employee {
@@ -259,7 +261,8 @@ html {
       .create_employee {
         flex-direction: row;
       }
-      .sub_form, .basic_info {
+      .sub_form,
+      .basic_info {
         flex-direction: row;
         grid-gap: 0;
         .current_employee {
@@ -273,7 +276,8 @@ html {
 @media (max-width: 849px) {
   .sidebar {
     & ~ .home {
-      .sub_form, .basic_info {
+      .sub_form,
+      .basic_info {
         flex-direction: column;
         grid-gap: 20px;
         .current_employee {
@@ -329,7 +333,7 @@ html {
       transform: translateX(-50%);
       border-radius: 50% !important;
       i {
-        font-size: 18px !important;
+        font-size: 1.8rem !important;
         margin-top: 0 !important;
       }
     }

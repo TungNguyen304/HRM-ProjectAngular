@@ -121,7 +121,7 @@ export class WorkingProcessComponent implements OnInit, AfterViewInit {
         workingForm: ['', [Validators.required]],
       })
     );
-    this.processControlList.controls.forEach((control) => {
+    this.processControlList.controls?.forEach((control) => {
       if (!control?.get('unit')?.valid) {
         control?.get('position')?.disable();
       }
@@ -133,12 +133,12 @@ export class WorkingProcessComponent implements OnInit, AfterViewInit {
   }
 
   handleDeleteProcess(index: number): void {
-    this.processControlList?.controls.splice(index, 1);
+    this.processControlList.removeAt(index);
     this.positionList.splice(index, 1);
   }
 
   warningDetect(): void {
-    this.processControlList?.controls.forEach((control) => {
+    this.processControlList?.controls?.forEach((control) => {
       this.handleSetWarning('unit', control);
       this.handleSetWarning('position', control);
       this.handleSetWarning('workingTime', control);

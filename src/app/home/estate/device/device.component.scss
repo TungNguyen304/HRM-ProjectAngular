@@ -16,16 +16,16 @@ form {
       label {
         margin-bottom: 10px;
       }
-      input {
-        background-color: #eaf0f4;
-      }
+      // input {
+        // background-color: #eaf0f4;
+      // }
       p {
         display: flex;
         align-items: center;
         position: absolute;
         top: calc(100% + 10px);
         font-style: italic;
-        font-size: 12px;
+        font-size: 1.2rem;
         right: 0;
         color: red;
         i {
@@ -35,7 +35,7 @@ form {
     }
     ::ng-deep .p-dropdown {
       width: 100%;
-      background-color: #eaf0f4;
+      // background-color: #eaf0f4;
     }
   }
   .action {
