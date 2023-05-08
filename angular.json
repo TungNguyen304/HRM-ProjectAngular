@@ -37,7 +37,8 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "file-saver"
+              "file-saver",
+              "qrcode"
             ]
           },
           "configurations": {
