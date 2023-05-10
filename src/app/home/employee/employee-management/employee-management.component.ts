@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from 'src/app/core/services/http/employee.service';
 import {
   AbstractControl,
@@ -62,7 +62,8 @@ export class EmployeeManagementComponent implements OnInit {
     private loadingService: LoadingService,
     private _FileSaverService: FileSaverService,
     private exportFileService: ExportFileService,
-    private toasMsgService: ToastMsgService
+    private toasMsgService: ToastMsgService,
+    private activatedRoute: ActivatedRoute
   ) {
     this.sex = [{ value: 'Male' }, { value: 'FeMale' }];
     this.actions = [
@@ -100,10 +101,16 @@ export class EmployeeManagementComponent implements OnInit {
 
   onPageChange(event: any): void {
     this.page = event.page + 1;
+    this.router.navigateByUrl(`employee/management/${event.page + 1}`);
     this.handleSendRequestGetEmployee();
   }
 
   ngOnInit() {
+    this.activatedRoute.params.subscribe((params) => {
+      if (params.id) {
+        this.page = params.id;
+      }
+    });
     this.toasMsgService.toast$.subscribe((toast) => {
       this.toast = toast;
     });

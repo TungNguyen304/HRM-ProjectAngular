@@ -34,23 +34,32 @@ const routes: Routes = [
     children: [
       {
         path: 'provider',
-        component: ProviderComponent,
+        children: [
+          {
+            path: '',
+            component: ProviderComponent,
+          },
+          { path: ':id', component: ProviderComponent },
+        ],
       },
       {
         path: 'device',
-        component: DeviceComponent,
-      },
-      {
-        path: 'device/create-device',
-        component: CreateDeviceComponent,
-      },
-      {
-        path: 'device/update-device/:id',
-        component: CreateDeviceComponent,
-      },
-      {
-        path: 'device/detail-device/:id',
-        component: DetailDeviceComponent,
+        children: [
+          { path: '', component: DeviceComponent },
+          {
+            path: 'create-device',
+            component: CreateDeviceComponent,
+          },
+          {
+            path: 'update-device/:id',
+            component: CreateDeviceComponent,
+          },
+          {
+            path: 'detail-device/:id',
+            component: DetailDeviceComponent,
+          },
+          { path: ':id', component: DeviceComponent },
+        ],
       },
       {
         path: '',

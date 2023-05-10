@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, finalize } from 'rxjs';
 import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
 import { ModalService } from 'src/app/core/services/helper/modal.service';
@@ -18,9 +19,9 @@ export class ProviderComponent implements OnInit {
   public providerList: IProviderResponse[];
   public displayCreate: boolean = false;
   public idProvider: number;
-  public pageCurrent: number = 1;
+  public page: number = 1;
   public total: number = 0;
-  public limit: number = 4;
+  public limit: number = 5;
   public infoUpdate: IProviderResponse;
   public loadDisplay: boolean = false;
   public searchInput: FormControl = new FormControl('');
@@ -32,8 +33,33 @@ export class ProviderComponent implements OnInit {
     private modalService: ModalService,
     private loadingService: LoadingService,
     private exportFileService: ExportFileService,
-    private toasMsgService: ToastMsgService
+    private toasMsgService: ToastMsgService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
+
+  ngOnInit() {
+    this.activatedRoute.params.subscribe((params) => {
+      if (params.id) {
+        this.page = params.id;
+      }
+    });
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
+    this.handleGetProvider().subscribe(
+      (data: any) => {
+        if (data.statusCode === 200) {
+          this.total = data.response.total;
+          this.providerList = data.response.data;
+        }
+        this.loadDisplay = false;
+      },
+      () => {
+        this.loadDisplay = false;
+      }
+    );
+  }
 
   handleDisplayCreateProvider(): void {
     this.typeAction = 'Add';
@@ -75,7 +101,7 @@ export class ProviderComponent implements OnInit {
   handleGetProvider(): Observable<object> {
     this.loadDisplay = true;
     return this.providerService.getProvider(
-      this.pageCurrent,
+      this.page,
       this.limit,
       this.searchInput.value
     );
@@ -105,28 +131,11 @@ export class ProviderComponent implements OnInit {
   }
 
   onPageChange(event: any): void {
-    if (this.pageCurrent !== event.page + 1) {
+    if (this.page !== event.page + 1) {
+      this.router.navigateByUrl(`estate/provider/${event.page + 1}`);
       this.loadDisplay = true;
-      this.pageCurrent = event.page + 1;
+      this.page = event.page + 1;
       this.handleGetProvider();
     }
-  }
-
-  ngOnInit() {
-    this.toasMsgService.toast$.subscribe((toast) => {
-      this.toast = toast;
-    });
-    this.handleGetProvider().subscribe(
-      (data: any) => {
-        if (data.statusCode === 200) {
-          this.total = data.response.total;
-          this.providerList = data.response.data;
-        }
-        this.loadDisplay = false;
-      },
-      () => {
-        this.loadDisplay = false;
-      }
-    );
   }
 }

@@ -109,6 +109,7 @@ export class DetailDeviceComponent implements OnInit {
 
   downQrCode() {
     handleDownQrCode();
+    this.displayQr = false;
   }
 
   transformDataForDetail(data: any) {
@@ -161,7 +162,7 @@ export class DetailDeviceComponent implements OnInit {
         }),
         switchMap((device: any) => {
           this.deviceExcel = device.response;
-          this.url = `${window.location.host}/detail-device/${
+          this.url = `${window.location.origin}/detail-device/${
             this.deviceExcel.asset_id
           }/${localStorage.getItem('token')}`;
           return this.providerService.getAllProvider(this.token).pipe(

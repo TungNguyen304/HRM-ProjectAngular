@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Observable, combineLatest, finalize } from 'rxjs';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
@@ -46,7 +46,7 @@ export class DeviceComponent implements OnInit {
   public loadDisplay = false;
   public total = 0;
   public limit = 4;
-  public pageCurrent = 1;
+  public page = 1;
   public deviceTemp: any;
   public toast: any;
   public warning: IWarningDeviceSearch = {
@@ -68,7 +68,8 @@ export class DeviceComponent implements OnInit {
     private loadingService: LoadingService,
     private exportFileService: ExportFileService,
     private providerService: ProviderService,
-    private toasMsgService: ToastMsgService
+    private toasMsgService: ToastMsgService,
+    private activatedRoute: ActivatedRoute
   ) {
     this.actions = [
       {
@@ -102,6 +103,66 @@ export class DeviceComponent implements OnInit {
     ];
   }
 
+  ngOnInit() {
+    this.activatedRoute.params.subscribe((params) => {
+      if (params.id) {
+        this.page = params.id;
+      }
+    });
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
+    this.loadDisplay = true;
+    combineLatest({
+      device: this.handleGetDevice(),
+      type: this.deviceService.getDeviceType(),
+      provider: this.providerService.getAllProvider(),
+    }).subscribe(
+      (res: any) => {
+        if (res.type.statusCode === 200) {
+          this.typeDevice = res.type.response;
+        }
+        if (res.provider.statusCode === 200 && res.device.statusCode === 200) {
+          this.deviceList = this.handleGetProviderByDevice(
+            res.device.response.data,
+            res.provider.response.data
+          );
+          this.total = res.device.response.total;
+        }
+        this.loadDisplay = false;
+      },
+      () => {
+        this.loadDisplay = false;
+      }
+    );
+
+    this.searchDeviceForm = this.fb.group({
+      code: ['', [Validators.maxLength(255), emojiValidator]],
+      employee: ['', [Validators.maxLength(255), emojiValidator]],
+      type: [''],
+      status: [''],
+    });
+
+    this.languageService.language$.subscribe((data) => {
+      switch (data) {
+        case 'en': {
+          this.status = deviceStatusEn;
+          break;
+        }
+        case 'vi': {
+          this.status = deviceStatusVi;
+          break;
+        }
+      }
+      this.estateService.handleSetValueForDeviceStore('status', this.status);
+    });
+
+    this.warningDetect();
+    this.searchDeviceForm.valueChanges.subscribe(() => {
+      this.warningDetect();
+    });
+  }
+
   handleActionsClick(device: any) {
     this.deviceTemp = device;
     this.url = `${window.location.origin}/detail-device/${
@@ -118,10 +179,11 @@ export class DeviceComponent implements OnInit {
   }
 
   onPageChange(event: any): void {
-    if (event.page + 1 !== this.pageCurrent) {
-      this.pageCurrent = event.page + 1;
+    if (event.page + 1 !== this.page) {
+      this.router.navigateByUrl(`estate/device/${event.page + 1}`);
+      this.page = event.page + 1;
       this.loadDisplay = true;
-      this.handleSendRuest(this.pageCurrent);
+      this.handleSendRuest(this.page);
     }
   }
 
@@ -131,6 +193,7 @@ export class DeviceComponent implements OnInit {
 
   downQrCode() {
     handleDownQrCode();
+    this.displayQr = false;
   }
 
   getValueSearch(): Array<string> {
@@ -186,7 +249,7 @@ export class DeviceComponent implements OnInit {
   }
 
   handleGetDevice(): Observable<object> {
-    return this.deviceService.getDevice(this.pageCurrent, this.limit);
+    return this.deviceService.getDevice(this.page, this.limit);
   }
 
   exportFile() {
@@ -213,62 +276,30 @@ export class DeviceComponent implements OnInit {
       const provider = providerList.find((provider: any) => {
         return provider.distributor_id === device.distributor_id;
       });
-      return { ...device, distributor_name: provider.name };
+      return { ...device, distributor_name: provider?.name || '' };
     });
   }
 
-  ngOnInit() {
-    this.toasMsgService.toast$.subscribe((toast) => {
-      this.toast = toast;
-    });
-    this.loadDisplay = true;
-    combineLatest({
-      device: this.handleGetDevice(),
-      type: this.deviceService.getDeviceType(),
-      provider: this.providerService.getAllProvider(),
-    }).subscribe(
-      (res: any) => {
-        if (res.type.statusCode === 200) {
-          this.typeDevice = res.type.response;
-        }
-        if (res.provider.statusCode === 200 && res.device.statusCode === 200) {
-          this.deviceList = this.handleGetProviderByDevice(
-            res.device.response.data,
-            res.provider.response.data
-          );
-          this.total = res.device.response.total;
-        }
-        this.loadDisplay = false;
-      },
-      () => {
-        this.loadDisplay = false;
-      }
-    );
+  handleSearchDevice(): void {
+    if (this.searchDeviceForm.valid) {
+      this.loadDisplay = true;
+      this.deviceService.getDevice(
+        1,
+        this.limit,
+        this.getControl('code')?.value,
+        this.getControl('employee')?.value,
+        this.getControl('type')?.value?.asset_type_id || '',
+        this.getControl('status')?.value.key || 0
+      );
+    }
+  }
 
-    this.searchDeviceForm = this.fb.group({
-      code: ['', [Validators.maxLength(255), emojiValidator]],
-      employee: ['', [Validators.maxLength(255), emojiValidator]],
-      type: [''],
-      status: [''],
-    });
-
-    this.languageService.language$.subscribe((data) => {
-      switch (data) {
-        case 'en': {
-          this.status = deviceStatusEn;
-          break;
-        }
-        case 'vi': {
-          this.status = deviceStatusVi;
-          break;
-        }
-      }
-      this.estateService.handleSetValueForDeviceStore('status', this.status);
-    });
-
-    this.warningDetect();
-    this.searchDeviceForm.valueChanges.subscribe(() => {
-      this.warningDetect();
+  handleResetSearchForm(): void {
+    this.searchDeviceForm.setValue({
+      code: '',
+      employee: '',
+      type: '',
+      status: '',
     });
   }
 }

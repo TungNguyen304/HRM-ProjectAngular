@@ -115,7 +115,7 @@
     <p-paginator
       *ngIf="total > 0"
       (onPageChange)="onPageChange($event)"
-      [first]="0"
+      [first]="(page - 1) * limit"
       [rows]="limit"
       [totalRecords]="total"
       [showFirstLastIcon]="false"
@@ -123,10 +123,7 @@
   </div>
 </div>
 
-<p-dialog
-  [modal]="true"
-  [(visible)]="displayCreate"
->
+<p-dialog [modal]="true" [(visible)]="displayCreate">
   <ng-template pTemplate="header">
     <h3 class="title">
       {{ (typeAction === "Add" ? "title.create" : "title.edit") | translate }}

@@ -20,6 +20,7 @@ import { DeviceService } from 'src/app/core/services/http/device.service';
 import { LanguageService } from 'src/app/core/services/state/language.service';
 import { IWarningBasicInfoDevice } from 'src/app/shared/interfaces';
 import { deviceStatusEn, deviceStatusVi } from '../../../device/data';
+import { CommonService } from 'src/app/core/services/common.service';
 
 @Component({
   selector: 'app-basic-information',
@@ -36,7 +37,8 @@ export class BasicInformationComponent implements OnInit, OnChanges {
   constructor(
     private deviceService: DeviceService,
     private languageService: LanguageService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private commonService: CommonService
   ) {}
   public lang = {
     currency: 'USD',
@@ -70,6 +72,31 @@ export class BasicInformationComponent implements OnInit, OnChanges {
     this.warningDetect();
     this.deviceForm.get('basicInfo')?.valueChanges.subscribe(() => {
       this.warningDetect();
+    });
+
+    this.languageService.language$.subscribe((lang) => {
+      this.deviceForm
+        .get('basicInfo.money')
+        ?.setValue(
+          this.commonService.convertCurrency(
+            this.deviceForm.get('basicInfo.money')?.value
+          )
+        );
+      switch (lang) {
+        case 'en': {
+          this.lang = {
+            currency: 'USD',
+            locale: 'en-US',
+          };
+          break;
+        }
+        case 'vi': {
+          this.lang = {
+            currency: 'VND',
+            locale: 'vi-VN',
+          };
+        }
+      }
     });
   }
 

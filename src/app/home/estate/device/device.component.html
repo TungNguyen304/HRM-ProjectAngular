@@ -94,11 +94,13 @@
               <button
                 type="button"
                 pButton
+                (click)="handleResetSearchForm()"
                 class="p-button-danger p-button-sm p-button-raised"
                 [label]="'common.delete' | translate"
               ></button>
               <button
                 type="submit"
+                (click)="handleSearchDevice()"
                 pButton
                 class="p-button-primary p-button-sm p-button-raised"
                 [label]="'common.search' | translate"
@@ -147,7 +149,7 @@
           <th>{{ "sidebar.provider" | translate }}</th>
           <th>{{ "createDevice.user" | translate }}</th>
           <th>{{ "common.status" | translate }}</th>
-          <th style="text-align: center;">{{ "common.action" | translate }}</th>
+          <th style="text-align: center">{{ "common.action" | translate }}</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-device>
@@ -216,7 +218,7 @@
     <p-paginator
       *ngIf="total > 0"
       (onPageChange)="onPageChange($event)"
-      [first]="0"
+      [first]="(page - 1) * limit"
       [rows]="limit"
       [totalRecords]="total"
       [showFirstLastIcon]="false"
@@ -234,8 +236,12 @@
       [errorCorrectionLevel]="correctionLevel"
     >
     </ngx-qrcode>
-    <div style="text-align: center; margin-top: 10px;">
-      <button (click)="downQrCode()" pButton [label]="'common.save' | translate"></button>
+    <div style="text-align: center; margin-top: 10px">
+      <button
+        (click)="downQrCode()"
+        pButton
+        [label]="'common.save' | translate"
+      ></button>
     </div>
   </ng-template>
 </p-dialog>

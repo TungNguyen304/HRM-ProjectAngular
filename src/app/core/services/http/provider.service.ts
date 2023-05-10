@@ -57,7 +57,7 @@ export class ProviderService {
   }
 
   updateProvider(data: IProviderRequest, id: string): Observable<object> {
-    return this.http.patch(`distributors/${id}`, data);
+    return this.http.patch(`distributors/${id}`, data).pipe(delay(1000));
   }
 
   deleteProviderById(id: string): Observable<object> {

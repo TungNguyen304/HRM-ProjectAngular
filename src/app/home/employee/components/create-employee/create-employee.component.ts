@@ -85,7 +85,6 @@ export class CreateEmployeeComponent implements OnInit {
 
   onSubmit(): void {
     this.commonService.markAsDirty(this.employeeForm);
-    console.log(this.employeeForm);
     if (this.employeeForm.valid) {
       setTimeout(() => {
         this.loadingService.setloading(true);

@@ -86,7 +86,7 @@ export class BasicInformationComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.errorFromApi &&
-      this.errorFromApi.error.errors.forEach((item: any) => {
+      this.errorFromApi.error.errors?.forEach((item: any) => {
         apiWarning(
           Object.values(item.constraints).join(', '),
           this,

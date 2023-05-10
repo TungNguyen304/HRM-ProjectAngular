@@ -5,15 +5,6 @@
     font-weight: bold;
     color: var(--primary-color-main);
   }
-  table {
-    tbody {
-      tr td {
-        .action button {
-          margin: 0 10px;
-        }
-      }
-    }
-  }
 }
 
 th,
@@ -23,4 +14,6 @@ td {
 
 .action {
   display: flex;
+  gap: 10px;
+  justify-content: center;
 }

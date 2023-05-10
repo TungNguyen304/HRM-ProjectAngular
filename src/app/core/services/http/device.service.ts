@@ -38,30 +38,17 @@ export class DeviceService {
     keyword: string = '',
     user_using_id: string = '',
     asset_type_id: string = '',
-    status: number = 1,
+    status: number = 0,
     distributor_id: string = ''
   ): Observable<object> {
-    this.device$.next(
-      `assets?page=${page}&limit=${limit}&keyword=${keyword}&user_using_id=${user_using_id}&asset_type_id=${asset_type_id}&status=${status}&distributor_id=${distributor_id}`
-    );
+    let url = `assets?page=${page}&limit=${limit}&keyword=${keyword}&user_using_id=${user_using_id}&asset_type_id=${asset_type_id}&distributor_id=${distributor_id}`;
+    if (status !== 0) {
+      url += `&status=${status}`;
+    }
+    this.device$.next(url);
     return this.device$.pipe(
       debounceTime(2000),
-      switchMap((url) =>
-        this.http.get(
-          url
-          //    {
-          //   params: {
-          //     page: page,
-          //     limit: limit,
-          //     keyword: keyword,
-          //     distributor_id: distributor_id,
-          //     asset_type_id: asset_type_id,
-          //     user_using_id: user_using_id,
-          //     status: status,
-          //   },
-          // }
-        )
-      )
+      switchMap((url) => this.http.get(url))
     );
   }
 

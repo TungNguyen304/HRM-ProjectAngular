@@ -1,7 +1,9 @@
 <div class="detail_employee">
   <div class="header">
-    <h2 class="title">CHI TIẾT THIẾT BỊ</h2>
-    <span (click)="handleBack()"><i class="bi bi-arrow-left-short"></i></span>
+    <h2 class="title">{{ "title.detailDevice" | translate }}</h2>
+    <span *ngIf="estate" (click)="handleBack()"
+      ><i class="bi bi-arrow-left-short"></i
+    ></span>
   </div>
   <div class="detail_info">
     <div class="export">

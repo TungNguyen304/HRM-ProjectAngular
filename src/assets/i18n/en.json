@@ -25,6 +25,7 @@
     "addSupplier": "ADD NEW PROVIDER",
     "editSupplier": "EDIT PROVIDER",
     "detail": "DETAIL",
+    "detailDevice": "DEVICE DETAIL",
     "employeeUpload": "UPLOAD EMPLOYEE",
     "provider": "PROVIDER",
     "propertyStatus": "Property status",
@@ -131,7 +132,7 @@
   "employeeManagement": {
     "employeeCode": "Employee code",
     "fullName": "Full name",
-    "sex": "Sex",
+    "sex": "Gender",
     "unit": "Unit",
     "position": "Position",
     "codeNameEmail": "Code/Name/Email",

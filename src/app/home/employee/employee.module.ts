@@ -46,28 +46,38 @@ const routes: Routes = [
       },
       {
         path: 'workplace',
-        component: WorkplaceComponent,
+        children: [
+          {
+            path: '',
+            component: WorkplaceComponent,
+          },
+          { path: ':id', component: WorkplaceComponent },
+        ],
       },
       {
         path: 'management',
-        component: EmployeeManagementComponent,
+        children: [
+          { path: '', component: EmployeeManagementComponent },
+          {
+            path: 'create-employee',
+            component: CreateEmployeeComponent,
+          },
+          {
+            path: 'detail-employee/:id',
+            component: DetailEmployeeComponent,
+          },
+          {
+            path: 'update-employee/:id',
+            component: CreateEmployeeComponent,
+          },
+          { path: ':id', component: EmployeeManagementComponent },
+        ],
       },
       {
         path: 'upload',
         component: EmployeeUploadComponent,
       },
-      {
-        path: 'management/create-employee',
-        component: CreateEmployeeComponent,
-      },
-      {
-        path: 'management/detail-employee/:id',
-        component: DetailEmployeeComponent,
-      },
-      {
-        path: 'management/update-employee/:id',
-        component: CreateEmployeeComponent,
-      },
+
       {
         path: '',
         redirectTo: 'work-unit',

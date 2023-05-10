@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MemberService } from 'src/app/core/services/http/member.service';
 
 export interface IMember {
@@ -24,9 +25,18 @@ export class TeamMemberComponent implements OnInit {
   public total: number = 0;
   public searchInput = '';
   public loadDisplay: boolean = false;
-  constructor(private memberService: MemberService) {}
+  constructor(
+    private memberService: MemberService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {}
   ngOnInit(): void {
     this.loadDisplay = true;
+    this.activatedRoute.params.subscribe((params) => {
+      if (params.id) {
+        this.page = params.id;
+      }
+    });
     this.memberService.getMember(this.page, this.limit).subscribe(
       (data: any) => {
         if (data.statusCode === 200) {
@@ -47,6 +57,7 @@ export class TeamMemberComponent implements OnInit {
   }
 
   onPageChange(event: any): void {
+    this.router.navigateByUrl(`team-member/${event.page + 1}`);
     this.page = event.page + 1;
     this.loadDisplay = true;
     this.memberService.getMember(this.page, this.limit, this.searchInput);

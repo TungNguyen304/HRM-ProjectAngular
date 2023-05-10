@@ -138,7 +138,7 @@
       *ngIf="total > 0"
       #paginator
       (onPageChange)="onPageChange($event)"
-      [first]="0"
+      [first]="(page - 1) * limit"
       [rows]="limit"
       [totalRecords]="total"
       [showFirstLastIcon]="false"

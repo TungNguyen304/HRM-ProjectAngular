@@ -8,6 +8,7 @@ import { finalize } from 'rxjs';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
 import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
 import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export interface IPositionForm {
   name: string;
@@ -28,21 +29,39 @@ export class WorkplaceComponent implements OnInit {
     private toastService: ToastService,
     private loadingService: LoadingService,
     private exportFileService: ExportFileService,
-    private toasMsgService: ToastMsgService
+    private toasMsgService: ToastMsgService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
   @ViewChild('paginator') paginator: ElementRef;
   public displayCreate: boolean = false;
   public displayMember: boolean = false;
   public toast: any;
   public positionTemp: string;
-  public limit: number = 4;
+  public limit: number = 5;
   public total: number = 0;
-  public pageCurrent: number = 1;
+  public page: number = 1;
   public loadDisplay: boolean = false;
   public infoUpdate: IPosition;
   public typeAction: 'Add' | 'Update';
   public props: IPropsMember;
   public searchInput: FormControl = new FormControl('');
+
+  ngOnInit(): void {
+    this.activatedRoute.params.subscribe((params) => {
+      if (params.id) {
+        this.page = params.id;
+      }
+    });
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
+    this.handleGetPosition();
+    this.searchInput.valueChanges.subscribe(() => {
+      this.loadDisplay = true;
+      this.positionService.getPosition(1, this.limit, this.searchInput.value);
+    });
+  }
 
   handleShowOverlayCreateWorkplace() {
     this.typeAction = 'Add';
@@ -95,9 +114,10 @@ export class WorkplaceComponent implements OnInit {
   }
 
   onPageChange(event: any): void {
-    if (this.pageCurrent !== event.page + 1) {
+    if (this.page !== event.page + 1) {
       this.loadDisplay = true;
-      this.pageCurrent = event.page + 1;
+      this.router.navigateByUrl(`employee/workplace/${event.page + 1}`);
+      this.page = event.page + 1;
       this.positionService.getPosition(
         event.page + 1,
         this.limit,
@@ -128,16 +148,5 @@ export class WorkplaceComponent implements OnInit {
           this.loadDisplay = false;
         }
       );
-  }
-
-  ngOnInit(): void {
-    this.toasMsgService.toast$.subscribe((toast) => {
-      this.toast = toast;
-    });
-    this.handleGetPosition();
-    this.searchInput.valueChanges.subscribe(() => {
-      this.loadDisplay = true;
-      this.positionService.getPosition(1, this.limit, this.searchInput.value);
-    });
   }
 }
