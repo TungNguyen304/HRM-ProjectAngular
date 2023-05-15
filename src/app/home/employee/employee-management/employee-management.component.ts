@@ -23,18 +23,26 @@ import {
 } from 'src/app/shared/interfaces';
 import { UnitTreeService } from 'src/app/core/services/state/uint-tree.service';
 import { PositionService } from 'src/app/core/services/http/position.service';
-import { Observable, finalize } from 'rxjs';
+import { Observable, finalize, takeUntil } from 'rxjs';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
-import { FileSaverService } from 'ngx-filesaver';
 import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
 import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
+import { DestroyDirective } from 'src/app/shared/directives/destroy.directive';
+import {
+  IFilter,
+  PageService,
+} from 'src/app/core/services/helper/page.service';
+import { CommonService } from 'src/app/core/services/common.service';
 
 @Component({
   selector: 'app-employee-management',
   templateUrl: './employee-management.component.html',
   styleUrls: ['./employee-management.component.scss'],
 })
-export class EmployeeManagementComponent implements OnInit {
+export class EmployeeManagementComponent
+  extends DestroyDirective
+  implements OnInit
+{
   public sex: ISex[];
   public employeeList: IEmployeeResponse[];
   public unitList: IUnit[];
@@ -51,6 +59,7 @@ export class EmployeeManagementComponent implements OnInit {
   public limit = 4;
   public total = 0;
   public page = 1;
+  public dataOnUrl: any;
   constructor(
     private employeeService: EmployeeService,
     private router: Router,
@@ -60,11 +69,13 @@ export class EmployeeManagementComponent implements OnInit {
     private unitTreeService: UnitTreeService,
     private positionService: PositionService,
     private loadingService: LoadingService,
-    private _FileSaverService: FileSaverService,
     private exportFileService: ExportFileService,
     private toasMsgService: ToastMsgService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private pageService: PageService,
+    private commonService: CommonService
   ) {
+    super();
     this.sex = [{ value: 'Male' }, { value: 'FeMale' }];
     this.actions = [
       {
@@ -91,29 +102,20 @@ export class EmployeeManagementComponent implements OnInit {
     ];
   }
 
-  handleActionsClick(employee: IEmployeeResponse) {
-    this.employeeActive = employee;
-  }
-
-  getControl(control: string): AbstractControl | null {
-    return getControlCommon(this.searchForm, control);
-  }
-
-  onPageChange(event: any): void {
-    this.page = event.page + 1;
-    this.router.navigateByUrl(`employee/management/${event.page + 1}`);
-    this.handleSendRequestGetEmployee();
-  }
-
   ngOnInit() {
-    this.activatedRoute.params.subscribe((params) => {
-      if (params.id) {
-        this.page = params.id;
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (params) {
+        this.dataOnUrl = params;
+      }
+      if (params.page) {
+        this.page = params.page;
       }
     });
+
     this.toasMsgService.toast$.subscribe((toast) => {
       this.toast = toast;
     });
+
     this.getControl('position')?.disable();
 
     this.searchForm = this.fb.group({
@@ -125,6 +127,19 @@ export class EmployeeManagementComponent implements OnInit {
     this.unitTreeService.getUnitTreeByUnitId();
     this.unitTreeService.unitTree$.subscribe((data: any) => {
       this.unitList = data;
+      this.unitTreeService.getUnitById(data, this.dataOnUrl?.unit);
+      this.onSelectedChange({
+        node: {
+          key: this.dataOnUrl?.unit,
+        },
+      });
+      this.searchForm.patchValue(
+        this.commonService.transformDataSearchOnUrl(
+          this.dataOnUrl,
+          this.unitTreeService.unitById
+        )
+      );
+      this.handleSendRequestGetEmployee();
     });
     this.handleGetEmployee();
     this.warningDetect();
@@ -133,21 +148,46 @@ export class EmployeeManagementComponent implements OnInit {
     });
   }
 
+  handleActionsClick(employee: IEmployeeResponse) {
+    this.employeeActive = employee;
+  }
+
+  getControl(control: string): AbstractControl | null {
+    return getControlCommon(this.searchForm, control);
+  }
+
+  saveUrl() {
+    this.pageService.saveUrl(
+      'employee/management',
+      this.page,
+      '',
+      this.getValueSearch()
+    );
+  }
+
+  onPageChange(event: any): void {
+    this.page = event.page + 1;
+    this.saveUrl();
+    this.handleSendRequestGetEmployee();
+  }
+
   handleGetEmployee(): void {
     this.loadDisplay = true;
-    this.handleSendRequestGetEmployee().subscribe(
-      (data: any) => {
-        if (data.statusCode === 200) {
-          this.employeeList = data?.response?.data;
+    this.handleSendRequestGetEmployee()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data: any) => {
+          if (data.statusCode === 200) {
+            this.employeeList = data?.response?.data;
+            this.loadDisplay = false;
+            this.total = data?.response?.total;
+          }
+        },
+        () => {
           this.loadDisplay = false;
-          this.total = data?.response?.total;
+          this.employeeList = [];
         }
-      },
-      () => {
-        this.loadDisplay = false;
-        this.employeeList = [];
-      }
-    );
+      );
   }
 
   handleSendRequestGetEmployee(): Observable<object> {
@@ -158,13 +198,14 @@ export class EmployeeManagementComponent implements OnInit {
       this.getControl('codeNameEmail')?.value,
       this.getControl('sex')?.value?.value?.toUpperCase() || '',
       this.getControl('unit')?.value.key || '',
-      this.getControl('position')?.value.job_position_id || ''
+      this.getControl('position')?.value || ''
     );
   }
 
   handleSearchEmployee(): void {
     if (this.searchForm.valid) {
       this.handleSendRequestGetEmployee();
+      this.saveUrl();
     }
   }
 
@@ -237,6 +278,15 @@ export class EmployeeManagementComponent implements OnInit {
           );
         }
       });
+  }
+
+  getValueSearch(): IFilter {
+    return {
+      keyword: this.searchForm.value.codeNameEmail,
+      position: this.searchForm.value.position,
+      gender: this.searchForm.value.sex.value,
+      unit: this.searchForm.value.unit.key,
+    };
   }
 
   handleDisplayCreateEmployee(): void {

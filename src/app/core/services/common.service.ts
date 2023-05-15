@@ -7,6 +7,7 @@ import {
   isFormGroup,
 } from '@angular/forms';
 import { LanguageService } from './state/language.service';
+import { IUnit } from 'src/app/shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,13 @@ export class CommonService {
             ...this.convertDataForTableRowStyle(item.children, data[item.key])
           );
         } else {
+          if (
+            item.key === 'birth_date' ||
+            item.key === 'hire_date' ||
+            item.key === 'receive_date'
+          ) {
+            data[item.key] = this.reverseStringDateToVi(data[item.key]);
+          }
           infoList.push({
             name: item.name,
             value: data[item.key],
@@ -77,6 +85,11 @@ export class CommonService {
     if (!date) return '';
     const [year, month, day] = date.split('-');
     return new Date([month, day, year].join('/')).toLocaleDateString('vi-VN');
+  }
+
+  reverseStringDateToViChangeStyle(date: string): string {
+    if (!date) return '';
+    return date.split('-').reverse().join('/');
   }
 
   reverseStringDateToVi(date: string): string {
@@ -146,5 +159,60 @@ export class CommonService {
       return true;
     }
     return false;
+  }
+
+  transformDataSearchOnUrl(data: any, unit?: IUnit) {
+    console.log('patch');
+
+    return Object.keys(data).reduce((accumulator, currentValue) => {
+      if (data[currentValue]) {
+        switch (currentValue) {
+          case 'keyword':
+            return {
+              ...accumulator,
+              codeNameEmail: data[currentValue],
+            };
+          case 'position':
+            return {
+              ...accumulator,
+              position: data[currentValue],
+            };
+          case 'gender':
+            return {
+              ...accumulator,
+              sex: {
+                value: data[currentValue],
+              },
+            };
+          case 'unit':
+            return {
+              ...accumulator,
+              unit: unit,
+            };
+          case 'code':
+            return {
+              ...accumulator,
+              code: data[currentValue],
+            };
+          case 'employee':
+            return {
+              ...accumulator,
+              employee: data[currentValue],
+            };
+          case 'type':
+            return {
+              ...accumulator,
+              type: data[currentValue],
+            };
+          case 'status': {
+            return {
+              ...accumulator,
+              status: Number(data[currentValue]),
+            };
+          }
+        }
+      }
+      return accumulator;
+    }, {});
   }
 }

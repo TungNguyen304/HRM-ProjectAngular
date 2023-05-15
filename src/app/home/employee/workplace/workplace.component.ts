@@ -4,11 +4,13 @@ import { PositionService } from 'src/app/core/services/http/position.service';
 import { IPosition } from 'src/app/shared/interfaces';
 import { IPropsMember } from '../components/member-table/member-table.component';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
-import { finalize } from 'rxjs';
+import { Observable, finalize, takeUntil } from 'rxjs';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
 import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
 import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { PageService } from 'src/app/core/services/helper/page.service';
+import { DestroyDirective } from 'src/app/shared/directives/destroy.directive';
 
 export interface IPositionForm {
   name: string;
@@ -22,7 +24,7 @@ export interface IPositionForm {
   templateUrl: './workplace.component.html',
   styleUrls: ['./workplace.component.scss'],
 })
-export class WorkplaceComponent implements OnInit {
+export class WorkplaceComponent extends DestroyDirective implements OnInit {
   public positionList: IPosition[];
   constructor(
     private positionService: PositionService,
@@ -31,8 +33,10 @@ export class WorkplaceComponent implements OnInit {
     private exportFileService: ExportFileService,
     private toasMsgService: ToastMsgService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) {}
+    private pageService: PageService
+  ) {
+    super();
+  }
   @ViewChild('paginator') paginator: ElementRef;
   public displayCreate: boolean = false;
   public displayMember: boolean = false;
@@ -48,19 +52,54 @@ export class WorkplaceComponent implements OnInit {
   public searchInput: FormControl = new FormControl('');
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {
-      if (params.id) {
-        this.page = params.id;
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (params.page) {
+        this.page = params.page;
+      }
+      if (params.search) {
+        this.searchInput.setValue(params.search);
       }
     });
+
     this.toasMsgService.toast$.subscribe((toast) => {
       this.toast = toast;
     });
-    this.handleGetPosition();
+
+    this.handleGetPosition()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data: any) => {
+          if (data.statusCode === 200) {
+            this.total = data.response.total;
+            this.positionList = data.response.data;
+            this.loadDisplay = false;
+            this.page = this.pageService.setPageThenSearchOrPaginatorChange(
+              this.page,
+              this.limit,
+              this.total,
+              this.searchInput.value,
+              'employee/workplace'
+            );
+          }
+        },
+        () => {
+          this.loadDisplay = false;
+        }
+      );
+
     this.searchInput.valueChanges.subscribe(() => {
       this.loadDisplay = true;
-      this.positionService.getPosition(1, this.limit, this.searchInput.value);
+      this.saveUrl();
+      this.handleGetPosition();
     });
+  }
+
+  saveUrl() {
+    this.pageService.saveUrl(
+      'employee/workplace',
+      this.page,
+      this.searchInput.value
+    );
   }
 
   handleShowOverlayCreateWorkplace() {
@@ -116,13 +155,9 @@ export class WorkplaceComponent implements OnInit {
   onPageChange(event: any): void {
     if (this.page !== event.page + 1) {
       this.loadDisplay = true;
-      this.router.navigateByUrl(`employee/workplace/${event.page + 1}`);
       this.page = event.page + 1;
-      this.positionService.getPosition(
-        event.page + 1,
-        this.limit,
-        this.searchInput.value
-      );
+      this.saveUrl();
+      this.handleGetPosition();
     }
   }
 
@@ -132,21 +167,12 @@ export class WorkplaceComponent implements OnInit {
     this.infoUpdate = position;
   }
 
-  handleGetPosition(): void {
+  handleGetPosition(): Observable<object> {
     this.loadDisplay = true;
-    this.positionService
-      .getPosition(1, this.limit, this.searchInput.value)
-      .subscribe(
-        (data: any) => {
-          if (data.statusCode === 200) {
-            this.total = data.response.total;
-            this.positionList = data.response.data;
-            this.loadDisplay = false;
-          }
-        },
-        () => {
-          this.loadDisplay = false;
-        }
-      );
+    return this.positionService.getPosition(
+      this.page,
+      this.limit,
+      this.searchInput.value
+    );
   }
 }

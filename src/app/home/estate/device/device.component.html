@@ -73,6 +73,7 @@
                   id="type"
                   [options]="typeDevice"
                   optionLabel="asset_type_name"
+                  optionValue="asset_type_id"
                   [placeholder]="'common.select' | translate"
                 ></p-dropdown>
               </div>
@@ -86,6 +87,7 @@
                   [placeholder]="'common.select' | translate"
                   [options]="status"
                   optionLabel="value"
+                  optionValue="key"
                 ></p-dropdown>
               </div>
             </div>
@@ -100,7 +102,7 @@
               ></button>
               <button
                 type="submit"
-                (click)="handleSearchDevice()"
+                (click)="searchDevice()"
                 pButton
                 class="p-button-primary p-button-sm p-button-raised"
                 [label]="'common.search' | translate"
@@ -113,7 +115,8 @@
   </div>
   <div class="table">
     <p-table
-      responsiveLayout="stack"
+      responsiveLayout="scroll"
+      [tableStyle]="{ 'min-width': '100rem' }"
       [breakpoint]="'1200px'"
       selectionMode="single"
       [value]="deviceList"
@@ -149,7 +152,7 @@
           <th>{{ "sidebar.provider" | translate }}</th>
           <th>{{ "createDevice.user" | translate }}</th>
           <th>{{ "common.status" | translate }}</th>
-          <th style="text-align: center">{{ "common.action" | translate }}</th>
+          <th style="text-align: end">{{ "common.action" | translate }}</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-device>

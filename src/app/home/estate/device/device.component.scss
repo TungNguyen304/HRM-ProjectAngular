@@ -2,6 +2,20 @@
   .title {
     margin-bottom: 30px;
   }
+  ::ng-deep
+    .p-datatable
+    .p-datatable-tbody
+    > tr:nth-child(3)
+    .p-tieredmenu.p-tieredmenu-overlay,
+  ::ng-deep
+    .p-datatable
+    .p-datatable-tbody
+    > tr:nth-child(4)
+    .p-tieredmenu.p-tieredmenu-overlay {
+    top: -142px !important;
+    right: 0 !important;
+    left: unset !important;
+  }
 }
 
 form {
@@ -17,7 +31,7 @@ form {
         margin-bottom: 10px;
       }
       // input {
-        // background-color: #eaf0f4;
+      // background-color: #eaf0f4;
       // }
       p {
         display: flex;

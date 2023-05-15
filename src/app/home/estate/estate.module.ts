@@ -34,13 +34,7 @@ const routes: Routes = [
     children: [
       {
         path: 'provider',
-        children: [
-          {
-            path: '',
-            component: ProviderComponent,
-          },
-          { path: ':id', component: ProviderComponent },
-        ],
+        component: ProviderComponent,
       },
       {
         path: 'device',
@@ -58,7 +52,6 @@ const routes: Routes = [
             path: 'detail-device/:id',
             component: DetailDeviceComponent,
           },
-          { path: ':id', component: DeviceComponent },
         ],
       },
       {

@@ -30,6 +30,7 @@ import {
 import { socialNetworks } from './data';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
+import { urlValidator } from 'src/app/core/services/helper/validator.service';
 
 @Component({
   selector: 'app-contact-information',
@@ -122,6 +123,11 @@ export class ContactInformationComponent implements OnInit, OnChanges {
           type: 'required',
         };
       }
+      if (control.get('value')?.errors?.['url']) {
+        this.warning.value = {
+          type: 'url',
+        };
+      }
     });
   }
 
@@ -145,7 +151,7 @@ export class ContactInformationComponent implements OnInit, OnChanges {
       ).push(
         this.fb.group({
           name: ['', [Validators.required]],
-          value: ['', [Validators.required]],
+          value: ['', [Validators.required, urlValidator]],
         })
       );
       this.cdr.detectChanges();

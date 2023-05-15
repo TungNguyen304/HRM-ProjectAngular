@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, finalize, switchMap, throwError } from 'rxjs';
+import { CommonService } from 'src/app/core/services/common.service';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
 import { AuthService } from 'src/app/core/services/http/auth.service';
 import { AccountService } from 'src/app/core/services/state/account.service';
@@ -34,7 +35,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private loadingService: LoadingService,
     private accountService: AccountService,
-    private toasMsgService: ToastMsgService
+    private toasMsgService: ToastMsgService,
+    private commonService: CommonService
   ) {}
   public loginForm: FormGroup;
   public toast: any;
@@ -109,47 +111,50 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.loadingService.setloading(true);
-    Object.keys(this.loginForm.controls).forEach((item) => {
-      if (isFormControl(this.loginForm.get(item))) {
-        this.loginForm.get(item)?.markAsDirty();
-      }
-    });
+    this.commonService.markAsDirty(this.loginForm);
     if (this.loginForm.valid) {
-      this.authService
-        .login({
-          email: this.loginForm.get('email')?.value,
-          password: this.loginForm.get('password')?.value,
-        })
-        .pipe(
-          switchMap((data: any) => {
-            localStorage.setItem('token', data.response.access_token);
-            this.toastService.toastSuccess(this.toast.loginSuccess);
-            this.router.navigate(['/']);
-            return this.authService.getMyInfo();
-          }),
-          finalize(() => {
-            this.loadingService.setloading(false);
-          }),
-          catchError((err) => {
-            this.toastService.toastError(this.toast.loginFail);
-            this.loginForm.patchValue({
-              email: '',
-              password: '',
-            });
-            Object.keys(this.loginForm.controls).forEach((item) => {
-              if (isFormControl(this.loginForm.get(item))) {
-                this.loginForm.get(item)?.markAsPristine();
-              }
-            });
-            return throwError(err);
+      this.loadingService.setloading(true);
+      Object.keys(this.loginForm.controls).forEach((item) => {
+        if (isFormControl(this.loginForm.get(item))) {
+          this.loginForm.get(item)?.markAsDirty();
+        }
+      });
+      if (this.loginForm.valid) {
+        this.authService
+          .login({
+            email: this.loginForm.get('email')?.value,
+            password: this.loginForm.get('password')?.value,
           })
-        )
-        .subscribe((data: any) => {
-          if (data.statusCode === 200) {
-            this.accountService.setAccount(data.response);
-          }
-        });
+          .pipe(
+            switchMap((data: any) => {
+              localStorage.setItem('token', data.response.access_token);
+              this.toastService.toastSuccess(this.toast.loginSuccess);
+              this.router.navigate(['/']);
+              return this.authService.getMyInfo();
+            }),
+            finalize(() => {
+              this.loadingService.setloading(false);
+            }),
+            catchError((err) => {
+              this.toastService.toastError(this.toast.loginFail);
+              this.loginForm.patchValue({
+                email: '',
+                password: '',
+              });
+              Object.keys(this.loginForm.controls).forEach((item) => {
+                if (isFormControl(this.loginForm.get(item))) {
+                  this.loginForm.get(item)?.markAsPristine();
+                }
+              });
+              return throwError(err);
+            })
+          )
+          .subscribe((data: any) => {
+            if (data.statusCode === 200) {
+              this.accountService.setAccount(data.response);
+            }
+          });
+      }
     }
   }
 }

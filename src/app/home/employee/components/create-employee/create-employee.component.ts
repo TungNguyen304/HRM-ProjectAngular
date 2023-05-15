@@ -62,6 +62,77 @@ export class CreateEmployeeComponent implements OnInit {
   public typeAction: typeAction = this.router.url.includes('update-employee')
     ? 'update'
     : 'add';
+
+  ngOnInit() {
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
+    this.employeeForm = this.fb.group({
+      basicInfo: this.fb.group({
+        code: [
+          '',
+          [Validators.required, Validators.maxLength(50), emojiValidator],
+        ],
+        name: [
+          '',
+          [Validators.required, Validators.maxLength(255), emojiValidator],
+        ],
+        sex: ['', [Validators.required]],
+        birthDay: [''],
+        currentResidence: ['', [Validators.maxLength(255), emojiValidator]],
+        address: ['', [Validators.maxLength(255), emojiValidator]],
+        joinDate: [''],
+        hireDate: '',
+        avt: ['', [Validators.required]],
+      }),
+      contactInfo: this.fb.group({
+        email: [
+          '',
+          [
+            Validators.required,
+            Validators.maxLength(50),
+            emojiValidator,
+            emailValidator,
+          ],
+        ],
+        phone: ['', [Validators.required]],
+        skypeId: ['', [Validators.maxLength(255), emojiValidator]],
+        socials: this.fb.array([]),
+      }),
+      workingProcess: this.fb.array([]),
+      otherInfo: this.fb.group({
+        description: ['', [Validators.maxLength(500)]],
+        unit: ['', Validators.required],
+        position: ['', Validators.required],
+        cv: [''],
+        status: ['', [Validators.required]],
+      }),
+    });
+
+    if (this.typeAction === 'update') {
+      setTimeout(() => {
+        this.loadingService.setloading(true);
+      });
+      this.activatedRoute.params
+        .pipe(
+          switchMap((params) => {
+            return this.employeeService.getEmployeeById(params.id);
+          })
+        )
+        .subscribe((data: any) => {
+          if (data.statusCode === 200) {
+            this.loadingService.setloading(false);
+            this.employeeInfo = data.response;
+            if (this.typeAction === 'update') {
+              this.patchValueForForm(this.employeeInfo);
+            }
+          }
+        });
+    }
+
+    this.unitTreeService.getUnitTreeByUnitId();
+  }
+
   handleBack(): void {
     this.location.back();
   }
@@ -340,75 +411,5 @@ export class CreateEmployeeComponent implements OnInit {
         value: social.value,
       };
     });
-  }
-
-  ngOnInit() {
-    this.toasMsgService.toast$.subscribe((toast) => {
-      this.toast = toast;
-    });
-    this.employeeForm = this.fb.group({
-      basicInfo: this.fb.group({
-        code: [
-          '',
-          [Validators.required, Validators.maxLength(50), emojiValidator],
-        ],
-        name: [
-          '',
-          [Validators.required, Validators.maxLength(255), emojiValidator],
-        ],
-        sex: ['', [Validators.required]],
-        birthDay: [''],
-        currentResidence: ['', [Validators.maxLength(255), emojiValidator]],
-        address: ['', [Validators.maxLength(255), emojiValidator]],
-        joinDate: [''],
-        hireDate: '',
-        avt: ['', [Validators.required]],
-      }),
-      contactInfo: this.fb.group({
-        email: [
-          '',
-          [
-            Validators.required,
-            Validators.maxLength(50),
-            emojiValidator,
-            emailValidator,
-          ],
-        ],
-        phone: ['', [Validators.required]],
-        skypeId: ['', [Validators.maxLength(255), emojiValidator]],
-        socials: this.fb.array([]),
-      }),
-      workingProcess: this.fb.array([]),
-      otherInfo: this.fb.group({
-        description: ['', [Validators.maxLength(500)]],
-        unit: ['', Validators.required],
-        position: ['', Validators.required],
-        cv: [''],
-        status: ['', [Validators.required]],
-      }),
-    });
-
-    if (this.typeAction === 'update') {
-      setTimeout(() => {
-        this.loadingService.setloading(true);
-      });
-      this.activatedRoute.params
-        .pipe(
-          switchMap((params) => {
-            return this.employeeService.getEmployeeById(params.id);
-          })
-        )
-        .subscribe((data: any) => {
-          if (data.statusCode === 200) {
-            this.loadingService.setloading(false);
-            this.employeeInfo = data.response;
-            if (this.typeAction === 'update') {
-              this.patchValueForForm(this.employeeInfo);
-            }
-          }
-        });
-    }
-
-    this.unitTreeService.getUnitTreeByUnitId();
   }
 }

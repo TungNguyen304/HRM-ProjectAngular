@@ -18,6 +18,8 @@ export class TypeErrorPipe implements PipeTransform {
         return 'warning.email';
       case 'api':
         return 'warning.api';
+      case 'url':
+        return 'warning.url';
       default:
         return value || '';
     }

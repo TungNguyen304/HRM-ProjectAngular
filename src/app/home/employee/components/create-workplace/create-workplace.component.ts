@@ -147,7 +147,7 @@ export class CreateWorkplaceComponent implements OnInit {
     this.workplaceForm.get('code')?.valueChanges.subscribe(() => {
       this.warning.code = null;
     });
-
+    this.warningDetect();
     this.workplaceForm.valueChanges.subscribe(() => {
       this.warningDetect();
     });

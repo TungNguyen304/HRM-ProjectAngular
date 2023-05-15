@@ -48,6 +48,10 @@ export class PositionService {
     return this.http.get('job-positions?page=1&limit=0').pipe(delay(2000));
   }
 
+  getPositionById(positionList: any, id: string) {
+    console.log(positionList, id);
+  }
+
   getMemberByPositionId(
     id: string = '',
     page: number = 1,

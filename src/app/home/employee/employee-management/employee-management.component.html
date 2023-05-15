@@ -76,6 +76,7 @@
                   formControlName="position"
                   [placeholder]="'common.select' | translate"
                   optionLabel="job_position_name"
+                  optionValue="job_position_id"
                 ></p-dropdown>
               </div>
             </div>
@@ -104,10 +105,10 @@
   <div class="employee_table">
     <p-table
       selectionMode="single"
-      responsiveLayout="stack"
+      responsiveLayout="scroll"
+      [tableStyle]="{ 'min-width': '110rem' }"
       [breakpoint]="'1200px'"
       [value]="employeeList"
-      [tableStyle]="{ 'min-width': '200px' }"
     >
       <ng-template pTemplate="caption">
         <div class="caption_table">
@@ -141,7 +142,7 @@
           <th>{{ "employeeManagement.unit" | translate }}</th>
           <th>{{ "employeeManagement.position" | translate }}</th>
           <th>{{ "common.status" | translate }}</th>
-          <th>{{ "common.action" | translate }}</th>
+          <th style="text-align: end;">{{ "common.action" | translate }}</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-employee>
@@ -189,7 +190,7 @@
             <span class="p-column-title">{{
               "common.action" | translate
             }}</span>
-            <div style="text-align: end;">
+            <div style="text-align: end">
               <p-splitButton
                 styleClass="p-button-sm"
                 [model]="actions"

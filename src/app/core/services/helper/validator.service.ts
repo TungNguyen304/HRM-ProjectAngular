@@ -1,5 +1,10 @@
 import { AbstractControl } from '@angular/forms';
-import { regexEmail, regexNoEmoji, regexPhone } from 'src/app/shared/regex';
+import {
+  regexEmail,
+  regexLinkUrl,
+  regexNoEmoji,
+  regexPhone,
+} from 'src/app/shared/regex';
 
 export function emojiValidator(c: AbstractControl) {
   if (!c.value) {
@@ -9,6 +14,17 @@ export function emojiValidator(c: AbstractControl) {
     ? null
     : {
         emoji: true,
+      };
+}
+
+export function urlValidator(c: AbstractControl) {
+  if (!c.value) {
+    return null;
+  }
+  return regexLinkUrl.test(c.value)
+    ? null
+    : {
+        url: true,
       };
 }
 

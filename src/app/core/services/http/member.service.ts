@@ -16,7 +16,7 @@ export class MemberService {
       }`
     );
     return this.member$.pipe(
-      debounceTime(2000),
+      debounceTime(1000),
       switchMap((url) => this.http.get(url))
     );
   }

@@ -18,6 +18,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AvtComponent } from './layouts/common/avt.component';
 import { ButtonModule } from 'primeng/button';
 import { ForbiddenComponent } from './layouts/forbidden/forbidden.component';
+import { DestroyDirective } from './directives/destroy.directive';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ForbiddenComponent } from './layouts/forbidden/forbidden.component';
     LoadSmallComponent,
     AvtComponent,
     ForbiddenComponent,
+    DestroyDirective,
   ],
   imports: [
     CommonModule,

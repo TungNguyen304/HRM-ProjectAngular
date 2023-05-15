@@ -64,6 +64,20 @@ h2 {
 
 .employee_table {
   margin-top: 30px;
+  ::ng-deep
+    .p-datatable
+    .p-datatable-tbody
+    > tr:nth-child(3)
+    .p-tieredmenu.p-tieredmenu-overlay,
+  ::ng-deep
+    .p-datatable
+    .p-datatable-tbody
+    > tr:nth-child(4)
+    .p-tieredmenu.p-tieredmenu-overlay {
+    top: -105px !important;
+    right: 0 !important;
+    left: unset !important;
+  }
 }
 
 .accordion,

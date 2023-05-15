@@ -47,7 +47,8 @@ export class HomeComponent implements OnInit {
   }
 
   handleRemoveIdFromPath(path: string): string {
-    const listUrl = path.split('/');
+    const url = path.split('?')[0];
+    const listUrl = url.split('/');
     if (path.includes('detail-employee') || path.includes('detail-device')) {
       listUrl.pop();
     }
