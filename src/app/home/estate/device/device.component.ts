@@ -332,7 +332,6 @@ export class DeviceComponent extends DestroyDirective implements OnInit {
 
   handleSearchDevice(): void {
     if (this.searchDeviceForm.valid) {
-      this.saveUrl();
       this.loadDisplay = true;
       this.deviceService.getDevice(
         1,
