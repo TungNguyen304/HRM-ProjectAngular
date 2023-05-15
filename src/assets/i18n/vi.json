@@ -61,7 +61,7 @@
     "status": "Trạng thái",
     "action": "Hành động",
     "addNew": "Thêm mới",
-    "delete": "Xóa",
+    "delete": "Làm mới",
     "cancel": "Hủy",
     "save": "Lưu",
     "update": "Chỉnh sửa",
@@ -159,6 +159,7 @@
     "emoji": "không được chứa emoji",
     "file": "Dung lượng của tệp không được quá {{mb}}mb",
     "email": "không đúng định dạng",
-    "api": "{{error}}"
+    "api": "{{error}}",
+    "url": "không hợp lệ"
   }
 }

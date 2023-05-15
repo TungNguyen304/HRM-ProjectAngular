@@ -73,6 +73,7 @@
                   id="type"
                   [options]="typeDevice"
                   optionLabel="asset_type_name"
+                  optionValue="asset_type_id"
                   [placeholder]="'common.select' | translate"
                 ></p-dropdown>
               </div>
@@ -86,6 +87,7 @@
                   [placeholder]="'common.select' | translate"
                   [options]="status"
                   optionLabel="value"
+                  optionValue="key"
                 ></p-dropdown>
               </div>
             </div>
@@ -113,7 +115,8 @@
   </div>
   <div class="table">
     <p-table
-      responsiveLayout="stack"
+      responsiveLayout="scroll"
+      [tableStyle]="{ 'min-width': '100rem' }"
       [breakpoint]="'1200px'"
       selectionMode="single"
       [value]="deviceList"

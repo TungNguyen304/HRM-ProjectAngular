@@ -105,7 +105,7 @@
     "search": "Search",
     "address": "Address",
     "addNew": "Add new",
-    "delete": "Delete",
+    "delete": "Reset",
     "cancel": "Cancel",
     "noData": "No Data",
     "noImage": "NO IMAGE AVAILABLE",
@@ -161,6 +161,7 @@
     "emoji": "are not allowed to contain emoji",
     "file": "The size of the file should not be more than {{mb}}mb",
     "email": "invalidate",
-    "api": "{{error}}"
+    "api": "{{error}}",
+    "url": "invalid"
   }
 }

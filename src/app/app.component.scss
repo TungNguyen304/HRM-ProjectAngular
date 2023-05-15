@@ -1,4 +1,3 @@
-
 .confirm_modal {
   position: fixed;
   top: 0;
@@ -16,7 +15,7 @@
 }
 
 ::ng-deep .p-datatable-wrapper {
-  overflow: unset !important;
+  overflow-y: scroll !important;
 }
 
 ::ng-deep.p-splitbutton .p-splitbutton-defaultbutton,
@@ -72,7 +71,7 @@
 
 ::ng-deep .p-button-sm {
   font-size: 1.4rem;
-  padding: 0.55625rem 0.9375rem;
+  // padding: 0.55625rem 0.9375rem;
   .p-button-icon {
     font-size: 1.2rem !important;
   }

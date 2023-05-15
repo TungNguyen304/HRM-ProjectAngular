@@ -46,13 +46,7 @@ const routes: Routes = [
       },
       {
         path: 'workplace',
-        children: [
-          {
-            path: '',
-            component: WorkplaceComponent,
-          },
-          { path: ':id', component: WorkplaceComponent },
-        ],
+        component: WorkplaceComponent,
       },
       {
         path: 'management',
@@ -70,7 +64,6 @@ const routes: Routes = [
             path: 'update-employee/:id',
             component: CreateEmployeeComponent,
           },
-          { path: ':id', component: EmployeeManagementComponent },
         ],
       },
       {

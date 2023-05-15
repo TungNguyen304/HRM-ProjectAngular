@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, finalize } from 'rxjs';
+import { Observable, finalize, takeUntil } from 'rxjs';
 import { ExportFileService } from 'src/app/core/services/helper/export-file.service';
 import { ModalService } from 'src/app/core/services/helper/modal.service';
+import { PageService } from 'src/app/core/services/helper/page.service';
 import { ToastService } from 'src/app/core/services/helper/toast.service';
 import { ProviderService } from 'src/app/core/services/http/provider.service';
 import { LoadingService } from 'src/app/core/services/state/loading.service';
 import { ToastMsgService } from 'src/app/core/services/state/toastMsg.service';
+import { DestroyDirective } from 'src/app/shared/directives/destroy.directive';
 import { IProviderResponse } from 'src/app/shared/interfaces';
 
 @Component({
@@ -15,7 +17,7 @@ import { IProviderResponse } from 'src/app/shared/interfaces';
   templateUrl: './provider.component.html',
   styleUrls: ['./provider.component.scss'],
 })
-export class ProviderComponent implements OnInit {
+export class ProviderComponent extends DestroyDirective implements OnInit {
   public providerList: IProviderResponse[];
   public displayCreate: boolean = false;
   public idProvider: number;
@@ -35,29 +37,45 @@ export class ProviderComponent implements OnInit {
     private exportFileService: ExportFileService,
     private toasMsgService: ToastMsgService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) {}
+    private activatedRoute: ActivatedRoute,
+    private pageService: PageService
+  ) {
+    super();
+  }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe((params) => {
-      if (params.id) {
-        this.page = params.id;
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (params.page) {
+        this.page = params.page;
+      }
+      if (params.search) {
+        this.searchInput.setValue(params.search);
       }
     });
     this.toasMsgService.toast$.subscribe((toast) => {
       this.toast = toast;
     });
-    this.handleGetProvider().subscribe(
-      (data: any) => {
-        if (data.statusCode === 200) {
-          this.total = data.response.total;
-          this.providerList = data.response.data;
+    this.handleGetProvider()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data: any) => {
+          if (data.statusCode === 200) {
+            this.total = data.response.total;
+            this.providerList = data.response.data;
+          }
+          this.loadDisplay = false;
+        },
+        () => {
+          this.loadDisplay = false;
         }
-        this.loadDisplay = false;
-      },
-      () => {
-        this.loadDisplay = false;
-      }
+      );
+  }
+
+  saveUrl() {
+    this.pageService.saveUrl(
+      'estate/provider',
+      this.page,
+      this.searchInput.value
     );
   }
 
@@ -100,6 +118,7 @@ export class ProviderComponent implements OnInit {
 
   handleGetProvider(): Observable<object> {
     this.loadDisplay = true;
+    this.saveUrl();
     return this.providerService.getProvider(
       this.page,
       this.limit,
@@ -132,7 +151,7 @@ export class ProviderComponent implements OnInit {
 
   onPageChange(event: any): void {
     if (this.page !== event.page + 1) {
-      this.router.navigateByUrl(`estate/provider/${event.page + 1}`);
+      this.saveUrl();
       this.loadDisplay = true;
       this.page = event.page + 1;
       this.handleGetProvider();

@@ -22,16 +22,7 @@ const routes: Routes = [
       },
       {
         path: 'team-member',
-        children: [
-          {
-            path: '',
-            component: TeamMemberComponent,
-          },
-          {
-            path: ':id',
-            component: TeamMemberComponent,
-          },
-        ],
+        component: TeamMemberComponent,
       },
       {
         path: 'employee',

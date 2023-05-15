@@ -2,7 +2,8 @@
   <h2 class="title">{{ "title.provider" | translate }}</h2>
   <div class="table">
     <p-table
-      responsiveLayout="stack"
+      responsiveLayout="scroll"
+      [tableStyle]="{ 'min-width': '80rem' }"
       [breakpoint]="'1024px'"
       selectionMode="single"
       [value]="providerList"

@@ -4,7 +4,8 @@
     <p-table
       selectionMode="single"
       [value]="positionList"
-      responsiveLayout="stack"
+      responsiveLayout="scroll"
+      [tableStyle]="{ 'min-width': '80rem' }"
       [breakpoint]="'1024px'"
     >
       <ng-template pTemplate="caption">
@@ -95,7 +96,7 @@
           </td>
           <td>
             <span class="p-column-title">{{
-              "workplace.position Type" | translate
+              "workplace.positionType" | translate
             }}</span
             ><span style="text-align: end">{{
               position.job_position_category

@@ -73,7 +73,9 @@ export class MemberTableComponent implements OnInit, OnDestroy {
     this.subscription = this.handleGetObservableByType(page).subscribe(
       (data: any) => {
         if (data.statusCode === 200) {
-          this.memberList = data.response.data;
+          this.memberList = data.response.data.filter(
+            (member: any) => member.employee_code
+          );
           this.total = data.response.total;
           this.loadDisplay = false;
         }

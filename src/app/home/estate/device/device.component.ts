@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Observable, combineLatest, finalize } from 'rxjs';
+import { Observable, combineLatest, finalize, takeUntil } from 'rxjs';
 import { getControlCommon } from 'src/app/core/services/helper/formControl.service';
 import { emojiValidator } from 'src/app/core/services/helper/validator.service';
 import {
@@ -30,6 +30,12 @@ import {
   NgxQrcodeErrorCorrectionLevels,
 } from '@techiediaries/ngx-qrcode';
 import { handleDownQrCode } from 'src/app/core/services/helper/qrcode.service';
+import { DestroyDirective } from 'src/app/shared/directives/destroy.directive';
+import {
+  IFilter,
+  PageService,
+} from 'src/app/core/services/helper/page.service';
+import { CommonService } from 'src/app/core/services/common.service';
 
 @Component({
   selector: 'app-device',
@@ -37,7 +43,7 @@ import { handleDownQrCode } from 'src/app/core/services/helper/qrcode.service';
   styleUrls: ['./device.component.scss'],
   providers: [MessageService],
 })
-export class DeviceComponent implements OnInit {
+export class DeviceComponent extends DestroyDirective implements OnInit {
   public status: any = [];
   public typeDevice: any = [];
   public deviceList: any;
@@ -57,6 +63,7 @@ export class DeviceComponent implements OnInit {
   public elementType = NgxQrcodeElementTypes.URL;
   public correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
   public url: string;
+  public dataOnUrl: any;
   constructor(
     private deviceService: DeviceService,
     private router: Router,
@@ -69,8 +76,11 @@ export class DeviceComponent implements OnInit {
     private exportFileService: ExportFileService,
     private providerService: ProviderService,
     private toasMsgService: ToastMsgService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private pageService: PageService,
+    private commonService: CommonService
   ) {
+    super();
     this.actions = [
       {
         label: 'Update',
@@ -104,43 +114,58 @@ export class DeviceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe((params) => {
-      if (params.id) {
-        this.page = params.id;
-      }
-    });
-    this.toasMsgService.toast$.subscribe((toast) => {
-      this.toast = toast;
-    });
     this.loadDisplay = true;
-    combineLatest({
-      device: this.handleGetDevice(),
-      type: this.deviceService.getDeviceType(),
-      provider: this.providerService.getAllProvider(),
-    }).subscribe(
-      (res: any) => {
-        if (res.type.statusCode === 200) {
-          this.typeDevice = res.type.response;
-        }
-        if (res.provider.statusCode === 200 && res.device.statusCode === 200) {
-          this.deviceList = this.handleGetProviderByDevice(
-            res.device.response.data,
-            res.provider.response.data
-          );
-          this.total = res.device.response.total;
-        }
-        this.loadDisplay = false;
-      },
-      () => {
-        this.loadDisplay = false;
-      }
-    );
 
     this.searchDeviceForm = this.fb.group({
       code: ['', [Validators.maxLength(255), emojiValidator]],
       employee: ['', [Validators.maxLength(255), emojiValidator]],
       type: [''],
       status: [''],
+    });
+
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (params) {
+        this.dataOnUrl = params;
+      }
+      if (params.page) {
+        this.page = params.page;
+      }
+    });
+    this.toasMsgService.toast$.subscribe((toast) => {
+      this.toast = toast;
+    });
+    combineLatest({
+      device: this.handleGetDevice(),
+      provider: this.providerService.getAllProvider(),
+    })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (res: any) => {
+          if (
+            res.provider.statusCode === 200 &&
+            res.device.statusCode === 200
+          ) {
+            this.deviceList = this.handleGetProviderByDevice(
+              res.device.response.data,
+              res.provider.response.data
+            );
+            this.total = res.device.response.total;
+          }
+          this.loadDisplay = false;
+        },
+        () => {
+          this.loadDisplay = false;
+        }
+      );
+
+    this.deviceService.getDeviceType().subscribe((data: any) => {
+      if (data.statusCode === 200) {
+        this.typeDevice = data.response;
+        this.searchDeviceForm.patchValue(
+          this.commonService.transformDataSearchOnUrl(this.dataOnUrl)
+        );
+        this.handleSearchDevice();
+      }
     });
 
     this.languageService.language$.subscribe((data) => {
@@ -163,6 +188,24 @@ export class DeviceComponent implements OnInit {
     });
   }
 
+  saveUrl() {
+    this.pageService.saveUrl(
+      'estate/device',
+      this.page,
+      '',
+      this.getValueSearch()
+    );
+  }
+
+  getValueSearch(): IFilter {
+    return {
+      code: this.searchDeviceForm.value.code,
+      employee: this.searchDeviceForm.value.employee,
+      type: this.searchDeviceForm.value.type,
+      status: this.searchDeviceForm.value.status,
+    };
+  }
+
   handleActionsClick(device: any) {
     this.deviceTemp = device;
     this.url = `${window.location.origin}/detail-device/${
@@ -180,10 +223,10 @@ export class DeviceComponent implements OnInit {
 
   onPageChange(event: any): void {
     if (event.page + 1 !== this.page) {
-      this.router.navigateByUrl(`estate/device/${event.page + 1}`);
-      this.page = event.page + 1;
       this.loadDisplay = true;
-      this.handleSendRuest(this.page);
+      this.page = event.page + 1;
+      this.saveUrl();
+      this.handleSearchDevice();
     }
   }
 
@@ -196,9 +239,9 @@ export class DeviceComponent implements OnInit {
     this.displayQr = false;
   }
 
-  getValueSearch(): Array<string> {
-    return Object.values(this.searchDeviceForm.value);
-  }
+  // getValueSearch(): Array<string> {
+  //   return Object.values(this.searchDeviceForm.value);
+  // }
 
   update() {
     this.router.navigate([
@@ -282,14 +325,15 @@ export class DeviceComponent implements OnInit {
 
   handleSearchDevice(): void {
     if (this.searchDeviceForm.valid) {
+      this.saveUrl();
       this.loadDisplay = true;
       this.deviceService.getDevice(
         1,
         this.limit,
         this.getControl('code')?.value,
         this.getControl('employee')?.value,
-        this.getControl('type')?.value?.asset_type_id || '',
-        this.getControl('status')?.value.key || 0
+        this.getControl('type')?.value || '',
+        this.getControl('status')?.value || 0
       );
     }
   }
