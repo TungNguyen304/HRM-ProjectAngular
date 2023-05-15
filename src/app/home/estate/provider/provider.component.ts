@@ -118,7 +118,6 @@ export class ProviderComponent extends DestroyDirective implements OnInit {
 
   handleGetProvider(): Observable<object> {
     this.loadDisplay = true;
-    this.saveUrl();
     return this.providerService.getProvider(
       this.page,
       this.limit,
