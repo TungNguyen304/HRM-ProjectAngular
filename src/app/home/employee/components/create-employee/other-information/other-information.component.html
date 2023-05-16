@@ -58,7 +58,7 @@
       [options]="positionList"
       optionLabel="job_position_name"
     >
-  </p-dropdown>
+    </p-dropdown>
     <p
       *ngIf="getControl('position')?.dirty && getControl('position')?.errors"
       class="warning"
@@ -68,7 +68,7 @@
       {{ warning.position?.type | typeError | translate : warning.position }}
     </p>
   </div>
-  <div class="form_item">
+  <!-- <div class="form_item">
     <label for="addresscurrent">
       <span>CV</span>
     </label>
@@ -79,7 +79,7 @@
       (onSelect)="myUploader($event)"
       [chooseLabel]="'createEmployee.uploadCV' | translate"
     ></p-fileUpload>
-  </div>
+  </div> -->
   <div class="form_item">
     <label for="status">
       <span>{{ "common.status" | translate }}</span>

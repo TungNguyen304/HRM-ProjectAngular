@@ -24,14 +24,6 @@ import { CommonService } from 'src/app/core/services/common.service';
           </p>
           <p class="phone">{{ memberInfo.mobile }}</p>
         </div>
-        <div class="action">
-          <button
-            pButton
-            pRipple
-            label="Chi tiết"
-            class="p-button-sm p-button-warning"
-          ></button>
-        </div>
       </div>
     </div>
   `,
